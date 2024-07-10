@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Button } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Colors } from '@/constants/Colors';
 
 export default function TabTwoScreen() {
     const [countOne, setCountOne] = useState(0);
@@ -26,16 +27,24 @@ export default function TabTwoScreen() {
             </View>
 
             <View style={styles.buttonContainer}>
-                <Button title={`Increment 1 (${countOne})`} onPress={() => handlePress(1)} />
-                <Button title={`Increment 2 (${countTwo})`} onPress={() => handlePress(2)} />
-                <Button title={`Increment 3 (${countThree})`} onPress={() => handlePress(3)} />
-                <Button title={`Reset All`} onPress={() => {
+                <TouchableOpacity style={styles.button} onPress={() => handlePress(1)}>
+                    <Text style={styles.buttonText}>{`Increment 1 (${countOne})`}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.button} onPress={() => handlePress(2)}>
+                    <Text style={styles.buttonText}>{`Increment 2 (${countTwo})`}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.button} onPress={() => handlePress(3)}>
+                    <Text style={styles.buttonText}>{`Increment 3 (${countThree})`}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.button} onPress={() => {
                     setCountOne(0);
                     setCountTwo(0);
                     setCountThree(0);
                     setCountTotalGraphs(0);
                     setCountTotalHair(0);
-                }} />
+                }}>
+                    <Text style={styles.buttonText}>Reset All</Text>
+                </TouchableOpacity>
             </View>
 
             <View style={styles.countContainer}>
@@ -50,27 +59,55 @@ const styles = StyleSheet.create({
     safeArea: {
         flex: 1,
         paddingTop: 10,
+        borderWidth: 1,
+        borderColor: Colors.dark.icon,
     },
     titleContainer: {
-        flex: 1,
         flexDirection: 'row',
-        gap: 8,
         justifyContent: 'center',
+        borderWidth: 1,
+        borderColor: Colors.dark.icon,
     },
     buttonContainer: {
-        margin: 20,
+        flexDirection: 'row',
+        flexWrap: 'wrap',
         justifyContent: 'center',
         alignItems: 'center',
+        borderWidth: 1,
+        borderColor: Colors.dark.icon,
+    },
+    button: {
+        backgroundColor: Colors.dark.icon,
+        borderRadius: 10,
+        margin: 10,
+        width: '95%',
+        borderWidth: 1,
+        borderColor: Colors.dark.text,
+        height: 80,
+        justifyContent: 'center',
+        alignItems: 'center',
+
+    },
+    buttonText: {
+        color: Colors.white,
+        fontSize: 30,
+        fontWeight: 'bold',
+        width: 300,
+        textAlign: 'center',
+        textAlignVertical: 'center',
     },
     countContainer: {
         justifyContent: 'center',
         alignItems: 'center',
+        borderWidth: 1,
+        borderColor: Colors.dark.icon,
     },
     customTitle: {
         fontSize: 30,
-        color: 'green',
+        color: Colors.dark.text,
     },
     largeText: {
-        fontSize: 24, // Change the font size as needed
+        fontSize: 24,
+        color: Colors.dark.text,
     },
 });
