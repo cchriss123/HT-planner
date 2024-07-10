@@ -6,7 +6,7 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 
 
-// Appearance.getColorScheme = () => 'light';
+//Appearance.getColorScheme = () => 'light';
 
 
 
