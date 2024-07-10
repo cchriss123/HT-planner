@@ -24,7 +24,7 @@ export default function TabLayout() {
                 }}
             />
             <Tabs.Screen
-                name="explore"
+                name="counter"
                 options={{
                     title: 'Follicle Counter',
                     tabBarIcon: ({ color, focused }) => (
