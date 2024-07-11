@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Text, useColorScheme } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '@/constants/Colors';
@@ -10,6 +10,9 @@ export default function TabTwoScreen() {
     const [countThree, setCountThree] = useState(0);
     const [countTotalGraphs, setCountTotalGraphs] = useState(0);
     const [countTotalHair, setCountTotalHair] = useState(0);
+
+    const colorScheme = useColorScheme();
+    const styles = createStyles(colorScheme);
 
     function handlePress(value: number) {
         if (value === 1) setCountOne(countOne + 1);
@@ -36,78 +39,85 @@ export default function TabTwoScreen() {
                 <TouchableOpacity style={styles.button} onPress={() => handlePress(3)}>
                     <Text style={styles.buttonText}>{`Increment 3 (${countThree})`}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={() => {
-                    setCountOne(0);
-                    setCountTwo(0);
-                    setCountThree(0);
-                    setCountTotalGraphs(0);
-                    setCountTotalHair(0);
-                }}>
-                    <Text style={styles.buttonText}>Reset All</Text>
-                </TouchableOpacity>
             </View>
 
             <View style={styles.countContainer}>
-                <ThemedText style={styles.largeText}>{`Total Hair: ${countTotalHair}`}</ThemedText>
-                <ThemedText>{`Count: ${countTotalGraphs}`}</ThemedText>
+                <ThemedText style={styles.largeText}>{`Count: ${countTotalGraphs}`}</ThemedText>
+                <ThemedText style={styles.smallText}>{`Total Hairs: ${countTotalHair}`}</ThemedText>
             </View>
         </SafeAreaView>
     );
 }
 
-const styles = StyleSheet.create({
-    safeArea: {
-        flex: 1,
-        paddingTop: 10,
-        borderWidth: 1,
-        borderColor: Colors.dark.icon,
-    },
-    titleContainer: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        borderWidth: 1,
-        borderColor: Colors.dark.icon,
-    },
-    buttonContainer: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderWidth: 1,
-        borderColor: Colors.dark.icon,
-    },
-    button: {
-        backgroundColor: Colors.dark.icon,
-        borderRadius: 10,
-        margin: 10,
-        width: '95%',
-        borderWidth: 1,
-        borderColor: Colors.dark.text,
-        height: 80,
-        justifyContent: 'center',
-        alignItems: 'center',
+function createStyles(colorScheme: "light" | "dark" | null | undefined) {
+    const colors = colorScheme === 'dark' ? Colors.dark : Colors.light;
+    return StyleSheet.create({
+        safeArea: {
+            flex: 1,
+            paddingTop: 10,
+            // backgroundColor: colors.background,
+            // borderWidth: 1,
+            // borderColor: colors.icon,
+        },
+        titleContainer: {
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+            // borderWidth: 1,
+            // borderColor: colors.icon,
+            height: 40,
+        },
+        buttonContainer: {
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+            alignItems: 'center',
+            // borderWidth: 1,
+            // borderColor: colors.tint,
+            paddingTop: 10,
+            paddingBottom: 10,
+        },
+        button: {
+            borderRadius: 10,
+            margin: 15,
+            width: '90%',
+            borderWidth: 1,
+            height: 100,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: colors.tint,
+            // borderColor: colors.icon,
+        },
 
-    },
-    buttonText: {
-        color: Colors.white,
-        fontSize: 30,
-        fontWeight: 'bold',
-        width: 300,
-        textAlign: 'center',
-        textAlignVertical: 'center',
-    },
-    countContainer: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderWidth: 1,
-        borderColor: Colors.dark.icon,
-    },
-    customTitle: {
-        fontSize: 30,
-        color: Colors.dark.text,
-    },
-    largeText: {
-        fontSize: 24,
-        color: Colors.dark.text,
-    },
-});
+        buttonText: {
+            color: colors.background,
+            fontSize: 30,
+            fontWeight: 'bold',
+            textAlign: 'center',
+        },
+        countContainer: {
+            justifyContent: 'center',
+            alignItems: 'center',
+            // borderWidth: 1,
+            // borderColor: colors.icon,
+            height: 120,
+        },
+        customTitle: {
+            fontSize: 30,
+        },
+        largeText: {
+            fontSize: 50,
+            paddingTop: 30,
+            marginTop: 20,
+            marginBottom: 5,
+            color: colors.text,
+            fontWeight: 'bold',
+
+        },
+        smallText: {
+            fontSize: 20,
+            marginBottom: 20,
+            color: colors.text,
+        },
+    });
+}
