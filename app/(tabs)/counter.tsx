@@ -3,6 +3,7 @@ import { StyleSheet, View, TouchableOpacity, Text, useColorScheme } from 'react-
 import { ThemedText } from '@/components/ThemedText';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '@/constants/Colors';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 export default function TabTwoScreen() {
     const [countOne, setCountOne] = useState(0);
@@ -10,6 +11,7 @@ export default function TabTwoScreen() {
     const [countThree, setCountThree] = useState(0);
     const [countTotalGraphs, setCountTotalGraphs] = useState(0);
     const [countTotalHair, setCountTotalHair] = useState(0);
+
 
     const colorScheme = useColorScheme();
     const styles = createStyles(colorScheme);
@@ -27,6 +29,7 @@ export default function TabTwoScreen() {
         <SafeAreaView style={styles.safeArea}>
             <View style={styles.titleContainer}>
                 <ThemedText type="title" style={styles.customTitle}>Counter</ThemedText>
+                <Icon name="menu" />
             </View>
 
             <View style={styles.buttonContainer}>
@@ -78,15 +81,24 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             paddingBottom: 10,
         },
         button: {
-            borderRadius: 10,
+            borderRadius: 20,
             margin: 15,
             width: '90%',
-            borderWidth: 1,
+            borderWidth: 2,
             height: 100,
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: colors.tint,
-            // borderColor: colors.icon,
+            backgroundColor: colors.blue,
+            borderTopColor: colors.lightBlue,
+            borderLeftColor: colors.lightBlue,
+            borderRightColor: colors.icon, // Darker side
+            borderBottomColor: colors.icon, // Darker side
+
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.3,
+            shadowRadius: 5,
+            elevation: 5,
         },
 
         buttonText: {
