@@ -18,7 +18,7 @@ export default function TabTwoScreen() {
 
 
     const colorScheme = useColorScheme();
-    const styles = createStyles(colorScheme);
+    const styles = createStyles(colorScheme, menuVisible);
 
     function handlePress(value: number) {
         if (value === 1) setCountOne(countOne + 1);
@@ -68,7 +68,9 @@ export default function TabTwoScreen() {
 
 
 
-                <Icon name="menu" style={styles.menuIcon} onPress={() => setMenuVisible(true)} />
+                <Icon name="menu" style={
+                    styles.menuIcon
+                } onPress={() => setMenuVisible(!menuVisible)} />
 
             </View>
 
@@ -92,7 +94,7 @@ export default function TabTwoScreen() {
     );
 }
 
-function createStyles(colorScheme: "light" | "dark" | null | undefined) {
+function createStyles(colorScheme: "light" | "dark" | null | undefined, menuVisible: boolean) {
     const colors = colorScheme === 'dark' ? Colors.dark : Colors.light;
     return StyleSheet.create({
         safeArea: {
@@ -174,37 +176,10 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             color: colors.text,
         },
         menuIcon: {
-            fontSize: 40,
+            fontSize: 50,
+            color: menuVisible ? colors.blue : colors.icon,
         },
-        // centeredView: {
-        //     flex: 1,
-        //     justifyContent: 'center',
-        //     alignItems: 'center',
-        //     marginTop: 22,
-        // },
-        // modalView: {
-        //     margin: 20,
-        //     backgroundColor: 'white',
-        //     borderRadius: 20,
-        //     padding: 35,
-        //     alignItems: 'center',
-        //     shadowColor: '#000',
-        //     shadowOffset: {
-        //         width: 0,
-        //         height: 2
-        //     },
-        //     shadowOpacity: 0.25,
-        //     shadowRadius: 4,
-        //     elevation: 5
-        // },
-        // buttonClose: {
-        //     backgroundColor: colors.icon,
-        // },
-        // textStyle: {
-        //     color: "white",
-        //     fontWeight: "bold",
-        //     textAlign: "center"
-        // }
+
 
 
     });
