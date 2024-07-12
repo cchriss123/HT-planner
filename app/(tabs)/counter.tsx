@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
-import { Modal, StyleSheet, View, TouchableOpacity, Text, useColorScheme } from 'react-native';
+import React, { useRef, useState, useEffect } from 'react';
+import {Animated, View, TouchableOpacity, Text, useColorScheme, StyleSheet, Dimensions} from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '@/constants/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
-
-
 
 export default function TabTwoScreen() {
     const [countOne, setCountOne] = useState(0);
@@ -14,8 +12,15 @@ export default function TabTwoScreen() {
     const [countTotalGraphs, setCountTotalGraphs] = useState(0);
     const [countTotalHair, setCountTotalHair] = useState(0);
     const [menuVisible, setMenuVisible] = useState(false);
+    const menuHeight = useRef(new Animated.Value(0)).current;
 
-
+    useEffect(() => {
+        Animated.timing(menuHeight, {
+            toValue: menuVisible ? Dimensions.get('window').height * 0.82 : 0,
+            duration: 50,
+            useNativeDriver: false
+        }).start();
+    }, [menuVisible]);
 
     const colorScheme = useColorScheme();
     const styles = createStyles(colorScheme, menuVisible);
@@ -24,7 +29,6 @@ export default function TabTwoScreen() {
         if (value === 1) setCountOne(countOne + 1);
         if (value === 2) setCountTwo(countTwo + 1);
         if (value === 3) setCountThree(countThree + 1);
-
         setCountTotalGraphs(countTotalGraphs + 1);
         setCountTotalHair(countTotalHair + value);
     }
@@ -32,47 +36,27 @@ export default function TabTwoScreen() {
     return (
         <SafeAreaView style={styles.safeArea}>
             <View style={styles.titleContainer}>
-                {/*<ThemedText type="title" style={styles.customTitle}>Counter</ThemedText>*/}
-
-
-
-                <Modal
-                    animationType="slide"
-                    transparent={true}
-                    visible={menuVisible}
-                >
-                    <View style={{
-                        position: 'absolute',
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                        height: '93%',
-                        backgroundColor: Colors.light.background,
-                        borderWidth: 1,
-                        borderTopColor: Colors.light.icon,
-                        borderTopRightRadius: 20,
-                        borderTopLeftRadius: 20,
-
-                        padding: 20,
-                        alignItems: 'center',
-                        // marginBottom: '6%'
-                    }}>
-                        <TouchableOpacity onPress={() => setMenuVisible(!menuVisible)}>
-                            <Text>Close Menu</Text>
-                        </TouchableOpacity>
-                    </View>
-                </Modal>
-
-
-
-
-
-
-                <Icon name="menu" style={
-                    styles.menuIcon
-                } onPress={() => setMenuVisible(!menuVisible)} />
-
+                <Icon name="menu" size={30} style={styles.menuIcon} onPress={() => setMenuVisible(!menuVisible)} />
             </View>
+
+            {menuVisible && (
+                <Animated.View style={{
+                    position: 'absolute',
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    height: menuHeight,
+                    backgroundColor: 'white', // Adjust color as needed
+                    borderTopRightRadius: 20,
+                    borderTopLeftRadius: 20,
+                    padding: 20,
+                    alignItems: 'center',
+                    zIndex: 1000, // High z-index to ensure it overlays other content
+                }}>
+                    <Text>Menu Content Here</Text>
+                </Animated.View>
+            )}
+
 
             <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.button} onPress={() => handlePress(1)}>
@@ -93,7 +77,6 @@ export default function TabTwoScreen() {
         </SafeAreaView>
     );
 }
-
 function createStyles(colorScheme: "light" | "dark" | null | undefined, menuVisible: boolean) {
     const colors = colorScheme === 'dark' ? Colors.dark : Colors.light;
     return StyleSheet.create({
