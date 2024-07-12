@@ -36,13 +36,33 @@ export default function TabTwoScreen() {
 
 
 
-            <Modal   animationType="slide" transparent={true} visible={menuVisible}>
-                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
-                    {/*<TouchableOpacity onPress={() => setMenuVisible(!menuVisible)} style={{ backgroundColor: 'white', padding: 20 }}>*/}
-                    {/*    <Text>Close Menu</Text>*/}
-                    {/*</TouchableOpacity>*/}
-                </View>
-            </Modal>
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={menuVisible}
+                >
+                    <View style={{
+                        position: 'absolute',
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        height: '93%',
+                        backgroundColor: Colors.light.background,
+                        borderWidth: 1,
+                        borderTopColor: Colors.light.icon,
+                        borderTopRightRadius: 20,
+                        borderTopLeftRadius: 20,
+
+                        padding: 20,
+                        alignItems: 'center',
+                        // marginBottom: '6%'
+                    }}>
+                        <TouchableOpacity onPress={() => setMenuVisible(!menuVisible)}>
+                            <Text>Close Menu</Text>
+                        </TouchableOpacity>
+                    </View>
+                </Modal>
+
 
 
 
