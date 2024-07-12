@@ -3,7 +3,6 @@ import React from 'react';
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
-import { ViewStyle } from 'react-native'; // If needed for TypeScript
 
 export default function TabLayout() {
     const colorScheme = useColorScheme();
@@ -14,7 +13,6 @@ export default function TabLayout() {
                 tabBarActiveTintColor: Colors[colorScheme ?? 'light'].primaryBlue,
                 tabBarStyle: {
                     backgroundColor: Colors[colorScheme ?? 'light'].solidBackground,
-                    borderTopColor: 'transparent' // Optional, removes the top border if desired
                 },
                 headerShown: false,
             }}>
