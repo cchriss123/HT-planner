@@ -16,8 +16,8 @@ export default function TabTwoScreen() {
 
     useEffect(() => {
         Animated.timing(menuHeight, {
-            toValue: menuVisible ? Dimensions.get('window').height * 0.82 : 0,
-            duration: 50,
+            toValue: menuVisible ? Dimensions.get('window').height * 0.60 : 0,
+            duration: 100,
             useNativeDriver: false
         }).start();
     }, [menuVisible]);
@@ -34,47 +34,52 @@ export default function TabTwoScreen() {
     }
 
     return (
-        <SafeAreaView style={styles.safeArea}>
-            <View style={styles.titleContainer}>
-                <Icon name="menu" size={30} style={styles.menuIcon} onPress={() => setMenuVisible(!menuVisible)} />
-            </View>
+        <View style={{ flex: 1, backgroundColor: colorScheme === 'dark' ? Colors.dark.softBackground : Colors.light.softBackground }}>
+            <SafeAreaView style={styles.safeArea}>
+                <View style={styles.titleContainer}>
+                    <Icon name="menu" size={30} style={styles.menuIcon} onPress={() => setMenuVisible(!menuVisible)} />
+                </View>
 
-            {menuVisible && (
-                <Animated.View style={{
-                    position: 'absolute',
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    height: menuHeight,
-                    backgroundColor: 'white', // Adjust color as needed
-                    borderTopRightRadius: 20,
-                    borderTopLeftRadius: 20,
-                    padding: 20,
-                    alignItems: 'center',
-                    zIndex: 1000, // High z-index to ensure it overlays other content
-                }}>
-                    <Text>Menu Content Here</Text>
-                </Animated.View>
-            )}
+                {menuVisible && (
+                    <Animated.View
+                        style={{
+                            position: 'absolute',
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            height: menuHeight,
+                            backgroundColor: colorScheme === 'dark' ? Colors.dark.solidBackground : Colors.light.solidBackground,
+                            borderTopRightRadius: 20,
+                            borderTopLeftRadius: 20,
+                            padding: 20,
+                            alignItems: 'center',
+                            zIndex: 1000,
+                        }}>
+                        <Text>Menu Content Here</Text>
+                    </Animated.View>
+                )}
 
+                <View style={{ flex: 1, alignItems: 'center' }}>
 
-            <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.button} onPress={() => handlePress(1)}>
-                    <Text style={styles.buttonText}>{`Increment 1 (${countOne})`}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={() => handlePress(2)}>
-                    <Text style={styles.buttonText}>{`Increment 2 (${countTwo})`}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={() => handlePress(3)}>
-                    <Text style={styles.buttonText}>{`Increment 3 (${countThree})`}</Text>
-                </TouchableOpacity>
-            </View>
+                    <View style={styles.buttonContainer}>
+                        <TouchableOpacity style={styles.button} onPress={() => handlePress(1)}>
+                            <Text style={styles.buttonText}>{`Increment 1 (${countOne})`}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.button} onPress={() => handlePress(2)}>
+                            <Text style={styles.buttonText}>{`Increment 2 (${countTwo})`}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.button} onPress={() => handlePress(3)}>
+                            <Text style={styles.buttonText}>{`Increment 3 (${countThree})`}</Text>
+                        </TouchableOpacity>
+                    </View>
 
-            <View style={styles.countContainer}>
-                <ThemedText style={styles.largeText}>{`Count: ${countTotalGraphs}`}</ThemedText>
-                <ThemedText style={styles.smallText}>{`Total Hairs: ${countTotalHair}`}</ThemedText>
-            </View>
-        </SafeAreaView>
+                    <View style={styles.countContainer}>
+                        <ThemedText style={styles.largeText}>{`Count: ${countTotalGraphs}`}</ThemedText>
+                        <ThemedText style={styles.smallText}>{`Total Hairs: ${countTotalHair}`}</ThemedText>
+                    </View>
+                </View>
+            </SafeAreaView>
+        </View>
     );
 }
 function createStyles(colorScheme: "light" | "dark" | null | undefined, menuVisible: boolean) {
@@ -92,10 +97,11 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined, menuVisi
             // justifyContent: 'space-between',
             alignItems: 'center',
             justifyContent: 'flex-end',
-            // borderWidth: 1,
-            // borderColor: colors.icon,
-            height: 40,
-            paddingRight: '5%'
+            // borderBottomWidth: 1,
+            // borderBottomColor: colors.neutralGrey,
+            height: 60,
+            paddingRight: '5%',
+
         },
         buttonContainer: {
             flexDirection: 'row',
@@ -115,11 +121,11 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined, menuVisi
             height: 100,
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: colors.blue,
-            borderTopColor: colors.lightBlue,
-            borderLeftColor: colors.lightBlue,
-            borderRightColor: colors.icon, // Darker side
-            borderBottomColor: colors.icon, // Darker side
+            backgroundColor: colors.primaryBlue,
+            borderTopColor: colors.secondaryBlue,
+            borderLeftColor: colors.secondaryBlue,
+            borderRightColor: colors.neutralGrey,
+            borderBottomColor: colors.neutralGrey,
 
             shadowColor: '#000',
             shadowOffset: { width: 0, height: 2 },
@@ -129,7 +135,7 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined, menuVisi
         },
 
         buttonText: {
-            color: colors.background,
+            color: colors.solidBackground,
             fontSize: 30,
             fontWeight: 'bold',
             textAlign: 'center',
@@ -149,18 +155,18 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined, menuVisi
             paddingTop: 30,
             marginTop: 20,
             marginBottom: 5,
-            color: colors.text,
+            color: colors.primaryText,
             fontWeight: 'bold',
 
         },
         smallText: {
             fontSize: 20,
             marginBottom: 20,
-            color: colors.text,
+            color: colors.primaryText,
         },
         menuIcon: {
             fontSize: 50,
-            color: menuVisible ? colors.blue : colors.icon,
+            color: menuVisible ? colors.primaryBlue : colors.neutralGrey,
         },
 
 

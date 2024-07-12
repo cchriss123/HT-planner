@@ -26,19 +26,21 @@ export const Colors = {
 
 
   light: {
-    blue: '#24a2d5',
-    lightBlue: '#99cdff',
-    text: '#11181C',
-    background: '#fff',
-    icon: '#687076',
-    tabIconDefault: '#687076',
+    primaryBlue: '#24a2d5',
+    secondaryBlue: '#99cdff',
+    primaryText: '#11181C',
+    neutralGrey: '#687076',
+    defaultIconColor: '#687076',
+    softBackground: '#f2f2f2',
+    solidBackground: '#fff',
   },
   dark: {
-    blue: '#24a2d5',
-    lightBlue: '#99cdff',
-    text: '#ECEDEE',
-    background: '#151718',
-    icon: '#9BA1A6',
-    tabIconDefault: '#9BA1A6',
+    primaryBlue: '#0a7ea4',
+    secondaryBlue: '#66c2cd',
+    primaryText: '#ECEDEE',
+    neutralGrey: '#9BA1A6',
+    defaultIconColor: '#9BA1A6',
+    softBackground: '#151718',
+    solidBackground: 'black',
   },
 };
