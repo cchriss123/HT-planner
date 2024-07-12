@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, TouchableOpacity, Text, useColorScheme } from 'react-native';
+import { Modal, StyleSheet, View, TouchableOpacity, Text, useColorScheme } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '@/constants/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
+
+
 
 export default function TabTwoScreen() {
     const [countOne, setCountOne] = useState(0);
@@ -11,6 +13,8 @@ export default function TabTwoScreen() {
     const [countThree, setCountThree] = useState(0);
     const [countTotalGraphs, setCountTotalGraphs] = useState(0);
     const [countTotalHair, setCountTotalHair] = useState(0);
+    const [menuVisible, setMenuVisible] = useState(false);
+
 
 
     const colorScheme = useColorScheme();
@@ -28,8 +32,24 @@ export default function TabTwoScreen() {
     return (
         <SafeAreaView style={styles.safeArea}>
             <View style={styles.titleContainer}>
-                <ThemedText type="title" style={styles.customTitle}>Counter</ThemedText>
-                <Icon name="menu" />
+                {/*<ThemedText type="title" style={styles.customTitle}>Counter</ThemedText>*/}
+
+
+
+            <Modal   animationType="slide" transparent={true} visible={menuVisible}>
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+                    {/*<TouchableOpacity onPress={() => setMenuVisible(!menuVisible)} style={{ backgroundColor: 'white', padding: 20 }}>*/}
+                    {/*    <Text>Close Menu</Text>*/}
+                    {/*</TouchableOpacity>*/}
+                </View>
+            </Modal>
+
+
+
+
+
+                <Icon name="menu" style={styles.menuIcon} onPress={() => setMenuVisible(true)} />
+
             </View>
 
             <View style={styles.buttonContainer}>
@@ -64,11 +84,13 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
         },
         titleContainer: {
             flexDirection: 'row',
-            justifyContent: 'center',
+            // justifyContent: 'space-between',
             alignItems: 'center',
+            justifyContent: 'flex-end',
             // borderWidth: 1,
             // borderColor: colors.icon,
             height: 40,
+            paddingRight: '5%'
         },
         buttonContainer: {
             flexDirection: 'row',
@@ -131,5 +153,39 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             marginBottom: 20,
             color: colors.text,
         },
+        menuIcon: {
+            fontSize: 40,
+        },
+        // centeredView: {
+        //     flex: 1,
+        //     justifyContent: 'center',
+        //     alignItems: 'center',
+        //     marginTop: 22,
+        // },
+        // modalView: {
+        //     margin: 20,
+        //     backgroundColor: 'white',
+        //     borderRadius: 20,
+        //     padding: 35,
+        //     alignItems: 'center',
+        //     shadowColor: '#000',
+        //     shadowOffset: {
+        //         width: 0,
+        //         height: 2
+        //     },
+        //     shadowOpacity: 0.25,
+        //     shadowRadius: 4,
+        //     elevation: 5
+        // },
+        // buttonClose: {
+        //     backgroundColor: colors.icon,
+        // },
+        // textStyle: {
+        //     color: "white",
+        //     fontWeight: "bold",
+        //     textAlign: "center"
+        // }
+
+
     });
 }
