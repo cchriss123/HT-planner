@@ -1,4 +1,4 @@
-import {StyleSheet, Text} from 'react-native';
+import {Appearance, StyleSheet, Text, View} from 'react-native';
 
 
 
@@ -8,14 +8,13 @@ import {StyleSheet, Text} from 'react-native';
 
 export default function HomeScreen() {
   return (
-      <Text>Home</Text>
+     <View style={styles.outerContainer}>
+       <Text>Home Screen</Text>
+     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+  outerContainer: {
   },
 });
