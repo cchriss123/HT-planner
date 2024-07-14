@@ -4,6 +4,7 @@ import { ThemedText } from '@/components/ThemedText';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '@/constants/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {AnimatedView} from "@/components/AnimatedView";
 
 export default function TabTwoScreen() {
     const [countOne, setCountOne] = useState(0);
@@ -33,6 +34,8 @@ export default function TabTwoScreen() {
         setCountTotalHair(countTotalHair + value);
     }
 
+    const testChild = <Text>Test</Text>;
+
     return (
         <View style={{ flex: 1, backgroundColor: colorScheme === 'dark' ? Colors.dark.softBackground : Colors.light.softBackground }}>
             <SafeAreaView style={styles.safeArea}>
@@ -40,23 +43,10 @@ export default function TabTwoScreen() {
                     <Icon name="menu" size={30} style={styles.menuIcon} onPress={() => setMenuVisible(!menuVisible)} />
                 </View>
 
+
+
                 {menuVisible && (
-                    <Animated.View
-                        style={{
-                            position: 'absolute',
-                            left: 0,
-                            right: 0,
-                            bottom: 0,
-                            height: menuHeight,
-                            backgroundColor: colorScheme === 'dark' ? Colors.dark.solidBackground : Colors.light.solidBackground,
-                            borderTopColor: colorScheme === 'dark' ? 'rgba(155, 161, 166, 0.5)' : 'rgba(104, 112, 118, 0.5)',
-                            borderTopWidth: 0.5,
-                            padding: 20,
-                            alignItems: 'center',
-                            zIndex: 1000,
-                        }}>
-                        <Text>Menu Content Here</Text>
-                    </Animated.View>
+                    <AnimatedView menuVisible={menuVisible} menuHeight={menuHeight}>{testChild}</AnimatedView>
                 )}
 
                 <View style={{ flex: 1, alignItems: 'center' }}>
