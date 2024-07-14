@@ -1,10 +1,10 @@
 import React, { useRef, useState, useEffect } from 'react';
-import {Animated, View, TouchableOpacity, Text, useColorScheme, StyleSheet, Dimensions} from 'react-native';
+import { Animated, View, TouchableOpacity, Text, useColorScheme, StyleSheet, Dimensions, TextInput, Alert } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '@/constants/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {AnimatedView} from "@/components/AnimatedView";
+import { AnimatedView } from '@/components/AnimatedView';
 
 export default function TabTwoScreen() {
     const [countOne, setCountOne] = useState(0);
@@ -13,11 +13,12 @@ export default function TabTwoScreen() {
     const [countTotalGraphs, setCountTotalGraphs] = useState(0);
     const [countTotalHair, setCountTotalHair] = useState(0);
     const [menuVisible, setMenuVisible] = useState(false);
+    const [newCountOne, setNewCountOne] = useState('');
     const menuHeight = useRef(new Animated.Value(0)).current;
 
     useEffect(() => {
         Animated.timing(menuHeight, {
-            toValue: menuVisible ? Dimensions.get('window').height * 0.60 : 0,
+            toValue: menuVisible ? Dimensions.get('window').height * 0.50 : 0,
             duration: 100,
             useNativeDriver: false
         }).start();
@@ -34,7 +35,27 @@ export default function TabTwoScreen() {
         setCountTotalHair(countTotalHair + value);
     }
 
-    const testChild = <Text>Test</Text>;
+    function handleReset() {
+        Alert.alert(
+            "Reset Counters",
+            "Are you sure you want to reset all counters?",
+            [
+                {
+                    text: "Cancel",
+                    style: "cancel"
+                },
+                {
+                    text: "OK", onPress: () => {
+                        setCountOne(0);
+                        setCountTwo(0);
+                        setCountThree(0);
+                        setCountTotalGraphs(0);
+                        setCountTotalHair(0);
+                    }
+                }
+            ]
+        );
+    }
 
     return (
         <View style={{ flex: 1, backgroundColor: colorScheme === 'dark' ? Colors.dark.softBackground : Colors.light.softBackground }}>
@@ -43,14 +64,37 @@ export default function TabTwoScreen() {
                     <Icon name="menu" size={30} style={styles.menuIcon} onPress={() => setMenuVisible(!menuVisible)} />
                 </View>
 
-
-
                 {menuVisible && (
-                    <AnimatedView menuVisible={menuVisible} menuHeight={menuHeight}>{testChild}</AnimatedView>
+                    <AnimatedView menuVisible={menuVisible} menuHeight={menuHeight}>
+
+                        <View style={styles.menuRow}>
+                            <TextInput style={styles.textInput} onChangeText={setNewCountOne} value={newCountOne} placeholder="Enter 1 FU count" keyboardType="numeric"/>
+                            <TouchableOpacity style={styles.okButton} onPress={() => setCountOne(parseInt(newCountOne, 10))}>
+                                <Text style={styles.okButtonText}>OK</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.menuRow}>
+                            <TextInput style={styles.textInput} onChangeText={setNewCountOne} value={newCountOne} placeholder="Enter 2 FU count" keyboardType="numeric"/>
+                            <TouchableOpacity style={styles.okButton} onPress={() => setCountTwo(parseInt(newCountOne, 10))}>
+                                <Text style={styles.okButtonText}>OK</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.menuRow}>
+                            <TextInput style={styles.textInput} onChangeText={setNewCountOne} value={newCountOne} placeholder="Enter 3 FU count" keyboardType="numeric"/>
+                            <TouchableOpacity style={styles.okButton} onPress={() => setCountThree(parseInt(newCountOne, 10))}>
+                                <Text style={styles.okButtonText}>OK</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.resetButtonContainer}>
+                            <TouchableOpacity style={styles.resetButton} onPress={handleReset}>
+                                <Text style={styles.resetButtonText}>Reset</Text>
+                            </TouchableOpacity>
+                        </View>
+
+                    </AnimatedView>
                 )}
 
                 <View style={{ flex: 1, alignItems: 'center' }}>
-
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity style={styles.button} onPress={() => handlePress(1)}>
                             <Text style={styles.buttonText}>{`Increment 1 (${countOne})`}</Text>
@@ -63,9 +107,10 @@ export default function TabTwoScreen() {
                         </TouchableOpacity>
                     </View>
 
-                    <View style={styles.countContainer}>
-                        <ThemedText style={styles.largeText}>{`Count: ${countTotalGraphs}`}</ThemedText>
-                        <ThemedText style={styles.smallText}>{`Total Hairs: ${countTotalHair}`}</ThemedText>
+                    <View style={styles.resetButtonContainer}>
+                        <TouchableOpacity style={styles.resetButton} onPress={handleReset}>
+                            <Text style={styles.resetButtonText}>Reset</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </SafeAreaView>
@@ -158,8 +203,83 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined, menuVisi
             fontSize: 50,
             color: menuVisible ? colors.primaryBlue : colors.neutralGrey,
         },
+        menuRow: {
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            width: '100%',
+            height: 80,
+
+
+        },
+        textInput: {
+            borderWidth: 1,
+            borderColor: '#ccc',
+            padding: 10,
+            width: '70%',
+            height: 50,
+            backgroundColor: colors.softBackground,
+            borderRadius: 15,
+        },
+        okButton: {
+            padding: 10,
+            borderRadius: 15,
+            width: '20%',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: 50,
+            borderWidth: 2,
+
+            backgroundColor: colors.primaryBlue,
+            borderTopColor: colors.secondaryBlue,
+            borderLeftColor: colors.secondaryBlue,
+            borderRightColor: colors.neutralGrey,
+            borderBottomColor: colors.neutralGrey,
+
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.3,
+            shadowRadius: 5,
+            elevation: 5,
+
+        },
+        okButtonText: {
+            color: colors.solidBackground,
+            fontSize: 18,
+        },
+            resetButtonContainer: {
+                flexDirection: 'row',
+                justifyContent: 'center',
+                width: '100%',
+                marginTop: 10,
+            },
+            resetButton: {
+                padding: 10,
+                borderRadius: 15,
+                width: '25%',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: 50,
+                borderWidth: 2,
+                backgroundColor: '#D9534F', // Softer red color
+                borderTopColor: '#B94A48',
+                borderLeftColor: '#B94A48',
+                borderRightColor: colors.neutralGrey,
+                borderBottomColor: colors.neutralGrey,
+                shadowColor: '#000',
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.3,
+                shadowRadius: 5,
+                elevation: 5,
+            },
+            resetButtonText: {
+                color: colors.solidBackground,
+                fontSize: 18,
+            }
 
 
 
-    });
+    }
+
+    );
 }
