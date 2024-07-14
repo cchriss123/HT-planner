@@ -14,6 +14,8 @@ export default function TabTwoScreen() {
     const [countTotalHair, setCountTotalHair] = useState(0);
     const [menuVisible, setMenuVisible] = useState(false);
     const [newCountOne, setNewCountOne] = useState('');
+    const [newCountTwo, setNewCountTwo] = useState('');
+    const [newCountThree, setNewCountThree] = useState('');
     const menuHeight = useRef(new Animated.Value(0)).current;
 
     useEffect(() => {
@@ -57,6 +59,28 @@ export default function TabTwoScreen() {
         );
     }
 
+    function handleSetCount(newValue: string, hairCount: number) {
+        const parsedValue = parseInt(newValue, 10);
+        if (isNaN(parsedValue)) return;
+
+        if (hairCount === 1) {
+            setCountOne(parsedValue);
+            setCountTotalGraphs(countTwo + countThree + parsedValue);
+            setCountTotalHair(countTwo + countThree + parsedValue);
+        }
+        if (hairCount === 2) {
+            setCountTwo(parsedValue);
+            setCountTotalGraphs(countOne + countThree + parsedValue);
+            setCountTotalHair(countOne + countThree + parsedValue*2);
+        }
+        if (hairCount === 3) {
+            setCountThree(parsedValue);
+            setCountTotalGraphs(countOne + countTwo + parsedValue);
+            setCountTotalHair(countOne + countTwo + parsedValue*3);
+        }
+    }
+
+
     return (
         <View style={{ flex: 1, backgroundColor: colorScheme === 'dark' ? Colors.dark.softBackground : Colors.light.softBackground }}>
             <SafeAreaView style={styles.safeArea}>
@@ -67,25 +91,28 @@ export default function TabTwoScreen() {
                 {menuVisible && (
                     <AnimatedView menuVisible={menuVisible} menuHeight={menuHeight}>
 
+                        <View style={styles.menuRow}>
+                            <TextInput style={styles.textInput} placeholder="Enter 1 FU count" keyboardType="numeric" onChangeText={(text) => setNewCountOne(text)}/>
+                            <TouchableOpacity style={styles.okButton} onPress={() => handleSetCount(newCountOne, 1)}>
+                                <Text style={styles.okButtonText}>OK</Text>
+                            </TouchableOpacity>
+                        </View>
 
                         <View style={styles.menuRow}>
-                            <TextInput style={styles.textInput} onChangeText={setNewCountOne} value={newCountOne} placeholder="Enter 1 FU count" keyboardType="numeric"/>
-                            <TouchableOpacity style={styles.okButton} onPress={() => setCountOne(parseInt(newCountOne, 10))}>
+                            <TextInput style={styles.textInput} placeholder="Enter 2 FU count" keyboardType="numeric" onChangeText={(text) => setNewCountTwo(text)}/>
+                            <TouchableOpacity style={styles.okButton} onPress={() => handleSetCount(newCountTwo, 2)}>
                                 <Text style={styles.okButtonText}>OK</Text>
                             </TouchableOpacity>
                         </View>
+
                         <View style={styles.menuRow}>
-                            <TextInput style={styles.textInput} onChangeText={setNewCountOne} value={newCountOne} placeholder="Enter 2 FU count" keyboardType="numeric"/>
-                            <TouchableOpacity style={styles.okButton} onPress={() => setCountTwo(parseInt(newCountOne, 10))}>
+                            <TextInput style={styles.textInput} placeholder="Enter 3 FU count" keyboardType="numeric" onChangeText={(text) => setNewCountThree(text)}/>
+                            <TouchableOpacity style={styles.okButton} onPress={() => handleSetCount(newCountThree, 3)}>
                                 <Text style={styles.okButtonText}>OK</Text>
                             </TouchableOpacity>
                         </View>
-                        <View style={styles.menuRow}>
-                            <TextInput style={styles.textInput} onChangeText={setNewCountOne} value={newCountOne} placeholder="Enter 3 FU count" keyboardType="numeric"/>
-                            <TouchableOpacity style={styles.okButton} onPress={() => setCountThree(parseInt(newCountOne, 10))}>
-                                <Text style={styles.okButtonText}>OK</Text>
-                            </TouchableOpacity>
-                        </View>
+
+
                         <View style={styles.resetButtonContainer}>
                             <TouchableOpacity style={styles.resetButton} onPress={handleReset}>
                                 <Text style={styles.resetButtonText}>Reset</Text>
@@ -108,16 +135,16 @@ export default function TabTwoScreen() {
                         </TouchableOpacity>
                     </View>
                     <View style={styles.countContainer}>
-                        <ThemedText style={styles.largeText}>{`Total Count: ${countTotalGraphs}`}</ThemedText>
+                        <ThemedText style={styles.largeText}>{`Count: ${countTotalGraphs}`}</ThemedText>
                         <ThemedText style={styles.smallText}>{`Total Hair: ${countTotalHair}`}</ThemedText>
                     </View>
-
-
                 </View>
             </SafeAreaView>
         </View>
     );
 }
+
+
 function createStyles(colorScheme: "light" | "dark" | null | undefined, menuVisible: boolean) {
     const colors = colorScheme === 'dark' ? Colors.dark : Colors.light;
     return StyleSheet.create({
