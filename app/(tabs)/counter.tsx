@@ -67,6 +67,7 @@ export default function TabTwoScreen() {
                 {menuVisible && (
                     <AnimatedView menuVisible={menuVisible} menuHeight={menuHeight}>
 
+
                         <View style={styles.menuRow}>
                             <TextInput style={styles.textInput} onChangeText={setNewCountOne} value={newCountOne} placeholder="Enter 1 FU count" keyboardType="numeric"/>
                             <TouchableOpacity style={styles.okButton} onPress={() => setCountOne(parseInt(newCountOne, 10))}>
@@ -106,12 +107,12 @@ export default function TabTwoScreen() {
                             <Text style={styles.buttonText}>{`Increment 3 (${countThree})`}</Text>
                         </TouchableOpacity>
                     </View>
-
-                    <View style={styles.resetButtonContainer}>
-                        <TouchableOpacity style={styles.resetButton} onPress={handleReset}>
-                            <Text style={styles.resetButtonText}>Reset</Text>
-                        </TouchableOpacity>
+                    <View style={styles.countContainer}>
+                        <ThemedText style={styles.largeText}>{`Total Count: ${countTotalGraphs}`}</ThemedText>
+                        <ThemedText style={styles.smallText}>{`Total Hair: ${countTotalHair}`}</ThemedText>
                     </View>
+
+
                 </View>
             </SafeAreaView>
         </View>
