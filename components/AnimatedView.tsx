@@ -44,7 +44,8 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined, menuHeig
             padding: 20,
             alignItems: 'center',
             zIndex: 1000,
-            borderRadius: 20,
+            borderTopRightRadius: 20,
+            borderTopLeftRadius: 20,
         },
         line: {
             width: 40,
