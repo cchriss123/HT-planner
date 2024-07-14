@@ -6,6 +6,15 @@ import { Colors } from '@/constants/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { AnimatedView } from '@/components/AnimatedView';
 
+
+//TODO ADD code to reset text input after OK button is pressed
+//TODO ADD code for gestures for animated view
+//TODO ADD IP input
+//TODO ADD GOAL input
+//TODO Consider adding progress bar here
+//TODO Add code to send data to desktop app
+
+
 export default function TabTwoScreen() {
     const [countOne, setCountOne] = useState(0);
     const [countTwo, setCountTwo] = useState(0);
