@@ -1,10 +1,23 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Animated, View, TouchableOpacity, Text, useColorScheme, StyleSheet, Dimensions, TextInput, Alert } from 'react-native';
+import {
+    Animated,
+    View,
+    TouchableOpacity,
+    Text,
+    useColorScheme,
+    StyleSheet,
+    Dimensions,
+    TextInput,
+    Alert,
+    Platform
+} from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '@/constants/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { AnimatedView } from '@/components/AnimatedView';
+import DropDownPicker from 'react-native-dropdown-picker';
+
 
 
 //TODO ADD code to reset text input after OK button is pressed
@@ -123,6 +136,8 @@ export default function TabTwoScreen() {
     }
 
 
+
+
     // function handleSetCount(newValue: string, hairCount: number) {
     //     const parsedValue = parseInt(newValue, 10);
     //     if (isNaN(parsedValue)) return;
@@ -144,20 +159,37 @@ export default function TabTwoScreen() {
     //     }
     // }
 
-
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState(null);
+    const [items, setItems] = useState([
+        { label: 'Apple', value: 'apple' },
+        { label: 'Banana', value: 'banana' },
+        { label: 'Orange', value: 'orange' },
+    ]);
 
 
     return (
         <View style={{ flex: 1, backgroundColor: colorScheme === 'dark' ? Colors.dark.softBackground : Colors.light.softBackground }}>
             <SafeAreaView style={styles.safeArea}>
+
+
+
                 <View style={styles.titleContainer}>
                     <Icon name="add" size={30} style={styles.addMenuIcon} onPress={() => handleAddIconPress()} />
-                    {/*<select>*/}
-                    {/*    {zones.map(zone => <option key={zone.createdAt} value={zone.name}>{zone.name}</option>)}*/}
-                    {/*</select>*/}
+                    <View style={{ borderColor: 'black', width: '60%', alignItems: 'center' }}>
+                        <DropDownPicker
+                            open={open}
+                            value={value}
+                            items={items}
+                            setOpen={setOpen}
+                            setValue={setValue}
+                            setItems={setItems}
+                            textStyle={{ fontSize: 18, fontWeight: 'bold' }} // Adjust the text style here
+                        />
+                    </View>
                     <Icon name="menu" size={30} style={styles.editMenuIcon} onPress={() => handleEditIconPress()} />
-
                 </View>
+
 
 
                 {addMenuVisible && (
@@ -242,17 +274,16 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined, addMenuV
             // borderWidth: 1,
             // borderColor: colors.icon,
         },
-        titleContainer: {
-            flexDirection: 'row',
-            // justifyContent: 'space-between',
-            alignItems: 'center',
-            justifyContent: 'flex-end',
-            // borderBottomWidth: 1,
-            // borderBottomColor: colors.neutralGrey,
-            height: 60,
-            paddingRight: '5%',
+            titleContainer: {
+                zIndex: 1000,
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                height: 60,
+                width: '100%', // Use full width
+                paddingHorizontal: '5%', // Add padding on both sides
 
-        },
+            },
         buttonContainer: {
             flexDirection: 'row',
             flexWrap: 'wrap',
@@ -264,6 +295,7 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined, addMenuV
             paddingBottom: 10,
         },
         button: {
+
             borderRadius: 20,
             margin: 15,
             width: '90%',
@@ -316,17 +348,19 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined, addMenuV
         },
 
 
-        editMenuIcon: {
+        addMenuIcon: {
+            fontSize: 50,
+            color: editMenuVisible ? colors.primaryBlue : colors.neutralGrey,
 
+        },
+
+        editMenuIcon: {
             fontSize: 50,
             color: addMenuVisible ? colors.primaryBlue : colors.neutralGrey,
         },
 
 
-        addMenuIcon: {
-            fontSize: 50,
-            color: editMenuVisible ? colors.primaryBlue : colors.neutralGrey,
-        },
+
         menuRow: {
             flexDirection: 'row',
             justifyContent: 'space-between',

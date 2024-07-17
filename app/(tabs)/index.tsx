@@ -2,7 +2,7 @@ import {Appearance, StyleSheet, Text, View} from 'react-native';
 
 
 
-// Appearance.getColorScheme = () => 'light';
+Appearance.getColorScheme = () => 'light';
 
 
 
