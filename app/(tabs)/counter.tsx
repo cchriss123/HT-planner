@@ -30,8 +30,6 @@ interface Zone {
 export default function TabTwoScreen() {
 
     const [zones, setZones] = useState<Zone[]>([]);
-
-
     const [countOne, setCountOne] = useState(0);
     const [countTwo, setCountTwo] = useState(0);
     const [countThree, setCountThree] = useState(0);
@@ -39,6 +37,8 @@ export default function TabTwoScreen() {
     const [countTotalHair, setCountTotalHair] = useState(0);
     const [editMenuVisible, setEditMenuVisible] = useState(false);
     const [addMenuVisible, setAddMenuVisible] = useState(false);
+    const [newZoneName, setNewZoneName] = useState('');
+    const [currentZone, setCurrentZone] = useState<Zone | null>(null);
     // const [newCountOne, setNewCountOne] = useState('');
     // const [newCountTwo, setNewCountTwo] = useState('');
     // const [newCountThree, setNewCountThree] = useState('');
@@ -152,7 +152,11 @@ export default function TabTwoScreen() {
             <SafeAreaView style={styles.safeArea}>
                 <View style={styles.titleContainer}>
                     <Icon name="add" size={30} style={styles.addMenuIcon} onPress={() => handleAddIconPress()} />
+                    {/*<select>*/}
+                    {/*    {zones.map(zone => <option key={zone.createdAt} value={zone.name}>{zone.name}</option>)}*/}
+                    {/*</select>*/}
                     <Icon name="menu" size={30} style={styles.editMenuIcon} onPress={() => handleEditIconPress()} />
+
                 </View>
 
 
@@ -161,7 +165,10 @@ export default function TabTwoScreen() {
                         addMenuVisible} menuHeight={menuHeight}>
 
                         <View style={styles.menuRow}>
-                            <TextInput style={styles.textInput} placeholder="Enter zone name" onChangeText={(text) => addZone(text)} />
+                            <TextInput style={styles.textInput} placeholder="Enter zone name" onChangeText={(text) => setNewZoneName(text)} />
+                            <TouchableOpacity style={styles.okButton} onPress={() => addZone(newZoneName)}>
+                                <Text style={styles.okButtonText}>OK</Text>
+                            </TouchableOpacity>
                         </View>
                     </AnimatedView>
                 )}
