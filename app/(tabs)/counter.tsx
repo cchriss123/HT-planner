@@ -157,14 +157,12 @@ export default function TabTwoScreen() {
 
 
 
-                <View style={styles.titleContainer}>
-                    <Icon name="add" size={30} style={styles.addMenuIcon} onPress={() => handleAddIconPress()} />
+                <View style={styles.topContainer}>
                     <View style={{ borderColor: 'black', width: '60%', alignItems: 'center' }}>
-
                         <DropdownComponent />
-
-
                     </View>
+                    <Icon name="add" size={30} style={styles.addMenuIcon} onPress={() => handleAddIconPress()} />
+
                     <Icon name="menu" size={30} style={styles.editMenuIcon} onPress={() => handleEditIconPress()} />
                 </View>
 
@@ -252,7 +250,7 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined, addMenuV
             // borderWidth: 1,
             // borderColor: colors.icon,
         },
-            titleContainer: {
+            topContainer: {
                 // zIndex: 1000,
                 flexDirection: 'row',
                 alignItems: 'center',

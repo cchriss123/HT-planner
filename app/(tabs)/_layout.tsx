@@ -19,7 +19,7 @@ export default function TabLayout() {
             <Tabs.Screen
                 name="index"
                 options={{
-                    title: 'Follicle Calculator',
+                    title: 'Calculator',
                     tabBarIcon: ({ color, focused }) => (
                         <TabBarIcon name={focused ? 'calculator' : 'calculator-outline'} color={color} />
                     ),
@@ -28,7 +28,7 @@ export default function TabLayout() {
             <Tabs.Screen
                 name="counter"
                 options={{
-                    title: 'Follicle Counter',
+                    title: 'Counter',
                     tabBarIcon: ({ color, focused }) => (
                         <TabBarIcon name={focused ? 'medkit' : 'medkit-outline'} color={color} />
                     ),
@@ -37,3 +37,4 @@ export default function TabLayout() {
         </Tabs>
     );
 }
+

@@ -51,7 +51,7 @@ export const DropdownComponent = () => {
           maxHeight={300}
           labelField="label"
           valueField="value"
-          placeholder="Select item"
+          placeholder="Select zone"
           searchPlaceholder="Search..."
           value={value}
           onChange={item => {
