@@ -1,7 +1,37 @@
-import {View, ViewProps} from "react-native";
+import {PanResponder, View, ViewProps} from "react-native";
 import {Animated, useColorScheme, StyleSheet, Dimensions} from 'react-native';
-import React, {useEffect} from "react";
+import React, {useEffect, useRef} from "react";
 import {Colors} from "@/constants/Colors";
+
+// const panResponder = useRef(
+//     PanResponder.create({
+//         onStartShouldSetPanResponder: () => true,
+//         onPanResponderMove: (evt, gestureState) => {
+//             // Subtract gestureState.dy from maxMenuHeight to invert the drag direction
+//             let newHeight = maxMenuHeight - gestureState.dy;
+//             // Clamp the new height to be between 0 and the maxMenuHeight
+//             newHeight = Math.max(0, Math.min(maxMenuHeight, newHeight));
+//             menuHeight.setValue(newHeight);
+//         },
+//         onPanResponderRelease: (evt, gestureState) => {
+//             // Determine if the menu should snap back or close based on the movement
+//             if (gestureState.dy < -100) {  // If moved up significantly, snap back
+//                 Animated.spring(menuHeight, {
+//                     toValue: maxMenuHeight,
+//                     useNativeDriver: false
+//                 }).start();
+//             } else if (gestureState.dy > 100) {  // If moved down significantly, close
+//                 setMenuVisible(false);
+//             } else {
+//                 // If not moved significantly, snap back to open position
+//                 Animated.spring(menuHeight, {
+//                     toValue: maxMenuHeight,
+//                     useNativeDriver: false
+//                 }).start();
+//             }
+//         }
+//     })
+// ).current;
 
 
 

@@ -57,6 +57,9 @@ export const DropdownComponent = () => {
           onChange={item => {
             setValue(item.value as any);
           }}
+          renderLeftIcon={() => (
+              <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
+          )}
           renderItem={renderItem}
       />
   );
