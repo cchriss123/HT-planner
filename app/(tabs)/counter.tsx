@@ -1,22 +1,11 @@
 import React, { useRef, useState, useEffect } from 'react';
-import {
-    Animated,
-    View,
-    TouchableOpacity,
-    Text,
-    useColorScheme,
-    StyleSheet,
-    Dimensions,
-    TextInput,
-    Alert,
-    Platform
-} from 'react-native';
+import {Animated, View, TouchableOpacity, Text, useColorScheme, StyleSheet, Dimensions, TextInput, Alert, Platform} from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '@/constants/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { AnimatedView } from '@/components/AnimatedView';
-import DropDownPicker from 'react-native-dropdown-picker';
+import { DropdownComponent } from '@/components/DropdownComponent';
 
 
 
@@ -159,13 +148,7 @@ export default function TabTwoScreen() {
     //     }
     // }
 
-    const [open, setOpen] = useState(false);
-    const [value, setValue] = useState(null);
-    const [items, setItems] = useState([
-        { label: 'Apple', value: 'apple' },
-        { label: 'Banana', value: 'banana' },
-        { label: 'Orange', value: 'orange' },
-    ]);
+
 
 
     return (
@@ -177,15 +160,10 @@ export default function TabTwoScreen() {
                 <View style={styles.titleContainer}>
                     <Icon name="add" size={30} style={styles.addMenuIcon} onPress={() => handleAddIconPress()} />
                     <View style={{ borderColor: 'black', width: '60%', alignItems: 'center' }}>
-                        <DropDownPicker
-                            open={open}
-                            value={value}
-                            items={items}
-                            setOpen={setOpen}
-                            setValue={setValue}
-                            setItems={setItems}
-                            textStyle={{ fontSize: 18, fontWeight: 'bold' }} // Adjust the text style here
-                        />
+
+                        <DropdownComponent />
+
+
                     </View>
                     <Icon name="menu" size={30} style={styles.editMenuIcon} onPress={() => handleEditIconPress()} />
                 </View>
@@ -275,7 +253,7 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined, addMenuV
             // borderColor: colors.icon,
         },
             titleContainer: {
-                zIndex: 1000,
+                // zIndex: 1000,
                 flexDirection: 'row',
                 alignItems: 'center',
                 justifyContent: 'space-between',
