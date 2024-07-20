@@ -28,6 +28,15 @@ export default function TabLayout() {
             <Tabs.Screen
                 name="calculator"
                 options={{
+                    title: 'Zones',
+                    tabBarIcon: ({ color, focused }) => (
+                        <TabBarIcon name={focused ? 'calculator' : 'calculator-outline'} color={color} />
+                    ),
+                }}
+            />
+            <Tabs.Screen
+                name="calculator"
+                options={{
                     title: 'Calculator',
                     tabBarIcon: ({ color, focused }) => (
                         <TabBarIcon name={focused ? 'calculator' : 'calculator-outline'} color={color} />
