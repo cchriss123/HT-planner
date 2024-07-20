@@ -29,7 +29,7 @@ interface Zone {
 
 
 
-export default function TabTwoScreen() {
+export default function CounterScreen() {
 
     const [zones, setZones] = useState<Zone[]>([]);
     const [countOne, setCountOne] = useState(0);
@@ -84,45 +84,45 @@ export default function TabTwoScreen() {
     }
 
 
-    function handleReset() {
-        Alert.alert(
-            "Reset Counters",
-            "Are you sure you want to reset all counters?",
-            [
-                {
-                    text: "Cancel",
-                    style: "cancel"
-                },
-                {
-                    text: "OK", onPress: () => {
-                        setCountOne(0);
-                        setCountTwo(0);
-                        setCountThree(0);
-                        setCountTotalGraphs(0);
-                        setCountTotalHair(0);
-                    }
-                }
-            ]
-        );
-    }
+    // function handleReset() {
+    //     Alert.alert(
+    //         "Reset Counters",
+    //         "Are you sure you want to reset all counters?",
+    //         [
+    //             {
+    //                 text: "Cancel",
+    //                 style: "cancel"
+    //             },
+    //             {
+    //                 text: "OK", onPress: () => {
+    //                     setCountOne(0);
+    //                     setCountTwo(0);
+    //                     setCountThree(0);
+    //                     setCountTotalGraphs(0);
+    //                     setCountTotalHair(0);
+    //                 }
+    //             }
+    //         ]
+    //     );
+    // }
 
-    function addZone(name: string) {
-
-        if (!name) {
-            Alert.alert('Error', 'Please enter a name for the zone');
-            return;
-        }
-
-        setZones([...zones, {
-            createdAt: new Date().toISOString(),
-            name: name,
-            countOne: 0,
-            countTwo: 0,
-            countThree: 0,
-            totalGraphs: 0,
-            totalHair: 0,
-        }]);
-    }
+    // function addZone(name: string) {
+    //
+    //     if (!name) {
+    //         Alert.alert('Error', 'Please enter a name for the zone');
+    //         return;
+    //     }
+    //
+    //     setZones([...zones, {
+    //         createdAt: new Date().toISOString(),
+    //         name: name,
+    //         countOne: 0,
+    //         countTwo: 0,
+    //         countThree: 0,
+    //         totalGraphs: 0,
+    //         totalHair: 0,
+    //     }]);
+    // }
 
 
 
@@ -154,28 +154,32 @@ export default function TabTwoScreen() {
     return (
         <View style={{ flex: 1, backgroundColor: colorScheme === 'dark' ? Colors.dark.softBackground : Colors.light.softBackground }}>
                 <View style={styles.topContainer}>
+
+
                     <View style={{ borderColor: 'black', width: '60%', alignItems: 'center' }}>
                         <DropdownComponent />
                     </View>
-                    <Icon name="add" size={30} style={styles.addMenuIcon} onPress={() => handleAddIconPress()} />
+                    {/*<Icon name="add" size={30} style={styles.addMenuIcon} onPress={() => handleAddIconPress()} />*/}
 
-                    <Icon name="menu" size={30} style={styles.editMenuIcon} onPress={() => handleEditIconPress()} />
+                    {/*<Icon name="menu" size={30} style={styles.editMenuIcon} onPress={() => handleEditIconPress()} />*/}
                 </View>
 
 
 
-                {addMenuVisible && (
-                    <AnimatedView menuVisible={
-                        addMenuVisible} menuHeight={menuHeight}>
+                {/*{addMenuVisible && (*/}
+                {/*    <AnimatedView menuVisible={*/}
+                {/*        addMenuVisible} menuHeight={menuHeight}>*/}
 
-                        <View style={styles.menuRow}>
-                            <TextInput style={styles.textInput} placeholder="Enter zone name" onChangeText={(text) => setNewZoneName(text)} />
-                            <TouchableOpacity style={styles.okButton} onPress={() => addZone(newZoneName)}>
-                                <Text style={styles.okButtonText}>OK</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </AnimatedView>
-                )}
+                {/*        <View style={styles.menuRow}>*/}
+                {/*            <TextInput style={styles.textInput} placeholder="Enter zone name" onChangeText={(text) => setNewZoneName(text)} />*/}
+                {/*            <TouchableOpacity style={styles.okButton} onPress={() => addZone(newZoneName)}>*/}
+                {/*                <Text style={styles.okButtonText}>OK</Text>*/}
+                {/*            </TouchableOpacity>*/}
+                {/*        </View>*/}
+                {/*        */}
+                {/*        */}
+                {/*    </AnimatedView>*/}
+                {/*)}*/}
 
 
                 {editMenuVisible && (
@@ -204,11 +208,11 @@ export default function TabTwoScreen() {
 
 
 
-                        <View style={styles.resetButtonContainer}>
-                            <TouchableOpacity style={styles.resetButton} onPress={handleReset}>
-                                <Text style={styles.resetButtonText}>Reset</Text>
-                            </TouchableOpacity>
-                        </View>
+                        {/*<View style={styles.resetButtonContainer}>*/}
+                        {/*    <TouchableOpacity style={styles.resetButton} onPress={handleReset}>*/}
+                        {/*        <Text style={styles.resetButtonText}>Reset</Text>*/}
+                        {/*    </TouchableOpacity>*/}
+                        {/*</View>*/}
 
                     </AnimatedView>
                 )}
