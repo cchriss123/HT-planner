@@ -1,5 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import {Appearance, StyleSheet, Text, View} from 'react-native';
+
+Appearance.getColorScheme = () => 'light';
+
 
 export default function ZonesScreen() {
     return (
