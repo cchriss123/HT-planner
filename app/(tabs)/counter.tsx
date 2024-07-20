@@ -153,10 +153,6 @@ export default function TabTwoScreen() {
 
     return (
         <View style={{ flex: 1, backgroundColor: colorScheme === 'dark' ? Colors.dark.softBackground : Colors.light.softBackground }}>
-            <SafeAreaView style={styles.safeArea}>
-
-
-
                 <View style={styles.topContainer}>
                     <View style={{ borderColor: 'black', width: '60%', alignItems: 'center' }}>
                         <DropdownComponent />
@@ -234,7 +230,7 @@ export default function TabTwoScreen() {
                         <ThemedText style={styles.smallText}>{`Total Hair: ${countTotalHair}`}</ThemedText>
                     </View>
                 </View>
-            </SafeAreaView>
+
         </View>
     );
 }
@@ -243,23 +239,16 @@ export default function TabTwoScreen() {
 function createStyles(colorScheme: "light" | "dark" | null | undefined, addMenuVisible: boolean, editMenuVisible: boolean) {
     const colors = colorScheme === 'dark' ? Colors.dark : Colors.light;
     return StyleSheet.create({
-        safeArea: {
-            flex: 1,
-            paddingTop: 10,
-            // backgroundColor: colors.background,
-            // borderWidth: 1,
-            // borderColor: colors.icon,
-        },
-            topContainer: {
-                // zIndex: 1000,
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                height: 60,
-                width: '100%', // Use full width
-                paddingHorizontal: '5%', // Add padding on both sides
+        topContainer: {
+            // zIndex: 1000,
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            height: 60,
+            width: '100%', // Use full width
+            paddingHorizontal: '5%', // Add padding on both sides
 
-            },
+        },
         buttonContainer: {
             flexDirection: 'row',
             flexWrap: 'wrap',
