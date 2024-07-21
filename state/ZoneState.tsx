@@ -12,12 +12,11 @@ interface Zone {
 
 interface AppStateContextType {
     zones: Zone[];
+    setZones: (zones: Zone[]) => void;
+    updateZone: (zone: Zone) => void;
     countOne: number;
     countTwo: number;
     countThree: number;
-    countTotalGraphs: number;
-    countTotalHair: number;
-    setZones: (zones: Zone[]) => void;
     setCountOne: (count: number) => void;
     setCountTwo: (count: number) => void;
     setCountThree: (count: number) => void;
@@ -43,20 +42,30 @@ export const AppStateProvider = ({ children }: { children: ReactNode }) => {
     const [countTotalGraphs, setCountTotalGraphs] = useState(0);
     const [countTotalHair, setCountTotalHair] = useState(0);
 
+    function updateZone(Zone: Zone) {
+        for (const z of zones) {
+            if (z.createdAt === Zone.createdAt) {
+                Object.assign(z, Zone);
+                break;
+            }
+        }
+        const newZones = [...zones];
+        setZones(newZones);
+    }
+
     return (
         <AppStateContext.Provider
             value={{
                 zones,
                 setZones,
+                updateZone,
                 countOne,
-                setCountOne,
                 countTwo,
-                setCountTwo,
                 countThree,
+                setCountOne,
+                setCountTwo,
                 setCountThree,
-                countTotalGraphs,
                 setCountTotalGraphs,
-                countTotalHair,
                 setCountTotalHair,
             }}
         >
