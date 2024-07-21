@@ -42,6 +42,9 @@ export const AppStateProvider = ({ children }: { children: ReactNode }) => {
     const [countTotalGraphs, setCountTotalGraphs] = useState(0);
     const [countTotalHair, setCountTotalHair] = useState(0);
 
+
+
+
     function updateZone(Zone: Zone) {
         for (const z of zones) {
             if (z.createdAt === Zone.createdAt) {
@@ -49,6 +52,11 @@ export const AppStateProvider = ({ children }: { children: ReactNode }) => {
                 break;
             }
         }
+        // zoneState.setCountTotalGraphs(zoneState.countOne + zoneState.countTwo + zoneState.countThree);
+        // zoneState.setCountTotalHair(zoneState.countOne + zoneState.countTwo + zoneState.countThree + value * value);
+        //
+        // zoneState.updateZone(updatedZone);
+
         const newZones = [...zones];
         setZones(newZones);
     }

@@ -9,15 +9,6 @@ import { DropdownComponent } from '@/components/DropdownComponent';
 import {AppStateProvider, useAppState} from '@/state/ZoneState';
 
 
-
-//TODO ADD code to reset text input after OK button is pressed
-//TODO ADD code for gestures for animated view
-//TODO ADD IP input
-//TODO ADD GOAL input
-//TODO Consider adding progress bar here
-//TODO Add code to send data to desktop app
-
-
 interface Zone {
     createdAt: string;
     name: string;
@@ -32,138 +23,24 @@ interface Zone {
 
 export default function CounterScreen() {
 
-
-    // const [zones, setZones] = useState<Zone[]>([]);
-    // const [countOne, setCountOne] = useState(0);
-    // const [countTwo, setCountTwo] = useState(0);
-    // const [countThree, setCountThree] = useState(0);
-    // const [countTotalGraphs, setCountTotalGraphs] = useState(0);
-    // const [countTotalHair, setCountTotalHair] = useState(0);
-    // const [editMenuVisible, setEditMenuVisible] = useState(false);
-    // const [addMenuVisible, setAddMenuVisible] = useState(false);
-    // const [newZoneName, setNewZoneName] = useState('');
     const [currentZone, setCurrentZone] = useState<Zone | null>(null);
-    // const [newCountOne, setNewCountOne] = useState('');
-    // const [newCountTwo, setNewCountTwo] = useState('');
-    // const [newCountThree, setNewCountThree] = useState('');
-    const menuHeight = useRef(new Animated.Value(0)).current;
-
-
-
-
-    // useEffect(() => {
-    //     let toValue = 0;
-    //     if (addMenuVisible || editMenuVisible) {
-    //         toValue = Dimensions.get('window').height * 0.50;
-    //     }
-    //
-    //     Animated.timing(menuHeight, {
-    //         toValue,
-    //         duration: 100,
-    //         useNativeDriver: false
-    //     }).start();
-    // }, [addMenuVisible, editMenuVisible]);
-
 
 
     const colorScheme = useColorScheme();
-    // const styles = createStyles(colorScheme, editMenuVisible, addMenuVisible);
     const styles = createStyles(colorScheme);
     const zoneState = useAppState();
 
 
-
-
     function handlePlusPress(value: number) {
         if (!currentZone) return;
-
         if (value === 1) zoneState.setCountOne(zoneState.countOne + 1);
         else if (value === 2) zoneState.setCountTwo(zoneState.countTwo + 1);
         else if (value === 3) zoneState.setCountThree(zoneState.countThree + 1);
-
         // zoneState.setCountTotalGraphs(zoneState.countOne + zoneState.countTwo + zoneState.countThree);
         // zoneState.setCountTotalHair(zoneState.countOne + zoneState.countTwo + zoneState.countThree + value * value);
         //
         // zoneState.updateZone(updatedZone);
     }
-
-
-    // function handleAddIconPress() {
-    //     setAddMenuVisible(!addMenuVisible);
-    //     setEditMenuVisible(false);
-    // }
-    //
-    // function handleEditIconPress() {
-    //     setEditMenuVisible(!editMenuVisible);
-    //     setAddMenuVisible(false);
-    // }
-
-
-    // function handleReset() {
-    //     Alert.alert(
-    //         "Reset Counters",
-    //         "Are you sure you want to reset all counters?",
-    //         [
-    //             {
-    //                 text: "Cancel",
-    //                 style: "cancel"
-    //             },
-    //             {
-    //                 text: "OK", onPress: () => {
-    //                     setCountOne(0);
-    //                     setCountTwo(0);
-    //                     setCountThree(0);
-    //                     setCountTotalGraphs(0);
-    //                     setCountTotalHair(0);
-    //                 }
-    //             }
-    //         ]
-    //     );
-    // }
-
-    // function addZone(name: string) {
-    //
-    //     if (!name) {
-    //         Alert.alert('Error', 'Please enter a name for the zone');
-    //         return;
-    //     }
-    //
-    //     setZones([...zones, {
-    //         createdAt: new Date().toISOString(),
-    //         name: name,
-    //         countOne: 0,
-    //         countTwo: 0,
-    //         countThree: 0,
-    //         totalGraphs: 0,
-    //         totalHair: 0,
-    //     }]);
-    // }
-
-
-
-
-    // function handleSetCount(newValue: string, hairCount: number) {
-    //     const parsedValue = parseInt(newValue, 10);
-    //     if (isNaN(parsedValue)) return;
-    //
-    //     if (hairCount === 1) {
-    //         setCountOne(parsedValue);
-    //         setCountTotalGraphs(countTwo + countThree + parsedValue);
-    //         setCountTotalHair(countTwo + countThree + parsedValue);
-    //     }
-    //     if (hairCount === 2) {
-    //         setCountTwo(parsedValue);
-    //         setCountTotalGraphs(countOne + countThree + parsedValue);
-    //         setCountTotalHair(countOne + countThree + parsedValue*hairCount);
-    //     }
-    //     if (hairCount === 3) {
-    //         setCountThree(parsedValue);
-    //         setCountTotalGraphs(countOne + countTwo + parsedValue);
-    //         setCountTotalHair(countOne + countTwo + parsedValue*hairCount);
-    //     }
-    // }
-
-
 
 
     return (
@@ -176,63 +53,8 @@ export default function CounterScreen() {
                     <View style={{ borderColor: 'black', width: '60%', alignItems: 'center' }}>
                         <DropdownComponent />
                     </View>
-                    {/*<Icon name="add" size={30} style={styles.addMenuIcon} onPress={() => handleAddIconPress()} />*/}
-
-                    {/*<Icon name="menu" size={30} style={styles.editMenuIcon} onPress={() => handleEditIconPress()} />*/}
                 </View>
 
-
-
-                {/*{addMenuVisible && (*/}
-                {/*    <AnimatedView menuVisible={*/}
-                {/*        addMenuVisible} menuHeight={menuHeight}>*/}
-
-                {/*        <View style={styles.menuRow}>*/}
-                {/*            <TextInput style={styles.textInput} placeholder="Enter zone name" onChangeText={(text) => setNewZoneName(text)} />*/}
-                {/*            <TouchableOpacity style={styles.okButton} onPress={() => addZone(newZoneName)}>*/}
-                {/*                <Text style={styles.okButtonText}>OK</Text>*/}
-                {/*            </TouchableOpacity>*/}
-                {/*        </View>*/}
-                {/*        */}
-                {/*        */}
-                {/*    </AnimatedView>*/}
-                {/*)}*/}
-
-
-                {/*{editMenuVisible && (*/}
-                {/*    <AnimatedView menuVisible={editMenuVisible} menuHeight={menuHeight}>*/}
-
-                {/*        <View style={styles.menuRow}>*/}
-                {/*            <TextInput style={styles.textInput} placeholder="Enter 1 FU count" keyboardType="numeric" onChangeText={(text) => setNewCountOne(text)}/>*/}
-                {/*            <TouchableOpacity style={styles.okButton} onPress={() => handleSetCount(newCountOne, 1)}>*/}
-                {/*                <Text style={styles.okButtonText}>OK</Text>*/}
-                {/*            </TouchableOpacity>*/}
-                {/*        </View>*/}
-
-                {/*        <View style={styles.menuRow}>*/}
-                {/*            <TextInput style={styles.textInput} placeholder="Enter 2 FU count" keyboardType="numeric" onChangeText={(text) => setNewCountTwo(text)}/>*/}
-                {/*            <TouchableOpacity style={styles.okButton} onPress={() => handleSetCount(newCountTwo, 2)}>*/}
-                {/*                <Text style={styles.okButtonText}>OK</Text>*/}
-                {/*            </TouchableOpacity>*/}
-                {/*        </View>*/}
-
-                {/*        <View style={styles.menuRow}>*/}
-                {/*            <TextInput style={styles.textInput} placeholder="Enter 3 FU count" keyboardType="numeric" onChangeText={(text) => setNewCountThree(text)}/>*/}
-                {/*            <TouchableOpacity style={styles.okButton} onPress={() => handleSetCount(newCountThree, 3)}>*/}
-                {/*                <Text style={styles.okButtonText}>OK</Text>*/}
-                {/*            </TouchableOpacity>*/}
-                {/*        </View>*/}
-
-
-
-                {/*        <View style={styles.resetButtonContainer}>*/}
-                {/*            <TouchableOpacity style={styles.resetButton} onPress={handleReset}>*/}
-                {/*                <Text style={styles.resetButtonText}>Reset</Text>*/}
-                {/*            </TouchableOpacity>*/}
-                {/*        </View>*/}
-
-                {/*    </AnimatedView>*/}
-                {/*)}*/}
 
                 {/*<View style={{ flex: 1, alignItems: 'center' }}>*/}
                 {/*    <View style={styles.buttonContainer}>*/}
