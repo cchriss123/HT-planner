@@ -4,9 +4,10 @@ import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 
-export default function TabLayout() {
-    const colorScheme = useColorScheme();
 
+export default function TabLayout() {
+
+    const colorScheme = useColorScheme();
     return (
         <Tabs
             screenOptions={{
@@ -16,21 +17,13 @@ export default function TabLayout() {
                 },
                 headerShown: false,
             }}>
+
             <Tabs.Screen
-                name="zones"
+                name="index"
                 options={{
                     title: 'Zones',
                     tabBarIcon: ({ color, focused }) => (
-                        <TabBarIcon name={focused ? 'calculator' : 'calculator-outline'} color={color} />
-                    ),
-                }}
-            />
-            <Tabs.Screen
-                name="calculator"
-                options={{
-                    title: 'Zones',
-                    tabBarIcon: ({ color, focused }) => (
-                        <TabBarIcon name={focused ? 'calculator' : 'calculator-outline'} color={color} />
+                        <TabBarIcon name={focused ? 'aperture' : 'aperture-outline'} color={color}/>
                     ),
                 }}
             />
