@@ -18,13 +18,12 @@ export default function CounterScreen() {
 
     function handlePlusPress(value: number) {
         if (!currentZone) return;
-
         if (value === 1) currentZone.countOne += 1;
         if (value === 2) currentZone.countTwo += 1;
         if (value === 3) currentZone.countThree += 1;
 
-        currentZone.totalGraphs = currentZone.countOne + currentZone.countTwo + currentZone.countThree;
-        currentZone.totalHair = currentZone.countOne + currentZone.countTwo + currentZone.countThree + value * value;
+        currentZone.totalHair = currentZone.totalHair + value;
+        currentZone.totalGraphs = currentZone.totalGraphs + 1;
 
         zoneState.setZones([...zoneState.zones]);
     }
