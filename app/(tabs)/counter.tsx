@@ -152,6 +152,8 @@ export default function CounterScreen() {
 
 
     return (
+        <SafeAreaView style={{ flex: 1, paddingTop: 10}}>
+
         <View style={{ flex: 1, backgroundColor: colorScheme === 'dark' ? Colors.dark.softBackground : Colors.light.softBackground }}>
                 <View style={styles.topContainer}>
 
@@ -236,6 +238,7 @@ export default function CounterScreen() {
                 </View>
 
         </View>
+        </SafeAreaView>
     );
 }
 

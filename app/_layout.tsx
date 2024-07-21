@@ -34,17 +34,17 @@ export default function RootLayout() {
 
         <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
           <View style={{ flex: 1 , backgroundColor: Colors[colorScheme ?? 'light'].softBackground}}>
-            <SafeAreaView style={{ flex: 1, paddingTop: 10}}>
               <View style={{ flex: 1 }}>
                 {/*<Text style={{ fontFamily: 'SpaceMono', fontSize: 24, textAlign: 'center', marginTop: 20 }}>*/}
                 {/*  Welcome to My App*/}
                 {/*</Text>*/}
+
                 <Stack>
                   <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
                   <Stack.Screen name="+not-found" />
                 </Stack>
+
               </View>
-            </SafeAreaView>
           </View>
         </ThemeProvider>
 );

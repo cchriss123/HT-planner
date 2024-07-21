@@ -1,13 +1,16 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import {SafeAreaView} from "react-native-safe-area-context";
 
 export default function CalculatorScreen() {
     return (
+        <SafeAreaView style={{ flex: 1, paddingTop: 10}}>
 
 
-        <View style={styles.outerContainer}>
-            <Text>Calculator Screen</Text>
-        </View>
+            <View style={styles.outerContainer}>
+                <Text>Calculator Screen</Text>
+            </View>
+        </SafeAreaView>
     );
 }
 
