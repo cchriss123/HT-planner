@@ -37,33 +37,34 @@ export default function CounterScreen() {
     const [countThree, setCountThree] = useState(0);
     const [countTotalGraphs, setCountTotalGraphs] = useState(0);
     const [countTotalHair, setCountTotalHair] = useState(0);
-    const [editMenuVisible, setEditMenuVisible] = useState(false);
-    const [addMenuVisible, setAddMenuVisible] = useState(false);
-    const [newZoneName, setNewZoneName] = useState('');
-    const [currentZone, setCurrentZone] = useState<Zone | null>(null);
+    // const [editMenuVisible, setEditMenuVisible] = useState(false);
+    // const [addMenuVisible, setAddMenuVisible] = useState(false);
+    // const [newZoneName, setNewZoneName] = useState('');
+    // const [currentZone, setCurrentZone] = useState<Zone | null>(null);
     // const [newCountOne, setNewCountOne] = useState('');
     // const [newCountTwo, setNewCountTwo] = useState('');
     // const [newCountThree, setNewCountThree] = useState('');
     const menuHeight = useRef(new Animated.Value(0)).current;
 
 
-    useEffect(() => {
-        let toValue = 0;
-        if (addMenuVisible || editMenuVisible) {
-            toValue = Dimensions.get('window').height * 0.50;
-        }
-
-        Animated.timing(menuHeight, {
-            toValue,
-            duration: 100,
-            useNativeDriver: false
-        }).start();
-    }, [addMenuVisible, editMenuVisible]);
+    // useEffect(() => {
+    //     let toValue = 0;
+    //     if (addMenuVisible || editMenuVisible) {
+    //         toValue = Dimensions.get('window').height * 0.50;
+    //     }
+    //
+    //     Animated.timing(menuHeight, {
+    //         toValue,
+    //         duration: 100,
+    //         useNativeDriver: false
+    //     }).start();
+    // }, [addMenuVisible, editMenuVisible]);
 
 
 
     const colorScheme = useColorScheme();
-    const styles = createStyles(colorScheme, editMenuVisible, addMenuVisible);
+    // const styles = createStyles(colorScheme, editMenuVisible, addMenuVisible);
+    const styles = createStyles(colorScheme);
 
     function handlePress(value: number) {
         if (value === 1) setCountOne(countOne + 1);
@@ -73,15 +74,15 @@ export default function CounterScreen() {
         setCountTotalHair(countTotalHair + value);
     }
 
-    function handleAddIconPress() {
-        setAddMenuVisible(!addMenuVisible);
-        setEditMenuVisible(false);
-    }
-
-    function handleEditIconPress() {
-        setEditMenuVisible(!editMenuVisible);
-        setAddMenuVisible(false);
-    }
+    // function handleAddIconPress() {
+    //     setAddMenuVisible(!addMenuVisible);
+    //     setEditMenuVisible(false);
+    // }
+    //
+    // function handleEditIconPress() {
+    //     setEditMenuVisible(!editMenuVisible);
+    //     setAddMenuVisible(false);
+    // }
 
 
     // function handleReset() {
@@ -184,40 +185,40 @@ export default function CounterScreen() {
                 {/*)}*/}
 
 
-                {editMenuVisible && (
-                    <AnimatedView menuVisible={editMenuVisible} menuHeight={menuHeight}>
+                {/*{editMenuVisible && (*/}
+                {/*    <AnimatedView menuVisible={editMenuVisible} menuHeight={menuHeight}>*/}
 
-                        {/*<View style={styles.menuRow}>*/}
-                        {/*    <TextInput style={styles.textInput} placeholder="Enter 1 FU count" keyboardType="numeric" onChangeText={(text) => setNewCountOne(text)}/>*/}
-                        {/*    <TouchableOpacity style={styles.okButton} onPress={() => handleSetCount(newCountOne, 1)}>*/}
-                        {/*        <Text style={styles.okButtonText}>OK</Text>*/}
-                        {/*    </TouchableOpacity>*/}
-                        {/*</View>*/}
+                {/*        <View style={styles.menuRow}>*/}
+                {/*            <TextInput style={styles.textInput} placeholder="Enter 1 FU count" keyboardType="numeric" onChangeText={(text) => setNewCountOne(text)}/>*/}
+                {/*            <TouchableOpacity style={styles.okButton} onPress={() => handleSetCount(newCountOne, 1)}>*/}
+                {/*                <Text style={styles.okButtonText}>OK</Text>*/}
+                {/*            </TouchableOpacity>*/}
+                {/*        </View>*/}
 
-                        {/*<View style={styles.menuRow}>*/}
-                        {/*    <TextInput style={styles.textInput} placeholder="Enter 2 FU count" keyboardType="numeric" onChangeText={(text) => setNewCountTwo(text)}/>*/}
-                        {/*    <TouchableOpacity style={styles.okButton} onPress={() => handleSetCount(newCountTwo, 2)}>*/}
-                        {/*        <Text style={styles.okButtonText}>OK</Text>*/}
-                        {/*    </TouchableOpacity>*/}
-                        {/*</View>*/}
+                {/*        <View style={styles.menuRow}>*/}
+                {/*            <TextInput style={styles.textInput} placeholder="Enter 2 FU count" keyboardType="numeric" onChangeText={(text) => setNewCountTwo(text)}/>*/}
+                {/*            <TouchableOpacity style={styles.okButton} onPress={() => handleSetCount(newCountTwo, 2)}>*/}
+                {/*                <Text style={styles.okButtonText}>OK</Text>*/}
+                {/*            </TouchableOpacity>*/}
+                {/*        </View>*/}
 
-                        {/*<View style={styles.menuRow}>*/}
-                        {/*    <TextInput style={styles.textInput} placeholder="Enter 3 FU count" keyboardType="numeric" onChangeText={(text) => setNewCountThree(text)}/>*/}
-                        {/*    <TouchableOpacity style={styles.okButton} onPress={() => handleSetCount(newCountThree, 3)}>*/}
-                        {/*        <Text style={styles.okButtonText}>OK</Text>*/}
-                        {/*    </TouchableOpacity>*/}
-                        {/*</View>*/}
+                {/*        <View style={styles.menuRow}>*/}
+                {/*            <TextInput style={styles.textInput} placeholder="Enter 3 FU count" keyboardType="numeric" onChangeText={(text) => setNewCountThree(text)}/>*/}
+                {/*            <TouchableOpacity style={styles.okButton} onPress={() => handleSetCount(newCountThree, 3)}>*/}
+                {/*                <Text style={styles.okButtonText}>OK</Text>*/}
+                {/*            </TouchableOpacity>*/}
+                {/*        </View>*/}
 
 
 
-                        {/*<View style={styles.resetButtonContainer}>*/}
-                        {/*    <TouchableOpacity style={styles.resetButton} onPress={handleReset}>*/}
-                        {/*        <Text style={styles.resetButtonText}>Reset</Text>*/}
-                        {/*    </TouchableOpacity>*/}
-                        {/*</View>*/}
+                {/*        <View style={styles.resetButtonContainer}>*/}
+                {/*            <TouchableOpacity style={styles.resetButton} onPress={handleReset}>*/}
+                {/*                <Text style={styles.resetButtonText}>Reset</Text>*/}
+                {/*            </TouchableOpacity>*/}
+                {/*        </View>*/}
 
-                    </AnimatedView>
-                )}
+                {/*    </AnimatedView>*/}
+                {/*)}*/}
 
                 <View style={{ flex: 1, alignItems: 'center' }}>
                     <View style={styles.buttonContainer}>
@@ -242,8 +243,9 @@ export default function CounterScreen() {
     );
 }
 
+function createStyles(colorScheme: "light" | "dark" | null | undefined) {
 
-function createStyles(colorScheme: "light" | "dark" | null | undefined, addMenuVisible: boolean, editMenuVisible: boolean) {
+// function createStyles(colorScheme: "light" | "dark" | null | undefined, addMenuVisible: boolean, editMenuVisible: boolean) {
     const colors = colorScheme === 'dark' ? Colors.dark : Colors.light;
     return StyleSheet.create({
         topContainer: {
@@ -320,16 +322,16 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined, addMenuV
         },
 
 
-        addMenuIcon: {
-            fontSize: 50,
-            color: editMenuVisible ? colors.primaryBlue : colors.neutralGrey,
-
-        },
-
-        editMenuIcon: {
-            fontSize: 50,
-            color: addMenuVisible ? colors.primaryBlue : colors.neutralGrey,
-        },
+        // addMenuIcon: {
+        //     fontSize: 50,
+        //     color: editMenuVisible ? colors.primaryBlue : colors.neutralGrey,
+        //
+        // },
+        //
+        // editMenuIcon: {
+        //     fontSize: 50,
+        //     color: addMenuVisible ? colors.primaryBlue : colors.neutralGrey,
+        // },
 
 
 

@@ -10,6 +10,7 @@ import { Colors } from '@/constants/Colors';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 import {Text, View} from "react-native";
+import {AppStateProvider} from "@/state/ZoneState";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -31,8 +32,8 @@ export default function RootLayout() {
   }
 
   return (
-
-        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      <AppStateProvider>
+      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
           <View style={{ flex: 1 , backgroundColor: Colors[colorScheme ?? 'light'].softBackground}}>
               <View style={{ flex: 1 }}>
                 {/*<Text style={{ fontFamily: 'SpaceMono', fontSize: 24, textAlign: 'center', marginTop: 20 }}>*/}
@@ -47,5 +48,6 @@ export default function RootLayout() {
               </View>
           </View>
         </ThemeProvider>
+      </AppStateProvider>
 );
 }
