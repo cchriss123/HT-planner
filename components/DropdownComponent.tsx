@@ -2,39 +2,21 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import { useAppState, Zone } from '@/state/ZoneState';
 
-const data = [
-  { label: 'Test 1', value: '1' },
-  { label: 'Item 2', value: '2' },
-  { label: 'Item 3', value: '3' },
-  { label: 'Item 4', value: '4' },
-  { label: 'Item 5', value: '5' },
-  { label: 'Item 6', value: '6' },
-  { label: 'Item 7', value: '7' },
-  { label: 'Item 8', value: '8' },
-];
-
-interface Item {
-  label: string;
-  value: any;
+export interface DropdownComponentProps {
+  selectedZone: Zone | null;
+  setSelectedZone: (zone: Zone | null) => void;
 }
 
-export const DropdownComponent = () => {
-  const [value, setValue] = useState(null);
+export const DropdownComponent = ({ selectedZone, setSelectedZone }: DropdownComponentProps) => {
+  const zoneState = useAppState();
+  const zones = zoneState.zones;
 
-
-  const renderItem = (item: Item) => {
+  const renderItem = (zone: Zone) => {
     return (
         <View style={styles.item}>
-          <Text style={styles.textItem}>{item.label}</Text>
-          {item.value === value && (
-              <AntDesign
-                  style={styles.icon}
-                  color="black"
-                  name="Safety"
-                  size={20}
-              />
-          )}
+          <Text style={styles.textItem}>{zone.name}</Text>
         </View>
     );
   };
@@ -44,18 +26,16 @@ export const DropdownComponent = () => {
           style={styles.dropdown}
           placeholderStyle={styles.placeholderStyle}
           selectedTextStyle={styles.selectedTextStyle}
-          inputSearchStyle={styles.inputSearchStyle}
           iconStyle={styles.iconStyle}
-          data={data}
-          search
+          data={zones}
           maxHeight={300}
-          labelField="label"
-          valueField="value"
+          labelField="name"
+          valueField="createdAt"
           placeholder="Select zone"
-          searchPlaceholder="Search..."
-          value={value}
-          onChange={item => {
-            setValue(item.value as any);
+          value={selectedZone?.createdAt}
+          onChange={z => {
+            const selected = zones.find(zone => zone.createdAt === z.createdAt) || null;
+            setSelectedZone(selected);
           }}
           renderLeftIcon={() => (
               <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
@@ -82,7 +62,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 1.41,
     width: '100%',
-
     elevation: 2,
   },
   icon: {

@@ -14,16 +14,16 @@ export default function CounterScreen() {
     const colorScheme = useColorScheme();
     const styles = createStyles(colorScheme);
     const zoneState = useAppState();
-    const [currentZone, setCurrentZone] = useState<Zone | null>(zoneState.zones[0] ?? null);
+    const [selectedZone, setSelectedZone] = useState<Zone | null>(zoneState.zones[0] ?? null);
 
     function handlePlusPress(value: number) {
-        if (!currentZone) return;
-        if (value === 1) currentZone.countOne += 1;
-        if (value === 2) currentZone.countTwo += 1;
-        if (value === 3) currentZone.countThree += 1;
+        if (!selectedZone) return;
+        if (value === 1) selectedZone.countOne += 1;
+        if (value === 2) selectedZone.countTwo += 1;
+        if (value === 3) selectedZone.countThree += 1;
 
-        currentZone.totalHair = currentZone.totalHair + value;
-        currentZone.totalGraphs = currentZone.totalGraphs + 1;
+        selectedZone.totalHair = selectedZone.totalHair + value;
+        selectedZone.totalGraphs = selectedZone.totalGraphs + 1;
 
         zoneState.setZones([...zoneState.zones]);
     }
@@ -36,7 +36,7 @@ export default function CounterScreen() {
 
 
                     <View style={{ borderColor: 'black', width: '60%', alignItems: 'center' }}>
-                        <DropdownComponent />
+                        <DropdownComponent selectedZone={selectedZone} setSelectedZone={setSelectedZone} />
                     </View>
                 </View>
 
@@ -44,18 +44,18 @@ export default function CounterScreen() {
                 <View style={{ flex: 1, alignItems: 'center' }}>
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity style={styles.button} onPress={() => handlePlusPress(1)}>
-                            <Text style={styles.buttonText}>{`Single (${currentZone?.countOne})`}</Text>
+                            <Text style={styles.buttonText}>{`Single (${selectedZone?.countOne})`}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.button} onPress={() => handlePlusPress(2)}>
-                            <Text style={styles.buttonText}>{`Double (${currentZone?.countTwo})`}</Text>
+                            <Text style={styles.buttonText}>{`Double (${selectedZone?.countTwo})`}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.button} onPress={() => handlePlusPress(3)}>
-                            <Text style={styles.buttonText}>{`Triple (${currentZone?.countThree})`}</Text>
+                            <Text style={styles.buttonText}>{`Triple (${selectedZone?.countThree})`}</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.countContainer}>
-                        <ThemedText style={styles.largeText}>{`Count: ${currentZone?.totalGraphs}`}</ThemedText>
-                        <ThemedText style={styles.smallText}>{`Total Hair: ${currentZone?.totalHair}`}</ThemedText>
+                        <ThemedText style={styles.largeText}>{`Count: ${selectedZone?.totalGraphs}`}</ThemedText>
+                        <ThemedText style={styles.smallText}>{`Total Hair: ${selectedZone?.totalHair}`}</ThemedText>
                     </View>
                 </View>
 
