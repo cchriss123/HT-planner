@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
-interface Zone {
+export interface Zone {
     createdAt: string;
     name: string;
     countOne: number;
@@ -13,7 +13,6 @@ interface Zone {
 interface AppStateContextType {
     zones: Zone[];
     setZones: (zones: Zone[]) => void;
-    updateZone: (zone: Zone) => void;
     countOne: number;
     countTwo: number;
     countThree: number;
@@ -35,38 +34,19 @@ export const useAppState = () => {
 };
 
 export const AppStateProvider = ({ children }: { children: ReactNode }) => {
-    const [zones, setZones] = useState<Zone[]>([]);
+    // const [zones, setZones] = useState<Zone[]>([]);
+    const [zones, setZones] = useState<Zone[]>(getMockZones());
     const [countOne, setCountOne] = useState(0);
     const [countTwo, setCountTwo] = useState(0);
     const [countThree, setCountThree] = useState(0);
     const [countTotalGraphs, setCountTotalGraphs] = useState(0);
     const [countTotalHair, setCountTotalHair] = useState(0);
 
-
-
-
-    function updateZone(Zone: Zone) {
-        for (const z of zones) {
-            if (z.createdAt === Zone.createdAt) {
-                Object.assign(z, Zone);
-                break;
-            }
-        }
-        // zoneState.setCountTotalGraphs(zoneState.countOne + zoneState.countTwo + zoneState.countThree);
-        // zoneState.setCountTotalHair(zoneState.countOne + zoneState.countTwo + zoneState.countThree + value * value);
-        //
-        // zoneState.updateZone(updatedZone);
-
-        const newZones = [...zones];
-        setZones(newZones);
-    }
-
     return (
         <AppStateContext.Provider
             value={{
                 zones,
                 setZones,
-                updateZone,
                 countOne,
                 countTwo,
                 countThree,
@@ -80,4 +60,27 @@ export const AppStateProvider = ({ children }: { children: ReactNode }) => {
             {children}
         </AppStateContext.Provider>
     );
+};
+
+const getMockZones = (): Zone[] => {
+    return [
+        {
+            createdAt: new Date().toISOString(),
+            name: 'Zone 1',
+            countOne: 0,
+            countTwo: 0,
+            countThree: 0,
+            totalGraphs: 0,
+            totalHair: 0,
+        },
+        {
+            createdAt: new Date().toISOString(),
+            name: 'Zone 2',
+            countOne: 0,
+            countTwo: 0,
+            countThree: 0,
+            totalGraphs: 0,
+            totalHair: 0,
+        },
+    ];
 };

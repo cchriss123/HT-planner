@@ -6,42 +6,28 @@ import { Colors } from '@/constants/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { AnimatedView } from '@/components/AnimatedView';
 import { DropdownComponent } from '@/components/DropdownComponent';
-import {AppStateProvider, useAppState} from '@/state/ZoneState';
-
-
-interface Zone {
-    createdAt: string;
-    name: string;
-    countOne: number;
-    countTwo: number;
-    countThree: number;
-    totalGraphs: number;
-    totalHair: number;
-}
-
+import {AppStateProvider, useAppState, Zone} from '@/state/ZoneState';
 
 
 export default function CounterScreen() {
 
-    const [currentZone, setCurrentZone] = useState<Zone | null>(null);
-
-
     const colorScheme = useColorScheme();
     const styles = createStyles(colorScheme);
     const zoneState = useAppState();
-
+    const [currentZone, setCurrentZone] = useState<Zone | null>(zoneState.zones[0] ?? null);
 
     function handlePlusPress(value: number) {
         if (!currentZone) return;
-        if (value === 1) zoneState.setCountOne(zoneState.countOne + 1);
-        else if (value === 2) zoneState.setCountTwo(zoneState.countTwo + 1);
-        else if (value === 3) zoneState.setCountThree(zoneState.countThree + 1);
-        // zoneState.setCountTotalGraphs(zoneState.countOne + zoneState.countTwo + zoneState.countThree);
-        // zoneState.setCountTotalHair(zoneState.countOne + zoneState.countTwo + zoneState.countThree + value * value);
-        //
-        // zoneState.updateZone(updatedZone);
-    }
 
+        if (value === 1) currentZone.countOne += 1;
+        if (value === 2) currentZone.countTwo += 1;
+        if (value === 3) currentZone.countThree += 1;
+
+        currentZone.totalGraphs = currentZone.countOne + currentZone.countTwo + currentZone.countThree;
+        currentZone.totalHair = currentZone.countOne + currentZone.countTwo + currentZone.countThree + value * value;
+
+        zoneState.setZones([...zoneState.zones]);
+    }
 
     return (
         <SafeAreaView style={{ flex: 1, paddingTop: 10}}>
@@ -56,23 +42,23 @@ export default function CounterScreen() {
                 </View>
 
 
-                {/*<View style={{ flex: 1, alignItems: 'center' }}>*/}
-                {/*    <View style={styles.buttonContainer}>*/}
-                {/*        <TouchableOpacity style={styles.button} onPress={() => handlePlusPress(1)}>*/}
-                {/*            <Text style={styles.buttonText}>{`Single (${zoneState.countOne})`}</Text>*/}
-                {/*        </TouchableOpacity>*/}
-                {/*        <TouchableOpacity style={styles.button} onPress={() => handlePlusPress(2)}>*/}
-                {/*            <Text style={styles.buttonText}>{`Double (${zoneState.countTwo})`}</Text>*/}
-                {/*        </TouchableOpacity>*/}
-                {/*        <TouchableOpacity style={styles.button} onPress={() => handlePlusPress(3)}>*/}
-                {/*            <Text style={styles.buttonText}>{`Triple (${zoneState.countThree})`}</Text>*/}
-                {/*        </TouchableOpacity>*/}
-                {/*    </View>*/}
-                {/*    <View style={styles.countContainer}>*/}
-                {/*        <ThemedText style={styles.largeText}>{`Count: ${zoneState.countTotalGraphs}`}</ThemedText>*/}
-                {/*        <ThemedText style={styles.smallText}>{`Total Hair: ${zoneState.countTotalHair}`}</ThemedText>*/}
-                {/*    </View>*/}
-                {/*</View>*/}
+                <View style={{ flex: 1, alignItems: 'center' }}>
+                    <View style={styles.buttonContainer}>
+                        <TouchableOpacity style={styles.button} onPress={() => handlePlusPress(1)}>
+                            <Text style={styles.buttonText}>{`Single (${currentZone?.countOne})`}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.button} onPress={() => handlePlusPress(2)}>
+                            <Text style={styles.buttonText}>{`Double (${currentZone?.countTwo})`}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.button} onPress={() => handlePlusPress(3)}>
+                            <Text style={styles.buttonText}>{`Triple (${currentZone?.countThree})`}</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.countContainer}>
+                        <ThemedText style={styles.largeText}>{`Count: ${currentZone?.totalGraphs}`}</ThemedText>
+                        <ThemedText style={styles.smallText}>{`Total Hair: ${currentZone?.totalHair}`}</ThemedText>
+                    </View>
+                </View>
 
         </View>
         </SafeAreaView>
