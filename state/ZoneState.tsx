@@ -65,7 +65,7 @@ export const AppStateProvider = ({ children }: { children: ReactNode }) => {
 const getMockZones = (): Zone[] => {
     return [
         {
-            createdAt: new Date().toISOString(),
+            createdAt: new Date(new Date().getTime() + 1000).toISOString(),
             name: 'Zone 1',
             countOne: 0,
             countTwo: 0,

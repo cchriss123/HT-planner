@@ -14,19 +14,31 @@ export default function CounterScreen() {
     const colorScheme = useColorScheme();
     const styles = createStyles(colorScheme);
     const zoneState = useAppState();
-    const [selectedZone, setSelectedZone] = useState<Zone | null>(zoneState.zones[0] ?? null);
+    const [selectedZone, setSelectedZone] = useState<Zone | null>(null);
 
     function handlePlusPress(value: number) {
+        console.log(selectedZone);
         if (!selectedZone) return;
         if (value === 1) selectedZone.countOne += 1;
         if (value === 2) selectedZone.countTwo += 1;
         if (value === 3) selectedZone.countThree += 1;
 
-        selectedZone.totalHair = selectedZone.totalHair + value;
-        selectedZone.totalGraphs = selectedZone.totalGraphs + 1;
 
+        selectedZone.totalHair += value;
+        selectedZone.totalGraphs += 1;
+
+        console.log(selectedZone);
         zoneState.setZones([...zoneState.zones]);
+        console.log(selectedZone);
     }
+
+    useEffect(() => {
+        if (!selectedZone && zoneState.zones.length > 0) {
+            console.log('Initializing selectedZone to the first zone');
+            setSelectedZone(zoneState.zones[0]);
+        }
+    }, [zoneState.zones]);
+
 
     return (
         <SafeAreaView style={{ flex: 1, paddingTop: 10}}>

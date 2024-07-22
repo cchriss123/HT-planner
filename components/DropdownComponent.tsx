@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import AntDesign from '@expo/vector-icons/AntDesign';
@@ -33,8 +33,9 @@ export const DropdownComponent = ({ selectedZone, setSelectedZone }: DropdownCom
           valueField="createdAt"
           placeholder="Select zone"
           value={selectedZone?.createdAt}
-          onChange={z => {
-            const selected = zones.find(zone => zone.createdAt === z.createdAt) || null;
+          onChange={item => {
+            const selected = zones.find(zone => zone.createdAt === item.createdAt) || null;
+            console.log('Selected zone from dropdown:', selected);
             setSelectedZone(selected);
           }}
           renderLeftIcon={() => (
