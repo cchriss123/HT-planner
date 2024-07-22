@@ -50,6 +50,7 @@ export default function CounterScreen() {
                 </View>
 
 
+            {selectedZone ? (
                 <View style={{ flex: 1, alignItems: 'center' }}>
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity style={styles.button} onPress={() => handlePlusPress(1)}>
@@ -67,8 +68,23 @@ export default function CounterScreen() {
                         <ThemedText style={styles.smallText}>{`Total Hair: ${selectedZone?.totalHair}`}</ThemedText>
                     </View>
                 </View>
+            ) : (
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                    <View style={styles.countContainer}>
+                        <ThemedText style={{
+                            fontSize: 30,
+                            paddingTop: 30,
+                            marginTop: 20,
+                            marginBottom: 5,
+                            color: Colors.light.primaryText,
+                        }}>Please add a zone</ThemedText>
+                    </View>
+                </View>
+            )}
 
-        </View>
+
+
+                </View>
         </SafeAreaView>
     );
 }
