@@ -16,15 +16,34 @@ export default function CounterScreen() {
     const zoneState = useAppState();
     const [selectedZone, setSelectedZone] = useState<Zone | null>(null);
 
-    function handlePlusPress(value: number) {
+    function updateZoneCounts(value: number) {
+
         if (!selectedZone) return;
-        if (value === 1) selectedZone.countOne += 1;
-        if (value === 2) selectedZone.countTwo += 1;
-        if (value === 3) selectedZone.countThree += 1;
+        if (value > 4) return;
 
+        if (value === 1) selectedZone.countOne ++;
+        else if (value === 2) selectedZone.countTwo ++;
+        else if (value === 3) selectedZone.countThree ++;
+        else if (value === 4) selectedZone.countFour ++;
+        else if (value === -1) {
+            if (selectedZone.countOne <= 0) return;
+            selectedZone.countOne --;
+        }
+        else if (value === -2) {
+            if (selectedZone.countTwo <= 0) return;
+            selectedZone.countTwo --;
+        }
+        else if (value === -3) {
+            if (selectedZone.countThree <= 0) return;
+            selectedZone.countThree --;
+        }
+        else if (value === -4) {
+            if (selectedZone.countFour <= 0) return;
+            selectedZone.countFour --;
+        }
 
+        value > 0 ? selectedZone.totalGraphs ++ : selectedZone.totalGraphs --;
         selectedZone.totalHair += value;
-        selectedZone.totalGraphs += 1;
 
         zoneState.setZones([...zoneState.zones]);
     }
@@ -50,17 +69,52 @@ export default function CounterScreen() {
 
             {selectedZone ? (
                 <View style={{ flex: 1, alignItems: 'center' }}>
-                    <View style={styles.buttonContainer}>
-                        <TouchableOpacity style={styles.button} onPress={() => handlePlusPress(1)}>
-                            <Text style={styles.buttonText}>{`Single (${selectedZone?.countOne})`}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.button} onPress={() => handlePlusPress(2)}>
-                            <Text style={styles.buttonText}>{`Double (${selectedZone?.countTwo})`}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.button} onPress={() => handlePlusPress(3)}>
-                            <Text style={styles.buttonText}>{`Triple (${selectedZone?.countThree})`}</Text>
-                        </TouchableOpacity>
+
+                    <View style={styles.buttonAreaContainer}>
+                        <View style={styles.buttonContainer}>
+                            <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(-1)}>
+                                <Icon name="remove-circle" size={60} color={Colors.light.solidBackground} />
+                            </TouchableOpacity>
+                            <Text style={styles.buttonText}>{`Singles ${selectedZone?.countOne}`}</Text>
+                            <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(1)}>
+                                <Icon name="add-circle" size={60} color={Colors.light.solidBackground} />
+                            </TouchableOpacity>
+                        </View>
+
+                        <View style={styles.buttonContainer}>
+                            <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(-2)}>
+                                <Icon name="remove-circle" size={60} color={Colors.light.solidBackground} />
+                            </TouchableOpacity>
+                            <Text style={styles.buttonText}>{`Doubles ${selectedZone?.countTwo}`}</Text>
+                            <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(2)}>
+                                <Icon name="add-circle" size={60} color={Colors.light.solidBackground} />
+                            </TouchableOpacity>
+                        </View>
+
+                        <View style={styles.buttonContainer}>
+                            <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(-3)}>
+                                <Icon name="remove-circle" size={60} color={Colors.light.solidBackground} />
+                            </TouchableOpacity>
+                            <Text style={styles.buttonText}>{`Triples ${selectedZone?.countThree}`}</Text>
+                            <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(3)}>
+                                <Icon name="add-circle" size={60} color={Colors.light.solidBackground} />
+                            </TouchableOpacity>
+                        </View>
+
+                        <View style={styles.buttonContainer}>
+                            <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(-4)}>
+                                <Icon name="remove-circle" size={60} color={Colors.light.solidBackground} />
+                            </TouchableOpacity>
+                            <Text style={styles.buttonText}>{`Quadruples ${selectedZone?.countFour}`}</Text>
+                            <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(4)}>
+                                <Icon name="add-circle" size={60} color={Colors.light.solidBackground} />
+                            </TouchableOpacity>
+                        </View>
                     </View>
+
+
+
+
                     <View style={styles.countContainer}>
                         <Text style={styles.largeText}>{`Count: ${selectedZone?.totalGraphs}`}</Text>
                         <Text style={styles.smallText}>{`Total Hair: ${selectedZone?.totalHair}`}</Text>
@@ -94,7 +148,7 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             paddingHorizontal: '5%', // Add padding on both sides
 
         },
-        buttonContainer: {
+        buttonAreaContainer: {
             flexDirection: 'row',
             flexWrap: 'wrap',
             justifyContent: 'center',
@@ -104,14 +158,15 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             paddingTop: 10,
             paddingBottom: 10,
         },
-        button: {
+        buttonContainer: {
 
+            flexDirection: 'row',
             borderRadius: 20,
-            margin: 15,
+            margin: 10,
             width: '90%',
             borderWidth: 2,
-            height: 100,
-            justifyContent: 'center',
+            height: 80,
+            justifyContent: 'space-between',
             alignItems: 'center',
             backgroundColor: colors.primaryBlue,
             borderTopColor: colors.secondaryBlue,
@@ -128,7 +183,7 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
 
         buttonText: {
             color: colors.solidBackground,
-            fontSize: 30,
+            fontSize: 25,
             fontWeight: 'bold',
             textAlign: 'center',
         },
@@ -215,39 +270,45 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             color: colors.solidBackground,
             fontSize: 18,
         },
-            resetButtonContainer: {
-                flexDirection: 'row',
-                justifyContent: 'center',
-                width: '100%',
-                marginTop: 10,
-            },
-            resetButton: {
-                padding: 10,
-                borderRadius: 15,
-                width: '25%',
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: 50,
-                borderWidth: 2,
-                backgroundColor: '#D9534F', // Softer red color
-                borderTopColor: '#B94A48',
-                borderLeftColor: '#B94A48',
-                borderRightColor: colors.neutralGrey,
-                borderBottomColor: colors.neutralGrey,
-                shadowColor: '#000',
-                shadowOffset: { width: 0, height: 2 },
-                shadowOpacity: 0.3,
-                shadowRadius: 5,
-                elevation: 5,
-            },
-            resetButtonText: {
-                color: colors.solidBackground,
-                fontSize: 18,
-            }
+        resetButtonContainer: {
+            flexDirection: 'row',
+            justifyContent: 'center',
+            width: '100%',
+            marginTop: 10,
+        },
+        resetButton: {
+            padding: 10,
+            borderRadius: 15,
+            width: '25%',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: 50,
+            borderWidth: 2,
+            backgroundColor: '#D9534F', // Softer red color
+            borderTopColor: '#B94A48',
+            borderLeftColor: '#B94A48',
+            borderRightColor: colors.neutralGrey,
+            borderBottomColor: colors.neutralGrey,
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.3,
+            shadowRadius: 5,
+            elevation: 5,
+        },
+        resetButtonText: {
+            color: colors.solidBackground,
+            fontSize: 18,
+        },
+        button: {
+            paddingHorizontal: '5%',
+            backgroundColor: colors.primaryBlue,
+            borderTopColor: colors.secondaryBlue,
+            borderLeftColor: colors.secondaryBlue,
+            borderRightColor: colors.neutralGrey,
+            borderBottomColor: colors.neutralGrey,
 
 
 
-    }
-
-    );
+        }
+    });
 }

@@ -5,6 +5,7 @@ export interface Zone {
     countOne: number;
     countTwo: number;
     countThree: number;
+    countFour: number;
     totalGraphs: number;
     totalHair: number;
     area: number;
@@ -70,6 +71,7 @@ const getMockZones = (): Zone[] => {
             countOne: 0,
             countTwo: 0,
             countThree: 0,
+            countFour: 0,
             totalGraphs: 0,
             totalHair: 0,
             area: 4.5,
@@ -80,6 +82,7 @@ const getMockZones = (): Zone[] => {
             countOne: 0,
             countTwo: 0,
             countThree: 0,
+            countFour: 0,
             totalGraphs: 0,
             totalHair: 0,
             area: 13.7,
