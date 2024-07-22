@@ -17,7 +17,6 @@ export default function CounterScreen() {
     const [selectedZone, setSelectedZone] = useState<Zone | null>(null);
 
     function handlePlusPress(value: number) {
-        console.log(selectedZone);
         if (!selectedZone) return;
         if (value === 1) selectedZone.countOne += 1;
         if (value === 2) selectedZone.countTwo += 1;
@@ -27,9 +26,7 @@ export default function CounterScreen() {
         selectedZone.totalHair += value;
         selectedZone.totalGraphs += 1;
 
-        console.log(selectedZone);
         zoneState.setZones([...zoneState.zones]);
-        console.log(selectedZone);
     }
 
     useEffect(() => {

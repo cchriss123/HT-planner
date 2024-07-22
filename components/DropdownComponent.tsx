@@ -30,17 +30,11 @@ export const DropdownComponent = ({ selectedZone, setSelectedZone }: DropdownCom
           data={zones}
           maxHeight={300}
           labelField="name"
-          valueField="createdAt"
+          valueField="name"
           placeholder="Select zone"
-          value={selectedZone?.createdAt}
-          onChange={item => {
-            const selected = zones.find(zone => zone.createdAt === item.createdAt) || null;
-            console.log('Selected zone from dropdown:', selected);
-            setSelectedZone(selected);
-          }}
-          renderLeftIcon={() => (
-              <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
-          )}
+          value={selectedZone}
+          onChange={z => setSelectedZone(zones.find(zone => zone === z) || null)}
+          renderLeftIcon={() => <AntDesign style={styles.icon} color="black" name="Safety" size={20} />}
           renderItem={renderItem}
       />
   );

@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 export interface Zone {
-    createdAt: string;
     name: string;
     countOne: number;
     countTwo: number;
@@ -65,7 +64,7 @@ export const AppStateProvider = ({ children }: { children: ReactNode }) => {
 const getMockZones = (): Zone[] => {
     return [
         {
-            createdAt: new Date(new Date().getTime() + 1000).toISOString(),
+            // createdAt: new Date(new Date().getTime() + 1000).toISOString(),
             name: 'Zone 1',
             countOne: 0,
             countTwo: 0,
@@ -74,7 +73,7 @@ const getMockZones = (): Zone[] => {
             totalHair: 0,
         },
         {
-            createdAt: new Date().toISOString(),
+            // createdAt: new Date().toISOString(),
             name: 'Zone 2',
             countOne: 0,
             countTwo: 0,
