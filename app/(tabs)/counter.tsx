@@ -38,15 +38,13 @@ export default function CounterScreen() {
 
 
     return (
-        <SafeAreaView style={{ flex: 1, paddingTop: 10}}>
-
-        <View style={{ flex: 1, backgroundColor: colorScheme === 'dark' ? Colors.dark.softBackground : Colors.light.softBackground }}>
+        <SafeAreaView style={{ flex: 1, paddingTop: 20}}>
+            <View style={{ flex: 1, backgroundColor: colorScheme === 'dark' ? Colors.dark.softBackground : Colors.light.softBackground }}>
                 <View style={styles.topContainer}>
-
-
                     <View style={{ borderColor: 'black', width: '60%', alignItems: 'center' }}>
                         <DropdownComponent selectedZone={selectedZone} setSelectedZone={setSelectedZone} />
                     </View>
+                    <Text style={{fontSize: 20, color: Colors.light.primaryText}}>Area: {selectedZone?.area} cm²</Text>
                 </View>
 
 
@@ -64,27 +62,19 @@ export default function CounterScreen() {
                         </TouchableOpacity>
                     </View>
                     <View style={styles.countContainer}>
-                        <ThemedText style={styles.largeText}>{`Count: ${selectedZone?.totalGraphs}`}</ThemedText>
-                        <ThemedText style={styles.smallText}>{`Total Hair: ${selectedZone?.totalHair}`}</ThemedText>
+                        <Text style={styles.largeText}>{`Count: ${selectedZone?.totalGraphs}`}</Text>
+                        <Text style={styles.smallText}>{`Total Hair: ${selectedZone?.totalHair}`}</Text>
                     </View>
                 </View>
             ) : (
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                     <View style={styles.countContainer}>
-                        <ThemedText style={{
-                            fontSize: 30,
-                            paddingTop: 30,
-                            marginTop: 20,
-                            marginBottom: 5,
-                            color: Colors.light.primaryText,
-                        }}>Please add a zone</ThemedText>
+                        <Text style={{ fontSize: 30, color: Colors.light.primaryText,}}>Please add a zone</Text>
                     </View>
                 </View>
             )}
 
-
-
-                </View>
+            </View>
         </SafeAreaView>
     );
 }
