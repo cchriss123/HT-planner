@@ -44,6 +44,7 @@ export default function CounterScreen() {
 
         value > 0 ? selectedZone.totalGraphs ++ : selectedZone.totalGraphs --;
         selectedZone.totalHair += value;
+        selectedZone.averageHairPerFU = selectedZone.totalHair / selectedZone.totalGraphs;
 
         zoneState.setZones([...zoneState.zones]);
     }
@@ -63,7 +64,6 @@ export default function CounterScreen() {
                     <View style={{ borderColor: 'black', width: '60%', alignItems: 'center' }}>
                         <DropdownComponent selectedZone={selectedZone} setSelectedZone={setSelectedZone} />
                     </View>
-                    <Text style={{fontSize: 20, color: Colors.light.primaryText}}>Area: {selectedZone?.area} cm²</Text>
                 </View>
 
 
@@ -112,13 +112,23 @@ export default function CounterScreen() {
                         </View>
                     </View>
 
-
-
+                    {/*TODO remove area and hairs/fu and put in zone info*/}
 
                     <View style={styles.countContainer}>
-                        <Text style={styles.largeText}>{`Count: ${selectedZone?.totalGraphs}`}</Text>
-                        <Text style={styles.smallText}>{`Total Hair: ${selectedZone?.totalHair}`}</Text>
+                        {/*<View style={{ flex: 1 }}>*/}
+                            <Text style={styles.mediumText}>{`Graphs: ${selectedZone.totalGraphs}`}</Text>
+                        {/*</View>*/}
+                        {/*<View style={{ flex: 1}}>*/}
+                            <Text style={styles.mediumText}>{`Hairs: ${selectedZone?.totalHair}`}</Text>
+                        {/*</View>*/}
+                        <Text style={styles.mediumText}>Hairs/FU: {selectedZone.averageHairPerFU.toFixed(2)}</Text>
                     </View>
+
+                    {/*<Text style={styles.mediumText}>{`Area: ${selectedZone.area} cm²`}</Text>*/}
+
+
+
+
                 </View>
             ) : (
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -162,10 +172,10 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
 
             flexDirection: 'row',
             borderRadius: 20,
-            margin: 10,
+            margin: 8,
             width: '90%',
             borderWidth: 2,
-            height: 80,
+            height: 70,
             justifyContent: 'space-between',
             alignItems: 'center',
             backgroundColor: colors.primaryBlue,
@@ -188,11 +198,14 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             textAlign: 'center',
         },
         countContainer: {
-            justifyContent: 'center',
+
+            width: '90%',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
             alignItems: 'center',
             // borderWidth: 1,
-            // borderColor: colors.icon,
-            height: 120,
+            height: 50,
+            // paddingHorizontal: 5,
         },
         customTitle: {
             fontSize: 30,
@@ -206,10 +219,10 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             fontWeight: 'bold',
 
         },
-        smallText: {
+        mediumText: {
             fontSize: 20,
-            marginBottom: 20,
             color: colors.primaryText,
+            fontWeight: 'bold',
         },
 
 
@@ -300,7 +313,7 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             fontSize: 18,
         },
         button: {
-            paddingHorizontal: '5%',
+            marginHorizontal: '5%',
             backgroundColor: colors.primaryBlue,
             borderTopColor: colors.secondaryBlue,
             borderLeftColor: colors.secondaryBlue,

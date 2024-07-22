@@ -8,7 +8,9 @@ export interface Zone {
     countFour: number;
     totalGraphs: number;
     totalHair: number;
+    averageHairPerFU: number;
     area: number;
+
 }
 
 interface AppStateContextType {
@@ -75,6 +77,7 @@ const getMockZones = (): Zone[] => {
             totalGraphs: 0,
             totalHair: 0,
             area: 4.5,
+            averageHairPerFU: 0,
         },
         {
             // createdAt: new Date().toISOString(),
@@ -86,6 +89,7 @@ const getMockZones = (): Zone[] => {
             totalGraphs: 0,
             totalHair: 0,
             area: 13.7,
+            averageHairPerFU: 0,
         },
     ];
 };
