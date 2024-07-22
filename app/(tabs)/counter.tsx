@@ -112,19 +112,29 @@ export default function CounterScreen() {
                         </View>
                     </View>
 
-                    {/*TODO remove area and hairs/fu and put in zone info*/}
 
                     <View style={styles.countContainer}>
-                        {/*<View style={{ flex: 1 }}>*/}
                             <Text style={styles.mediumText}>{`Graphs: ${selectedZone.totalGraphs}`}</Text>
-                        {/*</View>*/}
-                        {/*<View style={{ flex: 1}}>*/}
                             <Text style={styles.mediumText}>{`Hairs: ${selectedZone?.totalHair}`}</Text>
-                        {/*</View>*/}
                         <Text style={styles.mediumText}>Hairs/FU: {selectedZone.averageHairPerFU.toFixed(2)}</Text>
                     </View>
 
-                    {/*<Text style={styles.mediumText}>{`Area: ${selectedZone.area} cm²`}</Text>*/}
+                    <View style={styles.outerInfoContainer}>
+                        <View style={styles.innerInfoContainer}>
+
+                            <Text style={{ fontWeight: 'bold'}}>Zone Info</Text>
+                            <Text>{`Area: ${selectedZone.area} cm²`}</Text>
+
+                        </View>
+                        <View style={styles.innerInfoContainer}>
+                            <Text style={{ fontWeight: 'bold'}}>Overall Info</Text>
+
+                        </View>
+                    </View>
+
+
+
+
 
 
 
@@ -138,7 +148,9 @@ export default function CounterScreen() {
                 </View>
             )}
 
-            </View>
+
+                </View>
+
         </SafeAreaView>
     );
 }
@@ -156,17 +168,19 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             height: 60,
             width: '100%', // Use full width
             paddingHorizontal: '5%', // Add padding on both sides
+            paddingBottom: '5%'
 
         },
         buttonAreaContainer: {
+
             flexDirection: 'row',
             flexWrap: 'wrap',
             justifyContent: 'center',
             alignItems: 'center',
-            // borderWidth: 1,
-            // borderColor: colors.tint,
-            paddingTop: 10,
-            paddingBottom: 10,
+            borderTopWidth: 1,
+            borderColor: 'lightgrey',
+            paddingTop: 5,
+            paddingBottom: 5,
         },
         buttonContainer: {
 
@@ -319,9 +333,28 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             borderLeftColor: colors.secondaryBlue,
             borderRightColor: colors.neutralGrey,
             borderBottomColor: colors.neutralGrey,
+        },
+        outerInfoContainer: {
+            flexDirection: 'row',
+            width: '100%',
+            height: 400,
+        },
+        innerInfoContainer: {
+            width: '50%',
+            height: 400,
+            padding: '2%',
+            borderTopWidth: 1,
+            borderLeftWidth: 0.5,
+            borderRightWidth: 0.5,
+            borderColor: 'lightgrey',
+            borderRadius: 5,
+
+
+
 
 
 
         }
     });
+
 }
