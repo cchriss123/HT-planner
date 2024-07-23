@@ -9,17 +9,17 @@ export interface DropdownComponentProps {
   setSelectedZone: (zone: Zone | null) => void;
 }
 
-export const DropdownComponent = ({ selectedZone, setSelectedZone }: DropdownComponentProps) => {
+export function DropdownComponent({selectedZone, setSelectedZone}: DropdownComponentProps) {
   const zoneState = useAppState();
   const zones = zoneState.zones;
 
-  const renderItem = (zone: Zone) => {
+  function renderItem(zone: Zone) {
     return (
         <View style={styles.item}>
           <Text style={styles.textItem}>{zone.name}</Text>
         </View>
     );
-  };
+  }
 
   return (
       <Dropdown
@@ -34,11 +34,11 @@ export const DropdownComponent = ({ selectedZone, setSelectedZone }: DropdownCom
           placeholder="Select zone"
           value={selectedZone}
           onChange={z => setSelectedZone(zones.find(zone => zone === z) || null)}
-          renderLeftIcon={() => <AntDesign style={styles.icon} color="black" name="Safety" size={20} />}
+          renderLeftIcon={() => <AntDesign style={styles.icon} color="black" name="Safety" size={20}/>}
           renderItem={renderItem}
       />
   );
-};
+}
 
 export default DropdownComponent;
 

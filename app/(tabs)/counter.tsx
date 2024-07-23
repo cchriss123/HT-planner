@@ -13,8 +13,9 @@ export default function CounterScreen() {
 
     const colorScheme = useColorScheme();
     const styles = createStyles(colorScheme);
-    const zoneState = useAppState();
+    const globalState = useAppState();
     const [selectedZone, setSelectedZone] = useState<Zone | null>(null);
+
 
     function updateZoneCounts(value: number) {
 
@@ -46,15 +47,17 @@ export default function CounterScreen() {
         selectedZone.hair += value;
         selectedZone.averageHairPerFU = selectedZone.hair / selectedZone.graphs;
 
-        zoneState.setZones([...zoneState.zones]);
+        globalState.setZones([...globalState.zones]);
+
+        // TODO -update total global state counts
+
     }
 
     useEffect(() => {
-        if (!selectedZone && zoneState.zones.length > 0) {
-            console.log('Initializing selectedZone to the first zone');
-            setSelectedZone(zoneState.zones[0]);
+        if (!selectedZone && globalState.zones.length > 0) {
+            setSelectedZone(globalState.zones[0]);
         }
-    }, [zoneState.zones]);
+    }, [globalState.zones]);
 
 
     return (
@@ -75,7 +78,7 @@ export default function CounterScreen() {
                             <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(-1)}>
                                 <Icon name="remove-circle" size={60} color={Colors.light.solidBackground} />
                             </TouchableOpacity>
-                            <Text style={styles.buttonText}>{`Singles ${selectedZone?.singles}`}</Text>
+                            <Text style={styles.buttonText}>{`Singles ${selectedZone.singles}`}</Text>
                             <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(1)}>
                                 <Icon name="add-circle" size={60} color={Colors.light.solidBackground} />
                             </TouchableOpacity>
@@ -85,7 +88,7 @@ export default function CounterScreen() {
                             <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(-2)}>
                                 <Icon name="remove-circle" size={60} color={Colors.light.solidBackground} />
                             </TouchableOpacity>
-                            <Text style={styles.buttonText}>{`Doubles ${selectedZone?.doubles}`}</Text>
+                            <Text style={styles.buttonText}>{`Doubles ${selectedZone.doubles}`}</Text>
                             <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(2)}>
                                 <Icon name="add-circle" size={60} color={Colors.light.solidBackground} />
                             </TouchableOpacity>
@@ -95,7 +98,7 @@ export default function CounterScreen() {
                             <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(-3)}>
                                 <Icon name="remove-circle" size={60} color={Colors.light.solidBackground} />
                             </TouchableOpacity>
-                            <Text style={styles.buttonText}>{`Triples ${selectedZone?.triples}`}</Text>
+                            <Text style={styles.buttonText}>{`Triples ${selectedZone.triples}`}</Text>
                             <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(3)}>
                                 <Icon name="add-circle" size={60} color={Colors.light.solidBackground} />
                             </TouchableOpacity>
@@ -121,13 +124,40 @@ export default function CounterScreen() {
 
                     <View style={styles.outerInfoContainer}>
                         <View style={styles.innerInfoContainer}>
-
                             <Text style={{ fontWeight: 'bold'}}>Zone Info</Text>
                             <Text>{`Area: ${selectedZone.area} cm²`}</Text>
-
                         </View>
                         <View style={styles.innerInfoContainer}>
                             <Text style={{ fontWeight: 'bold'}}>Overall Info</Text>
+                            <View style={{flexDirection: 'row'}}>
+                                <Text style={styles.infoText}>{`Total Singles:`}</Text>
+                                <Text>{`${globalState.totalSingles}`}</Text>
+                            </View>
+                            <View style={{flexDirection: 'row'}}>
+                                <Text style={styles.infoText}>{`Total Doubles:`}</Text>
+                                <Text>{`${globalState.totalDoubles}`}</Text>
+                            </View>
+                            <View style={{flexDirection: 'row'}}>
+                                <Text style={styles.infoText}>{`Total Triples:`}</Text>
+                                <Text>{`${globalState.totalTriples}`}</Text>
+                            </View>
+                            <View style={{flexDirection: 'row'}}>
+                                <Text style={styles.infoText}>{`Total Quadruples:`}</Text>
+                                <Text>{`${globalState.totalQuadruples}`}</Text>
+                            </View>
+                            <Text></Text>
+                            <View style={{flexDirection: 'row'}}>
+                                <Text style={styles.infoText}>{`Total Graphs:`}</Text>
+                                <Text>{`${globalState.totalGraphs}`}</Text>
+                            </View>
+                            <View style={{flexDirection: 'row'}}>
+                                <Text style={styles.infoText}>{`Total Hair:`}</Text>
+                                <Text>{`${globalState.totalHair}`}</Text>
+                            </View>
+                            <View style={{flexDirection: 'row'}}>
+                                <Text style={styles.infoText}>{`Total Hair/FU:`}</Text>
+                                <Text>{`${globalState.totalHairPerFU}`}</Text>
+                            </View>
 
                         </View>
                     </View>
@@ -337,23 +367,20 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
         outerInfoContainer: {
             flexDirection: 'row',
             width: '100%',
-            height: 400,
         },
         innerInfoContainer: {
-            width: '50%',
-            height: 400,
-            padding: '2%',
-            borderTopWidth: 1,
-            borderLeftWidth: 0.5,
-            borderRightWidth: 0.5,
+            width: '49%',
+            paddingHorizontal: '2%',
+            paddingVertical: '3%',
+            margin: '0.5%',
+            borderWidth: 1,
             borderColor: 'lightgrey',
             borderRadius: 5,
-
-
-
-
-
-
+            flex: 1,
+            backgroundColor: colors.solidBackground,
+        },
+        infoText: {
+            width: '70%',
         }
     });
 
