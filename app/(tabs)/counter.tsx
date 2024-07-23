@@ -118,13 +118,21 @@ export default function CounterScreen() {
                     <View style={styles.countContainer}>
                             <Text style={styles.mediumText}>{`Graphs: ${selectedZone.graphs}`}</Text>
                             <Text style={styles.mediumText}>{`Hairs: ${selectedZone?.hair}`}</Text>
-                        <Text style={styles.mediumText}>Hairs/FU: {selectedZone.averageHairPerFU.toFixed(2)}</Text>
                     </View>
 
                     <View style={styles.outerInfoContainer}>
                         <View style={styles.innerInfoContainer}>
                             <Text style={{ fontWeight: 'bold'}}>Zone Info</Text>
-                            <Text>{`Area: ${selectedZone.area} cm²`}</Text>
+
+                            <View style={{flexDirection: 'row'}}>
+                                <Text style={styles.infoText}>{`Hairs/FU: `}</Text>
+                                <Text>{`${selectedZone.averageHairPerFU.toFixed(2)}`}</Text>
+                            </View>
+                            <View style={{flexDirection: 'row'}}>
+                                 <Text style={styles.infoText}>{`Area: `}</Text>
+                                 <Text>{`${selectedZone.area} cm²`}</Text>
+                            </View>
+
                         </View>
                         <View style={styles.innerInfoContainer}>
                             <Text style={{ fontWeight: 'bold'}}>Overall Info</Text>
@@ -156,6 +164,7 @@ export default function CounterScreen() {
                             <View style={{flexDirection: 'row'}}>
                                 <Text style={styles.infoText}>{`Total Hair/FU:`}</Text>
                                 <Text>{`${globalState.totalHairPerFU.toFixed(2)}`}</Text>
+
                             </View>
                         </View>
                     </View>
@@ -165,6 +174,7 @@ export default function CounterScreen() {
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                     <View style={styles.countContainer}>
                         <Text style={{ fontSize: 30, color: Colors.light.primaryText,}}>Please add a zone</Text>
+
                     </View>
                 </View>
             )}
@@ -233,9 +243,6 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             justifyContent: 'center',
             alignItems: 'center',
         },
-        icon: {
-            // Additional styles for the icon itself, if needed
-        },
 
 
         buttonText: {
@@ -246,9 +253,9 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
         },
         countContainer: {
 
-            width: '95%',
+            width: '100%',
             flexDirection: 'row',
-            justifyContent: 'space-between',
+            justifyContent: 'space-evenly',
             alignItems: 'center',
             // borderWidth: 1,
             height: 50,
@@ -267,7 +274,7 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
 
         },
         mediumText: {
-            fontSize: 20,
+            fontSize: 25,
             color: colors.primaryText,
             fontWeight: 'bold',
         },
