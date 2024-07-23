@@ -48,8 +48,7 @@ export default function CounterScreen() {
         selectedZone.averageHairPerFU = selectedZone.hair / selectedZone.graphs;
 
         globalState.setZones([...globalState.zones]);
-
-        // TODO -update total global state counts
+        globalState.updateTotalCounts();
 
     }
 
@@ -108,7 +107,7 @@ export default function CounterScreen() {
                             <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(-4)}>
                                 <Icon name="remove-circle" size={60} color={Colors.light.primaryBlue} />
                             </TouchableOpacity>
-                            <Text style={styles.buttonText}>{`Quadruples ${selectedZone?.quadruples}`}</Text>
+                            <Text style={styles.buttonText}>{`Quads ${selectedZone?.quadruples}`}</Text>
                             <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(4)}>
                                 <Icon name="add-circle" size={60} color={Colors.light.primaryBlue} />
                             </TouchableOpacity>
@@ -142,7 +141,7 @@ export default function CounterScreen() {
                                 <Text>{`${globalState.totalTriples}`}</Text>
                             </View>
                             <View style={{flexDirection: 'row'}}>
-                                <Text style={styles.infoText}>{`Total Quadruples:`}</Text>
+                                <Text style={styles.infoText}>{`Total Quads:`}</Text>
                                 <Text>{`${globalState.totalQuadruples}`}</Text>
                             </View>
                             <Text></Text>
@@ -156,17 +155,10 @@ export default function CounterScreen() {
                             </View>
                             <View style={{flexDirection: 'row'}}>
                                 <Text style={styles.infoText}>{`Total Hair/FU:`}</Text>
-                                <Text>{`${globalState.totalHairPerFU}`}</Text>
+                                <Text>{`${globalState.totalHairPerFU.toFixed(2)}`}</Text>
                             </View>
                         </View>
                     </View>
-
-
-
-
-
-
-
 
                 </View>
             ) : (
@@ -394,7 +386,7 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
         },
 
         infoText: {
-            width: '70%',
+            width: '65%',
         }
     });
 

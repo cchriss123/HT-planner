@@ -14,7 +14,8 @@ export interface Zone {
 
 interface AppStateContextType {
     zones: Zone[];
-
+    setZones: (zones: Zone[]) => void;
+    updateTotalCounts(): void;
     totalSingles: number;
     totalDoubles: number;
     totalTriples: number;
@@ -22,16 +23,6 @@ interface AppStateContextType {
     totalGraphs: number;
     totalHair: number;
     totalHairPerFU: number;
-
-    setZones: (zones: Zone[]) => void;
-
-    setTotalSingles: (count: number) => void;
-    setTotalDoubles: (count: number) => void;
-    setTotalTriples: (count: number) => void;
-    setTotalQuadruples: (count: number) => void;
-    setTotalGraphs: (count: number) => void;
-    setTotalHair: (count: number) => void;
-    setTotalHairPerFU: (count: number) => void;
 }
 
 export const AppStateContext = createContext<AppStateContextType | undefined>(undefined);
@@ -61,25 +52,47 @@ export function AppStateProvider({children}: { children: ReactNode }) {
             value={{
                 zones,
                 setZones,
+                updateTotalCounts: updateTotalCounts,
                 totalSingles,
-                setTotalSingles,
                 totalDoubles,
-                setTotalDoubles,
                 totalTriples,
-                setTotalTriples,
                 totalQuadruples,
-                setTotalQuadruples,
                 totalGraphs,
-                setTotalGraphs,
                 totalHair,
-                setTotalHair,
                 totalHairPerFU,
-                setTotalHairPerFU,
             }}
         >
             {children}
         </AppStateContext.Provider>
     );
+
+    function updateTotalCounts() {
+        let singles = 0;
+        let doubles = 0;
+        let triples = 0;
+        let quadruples = 0;
+        let graphs = 0;
+        let hair = 0;
+        let totalArea = 0;
+
+        for (const zone of zones) {
+            singles += zone.singles;
+            doubles += zone.doubles;
+            triples += zone.triples;
+            quadruples += zone.quadruples;
+            graphs += zone.graphs;
+            hair += zone.hair;
+            totalArea += zone.area;
+        }
+
+        setTotalSingles(singles);
+        setTotalDoubles(doubles);
+        setTotalTriples(triples);
+        setTotalQuadruples(quadruples);
+        setTotalGraphs(graphs);
+        setTotalHair(hair);
+        setTotalHairPerFU(hair / graphs);
+    }
 }
 
 function getMockZones(): Zone[] {
