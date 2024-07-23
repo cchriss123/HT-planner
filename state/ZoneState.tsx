@@ -36,15 +36,15 @@ interface AppStateContextType {
 
 export const AppStateContext = createContext<AppStateContextType | undefined>(undefined);
 
-export const useAppState = () => {
+export function useAppState() {
     const context = useContext(AppStateContext);
     if (!context) {
         throw new Error('useAppState must be used within an AppStateProvider');
     }
     return context;
-};
+}
 
-export const AppStateProvider = ({ children }: { children: ReactNode }) => {
+export function AppStateProvider({children}: { children: ReactNode }) {
     // const [zones, setZones] = useState<Zone[]>([]);
     const [zones, setZones] = useState<Zone[]>(getMockZones());
 
@@ -80,9 +80,9 @@ export const AppStateProvider = ({ children }: { children: ReactNode }) => {
             {children}
         </AppStateContext.Provider>
     );
-};
+}
 
-const getMockZones = (): Zone[] => {
+function getMockZones(): Zone[] {
     return [
         {
             // createdAt: new Date(new Date().getTime() + 1000).toISOString(),
@@ -109,4 +109,4 @@ const getMockZones = (): Zone[] => {
             averageHairPerFU: 0,
         },
     ];
-};
+}
