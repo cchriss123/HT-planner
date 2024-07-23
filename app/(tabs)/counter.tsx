@@ -369,7 +369,7 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             width: '100%',
         },
         innerInfoContainer: {
-            width: '49%',
+            width: '48%',
             paddingHorizontal: '2%',
             paddingVertical: '3%',
             margin: '0.5%',
@@ -378,7 +378,16 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             borderRadius: 5,
             flex: 1,
             backgroundColor: colors.solidBackground,
+            shadowColor: '#000',
+            shadowOffset: {
+                width: 0,
+                height: 1,
+            },
+            shadowOpacity: 0.2,
+            shadowRadius: 1.41,
+            elevation: 2,
         },
+
         infoText: {
             width: '70%',
         }
