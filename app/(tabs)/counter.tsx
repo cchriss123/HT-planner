@@ -76,41 +76,41 @@ export default function CounterScreen() {
                     <View style={styles.buttonAreaContainer}>
                         <View style={styles.buttonContainer}>
                             <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(-1)}>
-                                <Icon name="remove-circle" size={60} color={Colors.light.solidBackground} />
+                                <Icon name="remove-circle" size={60} color={Colors.light.primaryBlue} />
                             </TouchableOpacity>
                             <Text style={styles.buttonText}>{`Singles ${selectedZone.singles}`}</Text>
                             <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(1)}>
-                                <Icon name="add-circle" size={60} color={Colors.light.solidBackground} />
+                                <Icon name="add-circle" size={60} color={Colors.light.primaryBlue} />
                             </TouchableOpacity>
                         </View>
 
                         <View style={styles.buttonContainer}>
                             <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(-2)}>
-                                <Icon name="remove-circle" size={60} color={Colors.light.solidBackground} />
+                                <Icon name="remove-circle" size={60} color={Colors.light.primaryBlue} />
                             </TouchableOpacity>
                             <Text style={styles.buttonText}>{`Doubles ${selectedZone.doubles}`}</Text>
                             <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(2)}>
-                                <Icon name="add-circle" size={60} color={Colors.light.solidBackground} />
+                                <Icon name="add-circle" size={60} color={Colors.light.primaryBlue} />
                             </TouchableOpacity>
                         </View>
 
                         <View style={styles.buttonContainer}>
                             <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(-3)}>
-                                <Icon name="remove-circle" size={60} color={Colors.light.solidBackground} />
+                                <Icon name="remove-circle" size={60} color={Colors.light.primaryBlue} />
                             </TouchableOpacity>
                             <Text style={styles.buttonText}>{`Triples ${selectedZone.triples}`}</Text>
                             <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(3)}>
-                                <Icon name="add-circle" size={60} color={Colors.light.solidBackground} />
+                                <Icon name="add-circle" size={60} color={Colors.light.primaryBlue} />
                             </TouchableOpacity>
                         </View>
 
                         <View style={styles.buttonContainer}>
                             <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(-4)}>
-                                <Icon name="remove-circle" size={60} color={Colors.light.solidBackground} />
+                                <Icon name="remove-circle" size={60} color={Colors.light.primaryBlue} />
                             </TouchableOpacity>
                             <Text style={styles.buttonText}>{`Quadruples ${selectedZone?.quadruples}`}</Text>
                             <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(4)}>
-                                <Icon name="add-circle" size={60} color={Colors.light.solidBackground} />
+                                <Icon name="add-circle" size={60} color={Colors.light.primaryBlue} />
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -158,7 +158,6 @@ export default function CounterScreen() {
                                 <Text style={styles.infoText}>{`Total Hair/FU:`}</Text>
                                 <Text>{`${globalState.totalHairPerFU}`}</Text>
                             </View>
-
                         </View>
                     </View>
 
@@ -198,7 +197,10 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             height: 60,
             width: '100%', // Use full width
             paddingHorizontal: '5%', // Add padding on both sides
-            paddingBottom: '5%'
+            paddingBottom: '5%',
+            marginTop: 10,
+
+
 
         },
         buttonAreaContainer: {
@@ -213,30 +215,39 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             paddingBottom: 5,
         },
         buttonContainer: {
-
             flexDirection: 'row',
-            borderRadius: 20,
+            borderRadius: 12,
             margin: 8,
             width: '90%',
-            borderWidth: 2,
             height: 70,
             justifyContent: 'space-between',
             alignItems: 'center',
-            backgroundColor: colors.primaryBlue,
-            borderTopColor: colors.secondaryBlue,
-            borderLeftColor: colors.secondaryBlue,
-            borderRightColor: colors.neutralGrey,
-            borderBottomColor: colors.neutralGrey,
-
+            backgroundColor: colors.solidBackground,
             shadowColor: '#000',
             shadowOffset: { width: 0, height: 2 },
             shadowOpacity: 0.3,
             shadowRadius: 5,
             elevation: 5,
         },
+        button: {
+            marginHorizontal: '5%',
+            backgroundColor: colors.solidBackground,
+        },
+        iconContainer: {
+            borderRadius: 30,
+            borderWidth: 2,
+            borderColor: colors.neutralGrey,
+            padding: 5,
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
+        icon: {
+            // Additional styles for the icon itself, if needed
+        },
+
 
         buttonText: {
-            color: colors.solidBackground,
+            color: colors.primaryText,
             fontSize: 25,
             fontWeight: 'bold',
             textAlign: 'center',
@@ -268,6 +279,7 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             color: colors.primaryText,
             fontWeight: 'bold',
         },
+
 
 
         // addMenuIcon: {
@@ -356,14 +368,7 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             color: colors.solidBackground,
             fontSize: 18,
         },
-        button: {
-            marginHorizontal: '5%',
-            backgroundColor: colors.primaryBlue,
-            borderTopColor: colors.secondaryBlue,
-            borderLeftColor: colors.secondaryBlue,
-            borderRightColor: colors.neutralGrey,
-            borderBottomColor: colors.neutralGrey,
-        },
+
         outerInfoContainer: {
             flexDirection: 'row',
             width: '100%',
@@ -375,7 +380,7 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             margin: '0.5%',
             borderWidth: 1,
             borderColor: 'lightgrey',
-            borderRadius: 5,
+            borderRadius: 12,
             flex: 1,
             backgroundColor: colors.solidBackground,
             shadowColor: '#000',
