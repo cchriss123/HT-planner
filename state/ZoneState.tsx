@@ -14,19 +14,24 @@ export interface Zone {
 
 interface AppStateContextType {
     zones: Zone[];
+
+    totalSingles: number;
+    totalDoubles: number;
+    totalTriples: number;
+    totalQuadruples: number;
+    totalGraphs: number;
+    totalHair: number;
+    totalHairPerFU: number;
+
     setZones: (zones: Zone[]) => void;
 
-
-
-
-    // singles: number;
-    // doubles: number;
-    // triples: number;
-    // setCountOne: (count: number) => void;
-    // setCountTwo: (count: number) => void;
-    // setCountThree: (count: number) => void;
-    // setCountTotalGraphs: (count: number) => void;
-    // setCountTotalHair: (count: number) => void;
+    setTotalSingles: (count: number) => void;
+    setTotalDoubles: (count: number) => void;
+    setTotalTriples: (count: number) => void;
+    setTotalQuadruples: (count: number) => void;
+    setTotalGraphs: (count: number) => void;
+    setTotalHair: (count: number) => void;
+    setTotalHairPerFU: (count: number) => void;
 }
 
 export const AppStateContext = createContext<AppStateContextType | undefined>(undefined);
@@ -42,25 +47,34 @@ export const useAppState = () => {
 export const AppStateProvider = ({ children }: { children: ReactNode }) => {
     // const [zones, setZones] = useState<Zone[]>([]);
     const [zones, setZones] = useState<Zone[]>(getMockZones());
-    // const [singles, setCountOne] = useState(0);
-    // const [doubles, setCountTwo] = useState(0);
-    // const [triples, setCountThree] = useState(0);
-    // const [countTotalGraphs, setCountTotalGraphs] = useState(0);
-    // const [countTotalHair, setCountTotalHair] = useState(0);
+
+    const [totalSingles, setTotalSingles] = useState(0);
+    const [totalDoubles, setTotalDoubles] = useState(0);
+    const [totalTriples, setTotalTriples] = useState(0);
+    const [totalQuadruples, setTotalQuadruples] = useState(0);
+    const [totalGraphs, setTotalGraphs] = useState(0);
+    const [totalHair, setTotalHair] = useState(0);
+    const [totalHairPerFU, setTotalHairPerFU] = useState(0);
 
     return (
         <AppStateContext.Provider
             value={{
                 zones,
                 setZones,
-                // singles,
-                // doubles,
-                // triples,
-                // setCountOne,
-                // setCountTwo,
-                // setCountThree,
-                // setCountTotalGraphs,
-                // setCountTotalHair,
+                totalSingles,
+                setTotalSingles,
+                totalDoubles,
+                setTotalDoubles,
+                totalTriples,
+                setTotalTriples,
+                totalQuadruples,
+                setTotalQuadruples,
+                totalGraphs,
+                setTotalGraphs,
+                totalHair,
+                setTotalHair,
+                totalHairPerFU,
+                setTotalHairPerFU,
             }}
         >
             {children}
