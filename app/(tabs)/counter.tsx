@@ -21,30 +21,30 @@ export default function CounterScreen() {
         if (!selectedZone) return;
         if (value > 4) return;
 
-        if (value === 1) selectedZone.countOne ++;
-        else if (value === 2) selectedZone.countTwo ++;
-        else if (value === 3) selectedZone.countThree ++;
-        else if (value === 4) selectedZone.countFour ++;
+        if (value === 1) selectedZone.singles ++;
+        else if (value === 2) selectedZone.doubles ++;
+        else if (value === 3) selectedZone.triples ++;
+        else if (value === 4) selectedZone.quadruples ++;
         else if (value === -1) {
-            if (selectedZone.countOne <= 0) return;
-            selectedZone.countOne --;
+            if (selectedZone.singles <= 0) return;
+            selectedZone.singles --;
         }
         else if (value === -2) {
-            if (selectedZone.countTwo <= 0) return;
-            selectedZone.countTwo --;
+            if (selectedZone.doubles <= 0) return;
+            selectedZone.doubles --;
         }
         else if (value === -3) {
-            if (selectedZone.countThree <= 0) return;
-            selectedZone.countThree --;
+            if (selectedZone.triples <= 0) return;
+            selectedZone.triples --;
         }
         else if (value === -4) {
-            if (selectedZone.countFour <= 0) return;
-            selectedZone.countFour --;
+            if (selectedZone.quadruples <= 0) return;
+            selectedZone.quadruples --;
         }
 
-        value > 0 ? selectedZone.totalGraphs ++ : selectedZone.totalGraphs --;
-        selectedZone.totalHair += value;
-        selectedZone.averageHairPerFU = selectedZone.totalHair / selectedZone.totalGraphs;
+        value > 0 ? selectedZone.graphs ++ : selectedZone.graphs --;
+        selectedZone.hair += value;
+        selectedZone.averageHairPerFU = selectedZone.hair / selectedZone.graphs;
 
         zoneState.setZones([...zoneState.zones]);
     }
@@ -75,7 +75,7 @@ export default function CounterScreen() {
                             <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(-1)}>
                                 <Icon name="remove-circle" size={60} color={Colors.light.solidBackground} />
                             </TouchableOpacity>
-                            <Text style={styles.buttonText}>{`Singles ${selectedZone?.countOne}`}</Text>
+                            <Text style={styles.buttonText}>{`Singles ${selectedZone?.singles}`}</Text>
                             <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(1)}>
                                 <Icon name="add-circle" size={60} color={Colors.light.solidBackground} />
                             </TouchableOpacity>
@@ -85,7 +85,7 @@ export default function CounterScreen() {
                             <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(-2)}>
                                 <Icon name="remove-circle" size={60} color={Colors.light.solidBackground} />
                             </TouchableOpacity>
-                            <Text style={styles.buttonText}>{`Doubles ${selectedZone?.countTwo}`}</Text>
+                            <Text style={styles.buttonText}>{`Doubles ${selectedZone?.doubles}`}</Text>
                             <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(2)}>
                                 <Icon name="add-circle" size={60} color={Colors.light.solidBackground} />
                             </TouchableOpacity>
@@ -95,7 +95,7 @@ export default function CounterScreen() {
                             <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(-3)}>
                                 <Icon name="remove-circle" size={60} color={Colors.light.solidBackground} />
                             </TouchableOpacity>
-                            <Text style={styles.buttonText}>{`Triples ${selectedZone?.countThree}`}</Text>
+                            <Text style={styles.buttonText}>{`Triples ${selectedZone?.triples}`}</Text>
                             <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(3)}>
                                 <Icon name="add-circle" size={60} color={Colors.light.solidBackground} />
                             </TouchableOpacity>
@@ -105,7 +105,7 @@ export default function CounterScreen() {
                             <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(-4)}>
                                 <Icon name="remove-circle" size={60} color={Colors.light.solidBackground} />
                             </TouchableOpacity>
-                            <Text style={styles.buttonText}>{`Quadruples ${selectedZone?.countFour}`}</Text>
+                            <Text style={styles.buttonText}>{`Quadruples ${selectedZone?.quadruples}`}</Text>
                             <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(4)}>
                                 <Icon name="add-circle" size={60} color={Colors.light.solidBackground} />
                             </TouchableOpacity>
@@ -114,8 +114,8 @@ export default function CounterScreen() {
 
 
                     <View style={styles.countContainer}>
-                            <Text style={styles.mediumText}>{`Graphs: ${selectedZone.totalGraphs}`}</Text>
-                            <Text style={styles.mediumText}>{`Hairs: ${selectedZone?.totalHair}`}</Text>
+                            <Text style={styles.mediumText}>{`Graphs: ${selectedZone.graphs}`}</Text>
+                            <Text style={styles.mediumText}>{`Hairs: ${selectedZone?.hair}`}</Text>
                         <Text style={styles.mediumText}>Hairs/FU: {selectedZone.averageHairPerFU.toFixed(2)}</Text>
                     </View>
 

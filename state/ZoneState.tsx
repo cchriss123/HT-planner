@@ -2,28 +2,31 @@ import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 export interface Zone {
     name: string;
-    countOne: number;
-    countTwo: number;
-    countThree: number;
-    countFour: number;
-    totalGraphs: number;
-    totalHair: number;
+    singles: number;
+    doubles: number;
+    triples: number;
+    quadruples: number;
+    graphs: number;
+    hair: number;
     averageHairPerFU: number;
     area: number;
-
 }
 
 interface AppStateContextType {
     zones: Zone[];
     setZones: (zones: Zone[]) => void;
-    countOne: number;
-    countTwo: number;
-    countThree: number;
-    setCountOne: (count: number) => void;
-    setCountTwo: (count: number) => void;
-    setCountThree: (count: number) => void;
-    setCountTotalGraphs: (count: number) => void;
-    setCountTotalHair: (count: number) => void;
+
+
+
+
+    // singles: number;
+    // doubles: number;
+    // triples: number;
+    // setCountOne: (count: number) => void;
+    // setCountTwo: (count: number) => void;
+    // setCountThree: (count: number) => void;
+    // setCountTotalGraphs: (count: number) => void;
+    // setCountTotalHair: (count: number) => void;
 }
 
 export const AppStateContext = createContext<AppStateContextType | undefined>(undefined);
@@ -39,25 +42,25 @@ export const useAppState = () => {
 export const AppStateProvider = ({ children }: { children: ReactNode }) => {
     // const [zones, setZones] = useState<Zone[]>([]);
     const [zones, setZones] = useState<Zone[]>(getMockZones());
-    const [countOne, setCountOne] = useState(0);
-    const [countTwo, setCountTwo] = useState(0);
-    const [countThree, setCountThree] = useState(0);
-    const [countTotalGraphs, setCountTotalGraphs] = useState(0);
-    const [countTotalHair, setCountTotalHair] = useState(0);
+    // const [singles, setCountOne] = useState(0);
+    // const [doubles, setCountTwo] = useState(0);
+    // const [triples, setCountThree] = useState(0);
+    // const [countTotalGraphs, setCountTotalGraphs] = useState(0);
+    // const [countTotalHair, setCountTotalHair] = useState(0);
 
     return (
         <AppStateContext.Provider
             value={{
                 zones,
                 setZones,
-                countOne,
-                countTwo,
-                countThree,
-                setCountOne,
-                setCountTwo,
-                setCountThree,
-                setCountTotalGraphs,
-                setCountTotalHair,
+                // singles,
+                // doubles,
+                // triples,
+                // setCountOne,
+                // setCountTwo,
+                // setCountThree,
+                // setCountTotalGraphs,
+                // setCountTotalHair,
             }}
         >
             {children}
@@ -70,24 +73,24 @@ const getMockZones = (): Zone[] => {
         {
             // createdAt: new Date(new Date().getTime() + 1000).toISOString(),
             name: 'Zone 1',
-            countOne: 0,
-            countTwo: 0,
-            countThree: 0,
-            countFour: 0,
-            totalGraphs: 0,
-            totalHair: 0,
+            singles: 0,
+            doubles: 0,
+            triples: 0,
+            quadruples: 0,
+            graphs: 0,
+            hair: 0,
             area: 4.5,
             averageHairPerFU: 0,
         },
         {
             // createdAt: new Date().toISOString(),
             name: 'Zone 2',
-            countOne: 0,
-            countTwo: 0,
-            countThree: 0,
-            countFour: 0,
-            totalGraphs: 0,
-            totalHair: 0,
+            singles: 0,
+            doubles: 0,
+            triples: 0,
+            quadruples: 0,
+            graphs: 0,
+            hair: 0,
             area: 13.7,
             averageHairPerFU: 0,
         },
