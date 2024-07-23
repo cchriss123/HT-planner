@@ -75,41 +75,41 @@ export default function CounterScreen() {
                     <View style={styles.buttonAreaContainer}>
                         <View style={styles.buttonContainer}>
                             <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(-1)}>
-                                <Icon name="remove-circle" size={60} color={Colors.light.primaryBlue} />
+                                <Icon name="remove-circle" size={65} color={Colors.light.primaryBlue} />
                             </TouchableOpacity>
                             <Text style={styles.buttonText}>{`Singles ${selectedZone.singles}`}</Text>
                             <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(1)}>
-                                <Icon name="add-circle" size={60} color={Colors.light.primaryBlue} />
+                                <Icon name="add-circle" size={65} color={Colors.light.primaryBlue} />
                             </TouchableOpacity>
                         </View>
 
                         <View style={styles.buttonContainer}>
                             <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(-2)}>
-                                <Icon name="remove-circle" size={60} color={Colors.light.primaryBlue} />
+                                <Icon name="remove-circle" size={65} color={Colors.light.primaryBlue} />
                             </TouchableOpacity>
                             <Text style={styles.buttonText}>{`Doubles ${selectedZone.doubles}`}</Text>
                             <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(2)}>
-                                <Icon name="add-circle" size={60} color={Colors.light.primaryBlue} />
+                                <Icon name="add-circle" size={65} color={Colors.light.primaryBlue} />
                             </TouchableOpacity>
                         </View>
 
                         <View style={styles.buttonContainer}>
                             <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(-3)}>
-                                <Icon name="remove-circle" size={60} color={Colors.light.primaryBlue} />
+                                <Icon name="remove-circle" size={65} color={Colors.light.primaryBlue} />
                             </TouchableOpacity>
                             <Text style={styles.buttonText}>{`Triples ${selectedZone.triples}`}</Text>
                             <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(3)}>
-                                <Icon name="add-circle" size={60} color={Colors.light.primaryBlue} />
+                                <Icon name="add-circle" size={65} color={Colors.light.primaryBlue} />
                             </TouchableOpacity>
                         </View>
 
                         <View style={styles.buttonContainer}>
                             <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(-4)}>
-                                <Icon name="remove-circle" size={60} color={Colors.light.primaryBlue} />
+                                <Icon name="remove-circle" size={65} color={Colors.light.primaryBlue} />
                             </TouchableOpacity>
                             <Text style={styles.buttonText}>{`Quads ${selectedZone?.quadruples}`}</Text>
                             <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(4)}>
-                                <Icon name="add-circle" size={60} color={Colors.light.primaryBlue} />
+                                <Icon name="add-circle" size={65} color={Colors.light.primaryBlue} />
                             </TouchableOpacity>
                         </View>
                     </View>
