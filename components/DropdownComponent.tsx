@@ -26,13 +26,11 @@ export function DropdownComponent({selectedZone, setSelectedZone}: DropdownCompo
             />
         )}
       </View>
-
     );
   }
 
   return (
       <Dropdown
-
           style={styles.dropdown}
           placeholderStyle={styles.placeholderStyle}
           selectedTextStyle={styles.selectedTextStyle}
@@ -49,8 +47,6 @@ export function DropdownComponent({selectedZone, setSelectedZone}: DropdownCompo
       />
   );
 }
-
-export default DropdownComponent;
 
 const styles = StyleSheet.create({
   dropdown: {

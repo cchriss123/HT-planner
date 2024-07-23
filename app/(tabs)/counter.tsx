@@ -187,9 +187,9 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             alignItems: 'center',
             justifyContent: 'space-between',
             height: 60,
-            width: '100%', // Use full width
-            paddingHorizontal: '5%', // Add padding on both sides
+            width: '95%', // Use full width
             paddingBottom: '5%',
+            marginHorizontal: '2.5%',
             marginTop: 10,
 
 
@@ -210,7 +210,7 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             flexDirection: 'row',
             borderRadius: 12,
             margin: 8,
-            width: '90%',
+            width: '95%',
             height: 70,
             justifyContent: 'space-between',
             alignItems: 'center',
@@ -246,7 +246,7 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
         },
         countContainer: {
 
-            width: '90%',
+            width: '95%',
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
@@ -363,10 +363,9 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
 
         outerInfoContainer: {
             flexDirection: 'row',
-            width: '100%',
+            width: '97%',
         },
         innerInfoContainer: {
-            width: '48%',
             paddingHorizontal: '2%',
             paddingVertical: '3%',
             margin: '0.5%',
@@ -386,7 +385,7 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
         },
 
         infoText: {
-            width: '65%',
+            width: '60%',
         }
     });
 
