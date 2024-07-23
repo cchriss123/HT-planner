@@ -15,14 +15,24 @@ export function DropdownComponent({selectedZone, setSelectedZone}: DropdownCompo
 
   function renderItem(zone: Zone) {
     return (
-        <View style={styles.item}>
-          <Text style={styles.textItem}>{zone.name}</Text>
-        </View>
+      <View style={styles.item}>
+        <Text style={styles.textItem}>{zone.name}</Text>
+        {zone === selectedZone && (
+            <AntDesign
+                style={styles.icon}
+                color="black"
+                name="check"
+                size={20}
+            />
+        )}
+      </View>
+
     );
   }
 
   return (
       <Dropdown
+
           style={styles.dropdown}
           placeholderStyle={styles.placeholderStyle}
           selectedTextStyle={styles.selectedTextStyle}
@@ -33,8 +43,8 @@ export function DropdownComponent({selectedZone, setSelectedZone}: DropdownCompo
           valueField="name"
           placeholder="Select zone"
           value={selectedZone}
+
           onChange={z => setSelectedZone(zones.find(zone => zone === z) || null)}
-          renderLeftIcon={() => <AntDesign style={styles.icon} color="black" name="Safety" size={20}/>}
           renderItem={renderItem}
       />
   );
