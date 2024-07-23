@@ -7,6 +7,9 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { AnimatedView } from '@/components/AnimatedView';
 import { DropdownComponent } from '@/components/DropdownComponent';
 import {AppStateProvider, useAppState, Zone} from '@/state/ZoneState';
+import AntDesign from "@expo/vector-icons/AntDesign";
+import {openSettings} from "expo-linking";
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 
 export default function CounterScreen() {
@@ -15,6 +18,7 @@ export default function CounterScreen() {
     const styles = createStyles(colorScheme);
     const globalState = useAppState();
     const [selectedZone, setSelectedZone] = useState<Zone | null>(null);
+    const [menuVisible, setMenuVisible] = useState(false);
 
 
     function updateZoneCounts(value: number) {
@@ -49,8 +53,8 @@ export default function CounterScreen() {
 
         globalState.setZones([...globalState.zones]);
         globalState.updateTotalCounts();
-
     }
+
 
     useEffect(() => {
         if (!selectedZone && globalState.zones.length > 0) {
@@ -66,6 +70,12 @@ export default function CounterScreen() {
                     <View style={{ borderColor: 'black', width: '60%', alignItems: 'center' }}>
                         <DropdownComponent selectedZone={selectedZone} setSelectedZone={setSelectedZone} />
                     </View>
+                    <TouchableOpacity style={{marginHorizontal: "5%"}} onPress={() => setMenuVisible(!menuVisible)}>
+                        <FontAwesome gear="setting" size={35} color={
+                            menuVisible ? Colors.light.primaryBlue : Colors.light.neutralGrey
+                        }  name="gear"/>
+                    </TouchableOpacity>
+
                 </View>
 
 
