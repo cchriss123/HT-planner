@@ -1,7 +1,10 @@
-import React from 'react';
-import { Appearance, StyleSheet, Text, TextInput, View, KeyboardAvoidingView, } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { Appearance, StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from '@/constants/Colors';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import BottomSheet from "@gorhom/bottom-sheet";
+import Icon from "react-native-vector-icons/Ionicons";
 
 Appearance.getColorScheme = () => 'light';
 
@@ -10,18 +13,75 @@ export default function ZonesScreen() {
     const styles = createStyles(colorScheme);
     const colors = colorScheme === 'dark' ? Colors.dark : Colors.light;
 
-    return (
+    const [menuVisible, setMenuVisible] = useState(false);
+    const bottomSheetRef = useRef<BottomSheet>(null);
 
-        <SafeAreaView style={{ flex: 1, paddingTop: 10 }}>
-            <View style={styles.outerContainer}>
-                <View style={styles.inputContainer}>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Enter donor zone name here"
-                        placeholderTextColor={colors.neutralGrey}
-                    />
+    const handleMenuPress = () => {
+        if (menuVisible) {
+            setMenuVisible(false);
+            bottomSheetRef.current?.close();
+        } else {
+            setMenuVisible(true);
+            bottomSheetRef.current?.expand();
+        }
+    };
+
+    const handleSheetClose = () => {
+        setMenuVisible(false);
+    };
+
+    return (
+        <SafeAreaView style={{ flex: 1, paddingTop: 20 }}>
+            <ScrollView contentContainerStyle={styles.outerContainer}>
+                <View style={styles.topContainer}>
+                    <View style={{ borderColor: 'black', width: '60%', alignItems: 'center' }}>
+                        <Text style={styles.zoneListTitle}>THIS WILL BE A LOGO</Text>
+                    </View>
+                    <TouchableOpacity style={{ marginHorizontal: "5%" }} onPress={handleMenuPress}>
+                        <FontAwesome gear="setting" size={35} color={menuVisible ? Colors.light.primaryBlue : Colors.light.neutralGrey} name="gear" />
+                    </TouchableOpacity>
                 </View>
-            </View>
+                <View style={styles.buttonWrapper}>
+                    <View style={styles.buttonContainer}>
+
+
+                        <View style={styles.button}>
+                            <Icon name="add-circle" size={65} color={colors.primaryBlue} />
+                            <Text style={styles.zoneListTitle}>Donor Zones</Text>
+                        </View>
+                        <TouchableOpacity style={styles.zoneButton}>
+                            <Text style={styles.zoneButtonText}>Donor Zone 1</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.zoneButton}>
+                            <Text style={styles.zoneButtonText}>Donor Zone 2</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.zoneButton}>
+                            <Text style={styles.zoneButtonText}>Donor Zone 3</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.zoneButton}>
+                            <Text style={styles.zoneButtonText}>Donor Zone 4</Text>
+                        </TouchableOpacity>
+
+                    </View>
+                    <View style={styles.buttonContainer}>
+
+                        <View style={styles.button}>
+                            <Icon name="add-circle" size={65} color={colors.primaryBlue} />
+                            <Text style={styles.zoneListTitle}>Recipient Zones</Text>
+                        </View>
+
+                        <TouchableOpacity style={styles.zoneButton}>
+                            <Text style={styles.zoneButtonText}>Recipient Zone 1</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.zoneButton}>
+                            <Text style={styles.zoneButtonText}>Recipient Zone 2</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.zoneButton}>
+                            <Text style={styles.zoneButtonText}>Recipient Zone 3</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </ScrollView>
         </SafeAreaView>
     );
 }
@@ -32,29 +92,74 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
     return StyleSheet.create({
         outerContainer: {
             flex: 1,
-            padding: 16,
             backgroundColor: colors.softBackground,
         },
-        inputContainer: {
-            marginBottom: 20,
+        topContainer: {
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            height: 60,
+            width: '95%',
+            paddingBottom: '5%',
+            marginHorizontal: '2.5%',
+            marginTop: 10,
         },
-        input: {
-            height: 40,
-            borderColor: colors.neutralGrey,
-            borderWidth: 1,
-            borderRadius: 8,
-            paddingHorizontal: 10,
+        buttonWrapper: {
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            borderTopWidth: 1,
+            borderColor: 'lightgrey',
+            paddingTop: 20,
+        },
+        buttonContainer: {
+            flex: 1,
+            marginHorizontal: 10,
+
+        },
+        button: {
+            padding: 10,
             backgroundColor: colors.solidBackground,
-            color: colors.primaryText,
+            borderRadius: 8,
+            marginBottom: 10,
             shadowColor: '#000',
             shadowOffset: { width: 0, height: 2 },
             shadowOpacity: 0.3,
             shadowRadius: 5,
             elevation: 5,
+            alignItems: 'center',
+            borderWidth: 1,
+            borderColor: 'lightgrey',
         },
-        // placeholderTextColor: {
-        //     color: 'black'
-        // }
+        buttonText: {
+            color: colors.solidBackground,
+            fontSize: 16,
+        },
+        zoneListTitle: {
+            fontSize: 18,
+            fontWeight: 'bold',
+            marginBottom: 10,
+            color: colors.primaryText,
+        },
+        zoneButton: {
 
+            marginVertical: 5,
+            height: 50,
+            borderWidth: 1,
+            borderColor: 'lightgrey',
+            padding: 10,
+            backgroundColor: colors.primaryBlue,
+            borderRadius: 8,
+            marginBottom: 10,
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.3,
+            shadowRadius: 5,
+            elevation: 5,
+            alignItems: 'center',
+            justifyContent: 'center',
+        },
+        zoneButtonText: {
+            color: colors.solidBackground,
+        },
     });
 }
