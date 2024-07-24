@@ -91,7 +91,7 @@ export function AppStateProvider({children}: { children: ReactNode }) {
         setTotalQuadruples(quadruples);
         setTotalGraphs(graphs);
         setTotalHair(hair);
-        setTotalHairPerFU(hair / graphs);
+        setTotalHairPerFU(graphs > 0 ? hair / graphs : 0);
     }
 }
 
