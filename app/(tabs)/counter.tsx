@@ -1,20 +1,13 @@
-import React, { useRef, useState, useEffect } from 'react';
-import {Animated, View, TouchableOpacity, Text, useColorScheme, StyleSheet, Dimensions, TextInput, Alert, Platform} from 'react-native';
-import { ThemedText } from '@/components/ThemedText';
+import React, {useState, useEffect, useRef} from 'react';
+import {View, TouchableOpacity, Text, useColorScheme, StyleSheet} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '@/constants/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { AnimatedView } from '@/components/AnimatedView';
 import { DropdownComponent } from '@/components/DropdownComponent';
-import {AppStateProvider, useAppState, Zone} from '@/state/ZoneState';
-import AntDesign from "@expo/vector-icons/AntDesign";
-import {openSettings} from "expo-linking";
+import {useAppState, Zone} from '@/state/ZoneState';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import CustomBottomSheet from '@/components/CustomBottomSheet';
 import BottomSheet from "@gorhom/bottom-sheet";
-
-
-
 
 
 export default function CounterScreen() {
@@ -39,7 +32,6 @@ export default function CounterScreen() {
     const handleSheetClose = () => {
         setMenuVisible(false);
     };
-
 
 
     function updateZoneCounts(value: number) {
@@ -221,26 +213,19 @@ export default function CounterScreen() {
 }
 
 function createStyles(colorScheme: "light" | "dark" | null | undefined) {
-
-// function createStyles(colorScheme: "light" | "dark" | null | undefined, addMenuVisible: boolean, editMenuVisible: boolean) {
     const colors = colorScheme === 'dark' ? Colors.dark : Colors.light;
     return StyleSheet.create({
         topContainer: {
-            // zIndex: 1000,
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-between',
             height: 60,
-            width: '95%', // Use full width
+            width: '95%',
             paddingBottom: '5%',
             marginHorizontal: '2.5%',
             marginTop: 10,
-
-
-
         },
         buttonAreaContainer: {
-
             flexDirection: 'row',
             flexWrap: 'wrap',
             justifyContent: 'center',
@@ -269,16 +254,6 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             marginHorizontal: '5%',
             backgroundColor: colors.solidBackground,
         },
-        iconContainer: {
-            borderRadius: 30,
-            borderWidth: 2,
-            borderColor: colors.neutralGrey,
-            padding: 5,
-            justifyContent: 'center',
-            alignItems: 'center',
-        },
-
-
         buttonText: {
             color: colors.primaryText,
             fontSize: 25,
@@ -286,122 +261,17 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             textAlign: 'center',
         },
         countContainer: {
-
             width: '100%',
             flexDirection: 'row',
             justifyContent: 'space-evenly',
             alignItems: 'center',
-            // borderWidth: 1,
             height: 50,
-            // paddingHorizontal: 5,
-        },
-        customTitle: {
-            fontSize: 30,
-        },
-        largeText: {
-            fontSize: 50,
-            paddingTop: 30,
-            marginTop: 20,
-            marginBottom: 5,
-            color: colors.primaryText,
-            fontWeight: 'bold',
-
         },
         mediumText: {
             fontSize: 25,
             color: colors.primaryText,
             fontWeight: 'bold',
         },
-
-
-
-        // addMenuIcon: {
-        //     fontSize: 50,
-        //     color: editMenuVisible ? colors.primaryBlue : colors.neutralGrey,
-        //
-        // },
-        //
-        // editMenuIcon: {
-        //     fontSize: 50,
-        //     color: addMenuVisible ? colors.primaryBlue : colors.neutralGrey,
-        // },
-
-
-
-        menuRow: {
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            width: '100%',
-            height: 80,
-
-
-        },
-        textInput: {
-            borderWidth: 1,
-            borderColor: '#ccc',
-            padding: 10,
-            width: '70%',
-            height: 50,
-            backgroundColor: colors.softBackground,
-            borderRadius: 15,
-        },
-        okButton: {
-            padding: 10,
-            borderRadius: 15,
-            width: '20%',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: 50,
-            borderWidth: 2,
-
-            backgroundColor: colors.primaryBlue,
-            borderTopColor: colors.secondaryBlue,
-            borderLeftColor: colors.secondaryBlue,
-            borderRightColor: colors.neutralGrey,
-            borderBottomColor: colors.neutralGrey,
-
-            shadowColor: '#000',
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.3,
-            shadowRadius: 5,
-            elevation: 5,
-
-        },
-        okButtonText: {
-            color: colors.solidBackground,
-            fontSize: 18,
-        },
-        resetButtonContainer: {
-            flexDirection: 'row',
-            justifyContent: 'center',
-            width: '100%',
-            marginTop: 10,
-        },
-        resetButton: {
-            padding: 10,
-            borderRadius: 15,
-            width: '25%',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: 50,
-            borderWidth: 2,
-            backgroundColor: '#D9534F', // Softer red color
-            borderTopColor: '#B94A48',
-            borderLeftColor: '#B94A48',
-            borderRightColor: colors.neutralGrey,
-            borderBottomColor: colors.neutralGrey,
-            shadowColor: '#000',
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.3,
-            shadowRadius: 5,
-            elevation: 5,
-        },
-        resetButtonText: {
-            color: colors.solidBackground,
-            fontSize: 18,
-        },
-
         outerInfoContainer: {
             flexDirection: 'row',
             width: '97%',
@@ -424,7 +294,6 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             shadowRadius: 1.41,
             elevation: 2,
         },
-
         infoText: {
             width: '60%',
         }

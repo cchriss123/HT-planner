@@ -1,5 +1,5 @@
 import React, {forwardRef, useCallback, useMemo} from 'react';
-import { View, Text, StyleSheet, useColorScheme } from 'react-native';
+import { View, StyleSheet, useColorScheme } from 'react-native';
 import BottomSheet, {BottomSheetBackdrop} from '@gorhom/bottom-sheet';
 import { Colors } from '@/constants/Colors';
 import { Easing } from 'react-native-reanimated';
@@ -10,7 +10,7 @@ interface Props {
 }
 
 const CustomBottomSheet = forwardRef<BottomSheet, Props>((props, ref) => {
-    const { children, onClose } = props;
+    const { children} = props;
     const snapPoints = useMemo(() => ['25%', '50%', '70%'], []);
     const colorScheme = useColorScheme();
     const colors = colorScheme === 'dark' ? Colors.dark : Colors.light;
@@ -33,14 +33,7 @@ const CustomBottomSheet = forwardRef<BottomSheet, Props>((props, ref) => {
             onClose={props.onClose}
             backdropComponent={renderBackDrop}
             animationConfigs={animationConfigs}
-
-            backgroundStyle={{
-                // borderWidth: 1,
-                // borderColor: colors.neutralGrey,
-                borderRadius: 12
-
-            }}
-
+            backgroundStyle={{borderRadius: 12}}
         >
             <View style={[styles.contentContainer, { borderColor: colors.primaryBlue }]}>
                 {children}
