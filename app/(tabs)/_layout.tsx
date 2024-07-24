@@ -11,6 +11,7 @@ export default function TabLayout() {
     return (
         <Tabs
             screenOptions={{
+                tabBarHideOnKeyboard: true,
                 tabBarActiveTintColor: Colors[colorScheme ?? 'light'].primaryBlue,
                 tabBarStyle: {
                     backgroundColor: Colors[colorScheme ?? 'light'].solidBackground,
