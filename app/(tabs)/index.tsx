@@ -1,11 +1,12 @@
 import React, { useState, useRef } from 'react';
-import { Appearance, StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native';
+import { Appearance, StyleSheet, Text, TouchableOpacity, View, ScrollView, Image } from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from '@/constants/Colors';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import BottomSheet from "@gorhom/bottom-sheet";
 import Icon from "react-native-vector-icons/Ionicons";
 
+import logoImg from '@/assets/images/logo.png';
 Appearance.getColorScheme = () => 'light';
 
 export default function ZonesScreen() {
@@ -34,17 +35,16 @@ export default function ZonesScreen() {
         <SafeAreaView style={{ flex: 1, paddingTop: 20 }}>
             <ScrollView contentContainerStyle={styles.outerContainer}>
                 <View style={styles.topContainer}>
-                    <View style={{ borderColor: 'black', width: '60%', alignItems: 'center' }}>
-                        <Text style={styles.zoneListTitle}>THIS WILL BE A LOGO</Text>
+                    <View style={styles.placeholderContainer} />
+                    <View style={{ flex: 1, alignItems: 'center' }}>
+                        <Image source={logoImg} style={styles.logo} />
                     </View>
-                    <TouchableOpacity style={{ marginHorizontal: "5%" }} onPress={handleMenuPress}>
+                    <TouchableOpacity style={styles.placeholderContainer} onPress={handleMenuPress}>
                         <FontAwesome gear="setting" size={35} color={menuVisible ? Colors.light.primaryBlue : Colors.light.neutralGrey} name="gear" />
                     </TouchableOpacity>
                 </View>
                 <View style={styles.buttonWrapper}>
                     <View style={styles.buttonContainer}>
-
-
                         <View style={styles.button}>
                             <Icon name="add-circle" size={65} color={colors.primaryBlue} />
                             <Text style={styles.zoneListTitle}>Donor Zones</Text>
@@ -61,15 +61,12 @@ export default function ZonesScreen() {
                         <TouchableOpacity style={styles.zoneButton}>
                             <Text style={styles.zoneButtonText}>Donor Zone 4</Text>
                         </TouchableOpacity>
-
                     </View>
                     <View style={styles.buttonContainer}>
-
                         <View style={styles.button}>
                             <Icon name="add-circle" size={65} color={colors.primaryBlue} />
                             <Text style={styles.zoneListTitle}>Recipient Zones</Text>
                         </View>
-
                         <TouchableOpacity style={styles.zoneButton}>
                             <Text style={styles.zoneButtonText}>Recipient Zone 1</Text>
                         </TouchableOpacity>
@@ -104,6 +101,14 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             marginHorizontal: '2.5%',
             marginTop: 10,
         },
+        placeholderContainer: {
+            width: 50, // Adjust this width to match the gear icon's width
+        },
+        logo: {
+            width: 35,
+            height: 35,
+            resizeMode: 'contain',
+        },
         buttonWrapper: {
             flexDirection: 'row',
             justifyContent: 'space-between',
@@ -114,7 +119,6 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
         buttonContainer: {
             flex: 1,
             marginHorizontal: 10,
-
         },
         button: {
             padding: 10,
@@ -127,8 +131,6 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             shadowRadius: 5,
             elevation: 5,
             alignItems: 'center',
-            borderWidth: 1,
-            borderColor: 'lightgrey',
         },
         buttonText: {
             color: colors.solidBackground,
@@ -141,11 +143,8 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             color: colors.primaryText,
         },
         zoneButton: {
-
             marginVertical: 5,
             height: 50,
-            borderWidth: 1,
-            borderColor: 'lightgrey',
             padding: 10,
             backgroundColor: colors.primaryBlue,
             borderRadius: 8,

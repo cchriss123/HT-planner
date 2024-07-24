@@ -8,6 +8,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '@/constants/Colors';
 
 
+
 import { useColorScheme } from '@/hooks/useColorScheme';
 import {Text, View} from "react-native";
 import {AppStateProvider} from "@/state/ZoneState";
