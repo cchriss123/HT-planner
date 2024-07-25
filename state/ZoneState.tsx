@@ -7,14 +7,16 @@ export interface Zone {
     triples: number;
     quadruples: number;
     graphs: number;
-    hair: number;
+    hairs: number;
     averageHairPerFU: number;
     area: number;
 }
 
 interface AppStateContextType {
-    zones: Zone[];
-    setZones: (zones: Zone[]) => void;
+    donorZones: Zone[];
+    setDonorZones: (zones: Zone[]) => void;
+
+
     updateTotalCounts(): void;
     totalSingles: number;
     totalDoubles: number;
@@ -36,8 +38,9 @@ export function useAppState() {
 }
 
 export function AppStateProvider({children}: { children: ReactNode }) {
-    // const [zones, setZones] = useState<Zone[]>([]);
-    const [zones, setZones] = useState<Zone[]>(getMockZones());
+    // const [donorZones, setDonorZones] = useState<Zone[]>([]);
+    const [donorZones, setDonorZones] = useState<Zone[]>(getMockZones());
+    // const [recipientZones, setRecipientZones] = useState<Zone[]>([]);
 
     const [totalSingles, setTotalSingles] = useState(0);
     const [totalDoubles, setTotalDoubles] = useState(0);
@@ -47,11 +50,14 @@ export function AppStateProvider({children}: { children: ReactNode }) {
     const [totalHair, setTotalHair] = useState(0);
     const [totalHairPerFU, setTotalHairPerFU] = useState(0);
 
+
+
+
     return (
         <AppStateContext.Provider
             value={{
-                zones,
-                setZones,
+                donorZones: donorZones,
+                setDonorZones: setDonorZones,
                 updateTotalCounts: updateTotalCounts,
                 totalSingles,
                 totalDoubles,
@@ -75,13 +81,13 @@ export function AppStateProvider({children}: { children: ReactNode }) {
         let hair = 0;
         let totalArea = 0;
 
-        for (const zone of zones) {
+        for (const zone of donorZones) {
             singles += zone.singles;
             doubles += zone.doubles;
             triples += zone.triples;
             quadruples += zone.quadruples;
             graphs += zone.graphs;
-            hair += zone.hair;
+            hair += zone.hairs;
             totalArea += zone.area;
         }
 
@@ -105,7 +111,7 @@ function getMockZones(): Zone[] {
             triples: 0,
             quadruples: 0,
             graphs: 0,
-            hair: 0,
+            hairs: 0,
             area: 4.5,
             averageHairPerFU: 0,
         },
@@ -117,7 +123,7 @@ function getMockZones(): Zone[] {
             triples: 0,
             quadruples: 0,
             graphs: 0,
-            hair: 0,
+            hairs: 0,
             area: 13.7,
             averageHairPerFU: 0,
         },

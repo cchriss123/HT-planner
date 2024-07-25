@@ -61,19 +61,19 @@ export default function CounterScreen() {
         }
 
         value > 0 ? selectedZone.graphs ++ : selectedZone.graphs --;
-        selectedZone.hair += value;
-        selectedZone.averageHairPerFU = selectedZone.hair / selectedZone.graphs;
+        selectedZone.hairs += value;
+        selectedZone.averageHairPerFU = selectedZone.hairs / selectedZone.graphs;
 
-        globalState.setZones([...globalState.zones]);
+        globalState.setDonorZones([...globalState.donorZones]);
         globalState.updateTotalCounts();
     }
 
 
     useEffect(() => {
-        if (!selectedZone && globalState.zones.length > 0) {
-            setSelectedZone(globalState.zones[0]);
+        if (!selectedZone && globalState.donorZones.length > 0) {
+            setSelectedZone(globalState.donorZones[0]);
         }
-    }, [globalState.zones]);
+    }, [globalState.donorZones]);
 
 
     return (
@@ -140,7 +140,7 @@ export default function CounterScreen() {
 
                     <View style={styles.countContainer}>
                             <Text style={styles.mediumText}>{`Graphs: ${selectedZone.graphs}`}</Text>
-                            <Text style={styles.mediumText}>{`Hairs: ${selectedZone?.hair}`}</Text>
+                            <Text style={styles.mediumText}>{`Hairs: ${selectedZone?.hairs}`}</Text>
                     </View>
 
                     <View style={styles.outerInfoContainer}>

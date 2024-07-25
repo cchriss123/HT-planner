@@ -11,7 +11,7 @@ export interface DropdownComponentProps {
 
 export function DropdownComponent({selectedZone, setSelectedZone}: DropdownComponentProps) {
   const zoneState = useAppState();
-  const zones = zoneState.zones;
+  const zones = zoneState.donorZones;
 
   function renderItem(zone: Zone) {
     return (

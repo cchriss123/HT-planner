@@ -8,7 +8,11 @@ import Icon from "react-native-vector-icons/Ionicons";
 
 import logoImg from '@/assets/images/logo.png';
 import CustomBottomSheet from "@/components/CustomBottomSheet";
+import {useAppState} from "@/state/ZoneState";
+
 Appearance.getColorScheme = () => 'light';
+
+
 
 export default function ZonesScreen() {
     const colorScheme = Appearance.getColorScheme();
@@ -21,6 +25,13 @@ export default function ZonesScreen() {
     const wheelBottomSheetRef = useRef<BottomSheet>(null);
     const donorBottomSheetRef = useRef<BottomSheet>(null);
     const recipientBottomSheetRef = useRef<BottomSheet>(null);
+
+    const globalState = useAppState();
+    const donorZones = globalState.donorZones;
+
+
+
+
 
     const handleMenuPress = (
         menuVisible: boolean,
@@ -40,6 +51,21 @@ export default function ZonesScreen() {
         setMenuVisible(false);
     };
 
+    function GeneratedComponent() : React.JSX.Element[] {
+        let elements = [];
+        for (let i = 0; i < 5; i++) {
+            elements.push(
+                <TouchableOpacity style={styles.zoneButton}>
+                    <Text style={styles.zoneButtonText}>Donor Zone {i}</Text>
+                </TouchableOpacity>
+            );
+        }
+        return elements;
+    }
+
+
+
+
     return (
         <SafeAreaView style={{ flex: 1, paddingTop: 20 }}>
             <ScrollView contentContainerStyle={styles.outerContainer}>
@@ -55,6 +81,7 @@ export default function ZonesScreen() {
                         <FontAwesome gear="setting" size={35} color={wheelMenuVisible ? Colors.light.primaryBlue : Colors.light.neutralGrey} name="gear" />
                     </TouchableOpacity>
                 </View>
+
                 <View style={styles.buttonWrapper}>
                     <View style={styles.buttonContainer}>
                         <View style={styles.button}>
@@ -63,19 +90,29 @@ export default function ZonesScreen() {
                             </TouchableOpacity>
                             <Text style={styles.zoneListTitle}>Donor Zones</Text>
                         </View>
-                        <TouchableOpacity style={styles.zoneButton}>
-                            <Text style={styles.zoneButtonText}>Donor Zone 1</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.zoneButton}>
-                            <Text style={styles.zoneButtonText}>Donor Zone 2</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.zoneButton}>
-                            <Text style={styles.zoneButtonText}>Donor Zone 3</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.zoneButton}>
-                            <Text style={styles.zoneButtonText}>Donor Zone 4</Text>
-                        </TouchableOpacity>
+
+
+
+                        <GeneratedComponent>
+
+                        </GeneratedComponent>
+
+
+
+
+
+
+
+
+
                     </View>
+
+
+
+
+
+
+
                     <View style={styles.buttonContainer}>
                         <View style={styles.button}>
                             <TouchableOpacity onPress={() => handleMenuPress(recipientMenuVisible, setRecipientMenuVisible, recipientBottomSheetRef)}>
