@@ -45,6 +45,9 @@ export interface RecipientZone extends Zone {
 interface AppStateContextType {
     donorZones: DonorZone[];
     setDonorZones: (zones: DonorZone[]) => void;
+    recipientZones: RecipientZone[];
+    setRecipientZones: (zones: RecipientZone[]) => void;
+
     updateTotalCounts(): void;
     totalSingles: number;
     totalDoubles: number;
@@ -65,10 +68,13 @@ export function useAppState() {
     return context;
 }
 
+
+
 export function AppStateProvider({children}: { children: ReactNode }) {
     // const [donorZones, setDonorZones] = useState<Zone[]>([]);
-    const [donorZones, setDonorZones] = useState<DonorZone[]>(getMockZones());
     // const [recipientZones, setRecipientZones] = useState<Zone[]>([]);
+    const [donorZones, setDonorZones] = useState<DonorZone[]>(getMockDonorZones());
+    const [recipientZones, setRecipientZones] = useState<RecipientZone[]>(getMockRecipientZones());
 
     const [totalSingles, setTotalSingles] = useState(0);
     const [totalDoubles, setTotalDoubles] = useState(0);
@@ -79,13 +85,13 @@ export function AppStateProvider({children}: { children: ReactNode }) {
     const [totalHairPerFuCounted, setTotalHairPerFuCounted] = useState(0);
 
 
-
-
     return (
         <AppStateContext.Provider
             value={{
                 donorZones: donorZones,
                 setDonorZones: setDonorZones,
+                recipientZones: recipientZones,
+                setRecipientZones: setRecipientZones,
                 updateTotalCounts: updateTotalCounts,
                 totalSingles,
                 totalDoubles,
@@ -129,7 +135,7 @@ export function AppStateProvider({children}: { children: ReactNode }) {
     }
 }
 
-function getMockZones(): DonorZone[] {
+function getMockDonorZones(): DonorZone[] {
     return [
         {
             name: 'Zone 1',
@@ -177,5 +183,26 @@ function getMockZones(): DonorZone[] {
             hairs: 0,
             hairPerCountedFu: 0,
         }
+    ];
+}
+
+function getMockRecipientZones() {
+    return [
+        {
+            name: 'Recipient Zone 1',
+            caliber: 0.06,
+            fuPerCm2: 100,
+            hairPerCm2: 200,
+            area: 13.7,
+            desiredCoverageValue: 20,
+        },
+        {
+            name: 'Recipient Zone 2',
+            caliber: 0.07,
+            fuPerCm2: 120,
+            hairPerCm2: 150,
+            area: 11.7,
+            desiredCoverageValue: 20,
+        },
     ];
 }
