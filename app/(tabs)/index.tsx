@@ -7,6 +7,7 @@ import BottomSheet from "@gorhom/bottom-sheet";
 import Icon from "react-native-vector-icons/Ionicons";
 
 import logoImg from '@/assets/images/logo.png';
+import CustomBottomSheet from "@/components/CustomBottomSheet";
 Appearance.getColorScheme = () => 'light';
 
 export default function ZonesScreen() {
@@ -14,10 +15,18 @@ export default function ZonesScreen() {
     const styles = createStyles(colorScheme);
     const colors = colorScheme === 'dark' ? Colors.dark : Colors.light;
 
-    const [menuVisible, setMenuVisible] = useState(false);
-    const bottomSheetRef = useRef<BottomSheet>(null);
+    const [wheelMenuVisible, setWheelMenuVisible] = useState(false);
+    const [donorMenuVisible, setDonorMenuVisible] = useState(false);
+    const [recipientMenuVisible, setRecipientMenuVisible] = useState(false);
+    const wheelBottomSheetRef = useRef<BottomSheet>(null);
+    const donorBottomSheetRef = useRef<BottomSheet>(null);
+    const recipientBottomSheetRef = useRef<BottomSheet>(null);
 
-    const handleMenuPress = () => {
+    const handleMenuPress = (
+        menuVisible: boolean,
+        setMenuVisible: React.Dispatch<React.SetStateAction<boolean>>,
+        bottomSheetRef: React.RefObject<BottomSheet>
+    ) => {
         if (menuVisible) {
             setMenuVisible(false);
             bottomSheetRef.current?.close();
@@ -27,7 +36,7 @@ export default function ZonesScreen() {
         }
     };
 
-    const handleSheetClose = () => {
+    const handleSheetClose = (setMenuVisible: React.Dispatch<React.SetStateAction<boolean>>) => {
         setMenuVisible(false);
     };
 
@@ -39,14 +48,19 @@ export default function ZonesScreen() {
                     <View style={{ flex: 1, alignItems: 'center' }}>
                         <Image source={logoImg} style={styles.logo} />
                     </View>
-                    <TouchableOpacity style={styles.placeholderContainer} onPress={handleMenuPress}>
-                        <FontAwesome gear="setting" size={35} color={menuVisible ? Colors.light.primaryBlue : Colors.light.neutralGrey} name="gear" />
+                    <TouchableOpacity
+                        style={styles.placeholderContainer}
+                        onPress={() => handleMenuPress(wheelMenuVisible, setWheelMenuVisible, wheelBottomSheetRef)}
+                    >
+                        <FontAwesome gear="setting" size={35} color={wheelMenuVisible ? Colors.light.primaryBlue : Colors.light.neutralGrey} name="gear" />
                     </TouchableOpacity>
                 </View>
                 <View style={styles.buttonWrapper}>
                     <View style={styles.buttonContainer}>
                         <View style={styles.button}>
-                            <Icon name="add-circle" size={65} color={colors.primaryBlue} />
+                            <TouchableOpacity onPress={() => handleMenuPress(donorMenuVisible, setDonorMenuVisible, donorBottomSheetRef)}>
+                                <Icon name="add-circle" size={65} color={colors.primaryBlue} />
+                            </TouchableOpacity>
                             <Text style={styles.zoneListTitle}>Donor Zones</Text>
                         </View>
                         <TouchableOpacity style={styles.zoneButton}>
@@ -64,7 +78,9 @@ export default function ZonesScreen() {
                     </View>
                     <View style={styles.buttonContainer}>
                         <View style={styles.button}>
-                            <Icon name="add-circle" size={65} color={colors.primaryBlue} />
+                            <TouchableOpacity onPress={() => handleMenuPress(recipientMenuVisible, setRecipientMenuVisible, recipientBottomSheetRef)}>
+                                <Icon name="add-circle" size={65} color={colors.primaryBlue} />
+                            </TouchableOpacity>
                             <Text style={styles.zoneListTitle}>Recipient Zones</Text>
                         </View>
                         <TouchableOpacity style={styles.zoneButton}>
@@ -79,6 +95,27 @@ export default function ZonesScreen() {
                     </View>
                 </View>
             </ScrollView>
+
+            <CustomBottomSheet
+                ref={wheelBottomSheetRef}
+                onClose={() => handleSheetClose(setWheelMenuVisible)}
+            >
+                <Text>Wheel Menu Content</Text>
+            </CustomBottomSheet>
+
+            <CustomBottomSheet
+                ref={donorBottomSheetRef}
+                onClose={() => handleSheetClose(setDonorMenuVisible)}
+            >
+                <Text>Donor Menu Content</Text>
+            </CustomBottomSheet>
+
+            <CustomBottomSheet
+                ref={recipientBottomSheetRef}
+                onClose={() => handleSheetClose(setRecipientMenuVisible)}
+            >
+                <Text>Recipient Menu Content</Text>
+            </CustomBottomSheet>
         </SafeAreaView>
     );
 }
@@ -102,7 +139,7 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             marginTop: 10,
         },
         placeholderContainer: {
-            width: 50, // Adjust this width to match the gear icon's width
+            width: 50,
         },
         logo: {
             width: 35,
@@ -146,7 +183,7 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             marginVertical: 5,
             height: 50,
             padding: 10,
-            backgroundColor: colors.primaryBlue,
+            backgroundColor: colors.solidBackground,
             borderRadius: 8,
             marginBottom: 10,
             shadowColor: '#000',
@@ -158,7 +195,7 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             justifyContent: 'center',
         },
         zoneButtonText: {
-            color: colors.solidBackground,
+            color: colors.primaryText,
         },
     });
 }
