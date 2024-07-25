@@ -5,10 +5,9 @@ import { Colors } from '@/constants/Colors';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import BottomSheet from "@gorhom/bottom-sheet";
 import Icon from "react-native-vector-icons/Ionicons";
-
 import logoImg from '@/assets/images/logo.png';
 import CustomBottomSheet from "@/components/CustomBottomSheet";
-import {useAppState} from "@/state/ZoneState";
+import {useAppState, Zone} from "@/state/ZoneState";
 
 Appearance.getColorScheme = () => 'light';
 
@@ -22,71 +21,51 @@ export default function ZonesScreen() {
     const [wheelMenuVisible, setWheelMenuVisible] = useState(false);
     const [donorMenuVisible, setDonorMenuVisible] = useState(false);
     const [recipientMenuVisible, setRecipientMenuVisible] = useState(false);
+    const [editZoneVisible, setEditZoneVisible] = useState(false);
+    const [selectedZone, setSelectedZone] = useState<Zone | null>(null);
     const wheelBottomSheetRef = useRef<BottomSheet>(null);
     const donorBottomSheetRef = useRef<BottomSheet>(null);
     const recipientBottomSheetRef = useRef<BottomSheet>(null);
-
+    const editZoneBottomSheetRef = useRef<BottomSheet>(null);
     const globalState = useAppState();
-
-
     const donorZones = globalState.donorZones;
 
-    const [donorZoneMenuVisible, setDonorZoneMenuVisible] = useState<boolean[]>(donorZones.map(() => false));
-    const donorBottomSheetRefs = useRef<React.RefObject<BottomSheet>[]>(donorZones.map(() => React.createRef<BottomSheet>()));
-
-    const setSpecificDonorZoneMenuVisible = (i: number, visible: boolean) => {
-
-        setDonorZoneMenuVisible((prev) => {
-            const newStates = [...prev];
-            newStates[i] = visible;
-            return newStates;
-        });
-    };
-
-    const handleMenuPress = (
+    function handleMenuPress(
         menuVisible: boolean,
         setMenuVisible: React.Dispatch<React.SetStateAction<boolean>>,
-        bottomSheetRef: React.RefObject<BottomSheet>
-
-    ) => {
-        console.log(menuVisible);
+        bottomSheetRef: React.RefObject<BottomSheet>,
+        zone: Zone | null = null
+    ) {
         if (menuVisible) {
             setMenuVisible(false);
             bottomSheetRef.current?.close();
         } else {
+            setSelectedZone(zone);
             setMenuVisible(true);
             bottomSheetRef.current?.expand();
         }
-    };
-
-    const handleSheetClose = (setMenuVisible: React.Dispatch<React.SetStateAction<boolean>>) => {
-        setMenuVisible(false);
-    };
-
-    function ZoneComponent() : React.JSX.Element[] {
-        let elements = [];
-        for (let i = 0; i < donorZones.length; i++) {
-            elements.push(
-                <TouchableOpacity
-                    key={i}
-                    style={styles.zoneButton}
-                    onPress={() => {
-                        handleMenuPress(
-                            donorZoneMenuVisible[i],
-                            () => setSpecificDonorZoneMenuVisible(i, !donorZoneMenuVisible[i]),
-                            donorBottomSheetRefs.current[i]
-                        );
-                    }}
-                >
-                    <Text style={styles.zoneButtonText}>{donorZones[i].name}</Text>
-                </TouchableOpacity>
-            );
-        }
-        return elements;
     }
 
+    function handleSheetClose(setMenuVisible: React.Dispatch<React.SetStateAction<boolean>>) {
+        setMenuVisible(false);
+    }
 
-
+    function DonorZoneComponents() {
+        return donorZones.map((zone: Zone, i: number) => (
+            <TouchableOpacity
+                key={i}
+                style={styles.zoneButton}
+                onPress={() => handleMenuPress(
+                    editZoneVisible,
+                    setEditZoneVisible,
+                    editZoneBottomSheetRef,
+                    zone
+                )}
+            >
+                <Text style={styles.zoneButtonText}>{zone.name}</Text>
+            </TouchableOpacity>
+        ));
+    }
 
     return (
         <SafeAreaView style={{ flex: 1, paddingTop: 20 }}>
@@ -113,19 +92,9 @@ export default function ZonesScreen() {
                             <Text style={styles.zoneListTitle}>Donor Zones</Text>
                         </View>
 
-
-
-                        <ZoneComponent>
-
-                        </ZoneComponent>
+                        <DonorZoneComponents />
 
                     </View>
-
-
-
-
-
-
 
                     <View style={styles.buttonContainer}>
                         <View style={styles.button}>
@@ -147,9 +116,6 @@ export default function ZonesScreen() {
                 </View>
             </ScrollView>
 
-
-
-
             <CustomBottomSheet
                 ref={wheelBottomSheetRef}
                 onClose={() => handleSheetClose(setWheelMenuVisible)}
@@ -161,7 +127,7 @@ export default function ZonesScreen() {
                 ref={donorBottomSheetRef}
                 onClose={() => handleSheetClose(setDonorMenuVisible)}
             >
-                <Text>Donor Menu Content</Text>
+                <Text>Add Donor Zone Menu Content</Text>
             </CustomBottomSheet>
 
             <CustomBottomSheet
@@ -169,6 +135,13 @@ export default function ZonesScreen() {
                 onClose={() => handleSheetClose(setRecipientMenuVisible)}
             >
                 <Text>Recipient Menu Content</Text>
+            </CustomBottomSheet>
+
+            <CustomBottomSheet
+                ref={editZoneBottomSheetRef}
+                onClose={() => handleSheetClose(setEditZoneVisible)}
+            >
+                <Text>{selectedZone ? selectedZone.name : 'Edit Zone'} Menu Content</Text>
             </CustomBottomSheet>
         </SafeAreaView>
     );
@@ -253,3 +226,5 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
         },
     });
 }
+
+export { ZonesScreen };
