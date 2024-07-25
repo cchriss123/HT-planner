@@ -7,7 +7,7 @@ import BottomSheet from "@gorhom/bottom-sheet";
 import Icon from "react-native-vector-icons/Ionicons";
 import logoImg from '@/assets/images/logo.png';
 import CustomBottomSheet from "@/components/CustomBottomSheet";
-import {useAppState, Zone} from "@/state/ZoneState";
+import {useAppState, Zone} from "@/state/Store";
 
 Appearance.getColorScheme = () => 'light';
 

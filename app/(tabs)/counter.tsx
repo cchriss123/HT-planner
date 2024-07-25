@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '@/constants/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { DropdownComponent } from '@/components/DropdownComponent';
-import {useAppState, Zone} from '@/state/ZoneState';
+import {useAppState, DonorZone} from '@/state/Store';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import CustomBottomSheet from '@/components/CustomBottomSheet';
 import BottomSheet from "@gorhom/bottom-sheet";
@@ -15,7 +15,7 @@ export default function CounterScreen() {
     const colorScheme = useColorScheme();
     const styles = createStyles(colorScheme);
     const globalState = useAppState();
-    const [selectedZone, setSelectedZone] = useState<Zone | null>(null);
+    const [selectedZone, setSelectedZone] = useState<DonorZone | null>(null);
 
     const [menuVisible, setMenuVisible] = useState(false);
     const bottomSheetRef = useRef<BottomSheet>(null);

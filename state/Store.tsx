@@ -10,35 +10,41 @@ export interface Zone {
     desiredCoverageValue: number; // Desired coverage value (can be used for both donor and recipient)
 
     // Calculated values from user inputs
-    fuPerZone?: number; // = areaInCm2 * fuPerCm2
     hairPerFu?: number; // = hairPerCm2 / fuPerCm2
+}
+
+export interface DonorZone extends Zone {
+    // Counter values
+    singles: number;
+    doubles: number;
+    triples: number;
+    quadruples: number;
+    graphs: number; // = singles + doubles + triples + quadruples
+    hairs: number; // = singles + (doubles * 2) + (triples * 3) + (quadruples * 4)
+    hairPerCountedFu: number; // = hairs / graphs
+
+    // Calculated values from user inputs
+    fuPerZone?: number; // = areaInCm2 * fuPerCm2
     coverageValue?: number; // = caliber * hairPerCm2
     hairPerZone?: number; // = areaInCm2 * hairPerCm2
 
-    // Counter values (Donor only)
-    singles?: number;
-    doubles?: number;
-    triples?: number;
-    quadruples?: number;
-    graphs?: number; // = singles + doubles + triples + quadruples
-    hairs?: number; // = singles + (doubles * 2) + (triples * 3) + (quadruples * 4)
-    hairPerCountedFu?: number; // = hairs / graphs
-
-    // Output values
-    // Donor
-    fuExtractedToReachDonorDesiredCoverageValue?: number; // The number of FUs to be extracted to achieve the desired donor coverage value
     // Formula: fuExtractedToReachDonorDesiredCoverageValue = fuPerZone - ((areaInCm2 * desiredCoverageValue) / (caliber * hairPerFu))
+    fuExtractedToReachDonorDesiredCoverageValue?: number;
+}
 
-    // Recipient
-    fuImplantedToReachDesiredRecipientCoverageValue?: number; // The number of FUs to be implanted to achieve the desired recipient coverage value
+export interface RecipientZone extends Zone {
+
+    // Calculated values from user inputs
+    startingCoverageValue?: number; // = caliber * hairPerCm2
+    coverageValueDifference?: number; // = recipientDesiredCoverageValue - starting
+
     // Formula: fuImplantedToReachDesiredRecipientCoverageValue = (areaInCm2 * coverageValueDifference) / (caliber * hairPerFu)
+    fuImplantedToReachDesiredRecipientCoverageValue?: number; // The number of FUs to be implanted to achieve the desired recipient coverage value
 }
 
 interface AppStateContextType {
-    donorZones: Zone[];
-    setDonorZones: (zones: Zone[]) => void;
-
-
+    donorZones: DonorZone[];
+    setDonorZones: (zones: DonorZone[]) => void;
     updateTotalCounts(): void;
     totalSingles: number;
     totalDoubles: number;
@@ -61,7 +67,7 @@ export function useAppState() {
 
 export function AppStateProvider({children}: { children: ReactNode }) {
     // const [donorZones, setDonorZones] = useState<Zone[]>([]);
-    const [donorZones, setDonorZones] = useState<Zone[]>(getMockZones());
+    const [donorZones, setDonorZones] = useState<DonorZone[]>(getMockZones());
     // const [recipientZones, setRecipientZones] = useState<Zone[]>([]);
 
     const [totalSingles, setTotalSingles] = useState(0);
@@ -104,12 +110,12 @@ export function AppStateProvider({children}: { children: ReactNode }) {
         let totalArea = 0;
 
         for (const zone of donorZones) {
-            singles += zone.singles || 0;
-            doubles += zone.doubles || 0;
-            triples += zone.triples || 0;
-            quadruples += zone.quadruples || 0;
-            graphs += zone.graphs || 0;
-            hair += zone.hairs || 0;
+            singles += zone.singles;
+            doubles += zone.doubles;
+            triples += zone.triples;
+            quadruples += zone.quadruples;
+            graphs += zone.graphs;
+            hair += zone.hairs;
             totalArea += zone.area;
         }
 
@@ -123,10 +129,9 @@ export function AppStateProvider({children}: { children: ReactNode }) {
     }
 }
 
-function getMockZones(): Zone[] {
+function getMockZones(): DonorZone[] {
     return [
         {
-            // createdAt: new Date().toISOString(),
             name: 'Zone 1',
             caliber: 0.06,
             fuPerCm2: 100,
@@ -143,8 +148,7 @@ function getMockZones(): Zone[] {
         },
 
         {
-            // createdAt: new Date().toISOString(),
-            name: 'Zone 2',
+            name: 'Donor Zone 2',
             caliber: 0.07,
             fuPerCm2: 120,
             hairPerCm2: 150,
@@ -158,5 +162,20 @@ function getMockZones(): Zone[] {
             hairs: 0,
             hairPerCountedFu: 0,
         },
+        {
+            name: 'Donor Zone 3',
+            caliber: 0.08,
+            fuPerCm2: 130,
+            hairPerCm2: 170,
+            area: 15.7,
+            desiredCoverageValue: 20,
+            singles: 0,
+            doubles: 0,
+            triples: 0,
+            quadruples: 0,
+            graphs: 0,
+            hairs: 0,
+            hairPerCountedFu: 0,
+        }
     ];
 }

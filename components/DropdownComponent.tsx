@@ -2,18 +2,18 @@ import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import AntDesign from '@expo/vector-icons/AntDesign';
-import { useAppState, Zone } from '@/state/ZoneState';
+import { useAppState, DonorZone } from '@/state/Store';
 
 export interface DropdownComponentProps {
-  selectedZone: Zone | null;
-  setSelectedZone: (zone: Zone | null) => void;
+  selectedZone: DonorZone | null;
+  setSelectedZone: (zone: DonorZone | null) => void;
 }
 
 export function DropdownComponent({selectedZone, setSelectedZone}: DropdownComponentProps) {
   const zoneState = useAppState();
   const zones = zoneState.donorZones;
 
-  function renderItem(zone: Zone) {
+  function renderItem(zone: DonorZone) {
     return (
       <View style={styles.item}>
         <Text style={styles.textItem}>{zone.name}</Text>

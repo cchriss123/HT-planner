@@ -11,7 +11,7 @@ import { Colors } from '@/constants/Colors';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 import {Text, View} from "react-native";
-import {AppStateProvider} from "@/state/ZoneState";
+import {AppStateProvider} from "@/state/Store";
 import {GestureHandlerRootView} from "react-native-gesture-handler";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
