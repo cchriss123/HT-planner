@@ -62,7 +62,7 @@ export default function CounterScreen() {
 
         value > 0 ? selectedZone.graphs ++ : selectedZone.graphs --;
         selectedZone.hairs += value;
-        selectedZone.averageHairPerFU = selectedZone.hairs / selectedZone.graphs;
+        selectedZone.hairPerCountedFu = selectedZone.hairs / selectedZone.graphs;
 
         globalState.setDonorZones([...globalState.donorZones]);
         globalState.updateTotalCounts();
@@ -149,7 +149,7 @@ export default function CounterScreen() {
 
                             <View style={{flexDirection: 'row'}}>
                                 <Text style={styles.infoText}>{`Hairs/FU: `}</Text>
-                                <Text>{`${selectedZone.averageHairPerFU.toFixed(2)}`}</Text>
+                                <Text>{`${selectedZone.hairPerCountedFu.toFixed(2)}`}</Text>
                             </View>
                             <View style={{flexDirection: 'row'}}>
                                  <Text style={styles.infoText}>{`Area: `}</Text>
