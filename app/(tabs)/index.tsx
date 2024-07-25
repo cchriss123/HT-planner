@@ -27,17 +27,29 @@ export default function ZonesScreen() {
     const recipientBottomSheetRef = useRef<BottomSheet>(null);
 
     const globalState = useAppState();
+
+
     const donorZones = globalState.donorZones;
 
+    const [donorZoneMenuVisible, setDonorZoneMenuVisible] = useState<boolean[]>(donorZones.map(() => false));
+    const donorBottomSheetRefs = useRef<React.RefObject<BottomSheet>[]>(donorZones.map(() => React.createRef<BottomSheet>()));
 
+    const setSpecificDonorZoneMenuVisible = (i: number, visible: boolean) => {
 
-
+        setDonorZoneMenuVisible((prev) => {
+            const newStates = [...prev];
+            newStates[i] = visible;
+            return newStates;
+        });
+    };
 
     const handleMenuPress = (
         menuVisible: boolean,
         setMenuVisible: React.Dispatch<React.SetStateAction<boolean>>,
         bottomSheetRef: React.RefObject<BottomSheet>
+
     ) => {
+        console.log(menuVisible);
         if (menuVisible) {
             setMenuVisible(false);
             bottomSheetRef.current?.close();
@@ -51,12 +63,22 @@ export default function ZonesScreen() {
         setMenuVisible(false);
     };
 
-    function GeneratedComponent() : React.JSX.Element[] {
+    function ZoneComponent() : React.JSX.Element[] {
         let elements = [];
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < donorZones.length; i++) {
             elements.push(
-                <TouchableOpacity style={styles.zoneButton}>
-                    <Text style={styles.zoneButtonText}>Donor Zone {i}</Text>
+                <TouchableOpacity
+                    key={i}
+                    style={styles.zoneButton}
+                    onPress={() => {
+                        handleMenuPress(
+                            donorZoneMenuVisible[i],
+                            () => setSpecificDonorZoneMenuVisible(i, !donorZoneMenuVisible[i]),
+                            donorBottomSheetRefs.current[i]
+                        );
+                    }}
+                >
+                    <Text style={styles.zoneButtonText}>{donorZones[i].name}</Text>
                 </TouchableOpacity>
             );
         }
@@ -93,17 +115,9 @@ export default function ZonesScreen() {
 
 
 
-                        <GeneratedComponent>
+                        <ZoneComponent>
 
-                        </GeneratedComponent>
-
-
-
-
-
-
-
-
+                        </ZoneComponent>
 
                     </View>
 
@@ -132,6 +146,9 @@ export default function ZonesScreen() {
                     </View>
                 </View>
             </ScrollView>
+
+
+
 
             <CustomBottomSheet
                 ref={wheelBottomSheetRef}
