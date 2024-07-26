@@ -58,37 +58,33 @@ export default function ZonesScreen() {
     }
 
     function DonorZoneComponents() {
-        return donorZones.map((zone: Zone, i: number) => (
-            <TouchableOpacity
-                key={i}
-                style={styles.zoneButton}
-                onPress={() => handleMenuPress(
-                    editDonorZoneVisible,
-                    setEditDonorZoneVisible,
-                    editDonorZoneBottomSheetRef,
-                    zone
-                )}
-            >
-                <Text style={styles.zoneButtonText}>{zone.name}</Text>
-            </TouchableOpacity>
-        ));
+        return donorZones.map((zone: Zone, i: number) => <TouchableOpacity
+            key={i}
+            style={styles.zoneButton}
+            onPress={() => handleMenuPress(
+                editDonorZoneVisible,
+                setEditDonorZoneVisible,
+                editDonorZoneBottomSheetRef,
+                zone
+            )}
+        >
+            <Text style={styles.zoneButtonText}>{zone.name}</Text>
+        </TouchableOpacity>);
     }
 
     function RecipientZoneComponents() {
-        return recipientZones.map((zone: Zone, i: number) => (
-            <TouchableOpacity
-                key={i}
-                style={styles.zoneButton}
-                onPress={() => handleMenuPress(
-                    editRecipientZoneVisible,
-                    setEditRecipientZoneVisible,
-                    editRecipientZoneBottomSheetRef,
-                    zone
-                )}
-            >
-                <Text style={styles.zoneButtonText}>{zone.name}</Text>
-            </TouchableOpacity>
-        ));
+        return recipientZones.map((zone: Zone, i: number) => <TouchableOpacity
+            key={i}
+            style={styles.zoneButton}
+            onPress={() => handleMenuPress(
+                editRecipientZoneVisible,
+                setEditRecipientZoneVisible,
+                editRecipientZoneBottomSheetRef,
+                zone
+            )}
+        >
+            <Text style={styles.zoneButtonText}>{zone.name}</Text>
+        </TouchableOpacity>);
     }
 
     return (
@@ -131,39 +127,21 @@ export default function ZonesScreen() {
                 </View>
             </ScrollView>
 
-            <CustomBottomSheet
-                ref={wheelBottomSheetRef}
-                onClose={() => handleSheetClose(setWheelMenuVisible)}
-            >
+            <CustomBottomSheet ref={wheelBottomSheetRef} onClose={() => handleSheetClose(setWheelMenuVisible)}>
                 <Text>Wheel Menu Content</Text>
-            </CustomBottomSheet>
 
-            <CustomBottomSheet
-                ref={addDonorBottomSheetRef}
-                onClose={() => handleSheetClose(setAddDonorMenuVisible)}
-            >
+            </CustomBottomSheet>
+            <CustomBottomSheet ref={addDonorBottomSheetRef} onClose={() => handleSheetClose(setAddDonorMenuVisible)}>
                 <Text>Add Donor Zone Menu Content</Text>
             </CustomBottomSheet>
-
-            <CustomBottomSheet
-                ref={addRecipientBottomSheetRef}
-                onClose={() => handleSheetClose(setAddRecipientMenuVisible)}
-            >
-                <Text>Recipient Menu Content</Text>
+            <CustomBottomSheet ref={addRecipientBottomSheetRef} onClose={() => handleSheetClose(setAddRecipientMenuVisible)}>
+                <Text>Add Recipient Menu Content</Text>
             </CustomBottomSheet>
-
-            <CustomBottomSheet
-                ref={editDonorZoneBottomSheetRef}
-                onClose={() => handleSheetClose(setEditDonorZoneVisible)}
-            >
-                <Text>{selectedZone ? selectedZone.name : 'Edit Zone'} Menu Content</Text>
+            <CustomBottomSheet ref={editDonorZoneBottomSheetRef} onClose={() => handleSheetClose(setEditDonorZoneVisible)}>
+                <Text>Edit Donor Zone Menu for {selectedZone?.name}</Text>
             </CustomBottomSheet>
-
-            <CustomBottomSheet
-                ref={editRecipientZoneBottomSheetRef}
-                onClose={() => handleSheetClose(setEditRecipientZoneVisible)}
-            >
-                <Text>{selectedZone ? selectedZone.name : 'Edit Zone'} Menu Content</Text>
+            <CustomBottomSheet ref={editRecipientZoneBottomSheetRef} onClose={() => handleSheetClose(setEditRecipientZoneVisible)}>
+                <Text>Edit Recipient Zone Menu for {selectedZone?.name}</Text>
             </CustomBottomSheet>
 
         </SafeAreaView>
