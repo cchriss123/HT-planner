@@ -32,6 +32,8 @@ export interface DonorZone extends Zone {
     fuExtractedToReachDonorDesiredCoverageValue?: number;
 }
 
+// export type AnyZone = DonorZone | RecipientZone;
+
 export interface RecipientZone extends Zone {
 
     // Calculated values from user inputs
@@ -138,7 +140,7 @@ export function AppStateProvider({children}: { children: ReactNode }) {
 function getMockDonorZones(): DonorZone[] {
     return [
         {
-            name: 'Zone 1',
+            name: 'Donor Zone 1',
             caliber: 0.06,
             fuPerCm2: 100,
             hairPerCm2: 200,
