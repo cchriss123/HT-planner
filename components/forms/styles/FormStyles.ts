@@ -9,45 +9,69 @@ export default function FormStyles() {
 
     return StyleSheet.create({
         container: {
-            padding: 20,
-            backgroundColor: colors.softBackground,
+            // borderWidth: 1,
             flex: 1,
+            width: '70%',
+            alignItems: 'center',
+
         },
         input: {
+            width: '100%',
             height: 40,
-            borderColor: colors.neutralGrey,
-            borderWidth: 1,
-            marginBottom: 10,
-            paddingLeft: 8,
-            backgroundColor: colors.softBackground,
+            // borderWidth: 1,
             color: colors.primaryText,
+            borderColor: 'lightgrey',
+            backgroundColor: colors.softBackground,
             borderRadius: 8,
             shadowColor: '#000',
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.3,
+            shadowOffset: {
+                width: 0,
+                height: 2,
+            },
             shadowRadius: 5,
             elevation: 5,
+            marginVertical: 10,
+            paddingLeft: 10,
+
+
         },
         button: {
-            backgroundColor: colors.primaryBlue,
-            padding: 10,
-            textAlign: 'center',
+            height: 40,
+            color: colors.primaryText,
             borderRadius: 8,
-            marginTop: 10,
             shadowColor: '#000',
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.3,
+            shadowOffset: {
+                width: 0,
+                height: 2,
+            },
             shadowRadius: 5,
             elevation: 5,
+            marginVertical: 20,
+
+            width: '40%',
+
+            backgroundColor: colors.primaryBlue,
+            alignItems: 'center',
+            justifyContent: 'center',
         },
         buttonTitle: {
-            color: colors.primaryText,
-            fontSize: 16,
+            color: colors.solidBackground,
+            alignItems: 'center',
+            justifyContent: 'center',
+
         },
         message: {
-            marginTop: 10,
             color: colors.primaryText,
             textAlign: 'center',
+            fontWeight: 'bold',
+
         },
+        title: {
+            fontSize: 16,
+            fontWeight: 'bold',
+            color: colors.primaryText,
+            marginTop: 20,
+        }
     });
 }
+

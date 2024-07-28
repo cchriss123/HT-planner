@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, TextInput, View, Text } from 'react-native';
+import {Button, TextInput, View, Text, TouchableOpacity} from 'react-native';
 import { DonorZone } from "@/state/Store";
 import FormStyles from "@/components/forms/styles/FormStyles";
 
@@ -75,6 +75,8 @@ const AddDonorZone: React.FC<AddDonorZoneProps> = ({ zones }) => {
 
     return (
         <View style={styles.container}>
+            <Text style={styles.title}>Add Donor Zone</Text>
+
             <TextInput
                 style={styles.input}
                 placeholder="Zone Name"
@@ -117,21 +119,20 @@ const AddDonorZone: React.FC<AddDonorZoneProps> = ({ zones }) => {
                 value={desiredCoverageValue}
                 placeholderTextColor={styles.input.color}
             />
-            <View style={styles.button}>
-                <Button
-                    title="Add Donor Zone"
-                    onPress={() => handleSubmit({
-                        name,
-                        caliber,
-                        fuPerCm2,
-                        hairsPerCm2,
-                        area,
-                        desiredCoverageValue,
-                        zones,
-                    })}
-                    color={styles.button.backgroundColor}
-                />
-            </View>
+            <TouchableOpacity
+                style={styles.button}
+                onPress={() => handleSubmit({
+                    name,
+                    caliber,
+                    fuPerCm2,
+                    hairsPerCm2,
+                    area,
+                    desiredCoverageValue,
+                    zones,
+                })}
+            >
+                <Text style={styles.buttonTitle}>Add Donor Zone</Text>
+            </TouchableOpacity>
             {message ? <Text style={styles.message}>{message}</Text> : null}
         </View>
     );

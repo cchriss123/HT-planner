@@ -11,7 +11,7 @@ interface Props {
 
 const CustomBottomSheet = forwardRef<BottomSheet, Props>((props, ref) => {
     const { children} = props;
-    const snapPoints = useMemo(() => ['25%', '50%', '70%'], []);
+    const snapPoints = useMemo(() => ['25%', '50%', '70%', '100%'], []);
     const colorScheme = useColorScheme();
     const colors = colorScheme === 'dark' ? Colors.dark : Colors.light;
     const renderBackDrop = useCallback(
@@ -33,7 +33,7 @@ const CustomBottomSheet = forwardRef<BottomSheet, Props>((props, ref) => {
             onClose={props.onClose}
             backdropComponent={renderBackDrop}
             animationConfigs={animationConfigs}
-            backgroundStyle={{borderRadius: 12, backgroundColor: colors.softBackground}}
+            backgroundStyle={{borderRadius: 12, backgroundColor: colors.solidBackground}}
 
         >
             <View style={styles.contentContainer}>
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: Colors.light.softBackground,
+        backgroundColor: Colors.light.solidBackground,
     },
 });
 

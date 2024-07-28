@@ -50,6 +50,9 @@ export function DropdownComponent({selectedZone, setSelectedZone}: DropdownCompo
 
 const styles = StyleSheet.create({
   dropdown: {
+
+    borderWidth: 1,
+    borderColor: 'lightgrey',
     margin: 16,
     height: 50,
     backgroundColor: 'white',
@@ -58,12 +61,11 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 1,
+      height: 2,
     },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.41,
+    shadowRadius: 5,
     width: '100%',
-    elevation: 2,
+    elevation: 5,
   },
   icon: {
     marginRight: 5,

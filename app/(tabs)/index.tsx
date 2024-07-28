@@ -52,6 +52,7 @@ export default function ZonesScreen() {
             setSelectedZone(zone);
             setMenuVisible(true);
             bottomSheetRef.current?.expand();
+            bottomSheetRef.current?.snapToIndex(2)
         }
     }
 
@@ -133,7 +134,6 @@ export default function ZonesScreen() {
                 <Text>Wheel Menu Content</Text>
             </CustomBottomSheet>
             <CustomBottomSheet ref={addDonorBottomSheetRef} onClose={() => handleSheetClose(setAddDonorMenuVisible)}>
-                <Text>Add Donor Zone Menu Content</Text>
                 <AddDonorZone zones={donorZones} />
             </CustomBottomSheet>
             <CustomBottomSheet ref={addRecipientBottomSheetRef} onClose={() => handleSheetClose(setAddRecipientMenuVisible)}>
