@@ -8,6 +8,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import logoImg from '@/assets/images/logo.png';
 import CustomBottomSheet from "@/components/CustomBottomSheet";
 import {useAppState, Zone} from "@/state/Store";
+import AddDonorZone from "@/components/forms/AddDonorZone";
 
 Appearance.getColorScheme = () => 'light';
 
@@ -129,10 +130,10 @@ export default function ZonesScreen() {
 
             <CustomBottomSheet ref={wheelBottomSheetRef} onClose={() => handleSheetClose(setWheelMenuVisible)}>
                 <Text>Wheel Menu Content</Text>
-
             </CustomBottomSheet>
             <CustomBottomSheet ref={addDonorBottomSheetRef} onClose={() => handleSheetClose(setAddDonorMenuVisible)}>
                 <Text>Add Donor Zone Menu Content</Text>
+                <AddDonorZone zones={donorZones} />
             </CustomBottomSheet>
             <CustomBottomSheet ref={addRecipientBottomSheetRef} onClose={() => handleSheetClose(setAddRecipientMenuVisible)}>
                 <Text>Add Recipient Menu Content</Text>
