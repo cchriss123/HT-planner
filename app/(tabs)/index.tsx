@@ -9,6 +9,7 @@ import logoImg from '@/assets/images/logo.png';
 import CustomBottomSheet from "@/components/CustomBottomSheet";
 import {useAppState, Zone} from "@/state/Store";
 import AddDonorZone from "@/components/forms/AddDonorZone";
+import AddRecipientZone from "@/components/forms/AddRecipientZone";
 
 Appearance.getColorScheme = () => 'light';
 
@@ -137,6 +138,7 @@ export default function ZonesScreen() {
             </CustomBottomSheet>
             <CustomBottomSheet ref={addRecipientBottomSheetRef} onClose={() => handleSheetClose(setAddRecipientMenuVisible)}>
                 <Text>Add Recipient Menu Content</Text>
+                <AddRecipientZone zones={recipientZones} />
             </CustomBottomSheet>
             <CustomBottomSheet ref={editDonorZoneBottomSheetRef} onClose={() => handleSheetClose(setEditDonorZoneVisible)}>
                 <Text>Edit Donor Zone Menu for {selectedZone?.name}</Text>
