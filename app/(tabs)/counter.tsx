@@ -1,10 +1,10 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {View, TouchableOpacity, Text, useColorScheme, StyleSheet} from 'react-native';
+import {View, TouchableOpacity, Text, useColorScheme, StyleSheet, Keyboard} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '@/constants/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { DropdownComponent } from '@/components/DropdownComponent';
-import {useAppState, DonorZone} from '@/state/Store';
+import {useAppState, DonorZone, Zone,} from '@/state/Store';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import CustomBottomSheet from '@/components/CustomBottomSheet';
 import BottomSheet from "@gorhom/bottom-sheet";
@@ -16,22 +16,18 @@ export default function CounterScreen() {
     const styles = createStyles(colorScheme);
     const globalState = useAppState();
     const [selectedZone, setSelectedZone] = useState<DonorZone | null>(null);
+    const ref = useRef<BottomSheet>(null);
 
-    const [menuVisible, setMenuVisible] = useState(false);
+
     const bottomSheetRef = useRef<BottomSheet>(null);
 
     const handleMenuPress = () => {
-        if (menuVisible) {
-            setMenuVisible(false);
-            bottomSheetRef.current?.close();
-        } else {
-            setMenuVisible(true);
-            bottomSheetRef.current?.expand();
-        }
+        ref.current?.expand();
+        ref.current?.snapToIndex(1);
     };
-    const handleSheetClose = () => {
-        setMenuVisible(false);
-    };
+
+
+
 
 
     function updateZoneCounts(value: number) {
@@ -85,7 +81,7 @@ export default function CounterScreen() {
                     </View>
                     <TouchableOpacity style={{marginHorizontal: "5%"}} onPress={() => handleMenuPress()}>
                         <FontAwesome gear="setting" size={35} color={
-                            menuVisible ? Colors.light.primaryBlue : Colors.light.neutralGrey
+                            globalState.menuVisible ? Colors.light.primaryBlue : Colors.light.neutralGrey
                         }  name="gear"/>
                     </TouchableOpacity>
 
@@ -204,7 +200,7 @@ export default function CounterScreen() {
 
             </View>
 
-            <CustomBottomSheet ref={bottomSheetRef} onClose={handleSheetClose}>
+            <CustomBottomSheet ref={bottomSheetRef}>
                     <Text>Test</Text>
             </CustomBottomSheet>
 
