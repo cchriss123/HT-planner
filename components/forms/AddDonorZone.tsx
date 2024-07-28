@@ -1,6 +1,7 @@
 import React from 'react';
-import { Button, TextInput, View, Text, StyleSheet } from 'react-native';
+import { Button, TextInput, View, Text } from 'react-native';
 import { DonorZone } from "@/state/Store";
+import FormStyles from "@/components/forms/styles/FormStyles";
 
 export interface AddDonorZoneProps {
     zones: DonorZone[];
@@ -24,6 +25,8 @@ const AddDonorZone: React.FC<AddDonorZoneProps> = ({ zones }) => {
     const [area, setArea] = React.useState('');
     const [desiredCoverageValue, setDesiredCoverageValue] = React.useState('');
     const [message, setMessage] = React.useState('');
+
+    const styles = FormStyles(); // Invoke the function to get the styles
 
     const handleSubmit = (args: HandleSubmitArgs) => {
         if (!args.name) {
@@ -71,36 +74,67 @@ const AddDonorZone: React.FC<AddDonorZoneProps> = ({ zones }) => {
     };
 
     return (
-        <View>
-            <TextInput placeholder="Zone Name" onChangeText={setName} value={name} />
-            <TextInput placeholder="Caliber" onChangeText={setCaliber} value={caliber} />
-            <TextInput placeholder="Follicular Units per cm2" onChangeText={setFuPerCm2} value={fuPerCm2} />
-            <TextInput placeholder="Hairs per cm2" onChangeText={setHairsPerCm2} value={hairsPerCm2} />
-            <TextInput placeholder="Area in cm2" onChangeText={setArea} value={area} />
-            <TextInput placeholder="Desired Coverage Value" onChangeText={setDesiredCoverageValue} value={desiredCoverageValue} />
-            <Button
-                title="Add Donor Zone"
-                onPress={() => handleSubmit({
-                    name,
-                    caliber,
-                    fuPerCm2,
-                    hairsPerCm2,
-                    area,
-                    desiredCoverageValue,
-                    zones,
-                })}
+        <View style={styles.container}>
+            <TextInput
+                style={styles.input}
+                placeholder="Zone Name"
+                onChangeText={setName}
+                value={name}
+                placeholderTextColor={styles.input.color}
             />
+            <TextInput
+                style={styles.input}
+                placeholder="Caliber"
+                onChangeText={setCaliber}
+                value={caliber}
+                placeholderTextColor={styles.input.color}
+            />
+            <TextInput
+                style={styles.input}
+                placeholder="Follicular Units per cm2"
+                onChangeText={setFuPerCm2}
+                value={fuPerCm2}
+                placeholderTextColor={styles.input.color}
+            />
+            <TextInput
+                style={styles.input}
+                placeholder="Hairs per cm2"
+                onChangeText={setHairsPerCm2}
+                value={hairsPerCm2}
+                placeholderTextColor={styles.input.color}
+            />
+            <TextInput
+                style={styles.input}
+                placeholder="Area in cm2"
+                onChangeText={setArea}
+                value={area}
+                placeholderTextColor={styles.input.color}
+            />
+            <TextInput
+                style={styles.input}
+                placeholder="Desired Coverage Value"
+                onChangeText={setDesiredCoverageValue}
+                value={desiredCoverageValue}
+                placeholderTextColor={styles.input.color}
+            />
+            <View style={styles.button}>
+                <Button
+                    title="Add Donor Zone"
+                    onPress={() => handleSubmit({
+                        name,
+                        caliber,
+                        fuPerCm2,
+                        hairsPerCm2,
+                        area,
+                        desiredCoverageValue,
+                        zones,
+                    })}
+                    color={styles.button.backgroundColor}
+                />
+            </View>
             {message ? <Text style={styles.message}>{message}</Text> : null}
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    message: {
-        marginTop: 10,
-        color: 'green',
-        textAlign: 'center',
-    },
-});
 
 export default AddDonorZone;
