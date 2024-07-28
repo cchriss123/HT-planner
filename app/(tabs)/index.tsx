@@ -48,11 +48,14 @@ export default function ZonesScreen() {
         if (menuVisible) {
             setMenuVisible(false);
             bottomSheetRef.current?.close();
+            // hide keyboard here
+
         } else {
             setSelectedZone(zone);
             setMenuVisible(true);
             bottomSheetRef.current?.expand();
             bottomSheetRef.current?.snapToIndex(2)
+
         }
     }
 

@@ -24,6 +24,7 @@ export default function FormStyles() {
             backgroundColor: colors.softBackground,
             borderRadius: 8,
             shadowColor: '#000',
+            shadowOpacity: 0.3,
             shadowOffset: {
                 width: 0,
                 height: 2,
@@ -40,6 +41,7 @@ export default function FormStyles() {
             color: colors.primaryText,
             borderRadius: 8,
             shadowColor: '#000',
+            shadowOpacity: 0.3,
             shadowOffset: {
                 width: 0,
                 height: 2,
