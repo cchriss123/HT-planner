@@ -25,6 +25,7 @@ const AddRecipientZone: React.FC<AddDonorZoneProps> = ({ zones }) => {
     const [area, setArea] = React.useState('');
     const [desiredCoverageValue, setDesiredCoverageValue] = React.useState('');
     const [message, setMessage] = React.useState('');
+    const globalState = useAppState();
 
     const styles = FormStyles();
 
@@ -45,8 +46,9 @@ const AddRecipientZone: React.FC<AddDonorZoneProps> = ({ zones }) => {
         };
 
 
-        const globalState = useAppState();
         globalState.calculateRecipientZoneValues(newZone);
+
+
         zones.push(newZone);
 
         setMessage('Recipient zone added successfully!');

@@ -152,23 +152,12 @@ export function AppStateProvider({children}: { children: ReactNode }) {
             zone.desiredCoverageValue = 0;
         }
 
-        console.log("Calculating values for zone: " + zone.name);
-        zone.hairPerFu = zone.hairPerCm2 / zone.fuPerCm2;
-        console.log("Hair per FU: " + zone.hairPerFu);
-        zone.fuPerZone = zone.area * zone.fuPerCm2;
-        console.log("FU per Zone: " + zone.fuPerZone);
+        zone.hairPerFu = zone.hairPerCm2 / zone.fuPerCm2;zone.fuPerZone = zone.area * zone.fuPerCm2;
         zone.coverageValue = zone.caliber * zone.hairPerCm2;
-        console.log("Coverage Value: " + zone.coverageValue);
         zone.hairPerZone = zone.area * zone.hairPerCm2;
-        console.log("Hair per Zone: " + zone.hairPerZone);
         zone.fuExtractedToReachDonorDesiredCoverageValue =  Math.floor(zone.fuPerZone - ((zone.area * zone.desiredCoverageValue) / (zone.caliber * zone.hairPerFu)));
-        console.log("FU Extracted to reach desired coverage value: " + zone.fuExtractedToReachDonorDesiredCoverageValue);
-       zone.fuLeftToReachDonorDesiredCoverageValue = Math.floor(zone.fuExtractedToReachDonorDesiredCoverageValue) - zone.graphs;
-        console.log("FU Left to reach desired coverage value: " + zone.fuLeftToReachDonorDesiredCoverageValue);
-
-
-
-
+        zone.fuLeftToReachDonorDesiredCoverageValue = Math.floor(zone.fuExtractedToReachDonorDesiredCoverageValue) - zone.graphs;
+       console.log(JSON.stringify(zone));
 
 
    }

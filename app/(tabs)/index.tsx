@@ -10,6 +10,7 @@ import CustomBottomSheet from "@/components/CustomBottomSheet";
 import { useAppState, Zone } from "@/state/Store";
 import AddDonorZone from "@/components/forms/AddDonorZone";
 import AddRecipientZone from "@/components/forms/AddRecipientZone";
+//TODO fix decimals
 
 Appearance.getColorScheme = () => 'light';
 
@@ -35,7 +36,7 @@ export default function ZonesScreen() {
     function openMenu(ref: React.RefObject<BottomSheet>, zone: Zone | null = null) {
         setSelectedZone(zone);
         ref.current?.expand();
-        ref.current?.snapToIndex(3);
+        ref.current?.snapToIndex(2);
     }
 
     function DonorZoneComponents() {

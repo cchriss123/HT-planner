@@ -14,7 +14,7 @@ export interface Props {
 const CustomBottomSheet = forwardRef<BottomSheet, Props>((props, ref) => {
     const { children } = props;
     const { menuVisible, setMenuVisible } = props;
-    const snapPoints = useMemo(() => ['25%', '50%', '70%', '94%', '100%'], []);
+    const snapPoints = useMemo(() => ['50%', '70%', '94%', '100%'], []);
     const colorScheme = useColorScheme();
     const colors = colorScheme === 'dark' ? Colors.dark : Colors.light;
     const renderBackDrop = useCallback((props: any) => <BottomSheetBackdrop animatedIndex={0} animatedPosition={-1} {...props} />, []);
