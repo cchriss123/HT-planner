@@ -117,14 +117,20 @@ export default function CounterScreen() {
                             </View>
                         </View>
 
-                        <View style={styles.countContainer}>
-                            <Text style={styles.mediumText}>{`Graphs: ${selectedZone.graphs}`}</Text>
-                            <Text style={styles.mediumText}>{`Hairs: ${selectedZone.hairs}`}</Text>
-                        </View>
 
                         <View style={styles.outerInfoContainer}>
                             <View style={styles.innerInfoContainer}>
                                 <Text style={{ fontWeight: 'bold' }}>Zone Info</Text>
+
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text style={styles.infoText}>{`Grafts count: `}</Text>
+                                    <Text>{`${selectedZone.graphs}`}</Text>
+                                </View>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text style={styles.infoText}>{`Hairs count: `}</Text>
+                                    <Text>{`${selectedZone.hairs}`}</Text>
+                                </View>
+
                                 <View style={{ flexDirection: 'row' }}>
                                     <Text style={styles.infoText}>{`Hairs/FU: `}</Text>
                                     <Text>{`${selectedZone.hairPerCountedFu.toFixed(2)}`}</Text>
@@ -133,6 +139,26 @@ export default function CounterScreen() {
                                     <Text style={styles.infoText}>{`Area: `}</Text>
                                     <Text>{`${selectedZone.area} cm²`}</Text>
                                 </View>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text>{""}</Text>
+                                </View>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text style={styles.infoText}>{`Target: `}</Text>
+                                    <Text>{`${selectedZone.fuExtractedToReachDonorDesiredCoverageValue}`}</Text>
+                                </View>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text style={styles.infoText}>{`Left: `}</Text>
+                                    <Text>{`${selectedZone.fuLeftToReachDonorDesiredCoverageValue}`}</Text>
+                                </View>
+
+
+
+
+
+
+
+
+
                             </View>
                             <View style={styles.innerInfoContainer}>
                                 <Text style={{ fontWeight: 'bold' }}>Overall Info</Text>
@@ -154,7 +180,7 @@ export default function CounterScreen() {
                                 </View>
                                 <Text></Text>
                                 <View style={{ flexDirection: 'row' }}>
-                                    <Text style={styles.infoText}>{`Total Graphs:`}</Text>
+                                    <Text style={styles.infoText}>{`Total Grafts:`}</Text>
                                     <Text>{`${globalState.totalGraphs}`}</Text>
                                 </View>
                                 <View style={{ flexDirection: 'row' }}>
@@ -267,6 +293,7 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
         },
         infoText: {
             width: '60%',
+
         }
     });
 }

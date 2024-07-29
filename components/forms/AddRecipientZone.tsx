@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button, TextInput, View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import { RecipientZone } from "@/state/Store";
+import {RecipientZone, useAppState} from "@/state/Store";
 import FormStyles from "@/components/forms/styles/FormStyles";
 
 export interface AddDonorZoneProps {
@@ -45,12 +45,8 @@ const AddRecipientZone: React.FC<AddDonorZoneProps> = ({ zones }) => {
         };
 
 
-        newZone.hairPerFu = newZone.hairPerCm2 / newZone.fuPerCm2;
-        newZone.startingCoverageValue = newZone.caliber * newZone.hairPerCm2;
-        newZone.coverageValueDifference = newZone.desiredCoverageValue - newZone.startingCoverageValue;
-        newZone.fuImplantedToReachDesiredRecipientCoverageValue = (newZone.area * newZone.coverageValueDifference) / (newZone.caliber * newZone.hairPerFu);
-
-
+        const globalState = useAppState();
+        globalState.calculateRecipientZoneValues(newZone);
         zones.push(newZone);
 
         setMessage('Recipient zone added successfully!');
@@ -85,6 +81,7 @@ const AddRecipientZone: React.FC<AddDonorZoneProps> = ({ zones }) => {
                 onChangeText={setCaliber}
                 value={caliber}
                 placeholderTextColor={styles.input.color}
+                keyboardType="numeric"
             />
             <TextInput
                 style={styles.input}
@@ -92,6 +89,7 @@ const AddRecipientZone: React.FC<AddDonorZoneProps> = ({ zones }) => {
                 onChangeText={setFuPerCm2}
                 value={fuPerCm2}
                 placeholderTextColor={styles.input.color}
+                keyboardType="numeric"
             />
             <TextInput
                 style={styles.input}
@@ -99,6 +97,7 @@ const AddRecipientZone: React.FC<AddDonorZoneProps> = ({ zones }) => {
                 onChangeText={setHairsPerCm2}
                 value={hairsPerCm2}
                 placeholderTextColor={styles.input.color}
+                keyboardType="numeric"
             />
             <TextInput
                 style={styles.input}
@@ -106,6 +105,7 @@ const AddRecipientZone: React.FC<AddDonorZoneProps> = ({ zones }) => {
                 onChangeText={setArea}
                 value={area}
                 placeholderTextColor={styles.input.color}
+                keyboardType="numeric"
             />
             <TextInput
                 style={styles.input}
@@ -113,6 +113,7 @@ const AddRecipientZone: React.FC<AddDonorZoneProps> = ({ zones }) => {
                 onChangeText={setDesiredCoverageValue}
                 value={desiredCoverageValue}
                 placeholderTextColor={styles.input.color}
+                keyboardType="numeric"
             />
             <TouchableOpacity
                 style={styles.button}

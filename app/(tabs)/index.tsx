@@ -25,7 +25,7 @@ export default function ZonesScreen() {
 
 
     const bottomSheetRefs = {
-        wheel: useRef<BottomSheet>(null),
+        // wheel: useRef<BottomSheet>(null),
         addDonor: useRef<BottomSheet>(null),
         addRecipient: useRef<BottomSheet>(null),
         editDonor: useRef<BottomSheet>(null),
@@ -35,7 +35,7 @@ export default function ZonesScreen() {
     function openMenu(ref: React.RefObject<BottomSheet>, zone: Zone | null = null) {
         setSelectedZone(zone);
         ref.current?.expand();
-        ref.current?.snapToIndex(2);
+        ref.current?.snapToIndex(3);
     }
 
     function DonorZoneComponents() {
@@ -64,19 +64,20 @@ export default function ZonesScreen() {
 
     return (
         <SafeAreaView style={{ flex: 1, paddingTop: 20 }}>
+
             <ScrollView contentContainerStyle={styles.outerContainer}>
-                <View style={styles.topContainer}>
-                    <View style={styles.placeholderContainer} />
-                    <View style={{ flex: 1, alignItems: 'center' }}>
-                        <Image source={logoImg} style={styles.logo} />
-                    </View>
-                    <TouchableOpacity
-                        style={styles.placeholderContainer}
-                        onPress={() => openMenu(bottomSheetRefs.wheel)}
-                    >
-                        <FontAwesome gear="setting" size={35} color={menuVisible ? Colors.light.primaryBlue : Colors.light.neutralGrey} name="gear" />
-                    </TouchableOpacity>
-                </View>
+                {/*<View style={styles.topContainer}>*/}
+                {/*    <View style={styles.placeholderContainer} />*/}
+                {/*    <View style={{ flex: 1, alignItems: 'center' }}>*/}
+                {/*        <Image source={logoImg} style={styles.logo} />*/}
+                {/*    </View>*/}
+                {/*    <TouchableOpacity*/}
+                {/*        style={styles.placeholderContainer}*/}
+                {/*        onPress={() => openMenu(bottomSheetRefs.wheel)}*/}
+                {/*    >*/}
+                {/*        <FontAwesome gear="setting" size={35} color={menuVisible ? Colors.light.primaryBlue : Colors.light.neutralGrey} name="gear" />*/}
+                {/*    </TouchableOpacity>*/}
+                {/*</View>*/}
 
                 <View style={styles.buttonWrapper}>
                     <View style={styles.buttonContainer}>
@@ -84,7 +85,7 @@ export default function ZonesScreen() {
                             <TouchableOpacity onPress={() => openMenu(bottomSheetRefs.addDonor)}>
                                 <Icon name="add-circle" size={65} color={colors.primaryBlue} />
                             </TouchableOpacity>
-                            <Text style={styles.zoneListTitle}>Donor Zones</Text>
+                            <Text style={styles.zoneListTitle}>Add Donor Zones</Text>
                         </View>
                         <DonorZoneComponents />
                     </View>
@@ -94,16 +95,16 @@ export default function ZonesScreen() {
                             <TouchableOpacity onPress={() => openMenu(bottomSheetRefs.addRecipient)}>
                                 <Icon name="add-circle" size={65} color={colors.primaryBlue} />
                             </TouchableOpacity>
-                            <Text style={styles.zoneListTitle}>Recipient Zones</Text>
+                            <Text style={styles.zoneListTitle}>Add Recipient Zones</Text>
                         </View>
                         <RecipientZoneComponents />
                     </View>
                 </View>
             </ScrollView>
 
-            <CustomBottomSheet ref={bottomSheetRefs.wheel} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
-                <Text>Wheel Menu Content</Text>
-            </CustomBottomSheet>
+            {/*<CustomBottomSheet ref={bottomSheetRefs.wheel} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>*/}
+            {/*    <Text>Wheel Menu Content</Text>*/}
+            {/*</CustomBottomSheet>*/}
             <CustomBottomSheet ref={bottomSheetRefs.addDonor} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
                 <AddDonorZone zones={donorZones} />
             </CustomBottomSheet>
@@ -149,9 +150,10 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
         buttonWrapper: {
             flexDirection: 'row',
             justifyContent: 'space-between',
-            borderTopWidth: 1,
-            borderColor: 'lightgrey',
-            paddingTop: 20,
+            // borderTopWidth: 1,
+            // borderColor: 'lightgrey',
+            paddingTop: 10,
+
         },
         buttonContainer: {
             flex: 1,
@@ -174,7 +176,7 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             fontSize: 16,
         },
         zoneListTitle: {
-            fontSize: 18,
+            fontSize: 14,
             fontWeight: 'bold',
             marginBottom: 10,
             color: colors.primaryText,

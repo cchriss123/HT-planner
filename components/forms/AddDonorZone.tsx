@@ -1,9 +1,9 @@
 import React from 'react';
-import {Button, TextInput, View, Text, TouchableOpacity} from 'react-native';
-import { DonorZone } from "@/state/Store";
+import { Button, TextInput, View, Text, TouchableOpacity } from 'react-native';
+import { DonorZone, useAppState } from "@/state/Store";
 import FormStyles from "@/components/forms/styles/FormStyles";
 
-export interface AddDonorZoneProps {
+interface AddDonorZoneProps {
     zones: DonorZone[];
 }
 
@@ -27,8 +27,9 @@ const AddDonorZone: React.FC<AddDonorZoneProps> = ({ zones }) => {
     const [message, setMessage] = React.useState('');
 
     const styles = FormStyles();
+    const { calculateDonorZoneValues } = useAppState(); // Call useAppState at the top level
 
-    const handleSubmit = (args: HandleSubmitArgs) => {
+    function handleSubmit(args: HandleSubmitArgs) {
         if (!args.name || !args.caliber || !args.fuPerCm2 || !args.hairsPerCm2 || !args.area || !args.desiredCoverageValue) {
             setMessage('Please enter all fields.');
             return;
@@ -50,13 +51,7 @@ const AddDonorZone: React.FC<AddDonorZoneProps> = ({ zones }) => {
             hairPerCountedFu: 0,
         };
 
-        newZone.hairPerFu = newZone.hairPerCm2 / newZone.fuPerCm2;
-        newZone.fuPerZone = newZone.area * newZone.fuPerCm2;
-        newZone.coverageValue = newZone.caliber * newZone.hairPerCm2;
-        newZone.hairPerZone = newZone.area * newZone.hairPerCm2;
-        newZone.fuExtractedToReachDonorDesiredCoverageValue =
-            newZone.fuPerZone - ((newZone.area * newZone.desiredCoverageValue) / (newZone.caliber * newZone.hairPerFu));
-
+        calculateDonorZoneValues(newZone);
         zones.push(newZone);
 
         setMessage('Donor zone added successfully!');
@@ -71,7 +66,7 @@ const AddDonorZone: React.FC<AddDonorZoneProps> = ({ zones }) => {
         setTimeout(() => {
             setMessage('');
         }, 3000);
-    };
+    }
 
     return (
         <View style={styles.container}>
@@ -87,6 +82,7 @@ const AddDonorZone: React.FC<AddDonorZoneProps> = ({ zones }) => {
             <TextInput
                 style={styles.input}
                 placeholder="Caliber"
+                keyboardType="numeric"
                 onChangeText={setCaliber}
                 value={caliber}
                 placeholderTextColor={styles.input.color}
@@ -94,6 +90,7 @@ const AddDonorZone: React.FC<AddDonorZoneProps> = ({ zones }) => {
             <TextInput
                 style={styles.input}
                 placeholder="Follicular Units per cm2"
+                keyboardType="numeric"
                 onChangeText={setFuPerCm2}
                 value={fuPerCm2}
                 placeholderTextColor={styles.input.color}
@@ -101,6 +98,7 @@ const AddDonorZone: React.FC<AddDonorZoneProps> = ({ zones }) => {
             <TextInput
                 style={styles.input}
                 placeholder="Hairs per cm2"
+                keyboardType="numeric"
                 onChangeText={setHairsPerCm2}
                 value={hairsPerCm2}
                 placeholderTextColor={styles.input.color}
@@ -108,6 +106,7 @@ const AddDonorZone: React.FC<AddDonorZoneProps> = ({ zones }) => {
             <TextInput
                 style={styles.input}
                 placeholder="Area in cm2"
+                keyboardType="numeric"
                 onChangeText={setArea}
                 value={area}
                 placeholderTextColor={styles.input.color}
@@ -115,6 +114,7 @@ const AddDonorZone: React.FC<AddDonorZoneProps> = ({ zones }) => {
             <TextInput
                 style={styles.input}
                 placeholder="Desired Coverage Value"
+                keyboardType="numeric"
                 onChangeText={setDesiredCoverageValue}
                 value={desiredCoverageValue}
                 placeholderTextColor={styles.input.color}
