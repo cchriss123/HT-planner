@@ -23,15 +23,15 @@ export default function FormStyles() {
             borderColor: colors.primaryText,
             backgroundColor: colors.solidBackground,
             borderRadius: 8,
-            // shadowColor: '#000',
-            // shadowOpacity: 0.3,
-            // shadowOffset: {
-            //     width: 0,
-            //     height: 2,
-            // },
-            // shadowRadius: 5,
-            // elevation: 5,
-            marginVertical: 10,
+            shadowColor: '#000',
+            shadowOpacity: 0.3,
+            shadowOffset: {
+                width: 0,
+                height: 2,
+            },
+            shadowRadius: 5,
+            elevation: 5,
+            marginVertical: 5,
             paddingLeft: 10,
 
 

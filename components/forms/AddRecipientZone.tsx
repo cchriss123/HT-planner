@@ -68,7 +68,7 @@ const AddRecipientZone: React.FC<AddDonorZoneProps> = ({ zones }) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Add Recipient Zone</Text>
+            {/*<Text style={styles.title}>Add Recipient Zone</Text>*/}
 
             <TextInput
                 style={styles.input}
