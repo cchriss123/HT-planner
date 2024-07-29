@@ -20,7 +20,7 @@ export default function CounterScreen() {
     function openMenu() {
         setMenuVisible(true);
         bottomSheetRef.current?.expand();
-        bottomSheetRef.current?.snapToIndex(1);
+        bottomSheetRef.current?.snapToIndex(2);
     }
 
     function updateZoneCounts(value: number) {

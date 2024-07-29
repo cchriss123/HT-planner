@@ -18,19 +18,19 @@ export default function FormStyles() {
         input: {
             width: '100%',
             height: 40,
-            // borderWidth: 1,
+            borderWidth: 1,
             color: colors.primaryText,
-            borderColor: 'lightgrey',
-            backgroundColor: colors.softBackground,
+            borderColor: colors.primaryText,
+            backgroundColor: colors.solidBackground,
             borderRadius: 8,
-            shadowColor: '#000',
-            shadowOpacity: 0.3,
-            shadowOffset: {
-                width: 0,
-                height: 2,
-            },
-            shadowRadius: 5,
-            elevation: 5,
+            // shadowColor: '#000',
+            // shadowOpacity: 0.3,
+            // shadowOffset: {
+            //     width: 0,
+            //     height: 2,
+            // },
+            // shadowRadius: 5,
+            // elevation: 5,
             marginVertical: 10,
             paddingLeft: 10,
 
@@ -50,7 +50,7 @@ export default function FormStyles() {
             elevation: 5,
             marginVertical: 20,
 
-            width: '40%',
+            width: '50%',
 
             backgroundColor: colors.primaryBlue,
             alignItems: 'center',

@@ -26,11 +26,11 @@ const AddDonorZone: React.FC<AddDonorZoneProps> = ({ zones }) => {
     const [desiredCoverageValue, setDesiredCoverageValue] = React.useState('');
     const [message, setMessage] = React.useState('');
 
-    const styles = FormStyles(); // Invoke the function to get the styles
+    const styles = FormStyles();
 
     const handleSubmit = (args: HandleSubmitArgs) => {
-        if (!args.name) {
-            setMessage('Please enter a name for the zone.');
+        if (!args.name || !args.caliber || !args.fuPerCm2 || !args.hairsPerCm2 || !args.area || !args.desiredCoverageValue) {
+            setMessage('Please enter all fields.');
             return;
         }
 

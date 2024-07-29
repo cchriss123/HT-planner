@@ -35,7 +35,7 @@ export default function ZonesScreen() {
     function openMenu(ref: React.RefObject<BottomSheet>, zone: Zone | null = null) {
         setSelectedZone(zone);
         ref.current?.expand();
-        ref.current?.snapToIndex(1);
+        ref.current?.snapToIndex(2);
     }
 
     function DonorZoneComponents() {
@@ -108,7 +108,6 @@ export default function ZonesScreen() {
                 <AddDonorZone zones={donorZones} />
             </CustomBottomSheet>
             <CustomBottomSheet ref={bottomSheetRefs.addRecipient} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
-                <Text>Add Recipient Menu Content</Text>
                 <AddRecipientZone zones={recipientZones} />
             </CustomBottomSheet>
             <CustomBottomSheet ref={bottomSheetRefs.editDonor} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
@@ -184,7 +183,8 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             marginVertical: 5,
             height: 50,
             padding: 10,
-            backgroundColor: colors.solidBackground,
+            backgroundColor: colors.primaryBlue,
+
             borderRadius: 8,
             marginBottom: 10,
             shadowColor: '#000',
@@ -196,7 +196,7 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             justifyContent: 'center',
         },
         zoneButtonText: {
-            color: colors.primaryText,
+            color: colors.solidBackground,
         },
     });
 }
