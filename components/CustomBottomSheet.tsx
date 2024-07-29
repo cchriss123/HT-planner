@@ -15,25 +15,17 @@ const CustomBottomSheet = forwardRef<BottomSheet, Props>((props, ref) => {
     const colorScheme = useColorScheme();
     const colors = colorScheme === 'dark' ? Colors.dark : Colors.light;
     const appState = useAppState();
+    const renderBackDrop = useCallback((props: any) => <BottomSheetBackdrop animatedIndex={0} animatedPosition={-1} {...props} />, []);
+    const animationConfigs = useMemo(() => ({duration: 200, easing: Easing.out(Easing.ease)}), []);
 
-    const renderBackDrop = useCallback(
-        (props: any) => <BottomSheetBackdrop animatedIndex={0} animatedPosition={-1} {...props} />,
-        []
-    );
-
-    const animationConfigs = useMemo(() => ({
-        duration: 200,
-        easing: Easing.out(Easing.ease),
-    }), []);
-
-    const handleSheetChanges = (index: number) => {
+    function handleSheetChanges(index: number) {
         if (index === -1) {
             appState.setMenuVisible(false);
             Keyboard.dismiss();
         } else {
             appState.setMenuVisible(true);
         }
-    };
+    }
 
     return (
         <BottomSheet

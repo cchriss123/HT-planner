@@ -1,14 +1,13 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {View, TouchableOpacity, Text, useColorScheme, StyleSheet, Keyboard} from 'react-native';
+import {View, TouchableOpacity, Text, useColorScheme, StyleSheet} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '@/constants/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { DropdownComponent } from '@/components/DropdownComponent';
-import {useAppState, DonorZone, Zone,} from '@/state/Store';
+import {useAppState, DonorZone,} from '@/state/Store';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import CustomBottomSheet from '@/components/CustomBottomSheet';
 import BottomSheet from "@gorhom/bottom-sheet";
-
 
 export default function CounterScreen() {
 
@@ -17,18 +16,12 @@ export default function CounterScreen() {
     const globalState = useAppState();
     const [selectedZone, setSelectedZone] = useState<DonorZone | null>(null);
     const ref = useRef<BottomSheet>(null);
-
-
     const bottomSheetRef = useRef<BottomSheet>(null);
 
-    const handleMenuPress = () => {
+    function openMenu() {
         ref.current?.expand();
         ref.current?.snapToIndex(1);
-    };
-
-
-
-
+    }
 
     function updateZoneCounts(value: number) {
 
@@ -79,7 +72,7 @@ export default function CounterScreen() {
                     <View style={{ borderColor: 'black', width: '60%', alignItems: 'center' }}>
                         <DropdownComponent selectedZone={selectedZone} setSelectedZone={setSelectedZone} />
                     </View>
-                    <TouchableOpacity style={{marginHorizontal: "5%"}} onPress={() => handleMenuPress()}>
+                    <TouchableOpacity style={{marginHorizontal: "5%"}} onPress={() => openMenu()}>
                         <FontAwesome gear="setting" size={35} color={
                             globalState.menuVisible ? Colors.light.primaryBlue : Colors.light.neutralGrey
                         }  name="gear"/>

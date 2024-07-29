@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import {Appearance, StyleSheet, Text, TouchableOpacity, View, ScrollView, Image, Keyboard} from 'react-native';
+import {Appearance, StyleSheet, Text, TouchableOpacity, View, ScrollView, Image} from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from '@/constants/Colors';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
@@ -31,31 +31,35 @@ export default function ZonesScreen() {
         editRecipient: useRef<BottomSheet>(null)
     };
 
-    const handleMenuPress = (ref: React.RefObject<BottomSheet>, zone: Zone | null = null) => {
+    function openMenu(ref: React.RefObject<BottomSheet>, zone: Zone | null = null) {
         setSelectedZone(zone);
         ref.current?.expand();
         ref.current?.snapToIndex(1);
-    };
+    }
 
-    const DonorZoneComponents = () => donorZones.map((zone, i) => (
-        <TouchableOpacity
-            key={i}
-            style={styles.zoneButton}
-            onPress={() => handleMenuPress(bottomSheetRefs.editDonor, zone)}
-        >
-            <Text style={styles.zoneButtonText}>{zone.name}</Text>
-        </TouchableOpacity>
-    ));
+    function DonorZoneComponents() {
+        return donorZones.map((zone, i) => (
+            <TouchableOpacity
+                key={i}
+                style={styles.zoneButton}
+                onPress={() => openMenu(bottomSheetRefs.editDonor, zone)}
+            >
+                <Text style={styles.zoneButtonText}>{zone.name}</Text>
+            </TouchableOpacity>
+        ));
+    }
 
-    const RecipientZoneComponents = () => recipientZones.map((zone, i) => (
-        <TouchableOpacity
-            key={i}
-            style={styles.zoneButton}
-            onPress={() => handleMenuPress(bottomSheetRefs.editRecipient, zone)}
-        >
-            <Text style={styles.zoneButtonText}>{zone.name}</Text>
-        </TouchableOpacity>
-    ));
+    function RecipientZoneComponents() {
+        return recipientZones.map((zone, i) => (
+            <TouchableOpacity
+                key={i}
+                style={styles.zoneButton}
+                onPress={() => openMenu(bottomSheetRefs.editRecipient, zone)}
+            >
+                <Text style={styles.zoneButtonText}>{zone.name}</Text>
+            </TouchableOpacity>
+        ));
+    }
 
     return (
         <SafeAreaView style={{ flex: 1, paddingTop: 20 }}>
@@ -67,7 +71,7 @@ export default function ZonesScreen() {
                     </View>
                     <TouchableOpacity
                         style={styles.placeholderContainer}
-                        onPress={() => handleMenuPress(bottomSheetRefs.wheel)}
+                        onPress={() => openMenu(bottomSheetRefs.wheel)}
                     >
                         <FontAwesome gear="setting" size={35} color={globalState.menuVisible ? Colors.light.primaryBlue : Colors.light.neutralGrey} name="gear" />
                     </TouchableOpacity>
@@ -76,7 +80,7 @@ export default function ZonesScreen() {
                 <View style={styles.buttonWrapper}>
                     <View style={styles.buttonContainer}>
                         <View style={styles.button}>
-                            <TouchableOpacity onPress={() => handleMenuPress(bottomSheetRefs.addDonor)}>
+                            <TouchableOpacity onPress={() => openMenu(bottomSheetRefs.addDonor)}>
                                 <Icon name="add-circle" size={65} color={colors.primaryBlue} />
                             </TouchableOpacity>
                             <Text style={styles.zoneListTitle}>Donor Zones</Text>
@@ -86,7 +90,7 @@ export default function ZonesScreen() {
 
                     <View style={styles.buttonContainer}>
                         <View style={styles.button}>
-                            <TouchableOpacity onPress={() => handleMenuPress(bottomSheetRefs.addRecipient)}>
+                            <TouchableOpacity onPress={() => openMenu(bottomSheetRefs.addRecipient)}>
                                 <Icon name="add-circle" size={65} color={colors.primaryBlue} />
                             </TouchableOpacity>
                             <Text style={styles.zoneListTitle}>Recipient Zones</Text>
