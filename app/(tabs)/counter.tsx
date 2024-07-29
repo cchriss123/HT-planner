@@ -47,7 +47,7 @@ export default function CounterScreen() {
 
         value > 0 ? selectedZone.graphs++ : selectedZone.graphs--;
         selectedZone.hairs += value;
-        selectedZone.hairPerCountedFu = selectedZone.hairs / selectedZone.graphs;
+        selectedZone.hairPerCountedFu = selectedZone.hairs / selectedZone.graphs || 0;
 
         globalState.setDonorZones([...globalState.donorZones]);
         globalState.updateTotalCounts();
@@ -150,13 +150,6 @@ export default function CounterScreen() {
                                     <Text style={styles.infoText}>{`Left: `}</Text>
                                     <Text>{`${selectedZone.fuLeftToReachDonorDesiredCoverageValue}`}</Text>
                                 </View>
-
-
-
-
-
-
-
 
 
                             </View>

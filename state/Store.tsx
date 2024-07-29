@@ -152,6 +152,7 @@ export function AppStateProvider({children}: { children: ReactNode }) {
             zone.desiredCoverageValue = 0;
         }
 
+
         zone.hairPerFu = zone.hairPerCm2 / zone.fuPerCm2;zone.fuPerZone = zone.area * zone.fuPerCm2;
         zone.coverageValue = zone.caliber * zone.hairPerCm2;
         zone.hairPerZone = zone.area * zone.hairPerCm2;
