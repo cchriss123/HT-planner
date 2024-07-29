@@ -1,55 +1,51 @@
-import React, {useState, useEffect, useRef} from 'react';
-import {View, TouchableOpacity, Text, useColorScheme, StyleSheet} from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, TouchableOpacity, Text, useColorScheme, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '@/constants/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { DropdownComponent } from '@/components/DropdownComponent';
-import {useAppState, DonorZone,} from '@/state/Store';
+import { useAppState, DonorZone } from '@/state/Store';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import CustomBottomSheet from '@/components/CustomBottomSheet';
 import BottomSheet from "@gorhom/bottom-sheet";
 
 export default function CounterScreen() {
-
     const colorScheme = useColorScheme();
     const styles = createStyles(colorScheme);
     const globalState = useAppState();
     const [selectedZone, setSelectedZone] = useState<DonorZone | null>(null);
-    const ref = useRef<BottomSheet>(null);
     const bottomSheetRef = useRef<BottomSheet>(null);
+    const [menuVisible, setMenuVisible] = useState(false);
 
     function openMenu() {
-        ref.current?.expand();
-        ref.current?.snapToIndex(1);
+        setMenuVisible(true);
+        bottomSheetRef.current?.expand();
+        bottomSheetRef.current?.snapToIndex(1);
     }
 
     function updateZoneCounts(value: number) {
-
         if (!selectedZone) return;
         if (value > 4) return;
 
-        if (value === 1) selectedZone.singles ++;
-        else if (value === 2) selectedZone.doubles ++;
-        else if (value === 3) selectedZone.triples ++;
-        else if (value === 4) selectedZone.quadruples ++;
+        if (value === 1) selectedZone.singles++;
+        else if (value === 2) selectedZone.doubles++;
+        else if (value === 3) selectedZone.triples++;
+        else if (value === 4) selectedZone.quadruples++;
         else if (value === -1) {
             if (selectedZone.singles <= 0) return;
-            selectedZone.singles --;
-        }
-        else if (value === -2) {
+            selectedZone.singles--;
+        } else if (value === -2) {
             if (selectedZone.doubles <= 0) return;
-            selectedZone.doubles --;
-        }
-        else if (value === -3) {
+            selectedZone.doubles--;
+        } else if (value === -3) {
             if (selectedZone.triples <= 0) return;
-            selectedZone.triples --;
-        }
-        else if (value === -4) {
+            selectedZone.triples--;
+        } else if (value === -4) {
             if (selectedZone.quadruples <= 0) return;
-            selectedZone.quadruples --;
+            selectedZone.quadruples--;
         }
 
-        value > 0 ? selectedZone.graphs ++ : selectedZone.graphs --;
+        value > 0 ? selectedZone.graphs++ : selectedZone.graphs--;
         selectedZone.hairs += value;
         selectedZone.hairPerCountedFu = selectedZone.hairs / selectedZone.graphs;
 
@@ -57,146 +53,133 @@ export default function CounterScreen() {
         globalState.updateTotalCounts();
     }
 
-
     useEffect(() => {
         if (!selectedZone && globalState.donorZones.length > 0) {
             setSelectedZone(globalState.donorZones[0]);
         }
     }, [globalState.donorZones]);
 
-
     return (
-        <SafeAreaView style={{ flex: 1, paddingTop: 20}}>
+        <SafeAreaView style={{ flex: 1, paddingTop: 20 }}>
             <View style={{ flex: 1, backgroundColor: colorScheme === 'dark' ? Colors.dark.softBackground : Colors.light.softBackground }}>
                 <View style={styles.topContainer}>
                     <View style={{ borderColor: 'black', width: '60%', alignItems: 'center' }}>
                         <DropdownComponent selectedZone={selectedZone} setSelectedZone={setSelectedZone} />
                     </View>
-                    <TouchableOpacity style={{marginHorizontal: "5%"}} onPress={() => openMenu()}>
+                    <TouchableOpacity style={{ marginHorizontal: "5%" }} onPress={openMenu}>
                         <FontAwesome gear="setting" size={35} color={
-                            globalState.menuVisible ? Colors.light.primaryBlue : Colors.light.neutralGrey
-                        }  name="gear"/>
+                            menuVisible ? Colors.light.primaryBlue : Colors.light.neutralGrey
+                        } name="gear" />
                     </TouchableOpacity>
-
                 </View>
 
+                {selectedZone ? (
+                    <View style={{ flex: 1, alignItems: 'center' }}>
+                        <View style={styles.buttonAreaContainer}>
+                            <View style={styles.buttonContainer}>
+                                <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(-1)}>
+                                    <Icon name="remove-circle" size={65} color={Colors.light.primaryBlue} />
+                                </TouchableOpacity>
+                                <Text style={styles.buttonText}>{`Singles ${selectedZone.singles}`}</Text>
+                                <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(1)}>
+                                    <Icon name="add-circle" size={65} color={Colors.light.primaryBlue} />
+                                </TouchableOpacity>
+                            </View>
 
-            {selectedZone ? (
-                <View style={{ flex: 1, alignItems: 'center' }}>
+                            <View style={styles.buttonContainer}>
+                                <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(-2)}>
+                                    <Icon name="remove-circle" size={65} color={Colors.light.primaryBlue} />
+                                </TouchableOpacity>
+                                <Text style={styles.buttonText}>{`Doubles ${selectedZone.doubles}`}</Text>
+                                <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(2)}>
+                                    <Icon name="add-circle" size={65} color={Colors.light.primaryBlue} />
+                                </TouchableOpacity>
+                            </View>
 
-                    <View style={styles.buttonAreaContainer}>
-                        <View style={styles.buttonContainer}>
-                            <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(-1)}>
-                                <Icon name="remove-circle" size={65} color={Colors.light.primaryBlue} />
-                            </TouchableOpacity>
-                            <Text style={styles.buttonText}>{`Singles ${selectedZone.singles}`}</Text>
-                            <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(1)}>
-                                <Icon name="add-circle" size={65} color={Colors.light.primaryBlue} />
-                            </TouchableOpacity>
+                            <View style={styles.buttonContainer}>
+                                <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(-3)}>
+                                    <Icon name="remove-circle" size={65} color={Colors.light.primaryBlue} />
+                                </TouchableOpacity>
+                                <Text style={styles.buttonText}>{`Triples ${selectedZone.triples}`}</Text>
+                                <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(3)}>
+                                    <Icon name="add-circle" size={65} color={Colors.light.primaryBlue} />
+                                </TouchableOpacity>
+                            </View>
+
+                            <View style={styles.buttonContainer}>
+                                <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(-4)}>
+                                    <Icon name="remove-circle" size={65} color={Colors.light.primaryBlue} />
+                                </TouchableOpacity>
+                                <Text style={styles.buttonText}>{`Quads ${selectedZone.quadruples}`}</Text>
+                                <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(4)}>
+                                    <Icon name="add-circle" size={65} color={Colors.light.primaryBlue} />
+                                </TouchableOpacity>
+                            </View>
                         </View>
 
-                        <View style={styles.buttonContainer}>
-                            <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(-2)}>
-                                <Icon name="remove-circle" size={65} color={Colors.light.primaryBlue} />
-                            </TouchableOpacity>
-                            <Text style={styles.buttonText}>{`Doubles ${selectedZone.doubles}`}</Text>
-                            <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(2)}>
-                                <Icon name="add-circle" size={65} color={Colors.light.primaryBlue} />
-                            </TouchableOpacity>
-                        </View>
-
-                        <View style={styles.buttonContainer}>
-                            <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(-3)}>
-                                <Icon name="remove-circle" size={65} color={Colors.light.primaryBlue} />
-                            </TouchableOpacity>
-                            <Text style={styles.buttonText}>{`Triples ${selectedZone.triples}`}</Text>
-                            <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(3)}>
-                                <Icon name="add-circle" size={65} color={Colors.light.primaryBlue} />
-                            </TouchableOpacity>
-                        </View>
-
-                        <View style={styles.buttonContainer}>
-                            <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(-4)}>
-                                <Icon name="remove-circle" size={65} color={Colors.light.primaryBlue} />
-                            </TouchableOpacity>
-                            <Text style={styles.buttonText}>{`Quads ${selectedZone?.quadruples}`}</Text>
-                            <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(4)}>
-                                <Icon name="add-circle" size={65} color={Colors.light.primaryBlue} />
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-
-
-                    <View style={styles.countContainer}>
+                        <View style={styles.countContainer}>
                             <Text style={styles.mediumText}>{`Graphs: ${selectedZone.graphs}`}</Text>
-                            <Text style={styles.mediumText}>{`Hairs: ${selectedZone?.hairs}`}</Text>
-                    </View>
-
-                    <View style={styles.outerInfoContainer}>
-                        <View style={styles.innerInfoContainer}>
-                            <Text style={{ fontWeight: 'bold'}}>Zone Info</Text>
-
-                            <View style={{flexDirection: 'row'}}>
-                                <Text style={styles.infoText}>{`Hairs/FU: `}</Text>
-                                <Text>{`${selectedZone.hairPerCountedFu.toFixed(2)}`}</Text>
-                            </View>
-                            <View style={{flexDirection: 'row'}}>
-                                 <Text style={styles.infoText}>{`Area: `}</Text>
-                                 <Text>{`${selectedZone.area} cm²`}</Text>
-                            </View>
-
+                            <Text style={styles.mediumText}>{`Hairs: ${selectedZone.hairs}`}</Text>
                         </View>
-                        <View style={styles.innerInfoContainer}>
-                            <Text style={{ fontWeight: 'bold'}}>Overall Info</Text>
-                            <View style={{flexDirection: 'row'}}>
-                                <Text style={styles.infoText}>{`Total Singles:`}</Text>
-                                <Text>{`${globalState.totalSingles}`}</Text>
-                            </View>
-                            <View style={{flexDirection: 'row'}}>
-                                <Text style={styles.infoText}>{`Total Doubles:`}</Text>
-                                <Text>{`${globalState.totalDoubles}`}</Text>
-                            </View>
-                            <View style={{flexDirection: 'row'}}>
-                                <Text style={styles.infoText}>{`Total Triples:`}</Text>
-                                <Text>{`${globalState.totalTriples}`}</Text>
-                            </View>
-                            <View style={{flexDirection: 'row'}}>
-                                <Text style={styles.infoText}>{`Total Quads:`}</Text>
-                                <Text>{`${globalState.totalQuadruples}`}</Text>
-                            </View>
-                            <Text></Text>
-                            <View style={{flexDirection: 'row'}}>
-                                <Text style={styles.infoText}>{`Total Graphs:`}</Text>
-                                <Text>{`${globalState.totalGraphs}`}</Text>
-                            </View>
-                            <View style={{flexDirection: 'row'}}>
-                                <Text style={styles.infoText}>{`Total Hair:`}</Text>
-                                <Text>{`${globalState.totalHair}`}</Text>
-                            </View>
-                            <View style={{flexDirection: 'row'}}>
-                                <Text style={styles.infoText}>{`Total Hair/FU:`}</Text>
-                                <Text>{`${globalState.totalHairPerFU.toFixed(2)}`}</Text>
 
+                        <View style={styles.outerInfoContainer}>
+                            <View style={styles.innerInfoContainer}>
+                                <Text style={{ fontWeight: 'bold' }}>Zone Info</Text>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text style={styles.infoText}>{`Hairs/FU: `}</Text>
+                                    <Text>{`${selectedZone.hairPerCountedFu.toFixed(2)}`}</Text>
+                                </View>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text style={styles.infoText}>{`Area: `}</Text>
+                                    <Text>{`${selectedZone.area} cm²`}</Text>
+                                </View>
+                            </View>
+                            <View style={styles.innerInfoContainer}>
+                                <Text style={{ fontWeight: 'bold' }}>Overall Info</Text>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text style={styles.infoText}>{`Total Singles:`}</Text>
+                                    <Text>{`${globalState.totalSingles}`}</Text>
+                                </View>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text style={styles.infoText}>{`Total Doubles:`}</Text>
+                                    <Text>{`${globalState.totalDoubles}`}</Text>
+                                </View>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text style={styles.infoText}>{`Total Triples:`}</Text>
+                                    <Text>{`${globalState.totalTriples}`}</Text>
+                                </View>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text style={styles.infoText}>{`Total Quads:`}</Text>
+                                    <Text>{`${globalState.totalQuadruples}`}</Text>
+                                </View>
+                                <Text></Text>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text style={styles.infoText}>{`Total Graphs:`}</Text>
+                                    <Text>{`${globalState.totalGraphs}`}</Text>
+                                </View>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text style={styles.infoText}>{`Total Hair:`}</Text>
+                                    <Text>{`${globalState.totalHair}`}</Text>
+                                </View>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text style={styles.infoText}>{`Total Hair/FU:`}</Text>
+                                    <Text>{`${globalState.totalHairPerFU.toFixed(2)}`}</Text>
+                                </View>
                             </View>
                         </View>
                     </View>
-
-                </View>
-            ) : (
-                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                    <View style={styles.countContainer}>
-                        <Text style={{ fontSize: 30, color: Colors.light.primaryText,}}>Please add a zone</Text>
-
+                ) : (
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                        <View style={styles.countContainer}>
+                            <Text style={{ fontSize: 30, color: Colors.light.primaryText }}>Please add a zone</Text>
+                        </View>
                     </View>
-                </View>
-            )}
-
+                )}
             </View>
 
-            <CustomBottomSheet ref={bottomSheetRef}>
-                    <Text>Test</Text>
+            <CustomBottomSheet ref={bottomSheetRef} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
+                <Text>Test</Text>
             </CustomBottomSheet>
-
         </SafeAreaView>
     );
 }
@@ -286,5 +269,4 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             width: '60%',
         }
     });
-
 }

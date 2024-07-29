@@ -5,25 +5,27 @@ import { Colors } from '@/constants/Colors';
 import { Easing } from 'react-native-reanimated';
 import { useAppState } from "@/state/Store";
 
-interface Props {
+export interface Props {
     children: React.ReactNode;
+    menuVisible: boolean;
+    setMenuVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const CustomBottomSheet = forwardRef<BottomSheet, Props>((props, ref) => {
     const { children } = props;
+    const { menuVisible, setMenuVisible } = props;
     const snapPoints = useMemo(() => ['25%', '50%', '70%', '100%'], []);
     const colorScheme = useColorScheme();
     const colors = colorScheme === 'dark' ? Colors.dark : Colors.light;
-    const appState = useAppState();
     const renderBackDrop = useCallback((props: any) => <BottomSheetBackdrop animatedIndex={0} animatedPosition={-1} {...props} />, []);
     const animationConfigs = useMemo(() => ({duration: 200, easing: Easing.out(Easing.ease)}), []);
 
     function handleSheetChanges(index: number) {
         if (index === -1) {
-            appState.setMenuVisible(false);
+            setMenuVisible(false);
             Keyboard.dismiss();
         } else {
-            appState.setMenuVisible(true);
+            setMenuVisible(true);
         }
     }
 

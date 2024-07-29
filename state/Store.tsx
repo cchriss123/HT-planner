@@ -58,8 +58,6 @@ interface AppStateContextType {
     totalGraphs: number;
     totalHair: number;
     totalHairPerFU: number;
-    menuVisible: boolean;
-    setMenuVisible: (visible: boolean) => void;
 }
 
 export const AppStateContext = createContext<AppStateContextType | undefined>(undefined);
@@ -87,8 +85,6 @@ export function AppStateProvider({children}: { children: ReactNode }) {
     const [totalGraphs, setTotalGraphs] = useState(0);
     const [totalHair, setTotalHair] = useState(0);
     const [totalHairPerFuCounted, setTotalHairPerFuCounted] = useState(0);
-    const [menuVisible, setMenuVisible] = useState(false);
-
 
 
     return (
@@ -106,8 +102,6 @@ export function AppStateProvider({children}: { children: ReactNode }) {
                 totalGraphs,
                 totalHair,
                 totalHairPerFU: totalHairPerFuCounted,
-                menuVisible,
-                setMenuVisible,
             }}
         >
             {children}

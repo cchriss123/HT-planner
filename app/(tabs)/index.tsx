@@ -18,10 +18,11 @@ export default function ZonesScreen() {
     const styles = createStyles(colorScheme);
     const colors = colorScheme === 'dark' ? Colors.dark : Colors.light;
     const globalState = useAppState();
-
+    const [menuVisible, setMenuVisible] = useState(false);
     const donorZones = globalState.donorZones;
     const recipientZones = globalState.recipientZones;
     const [selectedZone, setSelectedZone] = useState<Zone | null>(null);
+
 
     const bottomSheetRefs = {
         wheel: useRef<BottomSheet>(null),
@@ -73,7 +74,7 @@ export default function ZonesScreen() {
                         style={styles.placeholderContainer}
                         onPress={() => openMenu(bottomSheetRefs.wheel)}
                     >
-                        <FontAwesome gear="setting" size={35} color={globalState.menuVisible ? Colors.light.primaryBlue : Colors.light.neutralGrey} name="gear" />
+                        <FontAwesome gear="setting" size={35} color={menuVisible ? Colors.light.primaryBlue : Colors.light.neutralGrey} name="gear" />
                     </TouchableOpacity>
                 </View>
 
@@ -100,20 +101,20 @@ export default function ZonesScreen() {
                 </View>
             </ScrollView>
 
-            <CustomBottomSheet ref={bottomSheetRefs.wheel}>
+            <CustomBottomSheet ref={bottomSheetRefs.wheel} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
                 <Text>Wheel Menu Content</Text>
             </CustomBottomSheet>
-            <CustomBottomSheet ref={bottomSheetRefs.addDonor}>
+            <CustomBottomSheet ref={bottomSheetRefs.addDonor} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
                 <AddDonorZone zones={donorZones} />
             </CustomBottomSheet>
-            <CustomBottomSheet ref={bottomSheetRefs.addRecipient}>
+            <CustomBottomSheet ref={bottomSheetRefs.addRecipient} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
                 <Text>Add Recipient Menu Content</Text>
                 <AddRecipientZone zones={recipientZones} />
             </CustomBottomSheet>
-            <CustomBottomSheet ref={bottomSheetRefs.editDonor}>
+            <CustomBottomSheet ref={bottomSheetRefs.editDonor} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
                 <Text>Edit Donor Zone Menu for {selectedZone?.name}</Text>
             </CustomBottomSheet>
-            <CustomBottomSheet ref={bottomSheetRefs.editRecipient}>
+            <CustomBottomSheet ref={bottomSheetRefs.editRecipient} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
                 <Text>Edit Recipient Zone Menu for {selectedZone?.name}</Text>
             </CustomBottomSheet>
         </SafeAreaView>
