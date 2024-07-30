@@ -13,7 +13,6 @@ export default function FormStyles() {
             background: colors.solidBackground,
             surface: colors.solidBackground,
             accent: colors.primaryText,
-            error: '#B00020',
             text: colors.primaryText,
             onSurface: colors.primaryText,
             disabled: colors.primaryText,
@@ -21,9 +20,7 @@ export default function FormStyles() {
             backdrop: colors.primaryText,
             notification: colors.primaryBlue,
         },
-
     };
-
 
     const styles = StyleSheet.create({
         container: {

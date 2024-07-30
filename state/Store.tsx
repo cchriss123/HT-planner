@@ -7,7 +7,7 @@ export interface Zone {
     fuPerCm2: number; // Follicular units per square centimeter
     hairPerCm2: number; // Hairs per square centimeter
     area: number; // Area in square centimeters
-    desiredCoverageValue?: number; // Desired coverage value (can be used for both donor and recipient)
+    desiredCoverageValue: number; // Desired coverage value (can be used for both donor and recipient)
 
     // Calculated values from user inputs
     hairPerFu?: number; // = hairPerCm2 / fuPerCm2
@@ -24,14 +24,14 @@ export interface DonorZone extends Zone {
     hairPerCountedFu: number; // = hairs / graphs //TODO change to hair to hair per counted grafts
 
     // Calculated values from user inputs
-    fuPerZone?: number; // = areaInCm2 * fuPerCm2
-    coverageValue?: number; // = caliber * hairPerCm2
-    hairPerZone?: number; // = areaInCm2 * hairPerCm2
+    fuPerZone: number; // = areaInCm2 * fuPerCm2
+    coverageValue: number; // = caliber * hairPerCm2
+    hairPerZone: number; // = areaInCm2 * hairPerCm2
 
     // Formula: fuExtractedToReachDonorDesiredCoverageValue = fuPerZone - ((areaInCm2 * desiredCoverageValue) / (caliber * hairPerFu))
-    fuExtractedToReachDonorDesiredCoverageValue?: number;
+    fuExtractedToReachDonorDesiredCoverageValue: number;
     //only used in counter
-   fuLeftToReachDonorDesiredCoverageValue?: number; // fuExtractedToReachDonorDesiredCoverageValue - grafts
+   fuLeftToReachDonorDesiredCoverageValue: number; // fuExtractedToReachDonorDesiredCoverageValue - grafts
 }
 
 // export type AnyZone = DonorZone | RecipientZone;
@@ -39,11 +39,11 @@ export interface DonorZone extends Zone {
 export interface RecipientZone extends Zone {
 
     // Calculated values from user inputs
-    startingCoverageValue?: number; // = caliber * hairPerCm2
-    coverageValueDifference?: number; // = recipientDesiredCoverageValue - starting
+    startingCoverageValue: number; // = caliber * hairPerCm2
+    coverageValueDifference: number; // = recipientDesiredCoverageValue - starting
 
     // Formula: fuImplantedToReachDesiredRecipientCoverageValue = (areaInCm2 * coverageValueDifference) / (caliber * hairPerFu)
-    fuImplantedToReachDesiredRecipientCoverageValue?: number; // The number of FUs to be implanted to achieve the desired recipient coverage value
+    fuImplantedToReachDesiredRecipientCoverageValue: number; // The number of FUs to be implanted to achieve the desired recipient coverage value
 }
 
 interface AppStateContextType {
@@ -148,17 +148,13 @@ export function AppStateProvider({children}: { children: ReactNode }) {
     }
    function calculateDonorZoneValues(zone: DonorZone) {
 
-        if(zone.desiredCoverageValue === undefined) {
-            zone.desiredCoverageValue = 0;
-        }
-
 
         zone.hairPerFu = zone.hairPerCm2 / zone.fuPerCm2;zone.fuPerZone = zone.area * zone.fuPerCm2;
         zone.coverageValue = zone.caliber * zone.hairPerCm2;
         zone.hairPerZone = zone.area * zone.hairPerCm2;
         zone.fuExtractedToReachDonorDesiredCoverageValue =  Math.floor(zone.fuPerZone - ((zone.area * zone.desiredCoverageValue) / (zone.caliber * zone.hairPerFu)));
         zone.fuLeftToReachDonorDesiredCoverageValue = Math.floor(zone.fuExtractedToReachDonorDesiredCoverageValue) - zone.graphs;
-       console.log(JSON.stringify(zone));
+        console.log(JSON.stringify(zone));
 
 
    }
@@ -246,7 +242,7 @@ function getMockDonorZones(): DonorZone[] {
     ];
 }
 
-function getMockRecipientZones() {
+function getMockRecipientZones() : RecipientZone[] {
     return [
         {
             name: 'Recipient Zone 1',
@@ -255,6 +251,10 @@ function getMockRecipientZones() {
             hairPerCm2: 200,
             area: 13.7,
             desiredCoverageValue: 20,
+
+            startingCoverageValue: 0,
+            coverageValueDifference: 0,
+            fuImplantedToReachDesiredRecipientCoverageValue: 0,
         },
         {
             name: 'Recipient Zone 2',
@@ -263,6 +263,10 @@ function getMockRecipientZones() {
             hairPerCm2: 150,
             area: 11.7,
             desiredCoverageValue: 20,
+
+            startingCoverageValue: 0,
+            coverageValueDifference: 0,
+            fuImplantedToReachDesiredRecipientCoverageValue: 0,
         },
     ];
 }

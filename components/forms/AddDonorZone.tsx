@@ -8,7 +8,7 @@ interface AddDonorZoneProps {
     zones: DonorZone[];
 }
 
-interface HandleSubmitArgs {
+interface AddZoneArgs {
     name: string;
     caliber: string;
     fuPerCm2: string;
@@ -18,9 +18,10 @@ interface HandleSubmitArgs {
     zones: DonorZone[];
 }
 
-const replaceCommaWithDot = (value: string) => value.replace(',', '.');
 
-const AddDonorZone: React.FC<AddDonorZoneProps> = ({ zones }) => {
+
+function AddDonorZone({ zones }: AddDonorZoneProps) {
+
     const [name, setName] = React.useState('');
     const [caliber, setCaliber] = React.useState('');
     const [fuPerCm2, setFuPerCm2] = React.useState('');
@@ -28,23 +29,40 @@ const AddDonorZone: React.FC<AddDonorZoneProps> = ({ zones }) => {
     const [area, setArea] = React.useState('');
     const [desiredCoverageValue, setDesiredCoverageValue] = React.useState('');
     const [message, setMessage] = React.useState('');
-
+    const replaceCommaWithDot = (value: string) => value.replace(',', '.');
     const { styles, theme } = FormStyles();
-    const { calculateDonorZoneValues } = useAppState(); // Call useAppState at the top level
+    const { calculateDonorZoneValues } = useAppState();
 
-    function handleSubmit(args: HandleSubmitArgs) {
+    function addZone(args: AddZoneArgs) {
+        const valuesToCheck = {
+            caliber: parseFloat(replaceCommaWithDot(args.caliber)),
+            fuPerCm2: parseInt(args.fuPerCm2),
+            hairsPerCm2: parseInt(args.hairsPerCm2),
+            area: parseFloat(replaceCommaWithDot(args.area)),
+            desiredCoverageValue: parseFloat(replaceCommaWithDot(args.desiredCoverageValue))
+        };
+
         if (!args.name || !args.caliber || !args.fuPerCm2 || !args.hairsPerCm2 || !args.area || !args.desiredCoverageValue) {
             setMessage('Please enter all fields.');
+            return;
+        }
+        if (zones.some(zone => zone.name === args.name)) {
+            setMessage('Zone with that name already exists.');
+            return;
+        }
+
+        if (Object.values(valuesToCheck).some(isNaN)) {
+            setMessage('Please enter correct value types.');
             return;
         }
 
         const newZone: DonorZone = {
             name: args.name,
-            caliber: parseFloat(replaceCommaWithDot(args.caliber)) || 0,
-            fuPerCm2: parseInt(args.fuPerCm2) || 0,
-            hairPerCm2: parseInt(args.hairsPerCm2) || 0,
-            area: parseFloat(replaceCommaWithDot(args.area)) || 0,
-            desiredCoverageValue: parseFloat(replaceCommaWithDot(args.desiredCoverageValue)) || 0,
+            caliber: valuesToCheck.caliber,
+            fuPerCm2: valuesToCheck.fuPerCm2,
+            hairPerCm2: valuesToCheck.hairsPerCm2,
+            area: valuesToCheck.area,
+            desiredCoverageValue: valuesToCheck.desiredCoverageValue,
             singles: 0,
             doubles: 0,
             triples: 0,
@@ -52,11 +70,15 @@ const AddDonorZone: React.FC<AddDonorZoneProps> = ({ zones }) => {
             graphs: 0,
             hairs: 0,
             hairPerCountedFu: 0,
+            fuPerZone: 0,
+            coverageValue: 0,
+            hairPerZone: 0,
+            fuExtractedToReachDonorDesiredCoverageValue: 0,
+            fuLeftToReachDonorDesiredCoverageValue: 0,
         };
 
         calculateDonorZoneValues(newZone);
         zones.push(newZone);
-
         setMessage('Donor zone added successfully!');
 
         setName('');
@@ -128,7 +150,7 @@ const AddDonorZone: React.FC<AddDonorZoneProps> = ({ zones }) => {
             />
             <TouchableOpacity
                 style={styles.button}
-                onPress={() => handleSubmit({
+                onPress={() => addZone({
                     name,
                     caliber,
                     fuPerCm2,
