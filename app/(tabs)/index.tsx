@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import { Appearance, StyleSheet, Text, TouchableOpacity, View, ScrollView, Image } from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from '@/constants/Colors';
@@ -10,6 +10,7 @@ import CustomBottomSheet from "@/components/CustomBottomSheet";
 import { useAppState, Zone, DonorZone, RecipientZone } from "@/state/Store";
 import AddZone from "@/components/forms/AddZone";
 import EditDonorZone from "@/components/forms/EditZone";
+//TODO make this scrollable
 
 Appearance.getColorScheme = () => 'light';
 
@@ -22,6 +23,11 @@ export default function ZonesScreen() {
     const donorZones = globalState.donorZones;
     const recipientZones = globalState.recipientZones;
     const [selectedZone, setSelectedZone] = useState<Zone | null>(null);
+
+    useEffect(() => {
+        if (!menuVisible) setSelectedZone(null);
+    }, [menuVisible]);
+
 
     const bottomSheetRefs = {
         addDonor: useRef<BottomSheet>(null),

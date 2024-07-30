@@ -172,7 +172,8 @@ function AddZone({ zones, zoneType }: AddZoneProps) {
                     desiredCoverageValue,
                 })}
             >
-                <Text style={styles.buttonTitle}>Add Zone</Text>
+                <Text style={styles.buttonTitle}>Add {zoneType.charAt(0).toUpperCase() + zoneType.slice(1)}</Text>
+
             </TouchableOpacity>
             {message ? <Text style={styles.message}>{message}</Text> : null}
         </View>

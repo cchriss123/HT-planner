@@ -11,6 +11,8 @@ interface EditZoneProps {
     zone: Zone;
 }
 
+
+//TODO take the old vales if nothing changed
 interface EditZoneArgs {
     name: string;
     caliber: string;
@@ -60,11 +62,8 @@ function EditZone({ zones, zone }: EditZoneProps) {
         zone.area = checkedValues.area;
         zone.desiredCoverageValue = checkedValues.desiredCoverageValue;
 
-        if (zone.type === 'donor') {
-            calculateDonorZoneValues(zone as DonorZone);
-        } else if (zone.type === 'recipient') {
-            calculateRecipientZoneValues(zone as RecipientZone);
-        }
+        if (zone.type === 'donor') calculateDonorZoneValues(zone as DonorZone);
+        else if (zone.type === 'recipient') calculateRecipientZoneValues(zone as RecipientZone);
     }
 
 
