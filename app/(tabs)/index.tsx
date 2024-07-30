@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import {Appearance, StyleSheet, Text, TouchableOpacity, View, ScrollView, Image} from 'react-native';
+import { Appearance, StyleSheet, Text, TouchableOpacity, View, ScrollView, Image } from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from '@/constants/Colors';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
@@ -7,10 +7,10 @@ import BottomSheet from "@gorhom/bottom-sheet";
 import Icon from "react-native-vector-icons/Ionicons";
 import logoImg from '@/assets/images/logo.png';
 import CustomBottomSheet from "@/components/CustomBottomSheet";
-import { useAppState, Zone } from "@/state/Store";
+import { useAppState, Zone, DonorZone, RecipientZone } from "@/state/Store";
 import AddDonorZone from "@/components/forms/AddDonorZone";
 import AddRecipientZone from "@/components/forms/AddRecipientZone";
-//TODO fix decimals
+import EditDonorZone from "@/components/forms/EditZone";
 
 Appearance.getColorScheme = () => 'light';
 
@@ -24,9 +24,7 @@ export default function ZonesScreen() {
     const recipientZones = globalState.recipientZones;
     const [selectedZone, setSelectedZone] = useState<Zone | null>(null);
 
-
     const bottomSheetRefs = {
-        // wheel: useRef<BottomSheet>(null),
         addDonor: useRef<BottomSheet>(null),
         addRecipient: useRef<BottomSheet>(null),
         editDonor: useRef<BottomSheet>(null),
@@ -63,23 +61,12 @@ export default function ZonesScreen() {
         ));
     }
 
+    const isDonorZone = (zone: Zone): zone is DonorZone => (zone as DonorZone).type === 'donor';
+    const isRecipientZone = (zone: Zone): zone is RecipientZone => (zone as RecipientZone).type === 'recipient';
+
     return (
         <SafeAreaView style={{ flex: 1, paddingTop: 20 }}>
-
             <ScrollView contentContainerStyle={styles.outerContainer}>
-                {/*<View style={styles.topContainer}>*/}
-                {/*    <View style={styles.placeholderContainer} />*/}
-                {/*    <View style={{ flex: 1, alignItems: 'center' }}>*/}
-                {/*        <Image source={logoImg} style={styles.logo} />*/}
-                {/*    </View>*/}
-                {/*    <TouchableOpacity*/}
-                {/*        style={styles.placeholderContainer}*/}
-                {/*        onPress={() => openMenu(bottomSheetRefs.wheel)}*/}
-                {/*    >*/}
-                {/*        <FontAwesome gear="setting" size={35} color={menuVisible ? Colors.light.primaryBlue : Colors.light.neutralGrey} name="gear" />*/}
-                {/*    </TouchableOpacity>*/}
-                {/*</View>*/}
-
                 <View style={styles.buttonWrapper}>
                     <View style={styles.buttonContainer}>
                         <View style={styles.button}>
@@ -103,20 +90,21 @@ export default function ZonesScreen() {
                 </View>
             </ScrollView>
 
-            {/*<CustomBottomSheet ref={bottomSheetRefs.wheel} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>*/}
-            {/*    <Text>Wheel Menu Content</Text>*/}
-            {/*</CustomBottomSheet>*/}
             <CustomBottomSheet ref={bottomSheetRefs.addDonor} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
                 <AddDonorZone zones={donorZones} />
             </CustomBottomSheet>
+
+
             <CustomBottomSheet ref={bottomSheetRefs.addRecipient} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
                 <AddRecipientZone zones={recipientZones} />
             </CustomBottomSheet>
+
             <CustomBottomSheet ref={bottomSheetRefs.editDonor} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
-                <Text>Edit Donor Zone Menu for {selectedZone?.name}</Text>
+                <EditDonorZone zone={selectedZone as DonorZone} zones={donorZones} />
             </CustomBottomSheet>
+
             <CustomBottomSheet ref={bottomSheetRefs.editRecipient} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
-                <Text>Edit Recipient Zone Menu for {selectedZone?.name}</Text>
+                <EditDonorZone zone={selectedZone as RecipientZone} zones={recipientZones} />
             </CustomBottomSheet>
         </SafeAreaView>
     );
@@ -151,10 +139,7 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
         buttonWrapper: {
             flexDirection: 'row',
             justifyContent: 'space-between',
-            // borderTopWidth: 1,
-            // borderColor: 'lightgrey',
             paddingTop: 10,
-
         },
         buttonContainer: {
             flex: 1,
@@ -187,7 +172,6 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             height: 50,
             padding: 10,
             backgroundColor: colors.primaryBlue,
-
             borderRadius: 8,
             marginBottom: 10,
             shadowColor: '#000',
@@ -203,5 +187,3 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
         },
     });
 }
-
-export { ZonesScreen };

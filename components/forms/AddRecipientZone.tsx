@@ -32,7 +32,7 @@ function AddRecipientZone({ zones }: AddDonorZoneProps) {
     const { styles, theme } = FormStyles();
 
 
-    function addZone(args: AddZoneArgs) {
+    function addZoneSubmit(args: AddZoneArgs) {
 
         const valuesToCheck = {
             caliber: parseFloat(replaceCommaWithDot(args.caliber)),
@@ -58,6 +58,7 @@ function AddRecipientZone({ zones }: AddDonorZoneProps) {
 
 
         const newZone: RecipientZone = {
+            type: 'recipient',
             name: args.name,
             caliber: valuesToCheck.caliber,
             fuPerCm2: valuesToCheck.fuPerCm2,
@@ -145,7 +146,7 @@ function AddRecipientZone({ zones }: AddDonorZoneProps) {
             />
             <TouchableOpacity
                 style={styles.button}
-                onPress={() => addZone({
+                onPress={() => addZoneSubmit({
                     name,
                     caliber,
                     fuPerCm2,

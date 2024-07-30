@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 export interface Zone {
     // User inputs
+    type: 'donor' | 'recipient';
     name: string; // The name of the zone
     caliber: number; // The diameter of the hair
     fuPerCm2: number; // Follicular units per square centimeter
@@ -15,6 +16,7 @@ export interface Zone {
 
 export interface DonorZone extends Zone {
     // Counter values
+    type: 'donor';
     singles: number;
     doubles: number;
     triples: number;
@@ -34,11 +36,11 @@ export interface DonorZone extends Zone {
    fuLeftToReachDonorDesiredCoverageValue: number; // fuExtractedToReachDonorDesiredCoverageValue - grafts
 }
 
-// export type AnyZone = DonorZone | RecipientZone;
 
 export interface RecipientZone extends Zone {
 
     // Calculated values from user inputs
+    type: 'recipient';
     startingCoverageValue: number; // = caliber * hairPerCm2
     coverageValueDifference: number; // = recipientDesiredCoverageValue - starting
 
@@ -173,6 +175,7 @@ export function AppStateProvider({children}: { children: ReactNode }) {
 function getMockDonorZones(): DonorZone[] {
     return [
         {
+            type: 'donor',
             name: 'Donor Zone 1',
             caliber: 0.05,
             fuPerCm2: 60,
@@ -196,6 +199,7 @@ function getMockDonorZones(): DonorZone[] {
         },
 
         {
+            type: 'donor',
             name: 'Donor Zone 2',
             caliber: 0.07,
             fuPerCm2: 120,
@@ -218,6 +222,7 @@ function getMockDonorZones(): DonorZone[] {
 
         },
         {
+            type: 'donor',
             name: 'Donor Zone 3',
             caliber: 0.08,
             fuPerCm2: 130,
@@ -245,6 +250,7 @@ function getMockDonorZones(): DonorZone[] {
 function getMockRecipientZones() : RecipientZone[] {
     return [
         {
+            type: 'recipient',
             name: 'Recipient Zone 1',
             caliber: 0.06,
             fuPerCm2: 100,
@@ -257,6 +263,7 @@ function getMockRecipientZones() : RecipientZone[] {
             fuImplantedToReachDesiredRecipientCoverageValue: 0,
         },
         {
+            type: 'recipient',
             name: 'Recipient Zone 2',
             caliber: 0.07,
             fuPerCm2: 120,

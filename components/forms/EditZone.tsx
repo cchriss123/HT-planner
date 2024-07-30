@@ -1,39 +1,40 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Alert } from 'react-native';
 import { TextInput } from 'react-native-paper';
-import { DonorZone, useAppState } from "@/state/Store";
+import { DonorZone, RecipientZone, useAppState, Zone } from "@/state/Store";
 import FormStyles from "@/components/forms/styles/FormStyles";
 
-interface AddDonorZoneProps {
-    zones: DonorZone[];
+interface EditZoneProps {
+    zones: Zone[];
+    zone: Zone;
 }
 
-interface AddZoneArgs {
+interface EditZoneArgs {
     name: string;
     caliber: string;
     fuPerCm2: string;
     hairsPerCm2: string;
     area: string;
     desiredCoverageValue: string;
-    zones: DonorZone[];
 }
 
-
-
-function AddDonorZone({ zones }: AddDonorZoneProps) {
-
-    const [name, setName] = React.useState('');
-    const [caliber, setCaliber] = React.useState('');
-    const [fuPerCm2, setFuPerCm2] = React.useState('');
-    const [hairsPerCm2, setHairsPerCm2] = React.useState('');
-    const [area, setArea] = React.useState('');
-    const [desiredCoverageValue, setDesiredCoverageValue] = React.useState('');
+function EditZone({ zones, zone }: EditZoneProps) {
+    if (!zone) return;
+    const [name, setName] = React.useState(zone.name);
+    const [caliber, setCaliber] = React.useState(zone.caliber.toString());
+    const [fuPerCm2, setFuPerCm2] = React.useState(zone.fuPerCm2.toString());
+    const [hairsPerCm2, setHairsPerCm2] = React.useState(zone.hairPerCm2.toString());
+    const [area, setArea] = React.useState(zone.area.toString());
+    const [desiredCoverageValue, setDesiredCoverageValue] = React.useState(zone.desiredCoverageValue.toString());
     const [message, setMessage] = React.useState('');
+
+    const { calculateDonorZoneValues, calculateRecipientZoneValues } = useAppState();
     const replaceCommaWithDot = (value: string) => value.replace(',', '.');
     const { styles, theme } = FormStyles();
-    const { calculateDonorZoneValues } = useAppState();
 
-    function addZoneSubmit(args: AddZoneArgs) {
+    function editZoneSubmit(args: EditZoneArgs) {
+
+
         const valuesToCheck = {
             caliber: parseFloat(replaceCommaWithDot(args.caliber)),
             fuPerCm2: parseInt(args.fuPerCm2),
@@ -46,7 +47,7 @@ function AddDonorZone({ zones }: AddDonorZoneProps) {
             setMessage('Please enter all fields.');
             return;
         }
-        if (zones.some(zone => zone.name === args.name)) {
+        if (zones.some(z => z.name === args.name && z.name !== zone.name)) {
             setMessage('Zone with that name already exists.');
             return;
         }
@@ -56,42 +57,43 @@ function AddDonorZone({ zones }: AddDonorZoneProps) {
             return;
         }
 
-        const newZone: DonorZone = {
-            type: 'donor',
-            name: args.name,
-            caliber: valuesToCheck.caliber,
-            fuPerCm2: valuesToCheck.fuPerCm2,
-            hairPerCm2: valuesToCheck.hairsPerCm2,
-            area: valuesToCheck.area,
-            desiredCoverageValue: valuesToCheck.desiredCoverageValue,
-            singles: 0,
-            doubles: 0,
-            triples: 0,
-            quadruples: 0,
-            graphs: 0,
-            hairs: 0,
-            hairPerCountedFu: 0,
-            fuPerZone: 0,
-            coverageValue: 0,
-            hairPerZone: 0,
-            fuExtractedToReachDonorDesiredCoverageValue: 0,
-            fuLeftToReachDonorDesiredCoverageValue: 0,
-        };
+        zone.name = args.name;
+        zone.caliber = valuesToCheck.caliber;
+        zone.fuPerCm2 = valuesToCheck.fuPerCm2;
+        zone.hairPerCm2 = valuesToCheck.hairsPerCm2;
+        zone.area = valuesToCheck.area;
+        zone.desiredCoverageValue = valuesToCheck.desiredCoverageValue;
 
-        calculateDonorZoneValues(newZone);
-        zones.push(newZone);
-        setMessage('Donor zone added successfully!');
+        if (zone.type === 'donor') {
+            calculateDonorZoneValues(zone as DonorZone);
+        } else if (zone.type === 'recipient') {
+            calculateRecipientZoneValues(zone as RecipientZone);
+        }
+    }
 
-        setName('');
-        setCaliber('');
-        setFuPerCm2('');
-        setHairsPerCm2('');
-        setArea('');
-        setDesiredCoverageValue('');
-
-        setTimeout(() => {
-            setMessage('');
-        }, 3000);
+    function deleteZone(zone: Zone, zones: Zone[]) {
+        Alert.alert(
+            'Delete Zone',
+            `Are you sure you want to delete ${zone.name}?`,
+            [
+                {
+                    text: 'Cancel',
+                    style: 'cancel',
+                    onPress: () => console.log('Cancel Pressed')
+                },
+                {
+                    text: 'Delete',
+                    style: 'destructive',
+                    onPress: () => {
+                        const index = zones.indexOf(zone);
+                        if (index > -1) {
+                            zones.splice(index, 1);
+                        }
+                    }
+                }
+            ],
+            { cancelable: true }
+        );
     }
 
     return (
@@ -101,6 +103,7 @@ function AddDonorZone({ zones }: AddDonorZoneProps) {
                 mode="outlined"
                 value={name}
                 onChangeText={setName}
+                placeholder={zone.name}
                 style={styles.input}
                 theme={theme}
             />
@@ -109,6 +112,7 @@ function AddDonorZone({ zones }: AddDonorZoneProps) {
                 mode="outlined"
                 value={caliber}
                 onChangeText={setCaliber}
+                placeholder={zone.caliber.toString()}
                 keyboardType="numeric"
                 style={styles.input}
                 theme={theme}
@@ -118,6 +122,7 @@ function AddDonorZone({ zones }: AddDonorZoneProps) {
                 mode="outlined"
                 value={fuPerCm2}
                 onChangeText={setFuPerCm2}
+                placeholder={zone.fuPerCm2.toString()}
                 keyboardType="numeric"
                 style={styles.input}
                 theme={theme}
@@ -127,6 +132,7 @@ function AddDonorZone({ zones }: AddDonorZoneProps) {
                 mode="outlined"
                 value={hairsPerCm2}
                 onChangeText={setHairsPerCm2}
+                placeholder={zone.hairPerCm2.toString()}
                 keyboardType="numeric"
                 style={styles.input}
                 theme={theme}
@@ -136,6 +142,7 @@ function AddDonorZone({ zones }: AddDonorZoneProps) {
                 mode="outlined"
                 value={area}
                 onChangeText={setArea}
+                placeholder={zone.area.toString()}
                 keyboardType="numeric"
                 style={styles.input}
                 theme={theme}
@@ -145,27 +152,33 @@ function AddDonorZone({ zones }: AddDonorZoneProps) {
                 mode="outlined"
                 value={desiredCoverageValue}
                 onChangeText={setDesiredCoverageValue}
+                placeholder={zone.desiredCoverageValue.toString()}
                 keyboardType="numeric"
                 style={styles.input}
                 theme={theme}
             />
             <TouchableOpacity
                 style={styles.button}
-                onPress={() => addZoneSubmit({
+                onPress={() => editZoneSubmit({
                     name,
                     caliber,
                     fuPerCm2,
                     hairsPerCm2,
                     area,
                     desiredCoverageValue,
-                    zones,
                 })}
             >
-                <Text style={styles.buttonTitle}>Add Donor Zone</Text>
+                <Text style={styles.buttonTitle}>Save Changes</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={[styles.button, { backgroundColor: 'red' }]}
+                onPress={() => deleteZone(zone, zones)}
+            >
+                <Text style={styles.buttonTitle}>Delete Zone</Text>
             </TouchableOpacity>
             {message ? <Text style={styles.message}>{message}</Text> : null}
         </View>
     );
 }
 
-export default AddDonorZone;
+export default EditZone;
