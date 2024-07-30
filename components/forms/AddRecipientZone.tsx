@@ -26,6 +26,7 @@ const AddRecipientZone: React.FC<AddDonorZoneProps> = ({ zones }) => {
     const [desiredCoverageValue, setDesiredCoverageValue] = React.useState('');
     const [message, setMessage] = React.useState('');
     const globalState = useAppState();
+    const replaceCommaWithDot = (value: string) => value.replace(',', '.');
 
     const styles = FormStyles();
 
@@ -38,11 +39,11 @@ const AddRecipientZone: React.FC<AddDonorZoneProps> = ({ zones }) => {
 
         const newZone: RecipientZone = {
             name: args.name,
-            caliber: parseFloat(args.caliber) || 0,
-            fuPerCm2: parseFloat(args.fuPerCm2) || 0,
-            hairPerCm2: parseFloat(args.hairsPerCm2) || 0,
-            area: parseFloat(args.area) || 0,
-            desiredCoverageValue: parseFloat(args.desiredCoverageValue) || 0,
+            caliber: parseFloat(replaceCommaWithDot(args.caliber)) || 0,
+            fuPerCm2: parseInt(args.fuPerCm2) || 0,
+            hairPerCm2: parseInt(args.hairsPerCm2) || 0,
+            area: parseFloat(replaceCommaWithDot(args.area)) || 0,
+            desiredCoverageValue: parseFloat(replaceCommaWithDot(args.desiredCoverageValue)) || 0,
         };
 
 
