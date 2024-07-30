@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button, TextInput, View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { TextInput } from 'react-native-paper';
 import { DonorZone, useAppState } from "@/state/Store";
 import FormStyles from "@/components/forms/styles/FormStyles";
 
@@ -17,6 +18,8 @@ interface HandleSubmitArgs {
     zones: DonorZone[];
 }
 
+const replaceCommaWithDot = (value: string) => value.replace(',', '.');
+
 const AddDonorZone: React.FC<AddDonorZoneProps> = ({ zones }) => {
     const [name, setName] = React.useState('');
     const [caliber, setCaliber] = React.useState('');
@@ -25,9 +28,8 @@ const AddDonorZone: React.FC<AddDonorZoneProps> = ({ zones }) => {
     const [area, setArea] = React.useState('');
     const [desiredCoverageValue, setDesiredCoverageValue] = React.useState('');
     const [message, setMessage] = React.useState('');
-    const replaceCommaWithDot = (value: string) => value.replace(',', '.');
 
-    const styles = FormStyles();
+    const { styles, theme } = FormStyles();
     const { calculateDonorZoneValues } = useAppState(); // Call useAppState at the top level
 
     function handleSubmit(args: HandleSubmitArgs) {
@@ -71,54 +73,58 @@ const AddDonorZone: React.FC<AddDonorZoneProps> = ({ zones }) => {
 
     return (
         <View style={styles.container}>
-            {/*<Text style={styles.title}>Add Donor Zone</Text>*/}
-
             <TextInput
-                style={styles.input}
-                placeholder="Zone Name"
-                onChangeText={setName}
+                label="Zone Name"
+                mode="outlined"
                 value={name}
-                placeholderTextColor={styles.input.color}
+                onChangeText={setName}
+                style={styles.input}
+                theme={theme}
             />
             <TextInput
-                style={styles.input}
-                placeholder="Caliber"
-                keyboardType="numeric"
-                onChangeText={setCaliber}
+                label="Caliber"
+                mode="outlined"
                 value={caliber}
-                placeholderTextColor={styles.input.color}
+                onChangeText={setCaliber}
+                keyboardType="numeric"
+                style={styles.input}
+                theme={theme}
             />
             <TextInput
-                style={styles.input}
-                placeholder="Follicular Units per cm2"
-                keyboardType="numeric"
-                onChangeText={setFuPerCm2}
+                label="Follicular Units per cm2"
+                mode="outlined"
                 value={fuPerCm2}
-                placeholderTextColor={styles.input.color}
+                onChangeText={setFuPerCm2}
+                keyboardType="numeric"
+                style={styles.input}
+                theme={theme}
             />
             <TextInput
-                style={styles.input}
-                placeholder="Hairs per cm2"
-                keyboardType="numeric"
-                onChangeText={setHairsPerCm2}
+                label="Hairs per cm2"
+                mode="outlined"
                 value={hairsPerCm2}
-                placeholderTextColor={styles.input.color}
+                onChangeText={setHairsPerCm2}
+                keyboardType="numeric"
+                style={styles.input}
+                theme={theme}
             />
             <TextInput
-                style={styles.input}
-                placeholder="Area in cm2"
-                keyboardType="numeric"
-                onChangeText={setArea}
+                label="Area in cm2"
+                mode="outlined"
                 value={area}
-                placeholderTextColor={styles.input.color}
+                onChangeText={setArea}
+                keyboardType="numeric"
+                style={styles.input}
+                theme={theme}
             />
             <TextInput
-                style={styles.input}
-                placeholder="Desired Coverage Value"
-                keyboardType="numeric"
-                onChangeText={setDesiredCoverageValue}
+                label="Desired Coverage Value"
+                mode="outlined"
                 value={desiredCoverageValue}
-                placeholderTextColor={styles.input.color}
+                onChangeText={setDesiredCoverageValue}
+                keyboardType="numeric"
+                style={styles.input}
+                theme={theme}
             />
             <TouchableOpacity
                 style={styles.button}

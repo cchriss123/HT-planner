@@ -6,6 +6,7 @@ import React, { useEffect } from 'react';
 import 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '@/constants/Colors';
+import { Provider as PaperProvider } from 'react-native-paper';
 
 
 
@@ -36,22 +37,24 @@ export default function RootLayout() {
   return (
       <AppStateProvider>
           <GestureHandlerRootView style={{ flex: 1 }}>
+              <PaperProvider>
 
-          <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-          <View style={{ flex: 1 , backgroundColor: Colors[colorScheme ?? 'light'].softBackground}}>
-              <View style={{ flex: 1 }}>
-                {/*<Text style={{ fontFamily: 'SpaceMono', fontSize: 24, textAlign: 'center', marginTop: 20 }}>*/}
-                {/*  Welcome to My App*/}
-                {/*</Text>*/}
+                  <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+                  <View style={{ flex: 1 , backgroundColor: Colors[colorScheme ?? 'light'].softBackground}}>
+                      <View style={{ flex: 1 }}>
+                        {/*<Text style={{ fontFamily: 'SpaceMono', fontSize: 24, textAlign: 'center', marginTop: 20 }}>*/}
+                        {/*  Welcome to My App*/}
+                        {/*</Text>*/}
 
-                <Stack>
-                  <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-                  <Stack.Screen name="+not-found" />
-                </Stack>
+                        <Stack>
+                          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                          <Stack.Screen name="+not-found" />
+                        </Stack>
 
-              </View>
-          </View>
-        </ThemeProvider>
+                      </View>
+                  </View>
+                </ThemeProvider>
+              </PaperProvider>
         </GestureHandlerRootView>
       </AppStateProvider>
 );
