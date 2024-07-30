@@ -156,7 +156,7 @@ export function AppStateProvider({children}: { children: ReactNode }) {
         zone.hairPerZone = zone.area * zone.hairPerCm2;
         zone.fuExtractedToReachDonorDesiredCoverageValue =  Math.floor(zone.fuPerZone - ((zone.area * zone.desiredCoverageValue) / (zone.caliber * zone.hairPerFu)));
         zone.fuLeftToReachDonorDesiredCoverageValue = Math.floor(zone.fuExtractedToReachDonorDesiredCoverageValue) - zone.graphs;
-        console.log(JSON.stringify(zone));
+        // console.log(JSON.stringify(zone));
 
 
    }

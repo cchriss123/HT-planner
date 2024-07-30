@@ -4,6 +4,7 @@ import { TextInput } from 'react-native-paper';
 import { DonorZone, RecipientZone, useAppState, Zone } from "@/state/Store";
 import FormStyles from "@/components/forms/styles/FormStyles";
 import {DataTableRow} from "react-native-paper/lib/typescript/components/DataTable/DataTableRow";
+import { valuesToCheck, ZoneArgs } from "@/components/forms/utility/valuesToCheck";
 
 interface EditZoneProps {
     zones: Zone[];
@@ -28,25 +29,16 @@ function EditZone({ zones, zone }: EditZoneProps) {
     const [area, setArea] = React.useState(zone.area.toString());
     const [desiredCoverageValue, setDesiredCoverageValue] = React.useState(zone.desiredCoverageValue.toString());
     const [message, setMessage] = React.useState('');
-    const { setDonorZones, setRecipientZones } = useAppState();
+    const { setDonorZones, setRecipientZones, donorZones, recipientZones } = useAppState();
 
     const { calculateDonorZoneValues, calculateRecipientZoneValues } = useAppState();
-    const replaceCommaWithDot = (value: string) => value.replace(',', '.');
     const { styles, theme } = FormStyles();
-    const globalState = useAppState();
 
 
     function editZoneSubmit(args: EditZoneArgs) {
 
 
-        const valuesToCheck = {
-            caliber: parseFloat(replaceCommaWithDot(args.caliber)),
-            fuPerCm2: parseInt(args.fuPerCm2),
-            hairsPerCm2: parseInt(args.hairsPerCm2),
-            area: parseFloat(replaceCommaWithDot(args.area)),
-            desiredCoverageValue: parseFloat(replaceCommaWithDot(args.desiredCoverageValue))
-        };
-
+        const checkedValues = valuesToCheck(args);
         if (!args.name || !args.caliber || !args.fuPerCm2 || !args.hairsPerCm2 || !args.area || !args.desiredCoverageValue) {
             setMessage('Please enter all fields.');
             return;
@@ -56,17 +48,17 @@ function EditZone({ zones, zone }: EditZoneProps) {
             return;
         }
 
-        if (Object.values(valuesToCheck).some(isNaN)) {
+        if (Object.values(checkedValues).some(isNaN)) {
             setMessage('Please enter correct value types.');
             return;
         }
 
         zone.name = args.name;
-        zone.caliber = valuesToCheck.caliber;
-        zone.fuPerCm2 = valuesToCheck.fuPerCm2;
-        zone.hairPerCm2 = valuesToCheck.hairsPerCm2;
-        zone.area = valuesToCheck.area;
-        zone.desiredCoverageValue = valuesToCheck.desiredCoverageValue;
+        zone.caliber = checkedValues.caliber;
+        zone.fuPerCm2 = checkedValues.fuPerCm2;
+        zone.hairPerCm2 = checkedValues.hairsPerCm2;
+        zone.area = checkedValues.area;
+        zone.desiredCoverageValue = checkedValues.desiredCoverageValue;
 
         if (zone.type === 'donor') {
             calculateDonorZoneValues(zone as DonorZone);
@@ -92,9 +84,9 @@ function EditZone({ zones, zone }: EditZoneProps) {
                     style: 'destructive',
                     onPress: () => {
                         if (zone.type === 'donor')
-                            globalState.setDonorZones(globalState.donorZones.filter(z => z !== zone));
+                            setDonorZones(donorZones.filter(z => z !== zone));
                         else if (zone.type === 'recipient')
-                            globalState.setRecipientZones(globalState.recipientZones.filter(z => z !== zone));
+                            setRecipientZones(recipientZones.filter(z => z !== zone));
                         console.log(`Zone ${zone.name} deleted.`);
                     }
                 }

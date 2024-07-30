@@ -1,27 +1,16 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { TextInput } from 'react-native-paper';
-import { DonorZone, useAppState } from "@/state/Store";
+import { DonorZone, RecipientZone, useAppState, Zone } from "@/state/Store";
 import FormStyles from "@/components/forms/styles/FormStyles";
+import { valuesToCheck, ZoneArgs } from "@/components/forms/utility/valuesToCheck";
 
-interface AddDonorZoneProps {
-    zones: DonorZone[];
+interface AddZoneProps {
+    zones: Zone[];
+    zoneType: 'donor' | 'recipient';
 }
 
-interface AddZoneArgs {
-    name: string;
-    caliber: string;
-    fuPerCm2: string;
-    hairsPerCm2: string;
-    area: string;
-    desiredCoverageValue: string;
-    zones: DonorZone[];
-}
-
-
-
-function AddDonorZone({ zones }: AddDonorZoneProps) {
-
+function AddZone({ zones, zoneType }: AddZoneProps) {
     const [name, setName] = React.useState('');
     const [caliber, setCaliber] = React.useState('');
     const [fuPerCm2, setFuPerCm2] = React.useState('');
@@ -29,18 +18,11 @@ function AddDonorZone({ zones }: AddDonorZoneProps) {
     const [area, setArea] = React.useState('');
     const [desiredCoverageValue, setDesiredCoverageValue] = React.useState('');
     const [message, setMessage] = React.useState('');
-    const replaceCommaWithDot = (value: string) => value.replace(',', '.');
     const { styles, theme } = FormStyles();
-    const { calculateDonorZoneValues } = useAppState();
+    const { calculateDonorZoneValues, calculateRecipientZoneValues, setDonorZones, setRecipientZones } = useAppState();
 
-    function addZoneSubmit(args: AddZoneArgs) {
-        const valuesToCheck = {
-            caliber: parseFloat(replaceCommaWithDot(args.caliber)),
-            fuPerCm2: parseInt(args.fuPerCm2),
-            hairsPerCm2: parseInt(args.hairsPerCm2),
-            area: parseFloat(replaceCommaWithDot(args.area)),
-            desiredCoverageValue: parseFloat(replaceCommaWithDot(args.desiredCoverageValue))
-        };
+    function addZoneSubmit(args: ZoneArgs) {
+        const checkedValues = valuesToCheck(args);
 
         if (!args.name || !args.caliber || !args.fuPerCm2 || !args.hairsPerCm2 || !args.area || !args.desiredCoverageValue) {
             setMessage('Please enter all fields.');
@@ -51,19 +33,24 @@ function AddDonorZone({ zones }: AddDonorZoneProps) {
             return;
         }
 
-        if (Object.values(valuesToCheck).some(isNaN)) {
+        if (Object.values(checkedValues).some(isNaN)) {
             setMessage('Please enter correct value types.');
             return;
         }
 
+        if (zoneType === 'donor') addDonorZone(args, checkedValues);
+        else addRecipientZone(args, checkedValues);
+    }
+
+    function addDonorZone(args: ZoneArgs, checkedValues: any) {
         const newZone: DonorZone = {
             type: 'donor',
             name: args.name,
-            caliber: valuesToCheck.caliber,
-            fuPerCm2: valuesToCheck.fuPerCm2,
-            hairPerCm2: valuesToCheck.hairsPerCm2,
-            area: valuesToCheck.area,
-            desiredCoverageValue: valuesToCheck.desiredCoverageValue,
+            caliber: checkedValues.caliber,
+            fuPerCm2: checkedValues.fuPerCm2,
+            hairPerCm2: checkedValues.hairsPerCm2,
+            area: checkedValues.area,
+            desiredCoverageValue: checkedValues.desiredCoverageValue,
             singles: 0,
             doubles: 0,
             triples: 0,
@@ -77,11 +64,36 @@ function AddDonorZone({ zones }: AddDonorZoneProps) {
             fuExtractedToReachDonorDesiredCoverageValue: 0,
             fuLeftToReachDonorDesiredCoverageValue: 0,
         };
+        console.log(newZone);
 
         calculateDonorZoneValues(newZone);
-        zones.push(newZone);
+        setDonorZones([...zones as DonorZone[], newZone]);
+        // zones.push(newZone);
         setMessage('Donor zone added successfully!');
+        resetForm();
+    }
 
+    function addRecipientZone(args: ZoneArgs, checkedValues: any) {
+        const newZone: RecipientZone = {
+            type: 'recipient',
+            name: args.name,
+            caliber: checkedValues.caliber,
+            fuPerCm2: checkedValues.fuPerCm2,
+            hairPerCm2: checkedValues.hairsPerCm2,
+            area: checkedValues.area,
+            desiredCoverageValue: checkedValues.desiredCoverageValue,
+            startingCoverageValue: 0,
+            coverageValueDifference: 0,
+            fuImplantedToReachDesiredRecipientCoverageValue: 0,
+        };
+
+        calculateRecipientZoneValues(newZone);
+        setRecipientZones([...zones as RecipientZone[], newZone]);
+        setMessage('Recipient zone added successfully!');
+        resetForm();
+    }
+
+    function resetForm() {
         setName('');
         setCaliber('');
         setFuPerCm2('');
@@ -158,14 +170,13 @@ function AddDonorZone({ zones }: AddDonorZoneProps) {
                     hairsPerCm2,
                     area,
                     desiredCoverageValue,
-                    zones,
                 })}
             >
-                <Text style={styles.buttonTitle}>Add Donor Zone</Text>
+                <Text style={styles.buttonTitle}>Add Zone</Text>
             </TouchableOpacity>
             {message ? <Text style={styles.message}>{message}</Text> : null}
         </View>
     );
 }
 
-export default AddDonorZone;
+export default AddZone;

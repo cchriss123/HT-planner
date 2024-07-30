@@ -8,8 +8,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import logoImg from '@/assets/images/logo.png';
 import CustomBottomSheet from "@/components/CustomBottomSheet";
 import { useAppState, Zone, DonorZone, RecipientZone } from "@/state/Store";
-import AddDonorZone from "@/components/forms/AddDonorZone";
-import AddRecipientZone from "@/components/forms/AddRecipientZone";
+import AddZone from "@/components/forms/AddZone";
 import EditDonorZone from "@/components/forms/EditZone";
 
 Appearance.getColorScheme = () => 'light';
@@ -34,7 +33,7 @@ export default function ZonesScreen() {
     function openMenu(ref: React.RefObject<BottomSheet>, zone: Zone | null = null) {
         setSelectedZone(zone);
         ref.current?.expand();
-        ref.current?.snapToIndex(2);
+        ref.current?.snapToIndex(1);
     }
 
     function DonorZoneComponents() {
@@ -88,12 +87,12 @@ export default function ZonesScreen() {
             </ScrollView>
 
             <CustomBottomSheet ref={bottomSheetRefs.addDonor} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
-                <AddDonorZone zones={donorZones} />
+                <AddZone zones={donorZones} zoneType={'donor'} />
             </CustomBottomSheet>
 
 
             <CustomBottomSheet ref={bottomSheetRefs.addRecipient} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
-                <AddRecipientZone zones={recipientZones} />
+                <AddZone zones={recipientZones} zoneType={'recipient'} />
             </CustomBottomSheet>
 
             <CustomBottomSheet ref={bottomSheetRefs.editDonor} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
