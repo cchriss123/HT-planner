@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, Alert } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { DonorZone, RecipientZone, useAppState, Zone } from "@/state/Store";
 import FormStyles from "@/components/forms/styles/FormStyles";
+import {DataTableRow} from "react-native-paper/lib/typescript/components/DataTable/DataTableRow";
 
 interface EditZoneProps {
     zones: Zone[];
@@ -164,25 +165,33 @@ function EditZone({ zones, zone }: EditZoneProps) {
                 style={styles.input}
                 theme={theme}
             />
-            <TouchableOpacity
-                style={styles.button}
-                onPress={() => editZoneSubmit({
-                    name,
-                    caliber,
-                    fuPerCm2,
-                    hairsPerCm2,
-                    area,
-                    desiredCoverageValue,
-                })}
-            >
-                <Text style={styles.buttonTitle}>Save Changes</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-                style={[styles.button, { backgroundColor: 'red' }]}
-                onPress={() => deleteZone(zone, zones)}
-            >
-                <Text style={styles.buttonTitle}>Delete Zone</Text>
-            </TouchableOpacity>
+
+
+            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => editZoneSubmit({
+                        name,
+                        caliber,
+                        fuPerCm2,
+                        hairsPerCm2,
+                        area,
+                        desiredCoverageValue,
+                    })}
+                >
+                    <Text style={styles.buttonTitle}>Save Changes</Text>
+                </TouchableOpacity>
+                <View style={{ width: '10%'}}></View>
+                <TouchableOpacity
+                    style={[styles.button, { backgroundColor: 'red' }]}
+                    onPress={() => deleteZone(zone)}
+                >
+                    <Text style={styles.buttonTitle}>Delete Zone</Text>
+                </TouchableOpacity>
+
+            </View>
+
+
             {message ? <Text style={styles.message}>{message}</Text> : null}
         </View>
     );

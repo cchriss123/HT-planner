@@ -46,7 +46,7 @@ export default function FormStyles() {
             shadowRadius: 5,
             elevation: 5,
             marginVertical: 20,
-            width: '50%',
+            width: '45%',
             backgroundColor: colors.primaryBlue,
             alignItems: 'center',
             justifyContent: 'center',
