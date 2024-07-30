@@ -61,9 +61,6 @@ export default function ZonesScreen() {
         ));
     }
 
-    const isDonorZone = (zone: Zone): zone is DonorZone => (zone as DonorZone).type === 'donor';
-    const isRecipientZone = (zone: Zone): zone is RecipientZone => (zone as RecipientZone).type === 'recipient';
-
     return (
         <SafeAreaView style={{ flex: 1, paddingTop: 20 }}>
             <ScrollView contentContainerStyle={styles.outerContainer}>

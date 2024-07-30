@@ -27,10 +27,13 @@ function EditZone({ zones, zone }: EditZoneProps) {
     const [area, setArea] = React.useState(zone.area.toString());
     const [desiredCoverageValue, setDesiredCoverageValue] = React.useState(zone.desiredCoverageValue.toString());
     const [message, setMessage] = React.useState('');
+    const { setDonorZones, setRecipientZones } = useAppState();
 
     const { calculateDonorZoneValues, calculateRecipientZoneValues } = useAppState();
     const replaceCommaWithDot = (value: string) => value.replace(',', '.');
     const { styles, theme } = FormStyles();
+    const globalState = useAppState();
+
 
     function editZoneSubmit(args: EditZoneArgs) {
 
@@ -71,7 +74,9 @@ function EditZone({ zones, zone }: EditZoneProps) {
         }
     }
 
-    function deleteZone(zone: Zone, zones: Zone[]) {
+
+    function deleteZone(zone: Zone) {
+
         Alert.alert(
             'Delete Zone',
             `Are you sure you want to delete ${zone.name}?`,
@@ -85,16 +90,18 @@ function EditZone({ zones, zone }: EditZoneProps) {
                     text: 'Delete',
                     style: 'destructive',
                     onPress: () => {
-                        const index = zones.indexOf(zone);
-                        if (index > -1) {
-                            zones.splice(index, 1);
-                        }
+                        if (zone.type === 'donor')
+                            globalState.setDonorZones(globalState.donorZones.filter(z => z !== zone));
+                        else if (zone.type === 'recipient')
+                            globalState.setRecipientZones(globalState.recipientZones.filter(z => z !== zone));
+                        console.log(`Zone ${zone.name} deleted.`);
                     }
                 }
             ],
             { cancelable: true }
         );
     }
+
 
     return (
         <View style={styles.container}>
