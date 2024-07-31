@@ -1,16 +1,13 @@
-import React, {useState, useRef, useEffect} from 'react';
-import { Appearance, StyleSheet, Text, TouchableOpacity, View, ScrollView, Image } from 'react-native';
+import React, { useState, useRef, useEffect } from 'react';
+import { Appearance, StyleSheet, Text, TouchableOpacity, View, FlatList } from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from '@/constants/Colors';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import BottomSheet from "@gorhom/bottom-sheet";
 import Icon from "react-native-vector-icons/Ionicons";
-import logoImg from '@/assets/images/logo.png';
+import BottomSheet from "@gorhom/bottom-sheet";
 import CustomBottomSheet from "@/components/CustomBottomSheet";
 import { useAppState, Zone, DonorZone, RecipientZone } from "@/state/Store";
 import AddZone from "@/components/forms/AddZone";
 import EditDonorZone from "@/components/forms/EditZone";
-//TODO make this scrollable
 
 Appearance.getColorScheme = () => 'light';
 
@@ -28,7 +25,6 @@ export default function ZonesScreen() {
         if (!menuVisible) setSelectedZone(null);
     }, [menuVisible]);
 
-
     const bottomSheetRefs = {
         addDonor: useRef<BottomSheet>(null),
         addRecipient: useRef<BottomSheet>(null),
@@ -42,33 +38,20 @@ export default function ZonesScreen() {
         ref.current?.snapToIndex(1);
     }
 
-    function DonorZoneComponents() {
-        return donorZones.map((zone, i) => (
+    function renderZoneItem({ item }: { item: Zone }, ref: React.RefObject<BottomSheet>) {
+        return (
             <TouchableOpacity
-                key={i}
                 style={styles.zoneButton}
-                onPress={() => openMenu(bottomSheetRefs.editDonor, zone)}
+                onPress={() => openMenu(ref, item)}
             >
-                <Text style={styles.zoneButtonText}>{zone.name}</Text>
+                <Text style={styles.zoneButtonText}>{item.name}</Text>
             </TouchableOpacity>
-        ));
-    }
-
-    function RecipientZoneComponents() {
-        return recipientZones.map((zone, i) => (
-            <TouchableOpacity
-                key={i}
-                style={styles.zoneButton}
-                onPress={() => openMenu(bottomSheetRefs.editRecipient, zone)}
-            >
-                <Text style={styles.zoneButtonText}>{zone.name}</Text>
-            </TouchableOpacity>
-        ));
+        );
     }
 
     return (
         <SafeAreaView style={{ flex: 1, paddingTop: 20 }}>
-            <ScrollView contentContainerStyle={styles.outerContainer}>
+            <View style={styles.outerContainer}>
                 <View style={styles.buttonWrapper}>
                     <View style={styles.buttonContainer}>
                         <View style={styles.button}>
@@ -77,7 +60,12 @@ export default function ZonesScreen() {
                             </TouchableOpacity>
                             <Text style={styles.zoneListTitle}>Add Donor Zones</Text>
                         </View>
-                        <DonorZoneComponents />
+                        <FlatList
+                            data={donorZones}
+                            renderItem={(item) => renderZoneItem(item, bottomSheetRefs.editDonor)}
+                            keyExtractor={(item, index) => index.toString()}
+                            style={styles.flatList}
+                        />
                     </View>
 
                     <View style={styles.buttonContainer}>
@@ -87,15 +75,19 @@ export default function ZonesScreen() {
                             </TouchableOpacity>
                             <Text style={styles.zoneListTitle}>Add Recipient Zones</Text>
                         </View>
-                        <RecipientZoneComponents />
+                        <FlatList
+                            data={recipientZones}
+                            renderItem={(item) => renderZoneItem(item, bottomSheetRefs.editRecipient)}
+                            keyExtractor={(item, index) => index.toString()}
+                            style={styles.flatList}
+                        />
                     </View>
                 </View>
-            </ScrollView>
+            </View>
 
             <CustomBottomSheet ref={bottomSheetRefs.addDonor} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
                 <AddZone zones={donorZones} zoneType={'donor'} />
             </CustomBottomSheet>
-
 
             <CustomBottomSheet ref={bottomSheetRefs.addRecipient} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
                 <AddZone zones={recipientZones} zoneType={'recipient'} />
@@ -120,28 +112,11 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             flex: 1,
             backgroundColor: colors.softBackground,
         },
-        topContainer: {
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            height: 60,
-            width: '95%',
-            paddingBottom: '5%',
-            marginHorizontal: '2.5%',
-            marginTop: 10,
-        },
-        placeholderContainer: {
-            width: 50,
-        },
-        logo: {
-            width: 35,
-            height: 35,
-            resizeMode: 'contain',
-        },
         buttonWrapper: {
             flexDirection: 'row',
             justifyContent: 'space-between',
             paddingTop: 10,
+            flex: 1,
         },
         buttonContainer: {
             flex: 1,
@@ -158,10 +133,6 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             shadowRadius: 5,
             elevation: 5,
             alignItems: 'center',
-        },
-        buttonText: {
-            color: colors.solidBackground,
-            fontSize: 16,
         },
         zoneListTitle: {
             fontSize: 14,
@@ -187,5 +158,8 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
         zoneButtonText: {
             color: colors.solidBackground,
         },
+        flatList: {
+            flexGrow: 1,
+        }
     });
 }
