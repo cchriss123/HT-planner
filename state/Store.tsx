@@ -5,13 +5,13 @@ export interface Zone {
     type: 'donor' | 'recipient';
     name: string; // The name of the zone
     caliber: number; // The diameter of the hair
-    fuPerCm2: number; // Follicular units per square centimeter
+    graftsPerCm2: number; // Follicular units per square centimeter
     hairPerCm2: number; // Hairs per square centimeter
     area: number; // Area in square centimeters
     desiredCoverageValue: number; // Desired coverage value (can be used for both donor and recipient)
 
     // Calculated values from user inputs
-    hairPerFu?: number; // = hairPerCm2 / fuPerCm2
+    hairPerGraft?: number; // = hairPerCm2 / graftsPerCm2
 }
 
 export interface DonorZone extends Zone {
@@ -21,19 +21,19 @@ export interface DonorZone extends Zone {
     doubles: number;
     triples: number;
     quadruples: number;
-    graphs: number; // = singles + doubles + triples + quadruples //TODO change to grafts
+    grafts: number; // = singles + doubles + triples + quadruples
     hairs: number; // = singles + (doubles * 2) + (triples * 3) + (quadruples * 4)
-    hairPerCountedFu: number; // = hairs / graphs //TODO change to hair to hair per counted grafts
+    hairPerCountedGraft: number; // = hairs / grafts
 
     // Calculated values from user inputs
-    fuPerZone: number; // = areaInCm2 * fuPerCm2
+    fuPerZone: number; // = areaInCm2 * graftsPerCm2
     coverageValue: number; // = caliber * hairPerCm2
     hairPerZone: number; // = areaInCm2 * hairPerCm2
 
-    // Formula: fuExtractedToReachDonorDesiredCoverageValue = fuPerZone - ((areaInCm2 * desiredCoverageValue) / (caliber * hairPerFu))
-    fuExtractedToReachDonorDesiredCoverageValue: number;
+    // Formula: graftsExtractedToReachDonorDesiredCoverageValue = fuPerZone - ((areaInCm2 * desiredCoverageValue) / (caliber * hairPerGraft))
+    graftsExtractedToReachDonorDesiredCoverageValue: number;
     //only used in counter
-   fuLeftToReachDonorDesiredCoverageValue: number; // fuExtractedToReachDonorDesiredCoverageValue - grafts
+   graftsLeftToReachDonorDesiredCoverageValue: number; // graftsExtractedToReachDonorDesiredCoverageValue - grafts
 }
 
 
@@ -44,7 +44,7 @@ export interface RecipientZone extends Zone {
     startingCoverageValue: number; // = caliber * hairPerCm2
     coverageValueDifference: number; // = recipientDesiredCoverageValue - starting
 
-    // Formula: fuImplantedToReachDesiredRecipientCoverageValue = (areaInCm2 * coverageValueDifference) / (caliber * hairPerFu)
+    // Formula: fuImplantedToReachDesiredRecipientCoverageValue = (areaInCm2 * coverageValueDifference) / (caliber * hairPerGraft)
     fuImplantedToReachDesiredRecipientCoverageValue: number; // The number of FUs to be implanted to achieve the desired recipient coverage value
 }
 
@@ -59,9 +59,9 @@ interface AppStateContextType {
     totalDoubles: number;
     totalTriples: number;
     totalQuadruples: number;
-    totalGraphs: number;
+    totalGrafts: number;
     totalHair: number;
-    totalHairPerFU: number;
+    totalHairPerGraft: number;
     calculateDonorZoneValues(zone: DonorZone): void;
     calculateRecipientZoneValues(zone: RecipientZone): void;
 }
@@ -90,9 +90,9 @@ export function AppStateProvider({children}: { children: ReactNode }) {
     const [totalDoubles, setTotalDoubles] = useState(0);
     const [totalTriples, setTotalTriples] = useState(0);
     const [totalQuadruples, setTotalQuadruples] = useState(0);
-    const [totalGraphs, setTotalGraphs] = useState(0);
+    const [totalGrafts, setTotalGrafts] = useState(0);
     const [totalHair, setTotalHair] = useState(0);
-    const [totalHairPerFuCounted, setTotalHairPerFuCounted] = useState(0);
+    const [totalHairPerGraftsCounted, setTotalHairPerGraftsCounted] = useState(0);
 
 
 
@@ -108,9 +108,9 @@ export function AppStateProvider({children}: { children: ReactNode }) {
                 totalDoubles,
                 totalTriples,
                 totalQuadruples,
-                totalGraphs,
+                totalGrafts: totalGrafts,
                 totalHair,
-                totalHairPerFU: totalHairPerFuCounted,
+                totalHairPerGraft: totalHairPerGraftsCounted,
                 calculateDonorZoneValues : calculateDonorZoneValues,
                 calculateRecipientZoneValues : calculateRecipientZoneValues
             }}
@@ -125,7 +125,7 @@ export function AppStateProvider({children}: { children: ReactNode }) {
         let doubles = 0;
         let triples = 0;
         let quadruples = 0;
-        let graphs = 0;
+        let grafts = 0;
         let hair = 0;
         let totalArea = 0;
 
@@ -134,7 +134,7 @@ export function AppStateProvider({children}: { children: ReactNode }) {
             doubles += zone.doubles;
             triples += zone.triples;
             quadruples += zone.quadruples;
-            graphs += zone.graphs;
+            grafts += zone.grafts;
             hair += zone.hairs;
             totalArea += zone.area;
         }
@@ -143,19 +143,19 @@ export function AppStateProvider({children}: { children: ReactNode }) {
         setTotalDoubles(doubles);
         setTotalTriples(triples);
         setTotalQuadruples(quadruples);
-        setTotalGraphs(graphs);
+        setTotalGrafts(grafts);
         setTotalHair(hair);
-        setTotalHairPerFuCounted(graphs > 0 ? hair / graphs : 0);
+        setTotalHairPerGraftsCounted(grafts > 0 ? hair / grafts : 0);
 
     }
    function calculateDonorZoneValues(zone: DonorZone) {
 
 
-        zone.hairPerFu = zone.hairPerCm2 / zone.fuPerCm2;zone.fuPerZone = zone.area * zone.fuPerCm2;
+        zone.hairPerGraft = zone.hairPerCm2 / zone.graftsPerCm2;zone.fuPerZone = zone.area * zone.graftsPerCm2;
         zone.coverageValue = zone.caliber * zone.hairPerCm2;
         zone.hairPerZone = zone.area * zone.hairPerCm2;
-        zone.fuExtractedToReachDonorDesiredCoverageValue =  Math.floor(zone.fuPerZone - ((zone.area * zone.desiredCoverageValue) / (zone.caliber * zone.hairPerFu)));
-        zone.fuLeftToReachDonorDesiredCoverageValue = Math.floor(zone.fuExtractedToReachDonorDesiredCoverageValue) - zone.graphs;
+        zone.graftsExtractedToReachDonorDesiredCoverageValue =  Math.floor(zone.fuPerZone - ((zone.area * zone.desiredCoverageValue) / (zone.caliber * zone.hairPerGraft)));
+        zone.graftsLeftToReachDonorDesiredCoverageValue = Math.floor(zone.graftsExtractedToReachDonorDesiredCoverageValue) - zone.grafts;
         // console.log(JSON.stringify(zone));
 
 
@@ -166,7 +166,7 @@ export function AppStateProvider({children}: { children: ReactNode }) {
             zone.desiredCoverageValue = 0;
         }
 
-        zone.hairPerFu = zone.hairPerCm2 / zone.fuPerCm2;
+        zone.hairPerGraft = zone.hairPerCm2 / zone.graftsPerCm2;
         zone.startingCoverageValue = zone.caliber * zone.hairPerCm2;
         zone.coverageValueDifference = zone.desiredCoverageValue - zone.startingCoverageValue;
     }
@@ -178,7 +178,7 @@ function getMockDonorZones(): DonorZone[] {
             type: 'donor',
             name: 'Donor Zone 1',
             caliber: 0.05,
-            fuPerCm2: 60,
+            graftsPerCm2: 60,
             hairPerCm2: 180,
             area: 45,
             desiredCoverageValue: 6,
@@ -186,15 +186,15 @@ function getMockDonorZones(): DonorZone[] {
             doubles: 0,
             triples: 0,
             quadruples: 0,
-            graphs: 0,
+            grafts: 0,
             hairs: 0,
-            hairPerCountedFu: 0,
+            hairPerCountedGraft: 0,
 
             fuPerZone: 0,
             coverageValue: 0,
             hairPerZone: 0,
-            fuExtractedToReachDonorDesiredCoverageValue: 0,
-            fuLeftToReachDonorDesiredCoverageValue: 0,
+            graftsExtractedToReachDonorDesiredCoverageValue: 0,
+            graftsLeftToReachDonorDesiredCoverageValue: 0,
 
         },
 
@@ -202,7 +202,7 @@ function getMockDonorZones(): DonorZone[] {
             type: 'donor',
             name: 'Donor Zone 2',
             caliber: 0.07,
-            fuPerCm2: 120,
+            graftsPerCm2: 120,
             hairPerCm2: 150,
             area: 11.7,
             desiredCoverageValue: 5,
@@ -210,22 +210,22 @@ function getMockDonorZones(): DonorZone[] {
             doubles: 0,
             triples: 0,
             quadruples: 0,
-            graphs: 0,
+            grafts: 0,
             hairs: 0,
-            hairPerCountedFu: 0,
+            hairPerCountedGraft: 0,
 
             fuPerZone: 0,
             coverageValue: 0,
             hairPerZone: 0,
-            fuExtractedToReachDonorDesiredCoverageValue: 0,
-            fuLeftToReachDonorDesiredCoverageValue: 0,
+            graftsExtractedToReachDonorDesiredCoverageValue: 0,
+            graftsLeftToReachDonorDesiredCoverageValue: 0,
 
         },
         {
             type: 'donor',
             name: 'Donor Zone 3',
             caliber: 0.08,
-            fuPerCm2: 130,
+            graftsPerCm2: 130,
             hairPerCm2: 170,
             area: 15.7,
             desiredCoverageValue: 5,
@@ -233,22 +233,22 @@ function getMockDonorZones(): DonorZone[] {
             doubles: 0,
             triples: 0,
             quadruples: 0,
-            graphs: 0,
+            grafts: 0,
             hairs: 0,
-            hairPerCountedFu: 0,
+            hairPerCountedGraft: 0,
 
             fuPerZone: 0,
             coverageValue: 0,
             hairPerZone: 0,
-            fuExtractedToReachDonorDesiredCoverageValue: 0,
-            fuLeftToReachDonorDesiredCoverageValue: 0,
+            graftsExtractedToReachDonorDesiredCoverageValue: 0,
+            graftsLeftToReachDonorDesiredCoverageValue: 0,
 
         },
         {
             type: 'donor',
             name: 'Donor Zone 4',
             caliber: 0.09,
-            fuPerCm2: 140,
+            graftsPerCm2: 140,
             hairPerCm2: 190,
             area: 17.7,
             desiredCoverageValue: 5,
@@ -256,21 +256,21 @@ function getMockDonorZones(): DonorZone[] {
             doubles: 0,
             triples: 0,
             quadruples: 0,
-            graphs: 0,
+            grafts: 0,
             hairs: 0,
-            hairPerCountedFu: 0,
+            hairPerCountedGraft: 0,
 
             fuPerZone: 0,
             coverageValue: 0,
             hairPerZone: 0,
-            fuExtractedToReachDonorDesiredCoverageValue: 0,
-            fuLeftToReachDonorDesiredCoverageValue: 0,
+            graftsExtractedToReachDonorDesiredCoverageValue: 0,
+            graftsLeftToReachDonorDesiredCoverageValue: 0,
         },
         {
             type: 'donor',
             name: 'Donor Zone 5',
             caliber: 0.1,
-            fuPerCm2: 150,
+            graftsPerCm2: 150,
             hairPerCm2: 200,
             area: 19.7,
             desiredCoverageValue: 5,
@@ -278,127 +278,127 @@ function getMockDonorZones(): DonorZone[] {
             doubles: 0,
             triples: 0,
             quadruples: 0,
-            graphs: 0,
+            grafts: 0,
             hairs: 0,
-            hairPerCountedFu: 0,
+            hairPerCountedGraft: 0,
 
             fuPerZone: 0,
             coverageValue: 0,
             hairPerZone: 0,
-            fuExtractedToReachDonorDesiredCoverageValue: 0,
-            fuLeftToReachDonorDesiredCoverageValue: 0,
+            graftsExtractedToReachDonorDesiredCoverageValue: 0,
+            graftsLeftToReachDonorDesiredCoverageValue: 0,
         },
-        {
-            type: 'donor',
-            name: 'Donor Zone 6',
-            caliber: 0.11,
-            fuPerCm2: 160,
-            hairPerCm2: 210,
-            area: 21.7,
-            desiredCoverageValue: 5,
-            singles: 0,
-            doubles: 0,
-            triples: 0,
-            quadruples: 0,
-            graphs: 0,
-            hairs: 0,
-            hairPerCountedFu: 0,
-
-            fuPerZone: 0,
-            coverageValue: 0,
-            hairPerZone: 0,
-            fuExtractedToReachDonorDesiredCoverageValue: 0,
-            fuLeftToReachDonorDesiredCoverageValue: 0,
-        },
-        {
-            type: 'donor',
-            name: 'Donor Zone 7',
-            caliber: 0.12,
-            fuPerCm2: 170,
-            hairPerCm2: 220,
-            area: 23.7,
-            desiredCoverageValue: 5,
-            singles: 0,
-            doubles: 0,
-            triples: 0,
-            quadruples: 0,
-            graphs: 0,
-            hairs: 0,
-            hairPerCountedFu: 0,
-
-            fuPerZone: 0,
-            coverageValue: 0,
-            hairPerZone: 0,
-            fuExtractedToReachDonorDesiredCoverageValue: 0,
-            fuLeftToReachDonorDesiredCoverageValue: 0,
-        }
-        ,
-        {
-            type: 'donor',
-            name: 'Donor Zone 8',
-            caliber: 0.13,
-            fuPerCm2: 180,
-            hairPerCm2: 230,
-            area: 25.7,
-            desiredCoverageValue: 5,
-            singles: 0,
-            doubles: 0,
-            triples: 0,
-            quadruples: 0,
-            graphs: 0,
-            hairs: 0,
-            hairPerCountedFu: 0,
-
-            fuPerZone: 0,
-            coverageValue: 0,
-            hairPerZone: 0,
-            fuExtractedToReachDonorDesiredCoverageValue: 0,
-            fuLeftToReachDonorDesiredCoverageValue: 0,
-        },
-        {
-            type: 'donor',
-            name: 'Donor Zone 9',
-            caliber: 0.14,
-            fuPerCm2: 190,
-            hairPerCm2: 240,
-            area: 27.7,
-            desiredCoverageValue: 5,
-            singles: 0,
-            doubles: 0,
-            triples: 0,
-            quadruples: 0,
-            graphs: 0,
-            hairs: 0,
-            hairPerCountedFu: 0,
-
-            fuPerZone: 0,
-            coverageValue: 0,
-            hairPerZone: 0,
-            fuExtractedToReachDonorDesiredCoverageValue: 0,
-            fuLeftToReachDonorDesiredCoverageValue: 0,
-        },
-        {
-            type: 'donor',
-            name: 'Donor Zone 10',
-            caliber: 0.15,
-            fuPerCm2: 200,
-            hairPerCm2: 250,
-            area: 29.7,
-            desiredCoverageValue: 5,
-            singles: 0,
-            doubles: 0,
-            triples: 0,
-            quadruples: 0,
-            graphs: 0,
-            hairs: 0,
-            hairPerCountedFu: 0,
-
-            fuPerZone: 0,
-            coverageValue: 0,
-            hairPerZone: 0,
-            fuExtractedToReachDonorDesiredCoverageValue: 0,
-            fuLeftToReachDonorDesiredCoverageValue: 0,
-        }
+        // {
+        //     type: 'donor',
+        //     name: 'Donor Zone 6',
+        //     caliber: 0.11,
+        //     graftsPerCm2: 160,
+        //     hairPerCm2: 210,
+        //     area: 21.7,
+        //     desiredCoverageValue: 5,
+        //     singles: 0,
+        //     doubles: 0,
+        //     triples: 0,
+        //     quadruples: 0,
+        //     grafts: 0,
+        //     hairs: 0,
+        //     hairPerCountedGraft: 0,
+        //
+        //     fuPerZone: 0,
+        //     coverageValue: 0,
+        //     hairPerZone: 0,
+        //     graftsExtractedToReachDonorDesiredCoverageValue: 0,
+        //     graftsLeftToReachDonorDesiredCoverageValue: 0,
+        // },
+        // {
+        //     type: 'donor',
+        //     name: 'Donor Zone 7',
+        //     caliber: 0.12,
+        //     graftsPerCm2: 170,
+        //     hairPerCm2: 220,
+        //     area: 23.7,
+        //     desiredCoverageValue: 5,
+        //     singles: 0,
+        //     doubles: 0,
+        //     triples: 0,
+        //     quadruples: 0,
+        //     grafts: 0,
+        //     hairs: 0,
+        //     hairPerCountedGraft: 0,
+        //
+        //     fuPerZone: 0,
+        //     coverageValue: 0,
+        //     hairPerZone: 0,
+        //     graftsExtractedToReachDonorDesiredCoverageValue: 0,
+        //     graftsLeftToReachDonorDesiredCoverageValue: 0,
+        // }
+        // ,
+        // {
+        //     type: 'donor',
+        //     name: 'Donor Zone 8',
+        //     caliber: 0.13,
+        //     graftsPerCm2: 180,
+        //     hairPerCm2: 230,
+        //     area: 25.7,
+        //     desiredCoverageValue: 5,
+        //     singles: 0,
+        //     doubles: 0,
+        //     triples: 0,
+        //     quadruples: 0,
+        //     grafts: 0,
+        //     hairs: 0,
+        //     hairPerCountedGraft: 0,
+        //
+        //     fuPerZone: 0,
+        //     coverageValue: 0,
+        //     hairPerZone: 0,
+        //     graftsExtractedToReachDonorDesiredCoverageValue: 0,
+        //     graftsLeftToReachDonorDesiredCoverageValue: 0,
+        // },
+        // {
+        //     type: 'donor',
+        //     name: 'Donor Zone 9',
+        //     caliber: 0.14,
+        //     graftsPerCm2: 190,
+        //     hairPerCm2: 240,
+        //     area: 27.7,
+        //     desiredCoverageValue: 5,
+        //     singles: 0,
+        //     doubles: 0,
+        //     triples: 0,
+        //     quadruples: 0,
+        //     grafts: 0,
+        //     hairs: 0,
+        //     hairPerCountedGraft: 0,
+        //
+        //     fuPerZone: 0,
+        //     coverageValue: 0,
+        //     hairPerZone: 0,
+        //     graftsExtractedToReachDonorDesiredCoverageValue: 0,
+        //     graftsLeftToReachDonorDesiredCoverageValue: 0,
+        // },
+        // {
+        //     type: 'donor',
+        //     name: 'Donor Zone 10',
+        //     caliber: 0.15,
+        //     graftsPerCm2: 200,
+        //     hairPerCm2: 250,
+        //     area: 29.7,
+        //     desiredCoverageValue: 5,
+        //     singles: 0,
+        //     doubles: 0,
+        //     triples: 0,
+        //     quadruples: 0,
+        //     grafts: 0,
+        //     hairs: 0,
+        //     hairPerCountedGraft: 0,
+        //
+        //     fuPerZone: 0,
+        //     coverageValue: 0,
+        //     hairPerZone: 0,
+        //     graftsExtractedToReachDonorDesiredCoverageValue: 0,
+        //     graftsLeftToReachDonorDesiredCoverageValue: 0,
+        // }
 
 
 
@@ -413,7 +413,7 @@ function getMockRecipientZones() : RecipientZone[] {
             type: 'recipient',
             name: 'Recipient Zone 1',
             caliber: 0.06,
-            fuPerCm2: 100,
+            graftsPerCm2: 100,
             hairPerCm2: 200,
             area: 13.7,
             desiredCoverageValue: 20,
@@ -426,7 +426,7 @@ function getMockRecipientZones() : RecipientZone[] {
             type: 'recipient',
             name: 'Recipient Zone 2',
             caliber: 0.07,
-            fuPerCm2: 120,
+            graftsPerCm2: 120,
             hairPerCm2: 150,
             area: 11.7,
             desiredCoverageValue: 20,

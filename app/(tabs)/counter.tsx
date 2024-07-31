@@ -45,9 +45,9 @@ export default function CounterScreen() {
             selectedZone.quadruples--;
         }
 
-        value > 0 ? selectedZone.graphs++ : selectedZone.graphs--;
+        value > 0 ? selectedZone.grafts++ : selectedZone.grafts--;
         selectedZone.hairs += value;
-        selectedZone.hairPerCountedFu = selectedZone.hairs / selectedZone.graphs || 0;
+        selectedZone.hairPerCountedGraft = selectedZone.hairs / selectedZone.grafts || 0;
 
         globalState.setDonorZones([...globalState.donorZones]);
         globalState.updateTotalCounts();
@@ -124,7 +124,7 @@ export default function CounterScreen() {
 
                                 <View style={{ flexDirection: 'row' }}>
                                     <Text style={styles.infoText}>{`Grafts count: `}</Text>
-                                    <Text>{`${selectedZone.graphs}`}</Text>
+                                    <Text>{`${selectedZone.grafts}`}</Text>
                                 </View>
                                 <View style={{ flexDirection: 'row' }}>
                                     <Text style={styles.infoText}>{`Hairs count: `}</Text>
@@ -133,7 +133,7 @@ export default function CounterScreen() {
 
                                 <View style={{ flexDirection: 'row' }}>
                                     <Text style={styles.infoText}>{`Hairs/FU: `}</Text>
-                                    <Text>{`${selectedZone.hairPerCountedFu.toFixed(2)}`}</Text>
+                                    <Text>{`${selectedZone.hairPerCountedGraft.toFixed(2)}`}</Text>
                                 </View>
                                 <View style={{ flexDirection: 'row' }}>
                                     <Text style={styles.infoText}>{`Area: `}</Text>
@@ -144,11 +144,11 @@ export default function CounterScreen() {
                                 </View>
                                 <View style={{ flexDirection: 'row' }}>
                                     <Text style={styles.infoText}>{`Target: `}</Text>
-                                    <Text>{`${selectedZone.fuExtractedToReachDonorDesiredCoverageValue}`}</Text>
+                                    <Text>{`${selectedZone.graftsExtractedToReachDonorDesiredCoverageValue}`}</Text>
                                 </View>
                                 <View style={{ flexDirection: 'row' }}>
                                     <Text style={styles.infoText}>{`Left: `}</Text>
-                                    <Text>{`${selectedZone.fuLeftToReachDonorDesiredCoverageValue}`}</Text>
+                                    <Text>{`${selectedZone.graftsLeftToReachDonorDesiredCoverageValue}`}</Text>
                                 </View>
 
 
@@ -174,7 +174,7 @@ export default function CounterScreen() {
                                 <Text></Text>
                                 <View style={{ flexDirection: 'row' }}>
                                     <Text style={styles.infoText}>{`Total Grafts:`}</Text>
-                                    <Text>{`${globalState.totalGraphs}`}</Text>
+                                    <Text>{`${globalState.totalGrafts}`}</Text>
                                 </View>
                                 <View style={{ flexDirection: 'row' }}>
                                     <Text style={styles.infoText}>{`Total Hair:`}</Text>
@@ -182,7 +182,7 @@ export default function CounterScreen() {
                                 </View>
                                 <View style={{ flexDirection: 'row' }}>
                                     <Text style={styles.infoText}>{`Total Hair/FU:`}</Text>
-                                    <Text>{`${globalState.totalHairPerFU.toFixed(2)}`}</Text>
+                                    <Text>{`${globalState.totalHairPerGraft.toFixed(2)}`}</Text>
                                 </View>
                             </View>
                         </View>

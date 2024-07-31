@@ -26,7 +26,7 @@ function EditZone({ zones, zone }: EditZoneProps) {
     if (!zone) return;
     const [name, setName] = React.useState(zone.name);
     const [caliber, setCaliber] = React.useState(zone.caliber.toString());
-    const [fuPerCm2, setFuPerCm2] = React.useState(zone.fuPerCm2.toString());
+    const [fuPerCm2, setFuPerCm2] = React.useState(zone.graftsPerCm2.toString());
     const [hairsPerCm2, setHairsPerCm2] = React.useState(zone.hairPerCm2.toString());
     const [area, setArea] = React.useState(zone.area.toString());
     const [desiredCoverageValue, setDesiredCoverageValue] = React.useState(zone.desiredCoverageValue.toString());
@@ -57,7 +57,7 @@ function EditZone({ zones, zone }: EditZoneProps) {
 
         zone.name = args.name;
         zone.caliber = checkedValues.caliber;
-        zone.fuPerCm2 = checkedValues.fuPerCm2;
+        zone.graftsPerCm2 = checkedValues.fuPerCm2;
         zone.hairPerCm2 = checkedValues.hairsPerCm2;
         zone.area = checkedValues.area;
         zone.desiredCoverageValue = checkedValues.desiredCoverageValue;
@@ -121,7 +121,7 @@ function EditZone({ zones, zone }: EditZoneProps) {
                 mode="outlined"
                 value={fuPerCm2}
                 onChangeText={setFuPerCm2}
-                placeholder={zone.fuPerCm2.toString()}
+                placeholder={zone.graftsPerCm2.toString()}
                 keyboardType="numeric"
                 style={styles.input}
                 theme={theme}
