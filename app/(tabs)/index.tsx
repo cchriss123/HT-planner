@@ -50,8 +50,7 @@ export default function ZonesScreen() {
     }
 
     return (
-        <SafeAreaView style={{ flex: 1, paddingTop: 20 }}>
-            <View style={styles.outerContainer}>
+        <SafeAreaView style={styles.safeArea}>
                 <View style={styles.buttonWrapper}>
                     <View style={styles.buttonContainer}>
                         <View style={styles.button}>
@@ -65,6 +64,7 @@ export default function ZonesScreen() {
                             renderItem={(item) => renderZoneItem(item, bottomSheetRefs.editDonor)}
                             keyExtractor={(item, index) => index.toString()}
                             style={styles.flatList}
+                            contentContainerStyle={styles.flatListContent}
                         />
                     </View>
 
@@ -80,10 +80,10 @@ export default function ZonesScreen() {
                             renderItem={(item) => renderZoneItem(item, bottomSheetRefs.editRecipient)}
                             keyExtractor={(item, index) => index.toString()}
                             style={styles.flatList}
+                            contentContainerStyle={styles.flatListContent}
                         />
                     </View>
                 </View>
-            </View>
 
             <CustomBottomSheet ref={bottomSheetRefs.addDonor} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
                 <AddZone zones={donorZones} zoneType={'donor'} />
@@ -108,10 +108,11 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
     const colors = colorScheme === 'dark' ? Colors.dark : Colors.light;
 
     return StyleSheet.create({
-        outerContainer: {
+        safeArea: {
             flex: 1,
             backgroundColor: colors.softBackground,
         },
+
         buttonWrapper: {
             flexDirection: 'row',
             justifyContent: 'space-between',
@@ -159,7 +160,10 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             color: colors.solidBackground,
         },
         flatList: {
-            flexGrow: 1,
-        }
+            flex: 1,
+        },
+        flatListContent: {
+            paddingBottom: 10,
+        },
     });
 }
