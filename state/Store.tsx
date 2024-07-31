@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, {createContext, useContext, useState, ReactNode, useEffect} from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export interface Zone {
     // User inputs
@@ -78,7 +79,7 @@ export function useAppState() {
 
 
 
-export function AppStateProvider({children}: { children: ReactNode }) {
+export function AppStateProvider({ children }: { children: ReactNode }) {
     // const [donorZones, setDonorZones] = useState<Zone[]>([]);
     // const [recipientZones, setRecipientZones] = useState<Zone[]>([]);
     const [donorZones, setDonorZones] = useState<DonorZone[]>(getMockDonorZones());
@@ -93,8 +94,68 @@ export function AppStateProvider({children}: { children: ReactNode }) {
     const [totalGrafts, setTotalGrafts] = useState(0);
     const [totalHair, setTotalHair] = useState(0);
     const [totalHairPerGraftsCounted, setTotalHairPerGraftsCounted] = useState(0);
+    // AsyncStorage.clear();
 
+    useEffect(() => {
+        async function loadDonorZones() {
+            try {
+                const storedDonorZones = await AsyncStorage.getItem('donorZones');
+                if (storedDonorZones) {
+                    const parsedDonorZones = JSON.parse(storedDonorZones);
+                    setDonorZones(parsedDonorZones);
+                    console.log('Loaded donorZones:', parsedDonorZones.map((zone: DonorZone) => zone.name));
+                }
+                updateTotalCounts();
+            } catch (error) {
+                console.error('Failed to load donor zones from AsyncStorage', error);
+            }
+        }
+        loadDonorZones();
+    }, []);
 
+    useEffect(() => {
+        async function loadRecipientZones() {
+            try {
+                const storedRecipientZones = await AsyncStorage.getItem('recipientZones');
+                if (storedRecipientZones) {
+                    const parsedRecipientZones = JSON.parse(storedRecipientZones);
+                    setRecipientZones(parsedRecipientZones);
+                    console.log('Loaded recipientZones:', parsedRecipientZones.map((zone: RecipientZone) => zone.name));
+                }
+            } catch (error) {
+                console.error('Failed to load recipient zones from AsyncStorage', error);
+            }
+        }
+        loadRecipientZones();
+    }, []);
+
+    useEffect(() => {
+        async function saveDonorZones() {
+            try {
+                const donorZoneNames = donorZones.map((zone: DonorZone) => zone.name);
+                console.log('Saving donor zones:', donorZoneNames);
+                await AsyncStorage.setItem('donorZones', JSON.stringify(donorZones));
+            } catch (error) {
+                console.error('Failed to save donor zones to AsyncStorage', error);
+            }
+        }
+
+        saveDonorZones();
+    }, [donorZones]);
+
+    useEffect(() => {
+        async function saveRecipientZones() {
+            try {
+                const recipientZoneNames = recipientZones.map((zone: RecipientZone) => zone.name);
+                console.log('Saving recipient zones:', recipientZoneNames);
+                await AsyncStorage.setItem('recipientZones', JSON.stringify(recipientZones));
+            } catch (error) {
+                console.error('Failed to save recipient zones to AsyncStorage', error);
+            }
+        }
+
+        saveRecipientZones();
+    }, [recipientZones]);
 
     return (
         <AppStateContext.Provider
@@ -111,8 +172,8 @@ export function AppStateProvider({children}: { children: ReactNode }) {
                 totalGrafts: totalGrafts,
                 totalHair,
                 totalHairPerGraft: totalHairPerGraftsCounted,
-                calculateDonorZoneValues : calculateDonorZoneValues,
-                calculateRecipientZoneValues : calculateRecipientZoneValues
+                calculateDonorZoneValues: calculateDonorZoneValues,
+                calculateRecipientZoneValues: calculateRecipientZoneValues
             }}
         >
             {children}
