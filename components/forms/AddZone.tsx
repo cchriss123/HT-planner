@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { DonorZone, RecipientZone, useAppState, Zone } from "@/state/Store";
@@ -11,6 +11,7 @@ interface AddZoneProps {
 }
 
 function AddZone({ zones, zoneType }: AddZoneProps) {
+
     const [name, setName] = React.useState('');
     const [caliber, setCaliber] = React.useState('');
     const [fuPerCm2, setFuPerCm2] = React.useState('');
@@ -20,6 +21,13 @@ function AddZone({ zones, zoneType }: AddZoneProps) {
     const [message, setMessage] = React.useState('');
     const { styles, theme } = FormStyles();
     const { calculateDonorZoneValues, calculateRecipientZoneValues, setDonorZones, setRecipientZones } = useAppState();
+
+    useEffect(() => {
+        if (message) {
+            const timer = setTimeout(() => setMessage(''), 3000);
+            return () => clearTimeout(timer);
+        }
+    }, [message]);
 
     function addZoneSubmit(args: ZoneArgs) {
         const checkedValues = valuesToCheck(args);
@@ -58,7 +66,7 @@ function AddZone({ zones, zoneType }: AddZoneProps) {
             grafts: 0,
             hairs: 0,
             hairPerCountedGraft: 0,
-            fuPerZone: 0,
+            graftsPerZone: 0,
             coverageValue: 0,
             hairPerZone: 0,
             graftsExtractedToReachDonorDesiredCoverageValue: 0,

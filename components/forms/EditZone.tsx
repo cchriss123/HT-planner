@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { View, Text, TouchableOpacity, Alert } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { DonorZone, RecipientZone, useAppState, Zone } from "@/state/Store";
@@ -12,7 +12,6 @@ interface EditZoneProps {
 }
 
 
-//TODO take the old vales if nothing changed
 interface EditZoneArgs {
     name: string;
     caliber: string;
@@ -37,33 +36,45 @@ function EditZone({ zones, zone }: EditZoneProps) {
     const { styles, theme } = FormStyles();
 
 
+    useEffect(() => {
+        if (message) {
+            const timer = setTimeout(() => setMessage(''), 3000);
+            return () => clearTimeout(timer);
+        }
+    }, [message]);
+
+
+
     function editZoneSubmit(args: EditZoneArgs) {
 
 
         const checkedValues = valuesToCheck(args);
-        if (!args.name || !args.caliber || !args.fuPerCm2 || !args.hairsPerCm2 || !args.area || !args.desiredCoverageValue) {
-            setMessage('Please enter all fields.');
-            return;
-        }
+
         if (zones.some(z => z.name === args.name && z.name !== zone.name)) {
             setMessage('Zone with that name already exists.');
             return;
         }
 
-        if (Object.values(checkedValues).some(isNaN)) {
-            setMessage('Please enter correct value types.');
-            return;
+
+        zone.name = args.name || zone.name;
+        zone.caliber = checkedValues.caliber || zone.caliber;
+        zone.graftsPerCm2 = checkedValues.fuPerCm2 || zone.graftsPerCm2;
+        zone.hairPerCm2 = checkedValues.hairsPerCm2 || zone.hairPerCm2;
+        zone.area = checkedValues.area || zone.area;
+        zone.desiredCoverageValue = checkedValues.desiredCoverageValue || zone.desiredCoverageValue;
+
+        if (zone.type === 'donor') {
+            calculateDonorZoneValues(zone as DonorZone);
+            setDonorZones([...donorZones]);
+        }
+        else if (zone.type === 'recipient'){
+            calculateRecipientZoneValues(zone as RecipientZone);
+            setRecipientZones([...recipientZones]);
         }
 
-        zone.name = args.name;
-        zone.caliber = checkedValues.caliber;
-        zone.graftsPerCm2 = checkedValues.fuPerCm2;
-        zone.hairPerCm2 = checkedValues.hairsPerCm2;
-        zone.area = checkedValues.area;
-        zone.desiredCoverageValue = checkedValues.desiredCoverageValue;
 
-        if (zone.type === 'donor') calculateDonorZoneValues(zone as DonorZone);
-        else if (zone.type === 'recipient') calculateRecipientZoneValues(zone as RecipientZone);
+        setMessage('Zone updated.');
+
     }
 
 
