@@ -34,7 +34,7 @@ export interface DonorZone extends Zone {
     // Formula: graftsExtractedToReachDonorDesiredCoverageValue = graftsPerZone - ((areaInCm2 * desiredCoverageValue) / (caliber * hairPerGraft))
     graftsExtractedToReachDonorDesiredCoverageValue: number;
     //only used in counter
-   graftsLeftToReachDonorDesiredCoverageValue: number; // graftsExtractedToReachDonorDesiredCoverageValue - grafts
+    graftsLeftToReachDonorDesiredCoverageValue: number; // graftsExtractedToReachDonorDesiredCoverageValue - grafts
 }
 
 
@@ -218,6 +218,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         zone.hairPerZone = zone.area * zone.hairPerCm2;
         zone.graftsExtractedToReachDonorDesiredCoverageValue =  Math.floor(zone.graftsPerZone - ((zone.area * zone.desiredCoverageValue) / (zone.caliber * zone.hairPerGraft)));
         zone.graftsLeftToReachDonorDesiredCoverageValue = Math.floor(zone.graftsExtractedToReachDonorDesiredCoverageValue) - zone.grafts;
+
         // console.log(JSON.stringify(zone));
 
 
@@ -231,6 +232,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         zone.hairPerGraft = zone.hairPerCm2 / zone.graftsPerCm2;
         zone.startingCoverageValue = zone.caliber * zone.hairPerCm2;
         zone.coverageValueDifference = zone.desiredCoverageValue - zone.startingCoverageValue;
+        zone.graftsImplantedToReachDesiredRecipientCoverageValue = Math.floor((zone.area * zone.coverageValueDifference) / (zone.caliber * zone.hairPerGraft));
     }
 
 
