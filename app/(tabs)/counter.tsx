@@ -49,7 +49,6 @@ export default function CounterScreen() {
         selectedZone.hairs += value;
         selectedZone.hairPerCountedGraft = selectedZone.hairs / selectedZone.grafts || 0;
 
-        globalState.setDonorZones([...globalState.donorZones]);
         globalState.updateTotalCounts();
     }
 

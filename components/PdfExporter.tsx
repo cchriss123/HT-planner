@@ -78,7 +78,7 @@ export default function PdfExporter() {
                 <div class="content-wrapper">
                     <h4>Totals</h4>
                     <p>Total Grafts extracted: ${globalState.totalGrafts}</p>
-                    
+                   
                     <h4>Donor Zones</h4>
                     <ul>
                         ${donorZonesHtml}
