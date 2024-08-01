@@ -31,7 +31,6 @@ export default function PdfExporter() {
         `).join('');
 
         const recipientZonesHtml = globalState.recipientZones.map(zone => `
-            <br>
             <li style="page-break-inside: avoid;">
                 <strong>${zone.name}</strong>
                 <ul>
