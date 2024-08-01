@@ -9,6 +9,12 @@ import { useAppState, Zone, DonorZone, RecipientZone } from "@/state/Store";
 import AddZone from "@/components/forms/AddZone";
 import EditDonorZone from "@/components/forms/EditZone";
 
+//TODO improve styling of ZonesScreen
+//TODO add a way to reset all stored zones
+//TODO improve zone deletion user experience
+//TODO add a way to input IP
+//Todo Add a way to send data
+//TODO add logo to pdf
 Appearance.getColorScheme = () => 'light';
 
 export default function ZonesScreen() {

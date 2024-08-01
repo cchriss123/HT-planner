@@ -1,4 +1,4 @@
-import React, {createContext, useContext, useState, ReactNode, useEffect} from 'react';
+import React, {createContext, ReactNode, useContext, useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export interface Zone {
@@ -93,9 +93,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         try {
             const storedDonorZones = await AsyncStorage.getItem('donorZones');
             if (storedDonorZones) {
-                const parsedDonorZones = JSON.parse(storedDonorZones) as DonorZone[];
-                console.log('Loaded donorZones:', parsedDonorZones.map(zone => zone.singles));
-                return parsedDonorZones;
+                return JSON.parse(storedDonorZones) as DonorZone[];
             }
         } catch (error) {
             console.error('Failed to load donor zones from AsyncStorage', error);
@@ -107,9 +105,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         try {
             const storedRecipientZones = await AsyncStorage.getItem('recipientZones');
             if (storedRecipientZones) {
-                const parsedRecipientZones = JSON.parse(storedRecipientZones) as RecipientZone[];
-                console.log('Loaded recipientZones:', parsedRecipientZones.map(zone => zone.name));
-                return parsedRecipientZones;
+                return JSON.parse(storedRecipientZones) as RecipientZone[];
             }
         } catch (error) {
             console.error('Failed to load recipient zones from AsyncStorage', error);
