@@ -18,13 +18,8 @@ export default function PdfExporter() {
                     <li>Area: ${zone.area}</li>
                     <li>Desired Coverage Value: ${zone.desiredCoverageValue}</li>
                     <li>Hair Per Graft: ${zone.hairPerGraft}</li>
-                    <li>Singles: ${zone.singles}</li>
-                    <li>Doubles: ${zone.doubles}</li>
-                    <li>Triples: ${zone.triples}</li>
-                    <li>Quadruples: ${zone.quadruples}</li>
-                    <li>Grafts: ${zone.grafts}</li>
-                    <li>Hairs: ${zone.hairs}</li>
-                    <li>Hair Per Counted Graft: ${zone.hairPerCountedGraft}</li>
+      
+   
                     <li>Grafts Per Zone: ${zone.graftsPerZone}</li>
                     <li>Coverage Value: ${zone.coverageValue}</li>
                     <li>Hair Per Zone: ${zone.hairPerZone}</li>
@@ -67,7 +62,7 @@ export default function PdfExporter() {
                         color: #333;
                     }
                     p, li {
-                        font-size: 14px;
+                        font-size: 12px;
                         line-height: 1.5;
                     }
                     ul {
@@ -76,21 +71,15 @@ export default function PdfExporter() {
                 </style>
             </head>
             <body>
-                <h2>Totals</h2>
-                <p>Total Singles: ${globalState.totalSingles}</p>
-                <p>Total Doubles: ${globalState.totalDoubles}</p>
-                <p>Total Triples: ${globalState.totalTriples}</p>
-                <p>Total Quadruples: ${globalState.totalQuadruples}</p>
+                <h4>Totals</h4>
                 <p>Total Grafts: ${globalState.totalGrafts}</p>
-                <p>Total Hair: ${globalState.totalHair}</p>
-                <p>Total Hair Per Grafts Counted: ${globalState.totalHairPerGraftsCounted}</p>
                 
-                <h2>Donor Zones</h2>
+                <h4>Donor Zones</h4>
                 <ul>
                     ${donorZonesHtml}
                 </ul>
                 
-                <h2>Recipient Zones</h2>
+                <h4>Recipient Zones</h4>
                 <ul>
                     ${recipientZonesHtml}
                 </ul>
