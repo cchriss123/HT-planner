@@ -182,7 +182,7 @@ export default function CounterScreen() {
                                 </View>
                                 <View style={{ flexDirection: 'row' }}>
                                     <Text style={styles.infoText}>{`Total Hair/FU:`}</Text>
-                                    <Text>{`${globalState.totalHairPerGraft.toFixed(2)}`}</Text>
+                                    <Text>{`${globalState.totalHairPerGraftsCounted.toFixed(2)}`}</Text>
                                 </View>
                             </View>
                         </View>

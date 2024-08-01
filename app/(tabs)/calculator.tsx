@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import {SafeAreaView} from "react-native-safe-area-context";
+import PdfExporter from "@/components/PdfExporter";
 
 export default function CalculatorScreen() {
     return (
@@ -8,6 +9,7 @@ export default function CalculatorScreen() {
 
 
             <View style={styles.outerContainer}>
+                <PdfExporter />
                 <Text>Calculator Screen</Text>
             </View>
         </SafeAreaView>

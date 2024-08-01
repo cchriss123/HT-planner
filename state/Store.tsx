@@ -45,8 +45,8 @@ export interface RecipientZone extends Zone {
     startingCoverageValue: number; // = caliber * hairPerCm2
     coverageValueDifference: number; // = recipientDesiredCoverageValue - starting
 
-    // Formula: fuImplantedToReachDesiredRecipientCoverageValue = (areaInCm2 * coverageValueDifference) / (caliber * hairPerGraft)
-    fuImplantedToReachDesiredRecipientCoverageValue: number; // The number of FUs to be implanted to achieve the desired recipient coverage value
+    // Formula: graftsImplantedToReachDesiredRecipientCoverageValue = (areaInCm2 * coverageValueDifference) / (caliber * hairPerGraft)
+    graftsImplantedToReachDesiredRecipientCoverageValue: number; // The number of FUs to be implanted to achieve the desired recipient coverage value
 }
 
 interface AppStateContextType {
@@ -62,7 +62,8 @@ interface AppStateContextType {
     totalQuadruples: number;
     totalGrafts: number;
     totalHair: number;
-    totalHairPerGraft: number;
+    totalHairPerGraftsCounted: number;
+
     calculateDonorZoneValues(zone: DonorZone): void;
     calculateRecipientZoneValues(zone: RecipientZone): void;
 }
@@ -171,7 +172,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
                 totalQuadruples,
                 totalGrafts: totalGrafts,
                 totalHair,
-                totalHairPerGraft: totalHairPerGraftsCounted,
+                totalHairPerGraftsCounted: totalHairPerGraftsCounted,
                 calculateDonorZoneValues: calculateDonorZoneValues,
                 calculateRecipientZoneValues: calculateRecipientZoneValues
             }}
@@ -481,7 +482,7 @@ function getMockRecipientZones() : RecipientZone[] {
 
             startingCoverageValue: 0,
             coverageValueDifference: 0,
-            fuImplantedToReachDesiredRecipientCoverageValue: 0,
+            graftsImplantedToReachDesiredRecipientCoverageValue: 0,
         },
         {
             type: 'recipient',
@@ -494,7 +495,7 @@ function getMockRecipientZones() : RecipientZone[] {
 
             startingCoverageValue: 0,
             coverageValueDifference: 0,
-            fuImplantedToReachDesiredRecipientCoverageValue: 0,
+            graftsImplantedToReachDesiredRecipientCoverageValue: 0,
         },
     ];
 }

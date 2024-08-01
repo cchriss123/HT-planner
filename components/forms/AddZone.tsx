@@ -92,7 +92,7 @@ function AddZone({ zones, zoneType }: AddZoneProps) {
             desiredCoverageValue: checkedValues.desiredCoverageValue,
             startingCoverageValue: 0,
             coverageValueDifference: 0,
-            fuImplantedToReachDesiredRecipientCoverageValue: 0,
+            graftsImplantedToReachDesiredRecipientCoverageValue: 0,
         };
 
         calculateRecipientZoneValues(newZone);
