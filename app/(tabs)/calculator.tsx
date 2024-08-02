@@ -78,10 +78,7 @@ export default function CalculatorScreen() {
 
                 )}
                 {activeTab === 'Recipient Zones' && (
-                    <View>
-                        <Text>Content for Recipient Zones</Text>
-                        {/* Add your Tab 2 content here */}
-                    </View>
+                        <PdfExporter />
                 )}
             </View>
         </View>

@@ -31,18 +31,27 @@ export default function PdfExporter() {
         `).join('');
 
         const recipientZonesHtml = globalState.recipientZones.map(zone => `
-            <li style="page-break-inside: avoid;">
-                <strong>${zone.name}</strong>
-                <p>Number of Grafts Planted in Frontal Zone ${zone.graftsImplantedToReachDesiredRecipientCoverageValue}</p>
-            </li>
+            <div style="display: inline-block; page-break-inside: avoid;">
+                <p>${zone.name}: ${zone.graftsImplantedToReachDesiredRecipientCoverageValue}, </p>
+            </div>
         `).join('');
 
         const recipientZonesHtmlJournal = globalState.recipientZones.map(zone => `
             <li style="page-break-inside: avoid;">
+            <h4>Recipient zones</h4>
                 <strong>${zone.name}</strong>
                 <ul>
                     <li>Number of Grafts Planted in Frontal Zone: ${zone.graftsImplantedToReachDesiredRecipientCoverageValue}</li>
-    
+                    <li>Caliber: ${zone.caliber}</li>
+                    <li>Grafts Per Cm²: ${zone.graftsPerCm2}</li>
+                    <li>Hair Per Cm²: ${zone.hairPerCm2}</li>
+                    <li>Area: ${zone.area}</li>
+                    <li>Desired Coverage Value: ${zone.desiredCoverageValue}</li>
+                    <li>Hair Per Graft: ${zone.hairPerGraft?.toFixed(2)}</li>
+                    <li>Starting Coverage Value: ${zone.startingCoverageValue.toFixed(2)}</li>
+                    <li>Coverage Value Difference: ${zone.coverageValueDifference.toFixed(2)}</li>
+                    <li>Grafts Implanted To Reach Desired Recipient Coverage Value: ${zone.graftsImplantedToReachDesiredRecipientCoverageValue}</li>
+                </ul>
             </li>
         `).join('');
 
@@ -63,7 +72,7 @@ export default function PdfExporter() {
                         color: #333;
                     }
                     p, li {
-                        font-size: 10px;
+                        font-size: 12px;
                         line-height: 1.5;
                     }
                     ul {
@@ -71,21 +80,24 @@ export default function PdfExporter() {
                     }
                     li {
                         page-break-inside: avoid;
+                    },
+                    h1:empty {
+                        margin: 300px;
                     }
+         
                 </style>
             </head>
             <body>
          <div class="content-wrapper">
             
 
-                    <h4>Patient Information</h4>
-                    <p>This report provides a quantitative summary of the hair transplantation procedure performed. It includes specific data on the number and type of grafts extracted and implanted, as well as the detailed metrics related to the condition of the donor and recipient areas. These numbers offer a precise overview of the procedure's scope and outcomes.</p>
+                    <h2>Patient Information</h2>
                     <p><strong>Name:</strong> ${name}</p>
                     <p><strong>Date of Procedure:</strong> ${new Date().toLocaleDateString()}</p>
                     <p><strong>Surgeon:</strong> Armin Soleimanpor</p>
                     <p><strong>Clinic:</strong> Göta Hårklinik </p>
                     <hr>
-                    <h4>Summary for Patient</h4>
+                    <h3>Summary for Patient</h3>
                     
                             <h4>Totals</h4>
                     <p>Total Grafts extracted: ${globalState.totalGrafts}</p>
@@ -95,15 +107,30 @@ export default function PdfExporter() {
                     <p>Total Quadruple Hair Grafts: ${globalState.totalQuadruples}</p>
                     <p>Total Hair ${globalState.totalHair}</p>
                     
-                    <h4>Recipient Zones</h4>
-                    <ul>
+                    <h4>Recipient Zones number of Grafts Implanted</h4>
+                    <div>
                         ${recipientZonesHtml}
-                    </ul>
-                    <p>This section presents the main numerical aspects of the procedure, including the distribution and types of grafts used in different recipient zones.</p>
-                    <h4>Detailed Clinical Information (For Patient's Journal)/h4>
+                    </div>
+                    
+                 
+                    <hr>
+                    
+                    <h4>Date: ${new Date().toLocaleDateString()}</h4>
+                    <h4>Surgeon's Signature:</h4>
+                    
+                    
+                    
+                    <h1 style="page-break-before: always;"></h1>
+                 
+                  
+                    <h4>Detailed Clinical Information (For Patient's Journal)</h4>
                     <h4>Donor Area Assessment</h4>
                     <ul>
                         ${donorZonesHtml}
+                    </ul>
+                    <h4>Recipient Area Assessment</h4>
+                    <ul>
+                        ${recipientZonesHtmlJournal}
                     </ul>
                 </div>
             </body>
@@ -115,7 +142,7 @@ export default function PdfExporter() {
             base64: false,
             margins: {
                 top: 40,
-                bottom: 40,
+                bottom: 80,
                 left: 40,
                 right: 40,
             },
