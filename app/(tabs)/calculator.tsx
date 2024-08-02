@@ -5,6 +5,8 @@ import PdfExporter from "@/components/PdfExporter";
 import {Colors} from "@/constants/Colors";
 import {useAppState, Zone, DonorZone, RecipientZone} from "@/state/Store";
 import BottomSheet from "@gorhom/bottom-sheet";
+import { Collapsible } from '@/components/Collapsible';
+
 
 export default function CalculatorScreen() {
     const [activeTab, setActiveTab] = useState<string>('Donor Zones');
@@ -23,7 +25,16 @@ export default function CalculatorScreen() {
     function renderDonorZoneItem({ item }: { item: DonorZone }) {
         return (
             <View style={styles.zoneItem}>
-                <Text>{item.name}</Text>
+
+                <Collapsible title={item.name}>
+
+                    <Text style={styles.zoneButtonText}>Text</Text>
+                    <Text>text</Text>
+                    <Text>text</Text>
+
+                    <Text>text</Text>
+                </Collapsible>
+
                 <Text>Area {item.area}</Text>
                 <Text>Coverage Value: {item.coverageValue}</Text>
                 <Text>Total Grafts:{item.graftsPerZone}</Text>
@@ -101,6 +112,7 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             height: '100%',
         },
         zoneItem: {
+            padding: 10,
             borderRadius: 12,
             marginVertical: 10,
             width: '100%',
@@ -114,7 +126,10 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             borderWidth: 1,
             borderColor: 'lightgrey',
 
-        }
+        },
+        zoneButtonText: {
+
+        },
 
 
     });
