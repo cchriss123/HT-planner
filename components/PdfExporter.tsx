@@ -1,14 +1,14 @@
-import React from 'react';
-import { Appearance, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { TextInput } from 'react-native-paper';
 import { printToFileAsync } from 'expo-print';
 import { shareAsync } from 'expo-sharing';
 import { useAppState } from '@/state/Store';
-import { Colors } from "@/constants/Colors";
+import FormStyles from '@/components/forms/styles/FormStyles';
 
 export default function PdfExporter() {
     const globalState = useAppState();
-    const colorScheme = Appearance.getColorScheme();
-    const styles = createStyles(colorScheme);
+    const { styles, theme } = FormStyles();
 
     async function exportPdf() {
         const donorZonesHtml = globalState.donorZones.map(zone => `
@@ -33,19 +33,19 @@ export default function PdfExporter() {
         const recipientZonesHtml = globalState.recipientZones.map(zone => `
             <li style="page-break-inside: avoid;">
                 <strong>${zone.name}</strong>
-                <ul>
-                    <li>Caliber: ${zone.caliber}</li>
-                    <li>Grafts Per Cm²: ${zone.graftsPerCm2}</li>
-                    <li>Hair Per Cm²: ${zone.hairPerCm2}</li>
-                    <li>Area: ${zone.area}</li>
-                    <li>Desired Coverage Value: ${zone.desiredCoverageValue}</li>
-                    <li>Hair Per Graft: ${zone.hairPerGraft?.toFixed(2)}</li>
-                    <li>Starting Coverage Value: ${zone.startingCoverageValue.toFixed(2)}</li>
-                    <li>Coverage Value Difference: ${zone.coverageValueDifference.toFixed(2)}</li>
-                    <li>Grafts Implanted To Reach Desired Recipient Coverage Value: ${zone.graftsImplantedToReachDesiredRecipientCoverageValue}</li>
-                </ul>
+                <p>Number of Grafts Planted in Frontal Zone ${zone.graftsImplantedToReachDesiredRecipientCoverageValue}</p>
             </li>
         `).join('');
+
+        const recipientZonesHtmlJournal = globalState.recipientZones.map(zone => `
+            <li style="page-break-inside: avoid;">
+                <strong>${zone.name}</strong>
+                <ul>
+                    <li>Number of Grafts Planted in Frontal Zone: ${zone.graftsImplantedToReachDesiredRecipientCoverageValue}</li>
+    
+            </li>
+        `).join('');
+
 
         const html = `
             <!DOCTYPE html>
@@ -75,18 +75,35 @@ export default function PdfExporter() {
                 </style>
             </head>
             <body>
-                <div class="content-wrapper">
-                    <h4>Totals</h4>
+         <div class="content-wrapper">
+            
+
+                    <h4>Patient Information</h4>
+                    <p>This report provides a quantitative summary of the hair transplantation procedure performed. It includes specific data on the number and type of grafts extracted and implanted, as well as the detailed metrics related to the condition of the donor and recipient areas. These numbers offer a precise overview of the procedure's scope and outcomes.</p>
+                    <p><strong>Name:</strong> ${name}</p>
+                    <p><strong>Date of Procedure:</strong> ${new Date().toLocaleDateString()}</p>
+                    <p><strong>Surgeon:</strong> Armin Soleimanpor</p>
+                    <p><strong>Clinic:</strong> Göta Hårklinik </p>
+                    <hr>
+                    <h4>Summary for Patient</h4>
+                    
+                            <h4>Totals</h4>
                     <p>Total Grafts extracted: ${globalState.totalGrafts}</p>
-                   
-                    <h4>Donor Zones</h4>
-                    <ul>
-                        ${donorZonesHtml}
-                    </ul>
+                    <p>Total Single Hair Grafts: ${globalState.totalSingles}</p>
+                    <p>Total Double Hair Grafts: ${globalState.totalDoubles}</p>
+                    <p>Total Triple Hair Grafts: ${globalState.totalTriples}</p>
+                    <p>Total Quadruple Hair Grafts: ${globalState.totalQuadruples}</p>
+                    <p>Total Hair ${globalState.totalHair}</p>
                     
                     <h4>Recipient Zones</h4>
                     <ul>
                         ${recipientZonesHtml}
+                    </ul>
+                    <p>This section presents the main numerical aspects of the procedure, including the distribution and types of grafts used in different recipient zones.</p>
+                    <h4>Detailed Clinical Information (For Patient's Journal)/h4>
+                    <h4>Donor Area Assessment</h4>
+                    <ul>
+                        ${donorZonesHtml}
                     </ul>
                 </div>
             </body>
@@ -107,35 +124,32 @@ export default function PdfExporter() {
         await shareAsync(pdfFile.uri);
     }
 
+    async function handleSubmit() {
+        if (!name) {
+            setMessage('Please enter a name.');
+            return;
+        }
+        await exportPdf();
+        setMessage('Export successful!');
+    }
+
+    const [name, setName] = useState('');
+    const [message, setMessage] = useState('');
+
     return (
-        <TouchableOpacity style={styles.zoneButton} onPress={exportPdf}>
-            <Text style={styles.zoneButtonText}>Export PDF</Text>
-        </TouchableOpacity>
+        <View style={styles.container}>
+            <TextInput
+                label="Name"
+                mode="outlined"
+                value={name}
+                onChangeText={setName}
+                style={styles.input}
+                theme={theme}
+            />
+            <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+                <Text style={styles.buttonTitle}>Export PDF</Text>
+            </TouchableOpacity>
+            {message ? <Text style={styles.message}>{message}</Text> : null}
+        </View>
     );
-}
-
-function createStyles(colorScheme: "light" | "dark" | null | undefined) {
-    const colors = colorScheme === 'dark' ? Colors.dark : Colors.light;
-
-    return StyleSheet.create({
-        zoneButton: {
-            marginVertical: 5,
-            height: 50,
-            padding: 10,
-            backgroundColor: colors.primaryBlue,
-            borderRadius: 8,
-            marginBottom: 10,
-            shadowColor: '#000',
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.3,
-            shadowRadius: 5,
-            elevation: 5,
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: 150,
-        },
-        zoneButtonText: {
-            color: colors.solidBackground,
-        },
-    });
 }
