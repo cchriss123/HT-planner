@@ -39,9 +39,12 @@ export default function RootLayout() {
           <GestureHandlerRootView style={{ flex: 1 }}>
               <PaperProvider>
 
+
                   <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+
+
                   <View style={{ flex: 1 , backgroundColor: Colors[colorScheme ?? 'light'].softBackground}}>
-                      <View style={{ flex: 1 }}>
+                      <View style={{ flex: 1 , borderWidth:1    }}>
                         {/*<Text style={{ fontFamily: 'SpaceMono', fontSize: 24, textAlign: 'center', marginTop: 20 }}>*/}
                         {/*  Welcome to My App*/}
                         {/*</Text>*/}
@@ -53,6 +56,7 @@ export default function RootLayout() {
 
                       </View>
                   </View>
+
                 </ThemeProvider>
               </PaperProvider>
         </GestureHandlerRootView>

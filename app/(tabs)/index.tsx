@@ -56,7 +56,7 @@ export default function ZonesScreen() {
     }
 
     return (
-        <SafeAreaView style={styles.safeArea}>
+        <View style={{ flex: 1, paddingTop: 70}}>
                 <View style={styles.buttonWrapper}>
                     <View style={styles.buttonContainer}>
                         <View style={styles.button}>
@@ -106,7 +106,8 @@ export default function ZonesScreen() {
             <CustomBottomSheet ref={bottomSheetRefs.editRecipient} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
                 <EditDonorZone zone={selectedZone as RecipientZone} zones={recipientZones} />
             </CustomBottomSheet>
-        </SafeAreaView>
+        </View>
+
     );
 }
 
@@ -114,10 +115,7 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
     const colors = colorScheme === 'dark' ? Colors.dark : Colors.light;
 
     return StyleSheet.create({
-        safeArea: {
-            flex: 1,
-            backgroundColor: colors.softBackground,
-        },
+
 
         buttonWrapper: {
             flexDirection: 'row',

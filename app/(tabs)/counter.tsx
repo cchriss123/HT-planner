@@ -59,7 +59,7 @@ export default function CounterScreen() {
     }, [globalState.donorZones]);
 
     return (
-        <SafeAreaView style={{ flex: 1, paddingTop: 20 }}>
+        <View style={{ flex: 1, paddingTop: 70 }}>
             <View style={{ flex: 1, backgroundColor: colorScheme === 'dark' ? Colors.dark.softBackground : Colors.light.softBackground }}>
                 <View style={styles.topContainer}>
                     <View style={{ borderColor: 'black', width: '60%', alignItems: 'center' }}>
@@ -198,7 +198,7 @@ export default function CounterScreen() {
             <CustomBottomSheet ref={bottomSheetRef} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
                 <Text>Test</Text>
             </CustomBottomSheet>
-        </SafeAreaView>
+        </View>
     );
 }
 
