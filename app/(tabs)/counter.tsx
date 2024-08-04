@@ -8,6 +8,7 @@ import { useAppState, DonorZone } from '@/state/Store';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import CustomBottomSheet from '@/components/CustomBottomSheet';
 import BottomSheet from "@gorhom/bottom-sheet";
+import PdfExporter from "@/components/PdfExporter";
 
 export default function CounterScreen() {
     const colorScheme = useColorScheme();
@@ -200,7 +201,7 @@ export default function CounterScreen() {
             </View>
 
             <CustomBottomSheet ref={bottomSheetRef} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
-                <Text>Test</Text>
+                <PdfExporter />
             </CustomBottomSheet>
         </View>
     );
