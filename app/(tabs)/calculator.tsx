@@ -129,10 +129,15 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             fontSize: 16,
         },
         outerContainer: {
-            flex: 1,
-            height: '100%',
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+            alignItems: 'center',
             borderTopWidth: 1,
             borderColor: 'lightgrey',
+            paddingTop: 5,
+            paddingBottom: 5,
+            marginHorizontal: '2.5%',
         },
         zoneItem: {
             padding: 10,
