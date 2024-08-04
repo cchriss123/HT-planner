@@ -30,7 +30,7 @@ function EditZone({ zones, zone }: EditZoneProps) {
     const [area, setArea] = React.useState(zone.area.toString());
     const [desiredCoverageValue, setDesiredCoverageValue] = React.useState(zone.desiredCoverageValue.toString());
     const [message, setMessage] = React.useState('');
-    const { setDonorZones, setRecipientZones, donorZones, recipientZones } = useAppState();
+    const { setDonorZones, setRecipientZones, donorZones, recipientZones, updateTotalCounts } = useAppState();
 
     const { calculateDonorZoneValues, calculateRecipientZoneValues } = useAppState();
     const { styles, theme } = FormStyles();
@@ -65,6 +65,9 @@ function EditZone({ zones, zone }: EditZoneProps) {
 
         if (zone.type === 'donor') {
             calculateDonorZoneValues(zone as DonorZone);
+            updateTotalCounts();
+
+
             setDonorZones([...donorZones]);
         }
         else if (zone.type === 'recipient'){

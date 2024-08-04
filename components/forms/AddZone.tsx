@@ -20,7 +20,7 @@ function AddZone({ zones, zoneType }: AddZoneProps) {
     const [desiredCoverageValue, setDesiredCoverageValue] = React.useState('');
     const [message, setMessage] = React.useState('');
     const { styles, theme } = FormStyles();
-    const { calculateDonorZoneValues, calculateRecipientZoneValues, setDonorZones, setRecipientZones } = useAppState();
+    const { calculateDonorZoneValues, calculateRecipientZoneValues, setDonorZones, setRecipientZones, updateTotalCounts } = useAppState();
 
     useEffect(() => {
         if (message) {
@@ -75,8 +75,8 @@ function AddZone({ zones, zoneType }: AddZoneProps) {
         console.log(newZone);
 
         calculateDonorZoneValues(newZone);
+        updateTotalCounts();
         setDonorZones([...zones as DonorZone[], newZone]);
-        // zones.push(newZone);
         setMessage('Donor zone added successfully!');
         resetForm();
     }
