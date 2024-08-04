@@ -134,6 +134,7 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             padding: 10,
             backgroundColor: colors.primaryBlue,
             borderRadius: 8,
+            width: '40%',
         },
         buttonText: {
             color: 'white',
