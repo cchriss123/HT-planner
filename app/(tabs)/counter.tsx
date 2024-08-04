@@ -65,7 +65,6 @@ export default function CounterScreen() {
 
     return (
         <View style={{ flex: 1, paddingTop: 70 }}>
-            <View style={{ flex: 1, backgroundColor: colorScheme === 'dark' ? Colors.dark.softBackground : Colors.light.softBackground }}>
                 <View style={styles.topContainer}>
                     <View style={{ borderColor: 'black', width: '60%', alignItems: 'center' }}>
                         <DropdownComponent selectedZone={selectedZone} setSelectedZone={setSelectedZone} />
@@ -198,7 +197,6 @@ export default function CounterScreen() {
                         </View>
                     </View>
                 )}
-            </View>
 
             <CustomBottomSheet ref={bottomSheetRef} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
                 <PdfExporter />
@@ -240,7 +238,7 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             alignItems: 'center',
             backgroundColor: colors.solidBackground,
             shadowColor: '#000',
-            shadowOffset: { width: 0, height: 2 },
+            shadowOffset: {width: 0, height: 2},
             shadowOpacity: 0.3,
             shadowRadius: 5,
             elevation: 5,
@@ -283,7 +281,7 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             flex: 1,
             backgroundColor: colors.solidBackground,
             shadowColor: '#000',
-            shadowOffset: { width: 0, height: 2 },
+            shadowOffset: {width: 0, height: 2},
             shadowOpacity: 0.3,
             shadowRadius: 5,
             elevation: 5,
@@ -293,4 +291,5 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
 
         }
     });
+
 }

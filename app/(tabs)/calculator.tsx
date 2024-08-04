@@ -110,11 +110,12 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
     return StyleSheet.create({
         tabContainer: {
             flexDirection: 'row',
-            justifyContent: 'space-around',
-            borderBottomWidth: 1,
-            borderBottomColor: '#ccc',
+            alignItems: 'center',
+            justifyContent: 'space-between',
             height: 60,
+            width: '95%',
             paddingBottom: '5%',
+            marginHorizontal: '2.5%',
             marginTop: 10,
         },
         tabButton: {
