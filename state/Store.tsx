@@ -194,7 +194,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         setTotalHair(hair);
         setTotalHairPerGraftsCounted(grafts > 0 ? hair / grafts : 0);
 
-        setDonorZones([...donorZones]);
+
     }
 
     function calculateDonorZoneValues(zone: DonorZone) {
@@ -204,6 +204,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         zone.hairPerZone = zone.area * zone.hairPerCm2;
         zone.graftsExtractedToReachDonorDesiredCoverageValue = Math.floor(zone.graftsPerZone - ((zone.area * zone.desiredCoverageValue) / (zone.caliber * zone.hairPerGraft)));
         zone.graftsLeftToReachDonorDesiredCoverageValue = Math.floor(zone.graftsExtractedToReachDonorDesiredCoverageValue) - zone.grafts;
+
     }
 
     function calculateRecipientZoneValues(zone: RecipientZone) {
