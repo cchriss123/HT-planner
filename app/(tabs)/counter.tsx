@@ -57,6 +57,9 @@ export default function CounterScreen() {
 
     }
 
+
+
+
     useEffect(() => {
         if (!selectedZone && globalState.donorZones.length > 0) {
             setSelectedZone(globalState.donorZones[0]);

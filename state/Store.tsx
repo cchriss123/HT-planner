@@ -100,6 +100,8 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         } catch (error) {
             console.error('Failed to load donor zones from AsyncStorage', error);
         }
+
+
         return getMockDonorZones();
     }
 
@@ -122,6 +124,10 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
             setDonorZones(loadedDonorZones);
             setRecipientZones(loadedRecipientZones);
             setInitialized(true);
+            donorZones.forEach(zone => calculateDonorZoneValues(zone));
+            recipientZones.forEach(zone => calculateRecipientZoneValues(zone));
+            setDonorZones([...donorZones]);
+            setRecipientZones([...recipientZones]);
         }
         initializeZones();
     }, []);
