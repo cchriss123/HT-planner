@@ -60,7 +60,6 @@ export default function CalculatorScreen() {
 
 
 
-
     return (
         <View style={{ flex: 1, paddingTop: 70}}>
             <View style={styles.tabContainer}>
@@ -136,7 +135,7 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             borderTopWidth: 1,
             borderColor: 'lightgrey',
             paddingTop: 5,
-            paddingBottom: 5,
+            paddingBottom: 70,
             marginHorizontal: '2.5%',
         },
         zoneItem: {

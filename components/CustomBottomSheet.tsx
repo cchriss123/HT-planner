@@ -39,7 +39,11 @@ const CustomBottomSheet = forwardRef<BottomSheet, Props>((props, ref) => {
             onChange={handleSheetChanges}
             backdropComponent={renderBackDrop}
             animationConfigs={animationConfigs}
-            backgroundStyle={{ borderRadius: 12, backgroundColor: colors.solidBackground }}
+            backgroundStyle={{ borderRadius: 12, backgroundColor:
+                colors.solidBackground,
+                borderWidth: 1,
+
+        }}
         >
             <View style={styles.contentContainer}>
                 {children}
@@ -53,6 +57,8 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        borderLeftWidth: 1,
+        borderRightWidth: 1,
         backgroundColor: Colors.light.solidBackground,
     },
 });

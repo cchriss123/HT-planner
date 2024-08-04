@@ -8,6 +8,7 @@ import CustomBottomSheet from "@/components/CustomBottomSheet";
 import { useAppState, Zone, DonorZone, RecipientZone } from "@/state/Store";
 import AddZone from "@/components/forms/AddZone";
 import EditDonorZone from "@/components/forms/EditZone";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 //TODO improve styling of ZonesScreen
 //TODO add a way to reset all stored zones
@@ -26,6 +27,7 @@ export default function ZonesScreen() {
     const donorZones = globalState.donorZones;
     const recipientZones = globalState.recipientZones;
     const [selectedZone, setSelectedZone] = useState<Zone | null>(null);
+
 
     useEffect(() => {
         if (!menuVisible) setSelectedZone(null);
@@ -90,6 +92,16 @@ export default function ZonesScreen() {
                         />
                     </View>
                 </View>
+            <View style={{justifyContent: 'center', alignItems: 'center', height: 100}}>
+                <TouchableOpacity
+                    style={styles.buttonReset}
+                    onPress={() => console.log('resets data')}>
+                    <Ionicons name="refresh" size={24} color="white" />
+                    <Text style={styles.buttonText}>Reset</Text>
+                </TouchableOpacity>
+
+            </View>
+
 
             <CustomBottomSheet ref={bottomSheetRefs.addDonor} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
                 <AddZone zones={donorZones} zoneType={'donor'} />
@@ -115,6 +127,19 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
     const colors = colorScheme === 'dark' ? Colors.dark : Colors.light;
 
     return StyleSheet.create({
+        buttonReset: {
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: 10,
+            backgroundColor: colors.primaryBlue,
+            borderRadius: 8,
+        },
+        buttonText: {
+            color: 'white',
+            fontSize: 16,
+            marginLeft: 8,
+        },
 
 
         buttonWrapper: {

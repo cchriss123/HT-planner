@@ -90,6 +90,8 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     const [totalHairPerGraftsCounted, setTotalHairPerGraftsCounted] = useState(0);
 
     async function loadDonorZones(): Promise<DonorZone[]> {
+        // await AsyncStorage.clear();
+
         try {
             const storedDonorZones = await AsyncStorage.getItem('donorZones');
             if (storedDonorZones) {
