@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Appearance, FlatList} from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
 import PdfExporter from "@/components/PdfExporter";
@@ -6,6 +6,7 @@ import {Colors} from "@/constants/Colors";
 import {useAppState, Zone, DonorZone, RecipientZone} from "@/state/Store";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { Collapsible } from '@/components/Collapsible';
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 
 export default function CalculatorScreen() {
@@ -13,6 +14,17 @@ export default function CalculatorScreen() {
     const colorScheme = Appearance.getColorScheme();
     const styles = createStyles(colorScheme);
     const globalState = useAppState();
+    const bottomSheetRef = useRef<BottomSheet>(null);
+    const [menuVisible, setMenuVisible] = useState(false);
+
+    function openMenu() {
+        setMenuVisible(true);
+        bottomSheetRef.current?.expand();
+        bottomSheetRef.current?.snapToIndex(2);
+    }
+
+
+
 
     const colors = colorScheme === 'dark' ? Colors.dark : Colors.light;
     const donorZones = globalState.donorZones;
@@ -56,16 +68,22 @@ export default function CalculatorScreen() {
                     style={[styles.tabButton, activeTab === 'Donor Zones' && styles.activeTab]}
                     onPress={() => handleTabChange('Donor Zones')}
                 >
-                    <Text style={styles.tabText}>Donor Zones</Text>
+                    <Text style={styles.tabText}>Donor Areas</Text>
 
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={[styles.tabButton, activeTab === 'Recipient Zones' && styles.activeTab]}
                     onPress={() => handleTabChange('Recipient Zones')}
                 >
-                    <Text style={styles.tabText}>Recipient Zones</Text>
+                    <Text style={styles.tabText}>Recipient Areas</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={{ marginHorizontal: "5%" }} onPress={openMenu}>
+                    <FontAwesome gear="setting" size={35} color={
+                        menuVisible ? Colors.light.primaryBlue : Colors.light.neutralGrey
+                    } name="gear" />
                 </TouchableOpacity>
             </View>
+
             <View style={styles.outerContainer}>
                 {activeTab === 'Donor Zones' && (
                     <FlatList
@@ -95,6 +113,9 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             justifyContent: 'space-around',
             borderBottomWidth: 1,
             borderBottomColor: '#ccc',
+            height: 60,
+            paddingBottom: '5%',
+            marginTop: 10,
         },
         tabButton: {
             padding: 10,
