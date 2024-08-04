@@ -4,7 +4,6 @@ import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 
-
 export default function TabLayout() {
 
     const colorScheme = useColorScheme();
@@ -15,6 +14,8 @@ export default function TabLayout() {
                 tabBarActiveTintColor: Colors[colorScheme ?? 'light'].primaryBlue,
                 tabBarStyle: {
                     backgroundColor: Colors[colorScheme ?? 'light'].solidBackground,
+                    borderTopWidth: 1,
+                    borderTopColor: 'lightgrey',
                 },
                 headerShown: false,
             }}>
@@ -49,4 +50,3 @@ export default function TabLayout() {
         </Tabs>
     );
 }
-
