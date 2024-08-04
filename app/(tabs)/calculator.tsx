@@ -131,6 +131,8 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
         outerContainer: {
             flex: 1,
             height: '100%',
+            borderWidth: 1,
+            borderColor: 'lightgrey',
         },
         zoneItem: {
             padding: 10,
