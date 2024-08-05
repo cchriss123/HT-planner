@@ -195,6 +195,8 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             justifyContent: 'space-between',
             paddingTop: 10,
             flex: 1,
+            borderTopWidth: 1,
+            borderColor: 'lightgrey',
         },
         buttonContainer: {
             flex: 1,
@@ -247,13 +249,13 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             alignItems: 'center',
             justifyContent: 'space-between',
             height: 60,
-            width: '95%',
+            width: '100%',
             paddingBottom: '5%',
-            marginHorizontal: '2.5%',
             marginTop: 10,
+
         },
         placeholderContainer: {
-            width: 50,
+            width: 58.5,
         },
         logo: {
             width: 35,

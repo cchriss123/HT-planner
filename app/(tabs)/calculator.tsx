@@ -141,7 +141,7 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             borderColor: 'lightgrey',
             paddingTop: 5,
             paddingBottom: 70,
-            marginHorizontal: '2.5%',
+            // marginHorizontal: '2.5%',
         },
         zoneItem: {
             padding: 10,
