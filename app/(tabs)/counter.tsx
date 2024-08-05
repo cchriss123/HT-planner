@@ -30,10 +30,6 @@ export default function CounterScreen() {
         }
     };
 
-
-
-
-
     function updateZoneCounts(value: number) {
         if (!selectedZone) return;
         if (value > 4) return;
