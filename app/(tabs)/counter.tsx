@@ -57,14 +57,17 @@ export default function CounterScreen() {
 
     }
 
-
-
-
     useEffect(() => {
         if (!selectedZone && globalState.donorZones.length > 0) {
             setSelectedZone(globalState.donorZones[0]);
+        } else if (selectedZone) {
+            const zoneExists = globalState.donorZones.some(zone => zone === selectedZone);
+            if (!zoneExists) {
+                setSelectedZone(globalState.donorZones.length > 0 ? globalState.donorZones[0] : null);
+            }
         }
     }, [globalState.donorZones]);
+
 
     return (
         <View style={{ flex: 1, paddingTop: 70 }}>

@@ -72,7 +72,6 @@ function AddZone({ zones, zoneType }: AddZoneProps) {
             graftsExtractedToReachDonorDesiredCoverageValue: 0,
             graftsLeftToReachDonorDesiredCoverageValue: 0,
         };
-        console.log(newZone);
 
         calculateDonorZoneValues(newZone);
         updateTotalCounts();
