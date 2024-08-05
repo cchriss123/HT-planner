@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Appearance, StyleSheet, Text, TouchableOpacity, View, FlatList } from 'react-native';
-import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from '@/constants/Colors';
 import Icon from "react-native-vector-icons/Ionicons";
 import BottomSheet from "@gorhom/bottom-sheet";
@@ -10,11 +9,16 @@ import AddZone from "@/components/forms/AddZone";
 import EditDonorZone from "@/components/forms/EditZone";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
+//TODO add recipient zones to calculator screen
+//TODO fix area styling on calculator screen
+//TODO makes sure values are correct in calculator screen
 //TODO improve styling of ZonesScreen
 //TODO add a way to reset all stored zones
 //TODO add a way to input IP
-//Todo Add a way to send data
+//TODO Add a way to send data
 //TODO add logo to pdf
+//TODO add different pdfs
+//TODO go over colour themes
 Appearance.getColorScheme = () => 'light';
 
 export default function ZonesScreen() {

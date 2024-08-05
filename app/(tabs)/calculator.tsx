@@ -7,6 +7,7 @@ import {useAppState, Zone, DonorZone, RecipientZone} from "@/state/Store";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { Collapsible } from '@/components/Collapsible';
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import CustomBottomSheet from "@/components/CustomBottomSheet";
 
 
 export default function CalculatorScreen() {
@@ -100,6 +101,10 @@ export default function CalculatorScreen() {
                         </View>
                 )}
             </View>
+            <CustomBottomSheet ref={bottomSheetRef} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
+                <View></View>
+
+            </CustomBottomSheet>
         </View>
     );
 }
