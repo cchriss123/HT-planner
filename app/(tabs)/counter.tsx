@@ -18,11 +18,21 @@ export default function CounterScreen() {
     const bottomSheetRef = useRef<BottomSheet>(null);
     const [menuVisible, setMenuVisible] = useState(false);
 
-    function openMenu() {
-        setMenuVisible(true);
-        bottomSheetRef.current?.expand();
-        bottomSheetRef.current?.snapToIndex(2);
-    }
+
+    const handleMenuPress = () => {
+        if (menuVisible) {
+            setMenuVisible(false);
+            bottomSheetRef.current?.close();
+        } else {
+            setMenuVisible(true);
+            bottomSheetRef.current?.expand();
+            bottomSheetRef.current?.snapToIndex(2);
+        }
+    };
+
+
+
+
 
     function updateZoneCounts(value: number) {
         if (!selectedZone) return;
@@ -75,7 +85,7 @@ export default function CounterScreen() {
                     <View style={{ borderColor: 'black', width: '60%', alignItems: 'center' }}>
                         <DropdownComponent selectedZone={selectedZone} setSelectedZone={setSelectedZone} />
                     </View>
-                    <TouchableOpacity style={{ marginHorizontal: "5%" }} onPress={openMenu}>
+                    <TouchableOpacity style={{ marginHorizontal: "5%" }} onPress={handleMenuPress}>
                         <FontAwesome gear="setting" size={35} color={
                             menuVisible ? Colors.light.primaryBlue : Colors.light.neutralGrey
                         } name="gear" />
