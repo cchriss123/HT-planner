@@ -101,6 +101,8 @@ function EditZone({ zones, zone }: EditZoneProps) {
                         else if (zone.type === 'recipient')
                             setRecipientZones(recipientZones.filter(z => z !== zone));
                         console.log(`Zone ${zone.name} deleted.`);
+                        setMessage('Zone deleted.');
+
                     }
                 }
             ],

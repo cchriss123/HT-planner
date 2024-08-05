@@ -12,7 +12,6 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 
 //TODO improve styling of ZonesScreen
 //TODO add a way to reset all stored zones
-//TODO improve zone deletion user experience
 //TODO add a way to input IP
 //Todo Add a way to send data
 //TODO add logo to pdf
