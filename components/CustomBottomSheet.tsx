@@ -3,7 +3,7 @@ import {View, StyleSheet, useColorScheme, Keyboard} from 'react-native';
 import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { Colors } from '@/constants/Colors';
 import { Easing } from 'react-native-reanimated';
-import { useAppState } from "@/state/Store";
+
 
 export interface Props {
     children: React.ReactNode;
@@ -13,27 +13,18 @@ export interface Props {
 
 const CustomBottomSheet = forwardRef<BottomSheet, Props>((props, ref) => {
     const { children } = props;
-    const { menuVisible, setMenuVisible } = props;
-    // much more snap points
+    const {setMenuVisible } = props;
     const snapPoints = useMemo(() => ['50%', '60%', '70%', '80%', '90%', '95%', '100%'], []);
     const colorScheme = useColorScheme();
     const colors = colorScheme === 'dark' ? Colors.dark : Colors.light;
     const renderBackDrop = useCallback((props: any) =>
-
         <BottomSheetBackdrop
             animatedIndex={props.animatedIndex}
             animatedPosition={props.animatedPosition}
             disappearsOnIndex={-1}
             appearsOnIndex={0}
-
-                             {...props} />
+            {...props} />
         , []);
-
-
-
-
-
-
     const animationConfigs = useMemo(() => ({duration: 200, easing: Easing.out(Easing.ease)}), []);
 
     function handleSheetChanges(index: number) {
