@@ -12,7 +12,6 @@ import logoImg from '@/assets/images/logo.png';
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 
-//TODO add bottom sheets for index.tsx
 //TODO add recipient zones to calculator screen
 //TODO fix area styling on calculator screen
 //TODO makes sure values are correct in calculator screen
@@ -34,16 +33,6 @@ export default function ZonesScreen() {
     const donorZones = globalState.donorZones;
     const recipientZones = globalState.recipientZones;
     const [selectedZone, setSelectedZone] = useState<Zone | null>(null);
-
-
-
-
-    useEffect(() => {
-        if (!menuVisible) setSelectedZone(null);
-    }, [menuVisible]);
-
-
-
     const bottomSheetRefs = {
         addDonor: useRef<BottomSheet>(null),
         addRecipient: useRef<BottomSheet>(null),
@@ -52,6 +41,10 @@ export default function ZonesScreen() {
         wheel: useRef<BottomSheet>(null),
     };
 
+    useEffect(() => {
+        if (!menuVisible) setSelectedZone(null);
+    }, [menuVisible]);
+    
     function openMenu(ref: React.RefObject<BottomSheet>, zone: Zone | null = null) {
         setSelectedZone(zone);
         ref.current?.expand();

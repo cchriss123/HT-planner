@@ -211,7 +211,7 @@ export default function CounterScreen() {
                 )}
 
             <CustomBottomSheet ref={bottomSheetRef} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
-                <PdfExporter />
+                <PdfExporter pdfType="counter" />
             </CustomBottomSheet>
         </View>
     );

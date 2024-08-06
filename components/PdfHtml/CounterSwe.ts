@@ -1,7 +1,16 @@
-import { useAppState } from "@/state/Store";
+import {DonorZone, RecipientZone, useAppState} from "@/state/Store";
+interface AppStateContextType {
+    totalGrafts: number;
+    totalSingles: number;
+    totalDoubles: number;
+    totalTriples: number;
+    totalQuadruples: number;
+    donorZones: DonorZone[];
+    recipientZones: RecipientZone[];
 
-export function getCounterSwePdfHtml(name: string) : string {
-    const globalState = useAppState();
+}
+
+export function getCounterSwePdfHtml(name: string, globalState: AppStateContextType) : string {
 
     const donorZonesHtml = globalState.donorZones.map(zone => `
         <li style="page-break-inside: avoid;">

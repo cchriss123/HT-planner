@@ -1,21 +1,44 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { printToFileAsync } from 'expo-print';
 import { shareAsync } from 'expo-sharing';
-import { useAppState } from '@/state/Store';
 import FormStyles from '@/components/forms/styles/FormStyles';
-import {getCounterSwePdfHtml} from "@/components/PdfHtml/CounterSwe";
+import { getCounterSwePdfHtml } from "@/components/PdfHtml/CounterSwe";
+import { getCounterEngPdfHtml } from "@/components/PdfHtml/CounterEng";
+import { getCalculatorEngPdfHtml} from "@/components/PdfHtml/CalculatorEng";
+import { getCalculatorSwePdfHtml} from "@/components/PdfHtml/CalculatorSwe";
+import { useAppState } from "@/state/Store";
 
-export default function PdfExporter() {
 
+interface PdfExporterProps {
+    pdfType: string;
+}
+
+export default function PdfExporter({ pdfType }: PdfExporterProps) {
     const { styles, theme } = FormStyles();
 
-    async function exportPdf() {
+    const [name, setName] = useState('');
+    const [message, setMessage] = useState('');
+    const globalState = useAppState();
 
 
+    async function exportPdf(reportType: string, reportLanguage: string): Promise<void> {
 
+        let html;
 
+        if (reportType === 'counter' && reportLanguage === 'swe') {
+            html = getCounterSwePdfHtml(name, globalState);
+        }
+        else if (reportType === 'counter' && reportLanguage === 'eng') {
+            html = getCounterEngPdfHtml(name);
+        }
+        else if (reportType === 'calculator' && reportLanguage === 'swe') {
+            html = getCalculatorSwePdfHtml(name);
+        }
+        else if (reportType === 'calculator' && reportLanguage === 'eng') {
+            html = getCalculatorEngPdfHtml(name);
+        }
 
         const pdfFile = await printToFileAsync({
             html: html,
@@ -31,18 +54,14 @@ export default function PdfExporter() {
         await shareAsync(pdfFile.uri);
     }
 
-    async function handleSubmit() {
+    async function handleSubmit(reportType: string, reportLanguage: string): Promise<void> {
         if (!name) {
             setMessage('Please enter a name.');
             return;
         }
-        await exportPdf();
+        await exportPdf(reportType, reportLanguage);
         setMessage('Export successful!');
     }
-
-    const [name, setName] = useState('');
-    const [message, setMessage] = useState('');
-    const html = getCounterSwePdfHtml(name);
 
     return (
         <View style={styles.container}>
@@ -54,8 +73,12 @@ export default function PdfExporter() {
                 style={styles.input}
                 theme={theme}
             />
-            <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-                <Text style={styles.buttonTitle}>Export PDF</Text>
+            <TouchableOpacity style={styles.button} onPress={() => handleSubmit(pdfType, 'swe')}>
+                <Text style={styles.buttonTitle}>Export SWE PDF</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.button} onPress={() => handleSubmit(pdfType, 'eng')}>
+                <Text style={styles.buttonTitle}>Export ENG PDF</Text>
             </TouchableOpacity>
             {message ? <Text style={styles.message}>{message}</Text> : null}
         </View>

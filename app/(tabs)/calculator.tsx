@@ -96,7 +96,8 @@ export default function CalculatorScreen() {
                 )}
             </View>
             <CustomBottomSheet ref={bottomSheetRef} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
-                <View></View>
+                <PdfExporter pdfType="calculator" />
+
 
             </CustomBottomSheet>
         </View>
