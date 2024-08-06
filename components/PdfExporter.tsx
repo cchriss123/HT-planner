@@ -31,13 +31,13 @@ export default function PdfExporter({ pdfType }: PdfExporterProps) {
             html = getCounterSwePdfHtml(name, globalState);
         }
         else if (reportType === 'counter' && reportLanguage === 'eng') {
-            html = getCounterEngPdfHtml(name);
+            html = getCounterEngPdfHtml(name, globalState);
         }
         else if (reportType === 'calculator' && reportLanguage === 'swe') {
-            html = getCalculatorSwePdfHtml(name);
+            html = getCalculatorSwePdfHtml(name, globalState);
         }
         else if (reportType === 'calculator' && reportLanguage === 'eng') {
-            html = getCalculatorEngPdfHtml(name);
+            html = getCalculatorEngPdfHtml(name, globalState);
         }
 
         const pdfFile = await printToFileAsync({
