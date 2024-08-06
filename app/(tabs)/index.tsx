@@ -12,11 +12,10 @@ import logoImg from '@/assets/images/logo.png';
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 
-
+//TODO add bottom sheets for index.tsx
 //TODO add recipient zones to calculator screen
 //TODO fix area styling on calculator screen
 //TODO makes sure values are correct in calculator screen
-//TODO improve styling of ZonesScreen
 //TODO add a way to reset all stored zones
 //TODO add a way to input IP
 //TODO Add a way to send data
@@ -34,9 +33,6 @@ export default function ZonesScreen() {
     const donorZones = globalState.donorZones;
     const recipientZones = globalState.recipientZones;
     const [selectedZone, setSelectedZone] = useState<Zone | null>(null);
-    const [wheelMenuVisible, setWheelMenuVisible] = useState(false);
-    const wheelBottomSheetRef = useRef<BottomSheet>(null);
-
 
 
 
@@ -49,7 +45,8 @@ export default function ZonesScreen() {
         addDonor: useRef<BottomSheet>(null),
         addRecipient: useRef<BottomSheet>(null),
         editDonor: useRef<BottomSheet>(null),
-        editRecipient: useRef<BottomSheet>(null)
+        editRecipient: useRef<BottomSheet>(null),
+        wheel: useRef<BottomSheet>(null),
     };
 
     function openMenu(ref: React.RefObject<BottomSheet>, zone: Zone | null = null) {
@@ -57,21 +54,37 @@ export default function ZonesScreen() {
         ref.current?.expand();
         ref.current?.snapToIndex(1);
     }
-    function handleMenuPress(
-        menuVisible: boolean,
-        setMenuVisible: React.Dispatch<React.SetStateAction<boolean>>,
-        ref: React.RefObject<BottomSheet>,
-        zone: Zone | null = null
-    ) {
-        if (menuVisible) {
-            setMenuVisible(false);
-            ref.current?.close();
-        } else {
-            setSelectedZone(zone);
-            setMenuVisible(true);
-            ref.current?.expand();
-        }
-    }
+
+    //
+    // const handleMenuPress = () => {
+    //     if (menuVisible) {
+    //         setMenuVisible(false);
+    //         bottomSheetRef.current?.close();
+    //     } else {
+    //         setMenuVisible(true);
+    //         bottomSheetRef.current?.expand();
+    //         bottomSheetRef.current?.snapToIndex(2);
+    //     }
+    // };
+
+
+    // function handleMenuPress(ref: React.RefObject<BottomSheet>, zone: Zone | null = null)
+    // {
+    //
+    //     if (menuVisible) {
+    //
+    //         setMenuVisible(false);
+    //         ref.current?.close();
+    //     } else {
+    //         setSelectedZone(zone);
+    //         setMenuVisible(true);
+    //         ref.current?.expand();
+    //     }
+    // }
+
+
+
+
 
 
 
@@ -95,9 +108,9 @@ export default function ZonesScreen() {
                 </View>
                 <TouchableOpacity
                     style={styles.placeholderContainer}
-                    onPress={() => handleMenuPress(wheelMenuVisible, setWheelMenuVisible, wheelBottomSheetRef)}
+                    onPress={() => openMenu(bottomSheetRefs.wheel)}
                 >
-                    <FontAwesome gear="setting" size={35} color={wheelMenuVisible ? Colors.light.primaryBlue : Colors.light.neutralGrey} name="gear" />
+                    <FontAwesome gear="setting" size={35} color={menuVisible ? colors.primaryBlue : colors.neutralGrey} name="gear" />
                 </TouchableOpacity>
             </View>
 
@@ -148,6 +161,10 @@ export default function ZonesScreen() {
                 </TouchableOpacity>
 
             </View>
+
+            <CustomBottomSheet ref={bottomSheetRefs.wheel} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
+                                 <Text>Wheel Menu Content</Text>
+            </CustomBottomSheet>
 
 
             <CustomBottomSheet ref={bottomSheetRefs.addDonor} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>

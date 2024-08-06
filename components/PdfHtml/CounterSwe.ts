@@ -1,6 +1,6 @@
 import { useAppState } from "@/state/Store";
 
-export function getCounterSwePdfHtml(name: string) {
+export function getCounterSwePdfHtml(name: string) : string {
     const globalState = useAppState();
 
     const donorZonesHtml = globalState.donorZones.map(zone => `

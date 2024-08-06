@@ -19,7 +19,7 @@ export default function CounterScreen() {
     const [menuVisible, setMenuVisible] = useState(false);
 
 
-    const handleMenuPress = () => {
+    function handleMenuPress() {
         if (menuVisible) {
             setMenuVisible(false);
             bottomSheetRef.current?.close();
@@ -28,7 +28,7 @@ export default function CounterScreen() {
             bottomSheetRef.current?.expand();
             bottomSheetRef.current?.snapToIndex(2);
         }
-    };
+    }
 
     function updateZoneCounts(value: number) {
         if (!selectedZone) return;

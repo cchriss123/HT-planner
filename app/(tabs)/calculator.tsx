@@ -17,19 +17,20 @@ export default function CalculatorScreen() {
     const globalState = useAppState();
     const bottomSheetRef = useRef<BottomSheet>(null);
     const [menuVisible, setMenuVisible] = useState(false);
-
-    function openMenu() {
-        setMenuVisible(true);
-        bottomSheetRef.current?.expand();
-        bottomSheetRef.current?.snapToIndex(2);
-    }
-
-
-
-
     const colors = colorScheme === 'dark' ? Colors.dark : Colors.light;
     const donorZones = globalState.donorZones;
     const recipientZones = globalState.recipientZones;
+
+    function handleMenuPress() {
+        if (menuVisible) {
+            setMenuVisible(false);
+            bottomSheetRef.current?.close();
+        } else {
+            setMenuVisible(true);
+            bottomSheetRef.current?.expand();
+            bottomSheetRef.current?.snapToIndex(2);
+        }
+    }
 
     function handleTabChange(tab: string) {
         setActiveTab(tab);
@@ -40,11 +41,9 @@ export default function CalculatorScreen() {
             <View style={styles.zoneItem}>
 
                 <Collapsible title={item.name}>
-
                     <Text style={styles.zoneButtonText}>Text</Text>
                     <Text>text</Text>
                     <Text>text</Text>
-
                     <Text>text</Text>
                 </Collapsible>
 
@@ -52,14 +51,9 @@ export default function CalculatorScreen() {
                 <Text>Coverage Value: {item.coverageValue}</Text>
                 <Text>Total Grafts:{item.graftsPerZone}</Text>
                 <Text>Available for extraction:{item.graftsLeftToReachDonorDesiredCoverageValue}</Text>
-
-
-
             </View>
         );
     }
-
-
 
     return (
         <View style={{ flex: 1, paddingTop: 70}}>
@@ -77,7 +71,7 @@ export default function CalculatorScreen() {
                 >
                     <Text style={styles.tabText}>Recipient Areas</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={{ marginHorizontal: "5%" }} onPress={openMenu}>
+                <TouchableOpacity style={{ marginHorizontal: "5%" }} onPress={handleMenuPress}>
                     <FontAwesome gear="setting" size={35} color={
                         menuVisible ? Colors.light.primaryBlue : Colors.light.neutralGrey
                     } name="gear" />
