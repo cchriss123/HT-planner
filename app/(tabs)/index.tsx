@@ -30,6 +30,7 @@ export default function ZonesScreen() {
     const colors = colorScheme === 'dark' ? Colors.dark : Colors.light;
     const globalState = useAppState();
     const [menuVisible, setMenuVisible] = useState(false);
+    const [wheelMenuVisible, setWheelMenuVisible] = useState(false);
     const donorZones = globalState.donorZones;
     const recipientZones = globalState.recipientZones;
     const [selectedZone, setSelectedZone] = useState<Zone | null>(null);
@@ -40,6 +41,8 @@ export default function ZonesScreen() {
     useEffect(() => {
         if (!menuVisible) setSelectedZone(null);
     }, [menuVisible]);
+
+
 
     const bottomSheetRefs = {
         addDonor: useRef<BottomSheet>(null),
@@ -55,36 +58,17 @@ export default function ZonesScreen() {
         ref.current?.snapToIndex(1);
     }
 
-    //
-    // const handleMenuPress = () => {
-    //     if (menuVisible) {
-    //         setMenuVisible(false);
-    //         bottomSheetRef.current?.close();
-    //     } else {
-    //         setMenuVisible(true);
-    //         bottomSheetRef.current?.expand();
-    //         bottomSheetRef.current?.snapToIndex(2);
-    //     }
-    // };
 
-
-    // function handleMenuPress(ref: React.RefObject<BottomSheet>, zone: Zone | null = null)
-    // {
-    //
-    //     if (menuVisible) {
-    //
-    //         setMenuVisible(false);
-    //         ref.current?.close();
-    //     } else {
-    //         setSelectedZone(zone);
-    //         setMenuVisible(true);
-    //         ref.current?.expand();
-    //     }
-    // }
-
-
-
-
+    function handleMenuPress() {
+        if (wheelMenuVisible) {
+            setWheelMenuVisible(false);
+            bottomSheetRefs.wheel.current?.close();
+        } else {
+            setWheelMenuVisible(true);
+            bottomSheetRefs.wheel.current?.expand();
+            bottomSheetRefs.wheel.current?.snapToIndex(2);
+        }
+    }
 
 
 
@@ -108,9 +92,9 @@ export default function ZonesScreen() {
                 </View>
                 <TouchableOpacity
                     style={styles.placeholderContainer}
-                    onPress={() => openMenu(bottomSheetRefs.wheel)}
+                    onPress={() => handleMenuPress()}
                 >
-                    <FontAwesome gear="setting" size={35} color={menuVisible ? colors.primaryBlue : colors.neutralGrey} name="gear" />
+                    <FontAwesome gear="setting" size={35} color={wheelMenuVisible ? colors.primaryBlue : colors.neutralGrey} name="gear" />
                 </TouchableOpacity>
             </View>
 
@@ -162,7 +146,7 @@ export default function ZonesScreen() {
 
             </View>
 
-            <CustomBottomSheet ref={bottomSheetRefs.wheel} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
+            <CustomBottomSheet ref={bottomSheetRefs.wheel} menuVisible={wheelMenuVisible} setMenuVisible={setWheelMenuVisible}>
                                  <Text>Wheel Menu Content</Text>
             </CustomBottomSheet>
 
