@@ -47,10 +47,23 @@ export default function CalculatorScreen() {
                     <Text style={styles.zoneButtonText}>text</Text>
                 </Collapsible>
 
-                <Text>Area {item.area}</Text>
-                <Text>Coverage Value: {item.coverageValue}</Text>
-                <Text>Total Grafts:{item.graftsPerZone}</Text>
-                <Text>Available for extraction:{item.graftsLeftToReachDonorDesiredCoverageValue}</Text>
+                <Text style={styles.zoneButtonText}>Area {item.area}</Text>
+                <Text style={styles.zoneButtonText}>Coverage Value: {item.coverageValue}</Text>
+                <Text style={styles.zoneButtonText}>Total Grafts:{item.graftsPerZone}</Text>
+                <Text style={styles.zoneButtonText}>Available for extraction:{item.graftsLeftToReachDonorDesiredCoverageValue}</Text>
+            </View>
+        );
+    }
+
+    function renderRecipientZoneItem({ item }: { item: RecipientZone }) {
+        return (
+            <View style={styles.zoneItem}>
+                <Collapsible title={item.name}>
+                    <Text style={styles.zoneButtonText}>text</Text>
+                    <Text style={styles.zoneButtonText}>text</Text>
+                    <Text style={styles.zoneButtonText}>text</Text>
+                </Collapsible>
+
             </View>
         );
     }
@@ -84,15 +97,20 @@ export default function CalculatorScreen() {
                         data={donorZones}
                         renderItem={renderDonorZoneItem}
                         keyExtractor={(item) => item.name}
-                        style={{ width: '95%', alignSelf: 'center' }}
+                        style={{ alignSelf: 'center', paddingHorizontal: '2.5%' }}
+
                     />
 
 
                 )}
                 {activeTab === 'Recipient Zones' && (
-                        <View>
-                            <Text>Recipient Zones</Text>
-                        </View>
+                    <FlatList
+                        data={recipientZones}
+                        renderItem={renderRecipientZoneItem}
+                        keyExtractor={(item) => item.name}
+                        style={{alignSelf: 'center', paddingHorizontal: '2.5%'}}
+                    />
+
                 )}
             </View>
             <CustomBottomSheet ref={bottomSheetRef} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
@@ -136,7 +154,6 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             borderColor: 'lightgrey',
             paddingTop: 5,
             paddingBottom: 70,
-            // marginHorizontal: '2.5%',
         },
         zoneItem: {
             padding: 10,
