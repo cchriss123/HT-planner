@@ -16,12 +16,12 @@ export function DropdownComponent({selectedZone, setSelectedZone}: DropdownCompo
   function renderItem(zone: DonorZone) {
     return (
       <View style={styles.item}>
-        <Text style={styles.textItem}>{zone.name}</Text>
+        <Text style={styles.textItem}>{zone.ip}</Text>
         {zone === selectedZone && (
             <AntDesign
                 style={styles.icon}
                 color="black"
-                name="check"
+                ip="check"
                 size={20}
             />
         )}
@@ -37,8 +37,8 @@ export function DropdownComponent({selectedZone, setSelectedZone}: DropdownCompo
           iconStyle={styles.iconStyle}
           data={zones}
           maxHeight={400}
-          labelField="name"
-          valueField="name"
+          labelField="ip"
+          valueField="ip"
           placeholder="Select zone"
           value={selectedZone}
 

@@ -64,6 +64,9 @@ interface AppStateContextType {
 
     calculateDonorZoneValues(zone: DonorZone): void;
     calculateRecipientZoneValues(zone: RecipientZone): void;
+
+    ip: string;
+    saveIp(ip: string): void;
 }
 
 export const AppStateContext = createContext<AppStateContextType | undefined>(undefined);
@@ -88,6 +91,19 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     const [totalGrafts, setTotalGrafts] = useState(0);
     const [totalHair, setTotalHair] = useState(0);
     const [totalHairPerGraftsCounted, setTotalHairPerGraftsCounted] = useState(0);
+    const [ip, setIp] = useState('');
+
+    async function loadIp(): Promise<string> {
+        try {
+            const storedIp = await AsyncStorage.getItem('ip');
+            if (storedIp) {
+                return storedIp;
+            }
+        } catch (error) {
+            console.error('Failed to load ip from AsyncStorage', error);
+        }
+        return '';
+    }
 
     async function loadDonorZones(): Promise<DonorZone[]> {
 
@@ -124,6 +140,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         async function initializeZones() {
             const loadedDonorZones = await loadDonorZones();
             const loadedRecipientZones = await loadRecipientZones();
+            setIp(await loadIp());
             setInitialized(true);
             loadedDonorZones.forEach(zone => calculateDonorZoneValues(zone));
             loadedRecipientZones.forEach(zone => calculateRecipientZoneValues(zone));
@@ -156,25 +173,36 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     return (
         <AppStateContext.Provider
             value={{
-                donorZones: donorZones,
-                setDonorZones: setDonorZones,
-                recipientZones: recipientZones,
-                setRecipientZones: setRecipientZones,
-                updateTotalCounts: updateTotalCounts,
+                donorZones,
+                setDonorZones,
+                recipientZones,
+                setRecipientZones,
+                updateTotalCounts,
                 totalSingles,
                 totalDoubles,
                 totalTriples,
                 totalQuadruples,
-                totalGrafts: totalGrafts,
+                totalGrafts,
                 totalHair,
-                totalHairPerGraftsCounted: totalHairPerGraftsCounted,
-                calculateDonorZoneValues: calculateDonorZoneValues,
-                calculateRecipientZoneValues: calculateRecipientZoneValues
+                totalHairPerGraftsCounted,
+                calculateDonorZoneValues,
+                calculateRecipientZoneValues,
+                ip,
+                saveIp,
             }}
         >
             {children}
         </AppStateContext.Provider>
     );
+
+    async function saveIp(ip: string) {
+        setIp(ip);
+        try {
+            await AsyncStorage.setItem('ip', ip);
+        } catch (error) {
+            console.error('Failed to save ip to AsyncStorage', error);
+        }
+    }
 
     function updateTotalCounts() {
         let singles = 0;

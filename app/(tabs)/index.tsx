@@ -11,6 +11,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import logoImg from '@/assets/images/logo.png';
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import ResetButton from "@/components/ResetButton";
+import ServerInput from "@/components/forms/ServerInput";
 
 
 //TODO add recipient zones to calculator screen
@@ -132,6 +133,7 @@ export default function ZonesScreen() {
 
 
             <CustomBottomSheet ref={bottomSheetRefs.wheel} menuVisible={wheelMenuVisible} setMenuVisible={setWheelMenuVisible}>
+                <ServerInput />
                 <ResetButton />
             </CustomBottomSheet>
 

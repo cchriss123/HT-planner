@@ -18,7 +18,7 @@ interface PdfExporterProps {
 export default function PdfExporter({ pdfType }: PdfExporterProps) {
     const { styles, theme } = FormStyles();
 
-    const [name, setName] = useState('');
+    const [ip, setName] = useState('');
     const [message, setMessage] = useState('');
     const globalState = useAppState();
 
@@ -35,16 +35,16 @@ export default function PdfExporter({ pdfType }: PdfExporterProps) {
         let html;
 
         if (reportType === 'counter' && reportLanguage === 'swe') {
-            html = getCounterSwePdfHtml(name, globalState);
+            html = getCounterSwePdfHtml(ip, globalState);
         }
         else if (reportType === 'counter' && reportLanguage === 'eng') {
-            html = getCounterEngPdfHtml(name, globalState);
+            html = getCounterEngPdfHtml(ip, globalState);
         }
         else if (reportType === 'calculator' && reportLanguage === 'swe') {
-            html = getCalculatorSwePdfHtml(name, globalState);
+            html = getCalculatorSwePdfHtml(ip, globalState);
         }
         else if (reportType === 'calculator' && reportLanguage === 'eng') {
-            html = getCalculatorEngPdfHtml(name, globalState);
+            html = getCalculatorEngPdfHtml(ip, globalState);
         }
 
         const pdfFile = await printToFileAsync({
@@ -62,8 +62,8 @@ export default function PdfExporter({ pdfType }: PdfExporterProps) {
     }
 
     async function handleSubmit(reportType: string, reportLanguage: string): Promise<void> {
-        if (!name) {
-            setMessage('Please enter a name.');
+        if (!ip) {
+            setMessage('Please enter a ip.');
             return;
         }
         await exportPdf(reportType, reportLanguage);
@@ -75,7 +75,7 @@ export default function PdfExporter({ pdfType }: PdfExporterProps) {
             <TextInput
                 label="Patient Name"
                 mode="outlined"
-                value={name}
+                value={ip}
                 onChangeText={setName}
                 style={styles.input}
                 theme={theme}
