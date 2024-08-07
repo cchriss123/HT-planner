@@ -46,7 +46,7 @@ export default function ResetButton() {
             <TouchableOpacity
                 style={styles.buttonReset}
                 onPress={() => resetZones(globalState.donorZones, globalState.recipientZones)}>
-                <Ionicons name="refresh" size={24} color="white" />
+                <Ionicons name="refresh" size={22} color="white" />
                 <Text style={styles.buttonResetText}>Reset Zones</Text>
             </TouchableOpacity>
             {message ? <Text style={styles.message}>{message}</Text> : null}
@@ -65,7 +65,10 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             // borderBottomColor: 'lightgray',
             width: '100%',
             alignItems: 'center'},
-        buttonReset: {
+            buttonReset: {
+            height: 40,
+
+
             backgroundColor: 'red',
             flexDirection: 'row',
             alignItems: 'center',
@@ -82,7 +85,7 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             },
             shadowRadius: 5,
             elevation: 5,
-            width: '45%',
+            width: '40%',
 
         },
         buttonResetText: {
