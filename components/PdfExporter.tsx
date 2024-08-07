@@ -66,20 +66,26 @@ export default function PdfExporter({ pdfType }: PdfExporterProps) {
     return (
         <View style={styles.container}>
             <TextInput
-                label="Name"
+                label="Patient Name"
                 mode="outlined"
                 value={name}
                 onChangeText={setName}
                 style={styles.input}
                 theme={theme}
             />
-            <TouchableOpacity style={styles.button} onPress={() => handleSubmit(pdfType, 'swe')}>
-                <Text style={styles.buttonTitle}>Export SWE PDF</Text>
-            </TouchableOpacity>
+            <View style={styles.buttonContainer}>
+                <TouchableOpacity style={styles.button} onPress={() => handleSubmit(pdfType, 'swe')}>
+                    <Text style={styles.buttonTitle}>Export SWE PDF</Text>
+                </TouchableOpacity>
 
-            <TouchableOpacity style={styles.button} onPress={() => handleSubmit(pdfType, 'eng')}>
-                <Text style={styles.buttonTitle}>Export ENG PDF</Text>
-            </TouchableOpacity>
+                <TouchableOpacity style={styles.button} onPress={() => handleSubmit(pdfType, 'eng')}>
+                    <Text style={styles.buttonTitle}>Export ENG PDF</Text>
+                </TouchableOpacity>
+
+            </View>
+
+
+
             {message ? <Text style={styles.message}>{message}</Text> : null}
         </View>
     );

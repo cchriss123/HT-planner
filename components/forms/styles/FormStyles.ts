@@ -66,6 +66,11 @@ export default function FormStyles() {
             fontWeight: 'bold',
             color: colors.primaryText,
             marginTop: 20,
+        },
+        buttonContainer: {
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            width: '100%',
         }
     });
 
