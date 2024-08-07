@@ -90,17 +90,20 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     const [totalHairPerGraftsCounted, setTotalHairPerGraftsCounted] = useState(0);
 
     async function loadDonorZones(): Promise<DonorZone[]> {
+
         // await AsyncStorage.clear();
+        console.log('AsyncStorage cleared');
 
         try {
             const storedDonorZones = await AsyncStorage.getItem('donorZones');
             if (storedDonorZones) {
+                console.log('Loaded donor zones from AsyncStorage');
                 return JSON.parse(storedDonorZones) as DonorZone[];
+
             }
         } catch (error) {
             console.error('Failed to load donor zones from AsyncStorage', error);
         }
-
 
         return getMockDonorZones();
     }
@@ -121,13 +124,16 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         async function initializeZones() {
             const loadedDonorZones = await loadDonorZones();
             const loadedRecipientZones = await loadRecipientZones();
-            setDonorZones(loadedDonorZones);
-            setRecipientZones(loadedRecipientZones);
+
             setInitialized(true);
-            donorZones.forEach(zone => calculateDonorZoneValues(zone));
-            recipientZones.forEach(zone => calculateRecipientZoneValues(zone));
-            setDonorZones([...donorZones]);
-            setRecipientZones([...recipientZones]);
+            loadedDonorZones.forEach(zone => calculateDonorZoneValues(zone));
+            loadedRecipientZones.forEach(zone => calculateRecipientZoneValues(zone));
+
+
+            setDonorZones([...loadedDonorZones]);
+            setRecipientZones([...loadedRecipientZones]);
+
+
         }
         initializeZones();
     }, []);

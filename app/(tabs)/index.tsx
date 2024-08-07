@@ -16,7 +16,6 @@ import ResetButton from "@/components/ResetButton";
 //TODO add recipient zones to calculator screen
 //TODO fix area styling on calculator screen
 //TODO makes sure values are correct in calculator screen
-//TODO add a way to reset all stored zones
 //TODO add a way to input IP
 //TODO Add a way to send data
 //TODO add logo to pdf
