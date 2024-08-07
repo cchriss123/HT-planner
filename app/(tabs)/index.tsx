@@ -129,19 +129,31 @@ export default function ZonesScreen() {
                         />
                     </View>
                 </View>
-            <View style={{justifyContent: 'center', alignItems: 'center', height: 100}}>
-                <TouchableOpacity
-                    style={styles.buttonReset}
-                    onPress={() => console.log('resets data')}>
-                    <Ionicons name="refresh" size={24} color="white" />
-                    <Text style={styles.buttonText}>Reset</Text>
-                </TouchableOpacity>
 
-            </View>
 
             <CustomBottomSheet ref={bottomSheetRefs.wheel} menuVisible={wheelMenuVisible} setMenuVisible={setWheelMenuVisible}>
-                                 <Text>Wheel Menu Content</Text>
+
+                <View>
+                    <TouchableOpacity
+                        style={styles.buttonReset}
+                        onPress={() =>
+
+                        {
+                            globalState.setDonorZones([]);
+                            globalState.setRecipientZones([]);
+
+                        }
+
+
+                    }>
+                        <Ionicons name="refresh" size={24} color="white" />
+                        <Text style={styles.buttonText}>Reset Zones</Text>
+                    </TouchableOpacity>
+                </View>
+
+
             </CustomBottomSheet>
+
 
 
             <CustomBottomSheet ref={bottomSheetRefs.addDonor} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
