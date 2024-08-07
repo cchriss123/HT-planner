@@ -3,14 +3,16 @@ import React from 'react';
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { Platform } from 'react-native';
 
 export default function TabLayout() {
 
     const colorScheme = useColorScheme();
+    const isAndroid = Platform.OS === 'android';
     return (
         <Tabs
             screenOptions={{
-                tabBarHideOnKeyboard: true,
+                tabBarHideOnKeyboard: isAndroid,
                 tabBarActiveTintColor: Colors[colorScheme ?? 'light'].primaryBlue,
                 tabBarStyle: {
                     backgroundColor: Colors[colorScheme ?? 'light'].solidBackground,
