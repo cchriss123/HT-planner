@@ -36,7 +36,7 @@ export function DropdownComponent({selectedZone, setSelectedZone}: DropdownCompo
           selectedTextStyle={styles.selectedTextStyle}
           iconStyle={styles.iconStyle}
           data={zones}
-          maxHeight={300}
+          maxHeight={400}
           labelField="name"
           valueField="name"
           placeholder="Select zone"
