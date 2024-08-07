@@ -1,16 +1,19 @@
-import React, {useEffect} from 'react';
-import { View, Text, TouchableOpacity, Alert } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import FormStyles from "@/components/forms/styles/FormStyles";
-
+import { useAppState } from '@/state/Store';
+import ResetButton from "@/components/ResetButton";
 
 function ServerInput() {
-    const [name, setName] = React.useState('');
-
-    const [message, setMessage] = React.useState('');
+    const [inputIp, setInputIp] = useState('');
+    const [message, setMessage] = useState('');
     const { styles, theme } = FormStyles();
-    
+    const { saveIp, ip } = useAppState();
 
+    useEffect(() => {
+        setInputIp(ip || '');
+    }, [ip]);
 
     useEffect(() => {
         if (message) {
@@ -19,45 +22,30 @@ function ServerInput() {
         }
     }, [message]);
 
-
-
-    function editZoneSubmit(ip : string) {
-
-
-
-
-
-
-
-
+    function editZoneSubmit() {
+        saveIp(inputIp);
         setMessage('New IP saved');
-
     }
-
-
-
 
     return (
         <View style={styles.container}>
             <TextInput
-                label="Zone Name"
+                label="Server IP"
                 mode="outlined"
-                value={name}
-                onChangeText={setName}
-                placeholder={'Enter new IP'}
+                value={inputIp}
+                onChangeText={setInputIp}
+                placeholder="Enter new IP"
                 style={styles.input}
                 theme={theme}
             />
 
-
             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                 <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => editZoneSubmit(name)}>
+                    style={[styles.button, { width: '54%' }]} onPress={editZoneSubmit}>
                     <Text style={styles.buttonTitle}>Save IP</Text>
                 </TouchableOpacity>
+                {/*<ResetButton />*/}
             </View>
-
 
             {message ? <Text style={styles.message}>{message}</Text> : null}
         </View>

@@ -60,21 +60,20 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
     return StyleSheet.create({
         buttonContainer: {
             flex: 1,
-            marginTop: 30,
-            // borderTopWidth: 1,
-            // borderBottomColor: 'lightgray',
+
             width: '100%',
             alignItems: 'center'},
-            buttonReset: {
+        buttonReset: {
+
+
             height: 40,
-
-
             backgroundColor: 'red',
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'center',
             padding: 10,
-            margin: 5,
+            marginTop: 15,
+
             color: colors.primaryText,
             borderRadius: 8,
             shadowColor: '#000',
@@ -85,7 +84,7 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             },
             shadowRadius: 5,
             elevation: 5,
-            width: '40%',
+            width: '38%',
 
         },
         buttonResetText: {

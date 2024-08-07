@@ -63,10 +63,10 @@ const styles = StyleSheet.create({
     contentContainer: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center',
         borderLeftWidth: 1,
         borderRightWidth: 1,
         backgroundColor: Colors.light.solidBackground,
+
     },
 });
 
