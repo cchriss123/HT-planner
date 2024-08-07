@@ -10,6 +10,7 @@ import EditDonorZone from "@/components/forms/EditZone";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import logoImg from '@/assets/images/logo.png';
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import ResetButton from "@/components/ResetButton";
 
 
 //TODO add recipient zones to calculator screen
@@ -132,26 +133,7 @@ export default function ZonesScreen() {
 
 
             <CustomBottomSheet ref={bottomSheetRefs.wheel} menuVisible={wheelMenuVisible} setMenuVisible={setWheelMenuVisible}>
-
-                <View>
-                    <TouchableOpacity
-                        style={styles.buttonReset}
-                        onPress={() =>
-
-                        {
-                            globalState.setDonorZones([]);
-                            globalState.setRecipientZones([]);
-
-                        }
-
-
-                    }>
-                        <Ionicons name="refresh" size={24} color="white" />
-                        <Text style={styles.buttonText}>Reset Zones</Text>
-                    </TouchableOpacity>
-                </View>
-
-
+                <ResetButton />
             </CustomBottomSheet>
 
 
@@ -475,7 +457,7 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
 //             elevation: 5,
 //             alignItems: 'center',
 //         },
-//         buttonText: {
+//         buttonResetText: {
 //             color: colors.solidBackground,
 //             fontSize: 16,
 //         },
