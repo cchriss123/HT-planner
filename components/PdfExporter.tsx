@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { printToFileAsync } from 'expo-print';
@@ -21,6 +21,13 @@ export default function PdfExporter({ pdfType }: PdfExporterProps) {
     const [name, setName] = useState('');
     const [message, setMessage] = useState('');
     const globalState = useAppState();
+
+    useEffect(() => {
+        if (message) {
+            const timer = setTimeout(() => setMessage(''), 3000);
+            return () => clearTimeout(timer);
+        }
+    }, [message]);
 
 
     async function exportPdf(reportType: string, reportLanguage: string): Promise<void> {
