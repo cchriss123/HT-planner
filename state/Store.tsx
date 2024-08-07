@@ -108,7 +108,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     async function loadDonorZones(): Promise<DonorZone[]> {
 
         // await AsyncStorage.clear();
-        console.log('AsyncStorage cleared');
+        // console.log('AsyncStorage cleared');
 
         try {
             const storedDonorZones = await AsyncStorage.getItem('donorZones');

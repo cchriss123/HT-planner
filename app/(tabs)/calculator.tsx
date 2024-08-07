@@ -41,10 +41,10 @@ export default function CalculatorScreen() {
             <View style={styles.zoneItem}>
 
                 <Collapsible title={item.name}>
-                    <Text style={styles.zoneButtonText}>Text</Text>
-                    <Text>text</Text>
-                    <Text>text</Text>
-                    <Text>text</Text>
+                    <Text style={styles.zoneButtonText}>Grafts left to reach desired coverage value: {item.graftsExtractedToReachDonorDesiredCoverageValue}</Text>
+                    <Text style={styles.zoneButtonText}>text</Text>
+                    <Text style={styles.zoneButtonText}>text</Text>
+                    <Text style={styles.zoneButtonText}>text</Text>
                 </Collapsible>
 
                 <Text>Area {item.area}</Text>

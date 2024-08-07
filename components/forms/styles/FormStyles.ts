@@ -24,10 +24,8 @@ export default function FormStyles() {
 
     const styles = StyleSheet.create({
         container: {
-            // flex: 1,
             width: '70%',
             alignItems: 'center',
-            height: '18%',
             marginTop : '5%',
         },
         input: {
