@@ -42,7 +42,7 @@ export default function ResetButton() {
     }
 
     return (
-        <View style={{ alignItems: 'center', padding: 20 }}>
+        <View style={styles.buttonContainer}>
             <TouchableOpacity
                 style={styles.buttonReset}
                 onPress={() => resetZones(globalState.donorZones, globalState.recipientZones)}>
@@ -58,14 +58,32 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
     const colors = colorScheme === 'dark' ? Colors.dark : Colors.light;
 
     return StyleSheet.create({
+        buttonContainer: {
+            flex: 1,
+            marginTop: 30,
+            // borderTopWidth: 1,
+            // borderBottomColor: 'lightgray',
+            width: '100%',
+            alignItems: 'center'},
         buttonReset: {
             backgroundColor: 'red',
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'center',
             padding: 10,
-            borderRadius: 5,
             margin: 5,
+            color: colors.primaryText,
+            borderRadius: 8,
+            shadowColor: '#000',
+            shadowOpacity: 0.3,
+            shadowOffset: {
+                width: 0,
+                height: 2,
+            },
+            shadowRadius: 5,
+            elevation: 5,
+            width: '45%',
+
         },
         buttonResetText: {
             color: 'white',
