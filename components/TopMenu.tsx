@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
 
 const TopMenu = () => {
     return (
@@ -30,7 +29,7 @@ const styles = StyleSheet.create({
         color: 'grey',
     },
     iconActive: {
-        color: 'blue', // Change this to your active color
+        color: 'blue',
     },
 });
 

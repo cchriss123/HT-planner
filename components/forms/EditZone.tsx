@@ -3,8 +3,7 @@ import { View, Text, TouchableOpacity, Alert } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { DonorZone, RecipientZone, useAppState, Zone } from "@/state/Store";
 import FormStyles from "@/components/forms/styles/FormStyles";
-import {DataTableRow} from "react-native-paper/lib/typescript/components/DataTable/DataTableRow";
-import { valuesToCheck, ZoneArgs } from "@/components/forms/utility/valuesToCheck";
+import { valuesToCheck } from "@/components/forms/utility/valuesToCheck";
 
 interface EditZoneProps {
     zones: Zone[];

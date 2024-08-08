@@ -3,17 +3,18 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import FormStyles from "@/components/forms/styles/FormStyles";
 import { useAppState } from '@/state/Store';
-import ResetButton from "@/components/ResetButton";
+
+
 
 function ServerInput() {
     const [inputIp, setInputIp] = useState('');
     const [message, setMessage] = useState('');
     const { styles, theme } = FormStyles();
-    const { saveIp, ip } = useAppState();
+    const globalState = useAppState();
 
     useEffect(() => {
-        setInputIp(ip || '');
-    }, [ip]);
+        setInputIp(globalState.ip || '');
+    }, [globalState.ip]);
 
     useEffect(() => {
         if (message) {
@@ -23,7 +24,7 @@ function ServerInput() {
     }, [message]);
 
     function editZoneSubmit() {
-        saveIp(inputIp);
+        globalState.saveIp(inputIp);
         setMessage('New IP saved');
     }
 

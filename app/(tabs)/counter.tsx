@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import {View, TouchableOpacity, Text, useColorScheme, StyleSheet, Platform} from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {View, TouchableOpacity, Text, useColorScheme, StyleSheet} from 'react-native';
 import { Colors } from '@/constants/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { DropdownComponent } from '@/components/DropdownComponent';

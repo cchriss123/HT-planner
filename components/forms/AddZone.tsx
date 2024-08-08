@@ -20,7 +20,7 @@ function AddZone({ zones, zoneType }: AddZoneProps) {
     const [desiredCoverageValue, setDesiredCoverageValue] = React.useState('');
     const [message, setMessage] = React.useState('');
     const { styles, theme } = FormStyles();
-    const { calculateDonorZoneValues, calculateRecipientZoneValues, setDonorZones, setRecipientZones, updateTotalCounts } = useAppState();
+    const globalState = useAppState();
 
     useEffect(() => {
         if (message) {
@@ -73,15 +73,16 @@ function AddZone({ zones, zoneType }: AddZoneProps) {
             graftsLeftToReachDonorDesiredCoverageValue: 0,
         };
 
-        calculateDonorZoneValues(newZone);
-        updateTotalCounts();
-        setDonorZones([...zones as DonorZone[], newZone]);
+        globalState.calculateDonorZoneValues(newZone);
+        globalState.updateTotalCounts();
+        globalState.setDonorZones([...zones as DonorZone[], newZone]);
         setMessage('Donor zone added successfully!');
         resetForm();
     }
 
     function addRecipientZone(args: ZoneArgs, checkedValues: any) {
         const newZone: RecipientZone = {
+
             type: 'recipient',
             name: args.name,
             caliber: checkedValues.caliber,
@@ -92,10 +93,11 @@ function AddZone({ zones, zoneType }: AddZoneProps) {
             startingCoverageValue: 0,
             coverageValueDifference: 0,
             graftsImplantedToReachDesiredRecipientCoverageValue: 0,
+            grafts: 0,
         };
 
-        calculateRecipientZoneValues(newZone);
-        setRecipientZones([...zones as RecipientZone[], newZone]);
+        globalState.calculateRecipientZoneValues(newZone);
+        globalState.setRecipientZones([...zones as RecipientZone[], newZone]);
         setMessage('Recipient zone added successfully!');
         resetForm();
     }

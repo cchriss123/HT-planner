@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { printToFileAsync } from 'expo-print';
 import { shareAsync } from 'expo-sharing';

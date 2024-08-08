@@ -4,12 +4,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export interface Zone {
     // User inputs
     type: 'donor' | 'recipient';
-    name: string; // The name of the zone
-    caliber: number; // The diameter of the hair
-    graftsPerCm2: number; // Follicular units per square centimeter
-    hairPerCm2: number; // Hairs per square centimeter
-    area: number; // Area in square centimeters
-    desiredCoverageValue: number; // Desired coverage value (can be used for both donor and recipient)
+    name: string;
+    caliber: number;
+    graftsPerCm2: number;
+    hairPerCm2: number;
+    area: number;
+    desiredCoverageValue: number;
 
     // Calculated values from user inputs
     hairPerGraft?: number; // = hairPerCm2 / graftsPerCm2
@@ -22,9 +22,9 @@ export interface DonorZone extends Zone {
     doubles: number;
     triples: number;
     quadruples: number;
-    grafts: number; // = singles + doubles + triples + quadruples
-    hairs: number; // = singles + (doubles * 2) + (triples * 3) + (quadruples * 4)
-    hairPerCountedGraft: number; // = hairs / grafts
+    grafts: number;
+    hairs: number;
+    hairPerCountedGraft: number;
 
     // Calculated values from user inputs
     graftsPerZone: number; // = areaInCm2 * graftsPerCm2

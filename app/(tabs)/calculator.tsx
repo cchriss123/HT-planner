@@ -1,9 +1,8 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Appearance, FlatList} from 'react-native';
-import { SafeAreaView } from "react-native-safe-area-context";
 import PdfExporter from "@/components/PdfExporter";
 import {Colors} from "@/constants/Colors";
-import {useAppState, Zone, DonorZone, RecipientZone} from "@/state/Store";
+import {useAppState, DonorZone, RecipientZone} from "@/state/Store";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { Collapsible } from '@/components/Collapsible';
 import FontAwesome from "@expo/vector-icons/FontAwesome";
@@ -17,7 +16,6 @@ export default function CalculatorScreen() {
     const globalState = useAppState();
     const bottomSheetRef = useRef<BottomSheet>(null);
     const [menuVisible, setMenuVisible] = useState(false);
-    const colors = colorScheme === 'dark' ? Colors.dark : Colors.light;
     const donorZones = globalState.donorZones;
     const recipientZones = globalState.recipientZones;
 
