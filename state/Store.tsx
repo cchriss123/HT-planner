@@ -142,11 +142,14 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
             const loadedDonorZones = await loadDonorZones();
             const loadedRecipientZones = await loadRecipientZones();
             setIp(await loadIp());
-            setInitialized(true);
             loadedDonorZones.forEach(zone => calculateDonorZoneValues(zone));
             loadedRecipientZones.forEach(zone => calculateRecipientZoneValues(zone));
+            setInitialized(true);
+
             setDonorZones([...loadedDonorZones]);
             setRecipientZones([...loadedRecipientZones]);
+
+
         }
         initializeZones();
     }, []);
@@ -154,6 +157,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     useEffect(() => {
         if (initialized) {
             saveZones('donorZones', donorZones);
+            updateTotalCounts();
         }
     }, [donorZones]);
 

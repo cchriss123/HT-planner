@@ -18,7 +18,7 @@ interface PdfExporterProps {
 export default function PdfExporter({ pdfType }: PdfExporterProps) {
     const { styles, theme } = FormStyles();
 
-    const [ip, setName] = useState('');
+    const [name, setName] = useState('');
     const [message, setMessage] = useState('');
     const globalState = useAppState();
 
@@ -35,16 +35,16 @@ export default function PdfExporter({ pdfType }: PdfExporterProps) {
         let html;
 
         if (reportType === 'counter' && reportLanguage === 'swe') {
-            html = getCounterSwePdfHtml(ip, globalState);
+            html = getCounterSwePdfHtml(name, globalState);
         }
         else if (reportType === 'counter' && reportLanguage === 'eng') {
-            html = getCounterEngPdfHtml(ip, globalState);
+            html = getCounterEngPdfHtml(name, globalState);
         }
         else if (reportType === 'calculator' && reportLanguage === 'swe') {
-            html = getCalculatorSwePdfHtml(ip, globalState);
+            html = getCalculatorSwePdfHtml(name, globalState);
         }
         else if (reportType === 'calculator' && reportLanguage === 'eng') {
-            html = getCalculatorEngPdfHtml(ip, globalState);
+            html = getCalculatorEngPdfHtml(name, globalState);
         }
 
         const pdfFile = await printToFileAsync({
@@ -62,8 +62,8 @@ export default function PdfExporter({ pdfType }: PdfExporterProps) {
     }
 
     async function handleSubmit(reportType: string, reportLanguage: string): Promise<void> {
-        if (!ip) {
-            setMessage('Please enter a ip.');
+        if (!name) {
+            setMessage('Please enter a patient name.');
             return;
         }
         await exportPdf(reportType, reportLanguage);
@@ -75,7 +75,7 @@ export default function PdfExporter({ pdfType }: PdfExporterProps) {
             <TextInput
                 label="Patient Name"
                 mode="outlined"
-                value={ip}
+                value={name}
                 onChangeText={setName}
                 style={styles.input}
                 theme={theme}
