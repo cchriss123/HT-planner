@@ -38,7 +38,7 @@ export default function CounterScreen() {
             return;
 
         }
-        const url = `http://${ip}:8080/api/endpoint`;
+        const url = `http://${ip}:8080/api/counter`;
 
         const payload = {
             method: 'POST',

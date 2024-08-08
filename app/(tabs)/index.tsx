@@ -13,8 +13,7 @@ import ResetButton from "@/components/ResetButton";
 import ServerInput from "@/components/forms/ServerInput";
 
 //TODO fix area styling on calculator screen
-//TODO add logo to pdf
-//TODO style different pdf
+//TODO style calculator pdf
 //TODO go over colour themes
 Appearance.getColorScheme = () => 'light';
 

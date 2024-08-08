@@ -4,10 +4,10 @@ import { TextInput } from 'react-native-paper';
 import { printToFileAsync } from 'expo-print';
 import { shareAsync } from 'expo-sharing';
 import FormStyles from '@/components/forms/styles/FormStyles';
-import { getCounterSwePdfHtml } from "@/components/PdfHtml/CounterSwe";
-import { getCounterEngPdfHtml } from "@/components/PdfHtml/CounterEng";
-import { getCalculatorEngPdfHtml} from "@/components/PdfHtml/CalculatorEng";
-import { getCalculatorSwePdfHtml} from "@/components/PdfHtml/CalculatorSwe";
+import { getCounterSwePdfHtml } from "@/components/pdfHtml/counterSwe";
+import { getCounterEngPdfHtml } from "@/components/pdfHtml/counterEng";
+import { getCalculatorEngPdfHtml} from "@/components/pdfHtml/calculatorEng";
+import { getCalculatorSwePdfHtml} from "@/components/pdfHtml/calculatorSwe";
 import { useAppState } from "@/state/Store";
 
 

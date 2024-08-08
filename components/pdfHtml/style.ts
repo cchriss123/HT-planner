@@ -1,8 +1,6 @@
-
-
-export function Style() : string {
+export function getStyle() : string {
     return `
-            <style>
+        <style>
             body {
                 font-family: Arial, sans-serif;
                 margin: 40px;
@@ -15,7 +13,7 @@ export function Style() : string {
                 line-height: 1.5;
             }
             ul {
-               padding-left: 20px;
+                padding-left: 20px;
             }
             li {
                 page-break-inside: avoid;
@@ -23,6 +21,16 @@ export function Style() : string {
             h1:empty {
                 margin: 300px;
             }
+            .summary-section {
+                display: flex;
+                justify-content: space-between;
+                gap: 20px; /* Adds space between the columns */
+            }
+            .summary-column {
+                flex: 1;
+                border-radius: 4px;
+                background-color: #f9f9f9;
+            }
         </style>
-    `
+    `;
 }
