@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, TouchableOpacity, Text, useColorScheme, StyleSheet } from 'react-native';
+import {View, TouchableOpacity, Text, useColorScheme, StyleSheet, Platform} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '@/constants/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -30,6 +30,36 @@ export default function CounterScreen() {
         }
     }
 
+    async function sendAsync(selectedZone: DonorZone, ip: string) {
+
+        // const ip = '192.168.0.28';
+
+        if (!ip){
+            console.log('No IP address provided');
+            return;
+
+        }
+        const url = `http://${ip}:8080/api/endpoint`;
+
+        const payload = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(selectedZone),
+        };
+
+        try {
+            await fetch(url, payload).catch(error => {
+                console.error('Error sending data:', error);
+            });
+        } catch (error) {
+            console.error('Unexpected error:', error);
+        }
+    }
+
+
+
     function updateZoneCounts(value: number) {
         if (!selectedZone) return;
         if (value > 4) return;
@@ -59,6 +89,8 @@ export default function CounterScreen() {
         globalState.calculateDonorZoneValues(selectedZone);
         globalState.updateTotalCounts();
         globalState.setDonorZones([...globalState.donorZones]);
+
+        sendAsync(selectedZone, globalState.ip);
 
 
     }
