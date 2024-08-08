@@ -13,12 +13,10 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import ResetButton from "@/components/ResetButton";
 import ServerInput from "@/components/forms/ServerInput";
 
-
-//TODO add recipient zones to calculator screen
+//TODO fix bug when exporting counter pgf (ip) and not updated
 //TODO fix area styling on calculator screen
 //TODO makes sure values are correct in calculator screen
-//TODO add a way to input IP
-//TODO Add a way to send data
+
 //TODO add logo to pdf
 //TODO add different pdfs
 //TODO go over colour themes

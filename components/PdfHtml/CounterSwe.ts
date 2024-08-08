@@ -32,10 +32,12 @@ export function getCounterSwePdfHtml(name: string, globalState: AppStateContextT
     `).join('');
 
     const recipientZonesHtml = globalState.recipientZones.map(zone => `
-        <div style="display: inline-block; page-break-inside: avoid;">
-            <p>${zone.name}: ${zone.graftsImplantedToReachDesiredRecipientCoverageValue}</p>
-        </div>
-    `).join('');
+    <div style="display: inline-block; page-break-inside: avoid;">
+        <p>${zone.name} grafts: ${zone.graftsImplantedToReachDesiredRecipientCoverageValue}<br></p>
+    </div>
+`).join('\n');
+
+
 
     const recipientZonesHtmlJournal = globalState.recipientZones.map(zone => `
         <li style="page-break-inside: avoid;">
@@ -101,13 +103,14 @@ export function getCounterSwePdfHtml(name: string, globalState: AppStateContextT
             <p><strong>Klinik:</strong> Göta Hårklinik</p>
             <hr>
             <h3>Sammanfattning för Patienten</h3>
-            <h4>Totalt</h4>
+            <h4>Extraktion</h4>
             <p>Totalt antal extraherade grafts: ${globalState.totalGrafts}</p>
             <p>Totalt antal enkla grafts: ${globalState.totalSingles}</p>
             <p>Totalt antal dubbla grafts: ${globalState.totalDoubles}</p>
             <p>Totalt antal trippel grafts: ${globalState.totalTriples}</p>
             <p>Totalt antal fyrdubbel grafts: ${globalState.totalQuadruples}</p>
-            <h4>Recipientzoner antal implanterade grafts</h4>
+            <h4>Implantation</h4>
+
             <div>
                 ${recipientZonesHtml}
             </div>
@@ -115,17 +118,20 @@ export function getCounterSwePdfHtml(name: string, globalState: AppStateContextT
             <h4>Datum: ${new Date().toLocaleDateString()}</h4>
             <h4>Kirurgens signatur:</h4>
             <h1 style="page-break-before: always;"></h1>
-            <h4>Detaljerad Klinisk Information (För Patientens Journal)</h4>
-            <h4>Bedömning av donatorområde</h4>
-            <ul>
-                ${donorZonesHtml}
-            </ul>
-            <h4>Bedömning av recipientområde</h4>
-            <ul>
-                ${recipientZonesHtmlJournal}
-            </ul>
+
         </div>
         </body>
         </html>
     `;
 }
+
+
+// <h4>Detaljerad Klinisk Information (För Patientens Journal)</h4>
+// <h4>Bedömning av donatorområde</h4>
+// <ul>
+//     ${donorZonesHtml}
+// </ul>
+// <h4>Bedömning av recipientområde</h4>
+// <ul>
+//     ${recipientZonesHtmlJournal}
+// </ul>

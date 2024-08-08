@@ -42,6 +42,7 @@ export interface RecipientZone extends Zone {
     type: 'recipient';
     startingCoverageValue: number; // = caliber * hairPerCm2
     coverageValueDifference: number; // = recipientDesiredCoverageValue - starting
+    grafts: number;
 
     // Formula: graftsImplantedToReachDesiredRecipientCoverageValue = (areaInCm2 * coverageValueDifference) / (caliber * hairPerGraft)
     graftsImplantedToReachDesiredRecipientCoverageValue: number; // The number of FUs to be implanted to achieve the desired recipient coverage value
@@ -246,10 +247,12 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
             zone.desiredCoverageValue = 0;
         }
 
+
         zone.hairPerGraft = zone.hairPerCm2 / zone.graftsPerCm2;
         zone.startingCoverageValue = zone.caliber * zone.hairPerCm2;
         zone.coverageValueDifference = zone.desiredCoverageValue - zone.startingCoverageValue;
         zone.graftsImplantedToReachDesiredRecipientCoverageValue = Math.floor((zone.area * zone.coverageValueDifference) / (zone.caliber * zone.hairPerGraft));
+        zone.grafts = zone.graftsPerCm2*zone.area;
     }
 
     function getMockDonorZones(): DonorZone[] {
@@ -375,6 +378,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
                 startingCoverageValue: 0,
                 coverageValueDifference: 0,
                 graftsImplantedToReachDesiredRecipientCoverageValue: 0,
+                grafts: 0,
             },
             {
                 type: 'recipient',
@@ -387,6 +391,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
                 startingCoverageValue: 0,
                 coverageValueDifference: 0,
                 graftsImplantedToReachDesiredRecipientCoverageValue: 0,
+                grafts: 0,
             },
         ];
     }

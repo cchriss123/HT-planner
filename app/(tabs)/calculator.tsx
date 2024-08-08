@@ -41,11 +41,16 @@ export default function CalculatorScreen() {
             <View style={styles.zoneItem}>
 
                 <Collapsible title={item.name}>
-                    <Text style={styles.zoneButtonText}>Grafts left to reach desired coverage value: {item.graftsExtractedToReachDonorDesiredCoverageValue}</Text>
-                    <Text style={styles.zoneButtonText}>text</Text>
-                    <Text style={styles.zoneButtonText}>text</Text>
-                    <Text style={styles.zoneButtonText}>text</Text>
+                    <Text style={styles.zoneButtonText}>Caliber: {item.caliber}</Text>
+                    <Text style={styles.zoneButtonText}>Hair per cm²: {item.hairPerCm2}</Text>
+                    <Text style={styles.zoneButtonText}>Grafts per cm²: {item.graftsPerCm2}</Text>
+                    <Text style={styles.zoneButtonText}>Desired coverage value: {item.desiredCoverageValue}</Text>
                 </Collapsible>
+
+
+
+
+
 
                 <Text style={styles.zoneButtonText}>Area {item.area}</Text>
                 <Text style={styles.zoneButtonText}>Coverage Value: {item.coverageValue}</Text>
@@ -59,12 +64,22 @@ export default function CalculatorScreen() {
         return (
             <View style={styles.zoneItem}>
                 <Collapsible title={item.name}>
-                    <Text style={styles.zoneButtonText}>text</Text>
-                    <Text style={styles.zoneButtonText}>text</Text>
-                    <Text style={styles.zoneButtonText}>text</Text>
+                    <Text style={styles.zoneButtonText}>Caliber: {item.caliber}</Text>
+                    <Text style={styles.zoneButtonText}>Hair per cm²: {item.hairPerCm2}</Text>
+                    <Text style={styles.zoneButtonText}>Grafts per cm²: {item.graftsPerCm2}</Text>
+                    <Text style={styles.zoneButtonText}>Desired coverage value: {item.desiredCoverageValue}</Text>
                 </Collapsible>
 
+                <Text style={styles.zoneButtonText}>Area {item.area}</Text>
+                <Text style={styles.zoneButtonText}>Current grafts: {item.grafts}</Text>
+                <Text style={styles.zoneButtonText}>Grafts needed: {item.graftsImplantedToReachDesiredRecipientCoverageValue}</Text>
             </View>
+
+
+
+
+
+
         );
     }
 
