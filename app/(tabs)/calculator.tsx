@@ -39,21 +39,37 @@ export default function CalculatorScreen() {
             <View style={styles.zoneItem}>
 
                 <Collapsible title={item.name}>
-                    <Text style={styles.zoneButtonText}>Caliber: {item.caliber}</Text>
-                    <Text style={styles.zoneButtonText}>Hair per cm²: {item.hairPerCm2}</Text>
-                    <Text style={styles.zoneButtonText}>Grafts per cm²: {item.graftsPerCm2}</Text>
-                    <Text style={styles.zoneButtonText}>Desired coverage value: {item.desiredCoverageValue}</Text>
+                    <View style={styles.row}>
+                        <View style={styles.leftColumn}>
+                            <Text>Caliber:</Text>
+                            <Text>Hair per cm²:</Text>
+                            <Text>Grafts per cm²:</Text>
+                            <Text>Desired coverage value:</Text>
+                        </View>
+                        <View style={styles.rightColumn}>
+                            <Text>{item.caliber}</Text>
+                            <Text>{item.hairPerCm2}</Text>
+                            <Text>{item.graftsPerCm2}</Text>
+                            <Text>{item.desiredCoverageValue}</Text>
+                        </View>
+                    </View>
                 </Collapsible>
 
+                <View style={styles.row}>
+                    <View style={styles.leftColumn}>
+                        <Text style={styles.zoneButtonText}>Area:</Text>
+                        <Text style={styles.zoneButtonText}>Coverage Value:</Text>
+                        <Text style={styles.zoneButtonText}>Total Grafts:</Text>
+                        <Text style={styles.zoneButtonText}>Available for extraction:</Text>
+                    </View>
+                    <View style={styles.rightColumn}>
+                        <Text style={styles.zoneButtonText}>{item.area} cm²</Text>
+                        <Text style={styles.zoneButtonText}>{item.coverageValue.toFixed(2)}</Text>
+                        <Text style={styles.zoneButtonText}>{item.graftsPerZone}</Text>
+                        <Text style={styles.zoneButtonText}>{item.graftsLeftToReachDonorDesiredCoverageValue}</Text>
+                    </View>
+                </View>
 
-
-
-
-
-                <Text style={styles.zoneButtonText}>Area {item.area}</Text>
-                <Text style={styles.zoneButtonText}>Coverage Value: {item.coverageValue}</Text>
-                <Text style={styles.zoneButtonText}>Total Grafts:{item.graftsPerZone}</Text>
-                <Text style={styles.zoneButtonText}>Available for extraction:{item.graftsLeftToReachDonorDesiredCoverageValue}</Text>
             </View>
         );
     }
@@ -62,24 +78,39 @@ export default function CalculatorScreen() {
         return (
             <View style={styles.zoneItem}>
                 <Collapsible title={item.name}>
-                    <Text style={styles.zoneButtonText}>Caliber: {item.caliber}</Text>
-                    <Text style={styles.zoneButtonText}>Hair per cm²: {item.hairPerCm2}</Text>
-                    <Text style={styles.zoneButtonText}>Grafts per cm²: {item.graftsPerCm2}</Text>
-                    <Text style={styles.zoneButtonText}>Desired coverage value: {item.desiredCoverageValue}</Text>
+                    <View style={styles.row}>
+                        <View style={styles.leftColumn}>
+                            <Text>Caliber:</Text>
+                            <Text>Hair per cm²:</Text>
+                            <Text>Grafts per cm²:</Text>
+                            <Text>Desired coverage value:</Text>
+                        </View>
+                        <View style={styles.rightColumn}>
+                            <Text>{item.caliber}</Text>
+                            <Text>{item.hairPerCm2}</Text>
+                            <Text>{item.graftsPerCm2}</Text>
+                            <Text>{item.desiredCoverageValue}</Text>
+                        </View>
+                    </View>
                 </Collapsible>
 
-                <Text style={styles.zoneButtonText}>Area {item.area}</Text>
-                <Text style={styles.zoneButtonText}>Current grafts: {item.grafts}</Text>
-                <Text style={styles.zoneButtonText}>Grafts needed: {item.graftsImplantedToReachDesiredRecipientCoverageValue}</Text>
+                <View style={styles.row}>
+                    <View style={styles.leftColumn}>
+                        <Text style={styles.zoneButtonText}>Area:</Text>
+                        <Text style={styles.zoneButtonText}>Current grafts:</Text>
+                        <Text style={styles.zoneButtonText}>Grafts needed:</Text>
+                    </View>
+                    <View style={styles.rightColumn}>
+                        <Text style={styles.zoneButtonText}>{item.area} cm²</Text>
+                        <Text style={styles.zoneButtonText}>{item.grafts}</Text>
+                        <Text style={styles.zoneButtonText}>{item.graftsImplantedToReachDesiredRecipientCoverageValue}</Text>
+                    </View>
+                </View>
+
             </View>
-
-
-
-
-
-
         );
     }
+
 
     return (
         <View style={{ flex: 1, paddingTop: 70}}>
@@ -182,13 +213,23 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             elevation: 5,
             borderWidth: 1,
             borderColor: 'lightgrey',
-
+        },
+        row: {
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+        },
+        leftColumn: {
+            flex: 3,
+            padding: 5,
+            marginLeft: 20,
+        },
+        rightColumn: {
+            flex: 2,
+            padding: 5,
         },
         zoneButtonText: {
-
+            fontSize: 16,
+            marginVertical: 3,
         },
-
-
     });
-    }
-
+}

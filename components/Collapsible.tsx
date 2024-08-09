@@ -38,6 +38,9 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     marginVertical: 10,
     overflow: 'hidden',
+    backgroundColor: Colors.light.solidBackground,
+    borderWidth: 1,
+    borderColor: 'lightgrey'
   },
   heading: {
     flexDirection: 'row',
