@@ -12,10 +12,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import ResetButton from "@/components/ResetButton";
 import ServerInput from "@/components/forms/ServerInput";
 
-//TODO fix area styling on calculator screen
-//TODO style calculator pdf
-//TODO go over colour themes
-Appearance.getColorScheme = () => 'light';
+//TODO fix area styling on calculator screenAppearance.getColorScheme = () => 'light';
 
 export default function ZonesScreen() {
     const colorScheme = Appearance.getColorScheme();

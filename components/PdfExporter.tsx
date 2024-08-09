@@ -52,7 +52,7 @@ export default function PdfExporter({ pdfType }: PdfExporterProps) {
             base64: false,
             margins: {
                 top: 40,
-                bottom: 80,
+                bottom: 40,
                 left: 40,
                 right: 40,
             },

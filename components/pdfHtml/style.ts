@@ -1,35 +1,22 @@
-export function getStyle() : string {
+export function getStyle(): string {
     return `
         <style>
             body {
                 font-family: Arial, sans-serif;
-                margin: 40px;
+                margin: 10px;
             }
-            h2 {
-                color: #333;
-            }
-            p, li {
+            p {
                 font-size: 12px;
                 line-height: 1.5;
             }
-            ul {
-                padding-left: 20px;
+            .zone-section {
+                margin-bottom: 1rem; 
             }
-            li {
-                page-break-inside: avoid;
+            .zone-details {
+                padding-left: 10px; 
             }
-            h1:empty {
-                margin: 300px;
-            }
-            .summary-section {
-                display: flex;
-                justify-content: space-between;
-                gap: 20px; /* Adds space between the columns */
-            }
-            .summary-column {
-                flex: 1;
-                border-radius: 4px;
-                background-color: #f9f9f9;
+            .avoid-break {
+                page-break-inside: avoid; 
             }
         </style>
     `;
