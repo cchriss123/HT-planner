@@ -4,13 +4,15 @@ import { TextInput } from 'react-native-paper';
 import { DonorZone, RecipientZone, useAppState, Zone } from "@/state/Store";
 import FormStyles from "@/components/forms/styles/FormStyles";
 import { valuesToCheck, ZoneArgs } from "@/components/forms/utility/valuesToCheck";
+import BottomSheet from "@gorhom/bottom-sheet";
 
 interface AddZoneProps {
     zones: Zone[];
     zoneType: 'donor' | 'recipient';
+    bottomSheetRef: React.RefObject<BottomSheet>;
 }
 
-function AddZone({ zones, zoneType }: AddZoneProps) {
+function AddZone({ zones, zoneType, bottomSheetRef}: AddZoneProps) {
 
     const [name, setName] = React.useState('');
     const [caliber, setCaliber] = React.useState('');
@@ -78,6 +80,8 @@ function AddZone({ zones, zoneType }: AddZoneProps) {
         globalState.setDonorZones([...zones as DonorZone[], newZone]);
         setMessage('Donor zone added successfully!');
         resetForm();
+        console.log(bottomSheetRef);
+        bottomSheetRef.current?.close();
     }
 
     function addRecipientZone(args: ZoneArgs, checkedValues: any) {
@@ -100,6 +104,8 @@ function AddZone({ zones, zoneType }: AddZoneProps) {
         globalState.setRecipientZones([...zones as RecipientZone[], newZone]);
         setMessage('Recipient zone added successfully!');
         resetForm();
+        bottomSheetRef.current?.close();
+
     }
 
     function resetForm() {

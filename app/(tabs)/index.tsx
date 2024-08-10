@@ -128,20 +128,21 @@ export default function ZonesScreen() {
 
 
             <CustomBottomSheet ref={bottomSheetRefs.addDonor} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
-                <AddZone zones={donorZones} zoneType={'donor'} />
+                <AddZone zones={donorZones} zoneType={'donor'} bottomSheetRef={bottomSheetRefs.addDonor} />
             </CustomBottomSheet>
 
             <CustomBottomSheet ref={bottomSheetRefs.addRecipient} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
-                <AddZone zones={recipientZones} zoneType={'recipient'} />
+                <AddZone zones={recipientZones} zoneType={'recipient'} bottomSheetRef={bottomSheetRefs.addRecipient} />
             </CustomBottomSheet>
 
             <CustomBottomSheet ref={bottomSheetRefs.editDonor} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
-                <EditDonorZone zone={selectedZone as DonorZone} zones={donorZones} />
+                <EditDonorZone zone={selectedZone as DonorZone} zones={donorZones} bottomSheetRef={bottomSheetRefs.editDonor} />
             </CustomBottomSheet>
 
             <CustomBottomSheet ref={bottomSheetRefs.editRecipient} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
-                <EditDonorZone zone={selectedZone as RecipientZone} zones={recipientZones} />
+                <EditDonorZone zone={selectedZone as RecipientZone} zones={recipientZones} bottomSheetRef={bottomSheetRefs.editRecipient} />
             </CustomBottomSheet>
+
         </View>
 
     );
@@ -165,8 +166,6 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             fontSize: 16,
             marginLeft: 8,
         },
-
-
         buttonWrapper: {
             flexDirection: 'row',
             justifyContent: 'space-between',
@@ -239,8 +238,6 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             height: 35,
             resizeMode: 'contain',
         },
-
-
     });
 }
 

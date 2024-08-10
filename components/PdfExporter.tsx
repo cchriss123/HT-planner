@@ -1,22 +1,23 @@
 import React, {useEffect, useState} from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import { TextInput } from 'react-native-paper';
-import { printToFileAsync } from 'expo-print';
-import { shareAsync } from 'expo-sharing';
+import {View, Text, TouchableOpacity} from 'react-native';
+import {TextInput} from 'react-native-paper';
+import {printToFileAsync} from 'expo-print';
+import {shareAsync} from 'expo-sharing';
 import FormStyles from '@/components/forms/styles/FormStyles';
-import { getCounterSwePdfHtml } from "@/components/pdfHtml/counterSwe";
-import { getCounterEngPdfHtml } from "@/components/pdfHtml/counterEng";
-import { getCalculatorEngPdfHtml} from "@/components/pdfHtml/calculatorEng";
-import { getCalculatorSwePdfHtml} from "@/components/pdfHtml/calculatorSwe";
-import { useAppState } from "@/state/Store";
+import {getCounterSwePdfHtml} from "@/components/pdfHtml/counterSwe";
+import {getCounterEngPdfHtml} from "@/components/pdfHtml/counterEng";
+import {getCalculatorEngPdfHtml} from "@/components/pdfHtml/calculatorEng";
+import {getCalculatorSwePdfHtml} from "@/components/pdfHtml/calculatorSwe";
+import {useAppState} from "@/state/Store";
+import BottomSheet from "@gorhom/bottom-sheet";
 
 
 interface PdfExporterProps {
-    pdfType: string;
+    pdfType: string,
 }
 
-export default function PdfExporter({ pdfType }: PdfExporterProps) {
-    const { styles, theme } = FormStyles();
+export default function PdfExporter({pdfType}: PdfExporterProps) {
+    const {styles, theme} = FormStyles();
 
     const [name, setName] = useState('');
     const [message, setMessage] = useState('');
@@ -36,14 +37,11 @@ export default function PdfExporter({ pdfType }: PdfExporterProps) {
 
         if (reportType === 'counter' && reportLanguage === 'swe') {
             html = getCounterSwePdfHtml(name, globalState);
-        }
-        else if (reportType === 'counter' && reportLanguage === 'eng') {
+        } else if (reportType === 'counter' && reportLanguage === 'eng') {
             html = getCounterEngPdfHtml(name, globalState);
-        }
-        else if (reportType === 'calculator' && reportLanguage === 'swe') {
+        } else if (reportType === 'calculator' && reportLanguage === 'swe') {
             html = getCalculatorSwePdfHtml(name, globalState);
-        }
-        else if (reportType === 'calculator' && reportLanguage === 'eng') {
+        } else if (reportType === 'calculator' && reportLanguage === 'eng') {
             html = getCalculatorEngPdfHtml(name, globalState);
         }
 
@@ -90,7 +88,6 @@ export default function PdfExporter({ pdfType }: PdfExporterProps) {
                 </TouchableOpacity>
 
             </View>
-
 
 
             {message ? <Text style={styles.message}>{message}</Text> : null}

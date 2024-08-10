@@ -1,15 +1,16 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, TouchableOpacity, Alert } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { DonorZone, RecipientZone, useAppState, Zone } from "@/state/Store";
 import FormStyles from "@/components/forms/styles/FormStyles";
 import { valuesToCheck } from "@/components/forms/utility/valuesToCheck";
+import BottomSheet from "@gorhom/bottom-sheet";
 
 interface EditZoneProps {
     zones: Zone[];
     zone: Zone;
+    bottomSheetRef: React.RefObject<BottomSheet>;
 }
-
 
 interface EditZoneArgs {
     name: string;
@@ -18,10 +19,12 @@ interface EditZoneArgs {
     hairsPerCm2: string;
     area: string;
     desiredCoverageValue: string;
+    bottomSheetRef: React.RefObject<BottomSheet>;
 }
 
-function EditZone({ zones, zone }: EditZoneProps) {
-    if (!zone) return;
+function EditZone({ zones, zone, bottomSheetRef }: EditZoneProps) {
+    if (!zone) return null;
+
     const [name, setName] = React.useState(zone.name);
     const [caliber, setCaliber] = React.useState(zone.caliber.toString());
     const [fuPerCm2, setFuPerCm2] = React.useState(zone.graftsPerCm2.toString());
@@ -30,10 +33,8 @@ function EditZone({ zones, zone }: EditZoneProps) {
     const [desiredCoverageValue, setDesiredCoverageValue] = React.useState(zone.desiredCoverageValue.toString());
     const [message, setMessage] = React.useState('');
     const { setDonorZones, setRecipientZones, donorZones, recipientZones, updateTotalCounts } = useAppState();
-
     const { calculateDonorZoneValues, calculateRecipientZoneValues } = useAppState();
     const { styles, theme } = FormStyles();
-
 
     useEffect(() => {
         if (message) {
@@ -42,18 +43,20 @@ function EditZone({ zones, zone }: EditZoneProps) {
         }
     }, [message]);
 
-
-
     function editZoneSubmit(args: EditZoneArgs) {
-
-
-        const checkedValues = valuesToCheck(args);
+        const checkedValues = valuesToCheck({
+            name: args.name,
+            caliber: args.caliber,
+            fuPerCm2: args.fuPerCm2,
+            hairsPerCm2: args.hairsPerCm2,
+            area: args.area,
+            desiredCoverageValue: args.desiredCoverageValue,
+        });
 
         if (zones.some(z => z.name === args.name && z.name !== zone.name)) {
             setMessage('Zone with that name already exists.');
             return;
         }
-
 
         zone.name = args.name || zone.name;
         zone.caliber = checkedValues.caliber || zone.caliber;
@@ -65,23 +68,17 @@ function EditZone({ zones, zone }: EditZoneProps) {
         if (zone.type === 'donor') {
             calculateDonorZoneValues(zone as DonorZone);
             updateTotalCounts();
-
-
             setDonorZones([...donorZones]);
-        }
-        else if (zone.type === 'recipient'){
+        } else if (zone.type === 'recipient') {
             calculateRecipientZoneValues(zone as RecipientZone);
             setRecipientZones([...recipientZones]);
         }
 
-
         setMessage('Zone updated.');
-
+        bottomSheetRef.current?.close();
     }
 
-
     function deleteZone(zone: Zone) {
-
         Alert.alert(
             'Delete Zone',
             `Are you sure you want to delete ${zone.name}?`,
@@ -99,16 +96,16 @@ function EditZone({ zones, zone }: EditZoneProps) {
                             setDonorZones(donorZones.filter(z => z !== zone));
                         else if (zone.type === 'recipient')
                             setRecipientZones(recipientZones.filter(z => z !== zone));
+
                         console.log(`Zone ${zone.name} deleted.`);
                         setMessage('Zone deleted.');
-
+                        bottomSheetRef.current?.close();
                     }
                 }
             ],
             { cancelable: true }
         );
     }
-
 
     return (
         <View style={styles.container}>
@@ -172,7 +169,6 @@ function EditZone({ zones, zone }: EditZoneProps) {
                 theme={theme}
             />
 
-
             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                 <TouchableOpacity
                     style={styles.button}
@@ -183,6 +179,7 @@ function EditZone({ zones, zone }: EditZoneProps) {
                         hairsPerCm2,
                         area,
                         desiredCoverageValue,
+                        bottomSheetRef,
                     })}
                 >
                     <Text style={styles.buttonTitle}>Save Changes</Text>
@@ -194,9 +191,7 @@ function EditZone({ zones, zone }: EditZoneProps) {
                 >
                     <Text style={styles.buttonTitle}>Delete Zone</Text>
                 </TouchableOpacity>
-
             </View>
-
 
             {message ? <Text style={styles.message}>{message}</Text> : null}
         </View>
