@@ -14,9 +14,10 @@ import BottomSheet from "@gorhom/bottom-sheet";
 
 interface PdfExporterProps {
     pdfType: string,
+    bottomSheetRef: React.RefObject<BottomSheet>;
 }
 
-export default function PdfExporter({pdfType}: PdfExporterProps) {
+export default function PdfExporter({pdfType, bottomSheetRef}: PdfExporterProps) {
     const {styles, theme} = FormStyles();
 
     const [name, setName] = useState('');
@@ -57,6 +58,7 @@ export default function PdfExporter({pdfType}: PdfExporterProps) {
         });
 
         await shareAsync(pdfFile.uri);
+        bottomSheetRef.current?.close();
     }
 
     async function handleSubmit(reportType: string, reportLanguage: string): Promise<void> {

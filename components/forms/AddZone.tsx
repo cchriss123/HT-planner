@@ -80,7 +80,6 @@ function AddZone({ zones, zoneType, bottomSheetRef}: AddZoneProps) {
         globalState.setDonorZones([...zones as DonorZone[], newZone]);
         setMessage('Donor zone added successfully!');
         resetForm();
-        console.log(bottomSheetRef);
         bottomSheetRef.current?.close();
     }
 
