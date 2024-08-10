@@ -22,13 +22,13 @@ export function getCalculatorEngPdfHtml(name: string, globalState: AppStateConte
             <h5>${zone.name}</h5>
             <p>Caliber: ${zone.caliber}</p>
             <p>Grafts per cm²: ${zone.graftsPerCm2}</p>
-            <p>Hairs per cm²: ${zone.hairPerCm2}</p>
+            <p>Hair per cm²: ${zone.hairPerCm2}</p>
             <p>Area: ${zone.area}</p>
             <p>Desired coverage value: ${zone.desiredCoverageValue}</p>
-            <p>Hairs per graft: ${zone.hairPerGraft?.toFixed(2)}</p>
+            <p>Hair per graft: ${zone.hairPerGraft?.toFixed(2)}</p>
             <p>Grafts per zone: ${zone.graftsPerZone}</p>
             <p>Coverage value: ${zone.coverageValue.toFixed(2)}</p>
-            <p>Hairs per zone: ${zone.hairPerZone}</p>
+            <p>Hair per zone: ${zone.hairPerZone}</p>
             <p>Grafts extracted to reach desired coverage value: ${zone.graftsExtractedToReachDonorDesiredCoverageValue}</p>
             <p>Grafts left to reach desired coverage value: ${zone.graftsLeftToReachDonorDesiredCoverageValue}</p>
         </div>
@@ -39,20 +39,19 @@ export function getCalculatorEngPdfHtml(name: string, globalState: AppStateConte
     <div class="zone-section avoid-break">
         <div class="zone-details">
             <h5>${zone.name}</h5>
-            <p>Number of grafts implanted in frontal zone: ${zone.graftsImplantedToReachDesiredRecipientCoverageValue}</p>
+            <p>Grafts implanted in the frontal zone: ${zone.graftsImplantedToReachDesiredRecipientCoverageValue}</p>
             <p>Caliber: ${zone.caliber}</p>
             <p>Grafts per cm²: ${zone.graftsPerCm2}</p>
-            <p>Hairs per cm²: ${zone.hairPerCm2}</p>
+            <p>Hair per cm²: ${zone.hairPerCm2}</p>
             <p>Area: ${zone.area}</p>
             <p>Desired coverage value: ${zone.desiredCoverageValue}</p>
-            <p>Hairs per graft: ${zone.hairPerGraft?.toFixed(2)}</p>
+            <p>Hair per graft: ${zone.hairPerGraft?.toFixed(2)}</p>
             <p>Starting coverage value: ${zone.startingCoverageValue.toFixed(2)}</p>
             <p>Coverage value difference: ${zone.coverageValueDifference.toFixed(2)}</p>
             <p>Grafts implanted to reach desired coverage value: ${zone.graftsImplantedToReachDesiredRecipientCoverageValue}</p>
         </div>
     </div>
 `).join('');
-
 
     return `
         <!DOCTYPE html>
@@ -70,24 +69,22 @@ export function getCalculatorEngPdfHtml(name: string, globalState: AppStateConte
                  <img src="${base64Image}" alt="Logo" style="max-width: 60px; max-height: 60px; margin: 0 auto;">
             </div>
         
-            <h3>Individual Hair Transplantation Plan</h3>
+            <h3>Individual Plan for Hair Transplantation</h3>
             <p><strong>Name:</strong> ${name}</p>
             <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
             <p><strong>Surgeon:</strong> Armin Soleimanpor</p>
             <p><strong>Clinic:</strong> Göta Hair Clinic</p>
           
-            <h4>Donor Area Assessment</h4>
-
-            <div>
-                ${donorZonesHtml}
-            </div>
-               
-            <hr>
-   
-
-            <h4>Recipient Area Assessment</h4>
-            <div>
-                ${recipientZonesHtmlJournal}
+            <h4>Assessment of Donor and Recipient Areas</h4>
+            <div class="pdf-two-column-layout">
+                <div class="pdf-column">
+                    <h4>Donor Area</h4>
+                    ${donorZonesHtml}
+                </div>
+                <div class="pdf-column">
+                    <h4>Recipient Area</h4>
+                    ${recipientZonesHtmlJournal}
+                </div>
             </div>
     
         </div>

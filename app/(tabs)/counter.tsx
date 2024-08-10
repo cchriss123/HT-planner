@@ -29,15 +29,36 @@ export default function CounterScreen() {
         }
     }
 
+
+    interface DisplayData {
+        donorZone: DonorZone;
+        totalSingles: number;
+        totalDoubles: number;
+        totalTriples: number;
+        totalQuadruples: number;
+        totalGrafts: number;
+        totalHair: number;
+        totalHairPerGraftsCounted: number;
+    }
+
     async function sendAsync(selectedZone: DonorZone, ip: string) {
 
-        // const ip = '192.168.0.28';
+        const displayData: DisplayData = {
+            donorZone: selectedZone,
+            totalSingles: globalState.totalSingles,
+            totalDoubles: globalState.totalDoubles,
+            totalTriples: globalState.totalTriples,
+            totalQuadruples: globalState.totalQuadruples,
+            totalGrafts: globalState.totalGrafts,
+            totalHair: globalState.totalHair,
+            totalHairPerGraftsCounted: globalState.totalHairPerGraftsCounted,
+        }
 
         if (!ip){
             console.log('No IP address provided');
             return;
-
         }
+
         const url = `http://${ip}:8080/api/counter`;
 
         const payload = {
@@ -45,7 +66,7 @@ export default function CounterScreen() {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(selectedZone),
+            body: JSON.stringify(displayData),
         };
 
         try {
@@ -56,8 +77,6 @@ export default function CounterScreen() {
             console.error('Unexpected error:', error);
         }
     }
-
-
 
     function updateZoneCounts(value: number) {
         if (!selectedZone) return;

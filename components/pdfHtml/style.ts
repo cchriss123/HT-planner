@@ -18,6 +18,17 @@ export function getStyle(): string {
             .avoid-break {
                 page-break-inside: avoid; 
             }
+            .pdf-two-column-layout {
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                box-sizing: border-box;
+            }
+            .pdf-column {
+                width: 50%; 
+                box-sizing: border-box; 
+                padding: 10px;
+            }
         </style>
     `;
 }

@@ -53,7 +53,6 @@ export function getCalculatorSwePdfHtml(name: string, globalState: AppStateConte
     </div>
 `).join('');
 
-
     return `
         <!DOCTYPE html>
         <html lang="sv">
@@ -62,6 +61,7 @@ export function getCalculatorSwePdfHtml(name: string, globalState: AppStateConte
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>PDF Export</title>
             ${getStyle()}
+   
         </head>
         <body>
         <div class="content-wrapper">
@@ -76,19 +76,16 @@ export function getCalculatorSwePdfHtml(name: string, globalState: AppStateConte
             <p><strong>Kirurg:</strong> Armin Soleimanpor</p>
             <p><strong>Klinik:</strong> Göta Hårklinik</p>
           
-            <h4>Bedömning av donatorområde</h4>
-
-            <div>
-                ${donorZonesHtml}
-            </div>
-               
-            <hr>
-   
-<!--            <div style="page-break-before: always;"></div>-->
-
-            <h4>Bedömning av mottagarområde</h4>
-            <div>
-                ${recipientZonesHtmlJournal}
+            <h4>Bedömning av donatorområde och mottagarområde</h4>
+            <div class="pdf-two-column-layout">
+                <div class="pdf-column">
+                    <h4>Donatorområde</h4>
+                    ${donorZonesHtml}
+                </div>
+                <div class="pdf-column">
+                    <h4>Mottagarområde</h4>
+                    ${recipientZonesHtmlJournal}
+                </div>
             </div>
     
         </div>
