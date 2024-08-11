@@ -1,5 +1,5 @@
 import { DonorZone, RecipientZone } from "@/state/Store";
-import { getStyle } from "@/components/pdfHtml/style";
+import { getStyle } from "@/components/pdfCss/calculatorStyle";
 import { getLogo } from "@/components/pdfHtml/logo";
 
 interface AppStateContextType {
