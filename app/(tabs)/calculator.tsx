@@ -27,6 +27,7 @@ export default function CalculatorScreen() {
             setMenuVisible(true);
             bottomSheetRef.current?.expand();
             bottomSheetRef.current?.snapToIndex(2);
+            console.log(globalState.averageDonorCaliber);
         }
     }
 

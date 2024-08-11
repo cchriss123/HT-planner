@@ -62,12 +62,9 @@ interface AppStateContextType {
     totalGrafts: number;
     totalHair: number;
     totalHairPerGraftsCounted: number;
-    averageDonorCaliber: number;
-    averageDonorHairPerGraft: number;
 
     calculateDonorZoneValues(zone: DonorZone): void;
     calculateRecipientZoneValues(zone: RecipientZone): void;
-    updateAverageDonorValues(): void;
 
     ip: string;
     saveIp(ip: string): void;
@@ -95,8 +92,6 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     const [totalGrafts, setTotalGrafts] = useState(0);
     const [totalHair, setTotalHair] = useState(0);
     const [totalHairPerGraftsCounted, setTotalHairPerGraftsCounted] = useState(0);
-    const [averageDonorCaliber, setAverageDonorCaliber] = useState(0);
-    const [averageDonorHairPerGraft, setAverageDonorHairPerGraft] = useState(0);
     const [ip, setIp] = useState('');
 
     async function loadIp(): Promise<string> {
@@ -163,6 +158,8 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         if (initialized) {
             saveZones('donorZones', donorZones);
             updateTotalCounts();
+            recipientZones.forEach(zone => calculateRecipientZoneValues(zone));
+
         }
     }, [donorZones]);
 
@@ -199,9 +196,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
                 calculateRecipientZoneValues,
                 ip,
                 saveIp,
-                updateAverageDonorValues,
-                averageDonorCaliber,
-                averageDonorHairPerGraft,
+
             }}
         >
             {children}
@@ -254,6 +249,22 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         zone.graftsLeftToReachDonorDesiredCoverageValue = Math.floor(zone.graftsExtractedToReachDonorDesiredCoverageValue) - zone.grafts;
     }
 
+    function getDonorZoneAvgCaliber() {
+
+        const amountOfDonorZones = donorZones.length;
+
+        if (amountOfDonorZones === 0) {
+            return 0;
+        }
+
+        let sum = 0;
+        for (const zone of donorZones) {
+            sum += zone.caliber;
+        }
+
+        return sum / amountOfDonorZones;
+    }
+
     function calculateRecipientZoneValues(zone: RecipientZone) {
         if (zone.desiredCoverageValue === undefined) {
             zone.desiredCoverageValue = 0;
@@ -263,15 +274,10 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         zone.hairPerGraft = zone.hairPerCm2 / zone.graftsPerCm2;
         zone.startingCoverageValue = zone.caliber * zone.hairPerCm2;
         zone.coverageValueDifference = zone.desiredCoverageValue - zone.startingCoverageValue;
-        zone.graftsImplantedToReachDesiredRecipientCoverageValue = Math.floor((zone.area * zone.coverageValueDifference) / (averageDonorCaliber * averageDonorHairPerGraft));
+        zone.graftsImplantedToReachDesiredRecipientCoverageValue = Math.floor((zone.area * zone.coverageValueDifference) / getDonorZoneAvgCaliber());
     }
 
-    function updateAverageDonorValues() {
-        const averageCaliber = donorZones.reduce((acc, zone) => acc + zone.caliber, 0) / donorZones.length;
-        const averageHairPerGraft = donorZones.reduce((acc, zone) => acc + zone.hairPerGraft!, 0) / donorZones.length;
-        setAverageDonorCaliber(averageCaliber);
-        setAverageDonorHairPerGraft(averageHairPerGraft);
-    }
+
 
     function getMockDonorZones(): DonorZone[] {
         return [

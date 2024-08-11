@@ -77,7 +77,6 @@ function AddZone({ zones, zoneType, bottomSheetRef}: AddZoneProps) {
 
         globalState.calculateDonorZoneValues(newZone);
         globalState.updateTotalCounts();
-        globalState.updateAverageDonorValues();
         globalState.setDonorZones([...zones as DonorZone[], newZone]);
         setMessage('Donor zone added successfully!');
         resetForm();
