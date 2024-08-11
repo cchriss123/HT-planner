@@ -128,11 +128,12 @@ export default function CalculatorScreen() {
                 >
                     <Text style={styles.tabText}>Recipient Areas</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={{ marginHorizontal: "5%" }} onPress={handleMenuPress}>
-                    <FontAwesome gear="setting" size={35} color={
+                <TouchableOpacity style={{marginRight: '3%'}} onPress={handleMenuPress}>
+                    <FontAwesome name="file-pdf-o" size={35} color={
                         menuVisible ? Colors.light.primaryBlue : Colors.light.neutralGrey
-                    } name="gear" />
+                    } />
                 </TouchableOpacity>
+
             </View>
 
             <View style={styles.outerContainer}>
@@ -172,9 +173,8 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             alignItems: 'center',
             justifyContent: 'space-between',
             height: 60,
-            width: '95%',
-            paddingBottom: '5%',
-            marginHorizontal: '2.5%',
+            width: '100%', // Ensures the container takes full width of the screen
+            paddingHorizontal: 10, // Add padding to the sides for better alignment
             marginTop: 10,
         },
         tabButton: {

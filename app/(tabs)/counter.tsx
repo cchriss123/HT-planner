@@ -131,11 +131,13 @@ export default function CounterScreen() {
                     <View style={{ borderColor: 'black', width: '60%', alignItems: 'center' }}>
                         <DropdownComponent selectedZone={selectedZone} setSelectedZone={setSelectedZone} />
                     </View>
-                    <TouchableOpacity style={{ marginHorizontal: "5%" }} onPress={handleMenuPress}>
-                        <FontAwesome gear="setting" size={35} color={
+                    <TouchableOpacity style={{marginRight: '3%'
+                    }} onPress={handleMenuPress}>
+                        <FontAwesome name="file-pdf-o" size={35} color={
                             menuVisible ? Colors.light.primaryBlue : Colors.light.neutralGrey
-                        } name="gear" />
+                        } />
                     </TouchableOpacity>
+
                 </View>
 
                 {selectedZone ? (
@@ -275,9 +277,8 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             alignItems: 'center',
             justifyContent: 'space-between',
             height: 60,
-            width: '95%',
-            paddingBottom: '5%',
-            marginHorizontal: '2.5%',
+            width: '100%',
+            paddingHorizontal: 10,
             marginTop: 10,
         },
         buttonAreaContainer: {
@@ -300,7 +301,7 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             alignItems: 'center',
             backgroundColor: colors.solidBackground,
             shadowColor: '#000',
-            shadowOffset: {width: 0, height: 2},
+            shadowOffset: { width: 0, height: 2 },
             shadowOpacity: 0.3,
             shadowRadius: 5,
             elevation: 5,
@@ -343,15 +344,13 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             flex: 1,
             backgroundColor: colors.solidBackground,
             shadowColor: '#000',
-            shadowOffset: {width: 0, height: 2},
+            shadowOffset: { width: 0, height: 2 },
             shadowOpacity: 0.3,
             shadowRadius: 5,
             elevation: 5,
         },
         infoText: {
             width: '60%',
-
-        }
+        },
     });
-
 }

@@ -74,16 +74,17 @@ export default function ZonesScreen() {
         <View style={{ flex: 1, paddingTop: 70}}>
             <View style={styles.topContainer}>
                 <View style={styles.placeholderContainer} />
-                <View style={{ flex: 1, alignItems: 'center' }}>
+                <View style={styles.logoContainer}>
                     <Image source={logoImg} style={styles.logo} />
                 </View>
                 <TouchableOpacity
-                    style={styles.placeholderContainer}
+                    style={styles.gearContainer}
                     onPress={() => handleMenuPress()}
                 >
                     <FontAwesome gear="setting" size={35} color={wheelMenuVisible ? colors.primaryBlue : colors.neutralGrey} name="gear" />
                 </TouchableOpacity>
             </View>
+
 
 
 
@@ -229,18 +230,29 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             justifyContent: 'space-between',
             height: 60,
             width: '100%',
-            paddingBottom: '5%',
+            paddingHorizontal: 10,
             marginTop: 10,
-
         },
         placeholderContainer: {
-            width: 58.5,
+            flex: 1,
+            maxWidth: 60,
+        },
+        logoContainer: {
+            flex: 2,
+            alignItems: 'center',
         },
         logo: {
             width: 35,
             height: 35,
             resizeMode: 'contain',
         },
+        gearContainer: {
+            flex: 1,
+            maxWidth: 60,
+            alignItems: 'center',
+
+        },
+
     });
 }
 
