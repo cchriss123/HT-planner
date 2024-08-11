@@ -12,6 +12,9 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import ResetButton from "@/components/ResetButton";
 import ServerInput from "@/components/forms/ServerInput";
 
+//TODO Fix formulas
+
+
 Appearance.getColorScheme = () => 'light';
 
 export default function ZonesScreen() {

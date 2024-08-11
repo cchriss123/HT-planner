@@ -17,36 +17,36 @@ const base64Image = getLogo();
 export function getCalculatorSwePdfHtml(name: string, globalState: AppStateContextType): string {
 
     const donorZonesHtml = globalState.donorZones.map((zone) => `
-    <div class="zone-section" style="break-inside: avoid; margin-bottom: 1rem;">
-        <div class="zone-details" style="padding-left: 10px;">
-            <p><strong>${zone.name}</strong></p>
-            <p style="font-size: 10px;">Kaliber: ${zone.caliber}</p>
-            <p style="font-size: 10px;">Grafts per cm²: ${zone.graftsPerCm2}</p>
-            <p style="font-size: 10px;">Hår per cm²: ${zone.hairPerCm2}</p>
-            <p style="font-size: 10px;">Område: ${zone.area}</p>
-            <p style="font-size: 10px;">Önskat täckningsvärde: ${zone.desiredCoverageValue}</p>
-            <p style="font-size: 10px;">Hår per graft: ${zone.hairPerGraft?.toFixed(2)}</p>
-            <p style="font-size: 10px;">Grafts per zon: ${zone.graftsPerZone}</p>
-            <p style="font-size: 10px;">Täckningsvärde: ${zone.coverageValue.toFixed(2)}</p>
-            <p style="font-size: 10px;">Hår per zon: ${zone.hairPerZone}</p>
-            <p style="font-size: 10px;">Grafts extraherade för att nå önskat täckningsvärde: ${zone.graftsExtractedToReachDonorDesiredCoverageValue}</p>
+    <div class="zone-section avoid-break">
+        <div class="zone-details">
+            <p class="zone-title">${zone.name}</p>
+            <p class="zone-text">Kaliber: ${zone.caliber}</p>
+            <p class="zone-text">Grafts per cm²: ${zone.graftsPerCm2}</p>
+            <p class="zone-text">Hår per cm²: ${zone.hairPerCm2}</p>
+            <p class="zone-text">Område: ${zone.area}</p>
+            <p class="zone-text">Önskat täckningsvärde: ${zone.desiredCoverageValue}</p>
+            <p class="zone-text">Hår per graft: ${zone.hairPerGraft?.toFixed(2)}</p>
+            <p class="zone-text">Grafts per zon: ${zone.graftsPerZone}</p>
+            <p class="zone-text">Täckningsvärde: ${zone.coverageValue.toFixed(2)}</p>
+            <p class="zone-text">Hår per zon: ${zone.hairPerZone}</p>
+            <p class="zone-text">Grafts extraherade för att nå önskat täckningsvärde: ${zone.graftsExtractedToReachDonorDesiredCoverageValue}</p>
         </div>
     </div>`).join('');
 
     const recipientZonesHtmlJournal = globalState.recipientZones.map((zone) => `
-    <div class="zone-section" style="break-inside: avoid; margin-bottom: 1rem;">
-        <div class="zone-details" style="padding-left: 10px;">
-            <p><strong>${zone.name}</strong></p>            
-            <p style="font-size: 10px;">Antal grafts planterade i frontalzon: ${zone.graftsImplantedToReachDesiredRecipientCoverageValue}</p>
-            <p style="font-size: 10px;">Kaliber: ${zone.caliber}</p>
-            <p style="font-size: 10px;">Grafts per cm²: ${zone.graftsPerCm2}</p>
-            <p style="font-size: 10px;">Hår per cm²: ${zone.hairPerCm2}</p>
-            <p style="font-size: 10px;">Område: ${zone.area}</p>
-            <p style="font-size: 10px;">Önskat täckningsvärde: ${zone.desiredCoverageValue}</p>
-            <p style="font-size: 10px;">Hår per graft: ${zone.hairPerGraft?.toFixed(2)}</p>
-            <p style="font-size: 10px;">Starttäckningsvärde: ${zone.startingCoverageValue.toFixed(2)}</p>
-            <p style="font-size: 10px;">Täckningsvärdeskillnad: ${zone.coverageValueDifference.toFixed(2)}</p>
-            <p style="font-size: 10px;">Grafts implanterade för att nå önskat täckningsvärde: ${zone.graftsImplantedToReachDesiredRecipientCoverageValue}</p>
+    <div class="zone-section avoid-break">
+        <div class="zone-details">
+            <p class="zone-title">${zone.name}</p>            
+            <p class="zone-text">Antal grafts planterade i frontalzon: ${zone.graftsImplantedToReachDesiredRecipientCoverageValue}</p>
+            <p class="zone-text">Kaliber: ${zone.caliber}</p>
+            <p class="zone-text">Grafts per cm²: ${zone.graftsPerCm2}</p>
+            <p class="zone-text">Hår per cm²: ${zone.hairPerCm2}</p>
+            <p class="zone-text">Område: ${zone.area}</p>
+            <p class="zone-text">Önskat täckningsvärde: ${zone.desiredCoverageValue}</p>
+            <p class="zone-text">Hår per graft: ${zone.hairPerGraft?.toFixed(2)}</p>
+            <p class="zone-text">Starttäckningsvärde: ${zone.startingCoverageValue.toFixed(2)}</p>
+            <p class="zone-text">Täckningsvärdeskillnad: ${zone.coverageValueDifference.toFixed(2)}</p>
+            <p class="zone-text">Grafts implanterade för att nå önskat täckningsvärde: ${zone.graftsImplantedToReachDesiredRecipientCoverageValue}</p>
         </div>
     </div>`).join('');
 
@@ -60,33 +60,35 @@ export function getCalculatorSwePdfHtml(name: string, globalState: AppStateConte
             ${getStyle()}
         </head>
         <body>
-        <div class="content-wrapper" style="font-family: Arial, sans-serif; margin: 10px;">
-
-            <div style="display: grid; grid-template-columns: 1fr 1fr; grid-gap: 20px; width: 100%; margin-bottom: 20px;">
-                <div style="padding: 10px;">
-                    <h3>Individuell plan för hårtransplantation</h3>
-                    <p><strong>Namn:</strong> ${name}</p>
-                    <p><strong>Datum:</strong> ${new Date().toLocaleDateString()}</p>
-                    <p><strong>Kirurg:</strong> Armin Soleimanpor</p>
-                    <p><strong>Klinik:</strong> Göta Hårklinik</p>
+        <div class="content-wrapper">
+            <div class="grid-layout">
+                <div>
+                    <h4>Individuell plan för hårtransplantation</h4>
+                    <p class="headerInfo"><strong>Namn:</strong> ${name}</p>
+                    <p class="headerInfo"><strong>Datum:</strong> ${new Date().toLocaleDateString()}</p>
+                    <p class="headerInfo"><strong>Kirurg:</strong> Armin Soleimanpor</p>
+                    <p class="headerInfo"><strong>Klinik:</strong> Göta Hårklinik</p>
                 </div>
-                <div style="display: flex; justify-content: center; align-items: center; padding: 10px;">
+                <div style="display: flex; justify-content: center; align-items: center;">
                     <img src="${base64Image}" alt="Logo" style="max-width: 100px; max-height: 100px;">
                 </div>
             </div>
 
-            <hr style="margin: 20px 0;">
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; grid-gap: 20px;">
-                <div style="break-inside: avoid; padding: 10px;">
-                    <h5 style="margin-top: 5px; margin-bottom: 5px;">Donatorområde</h5>
+            <hr class="section-divider">
+            <h4 class="section-title">Bedömning av donatorområde och mottagarområde</h4>
+            
+            <div class="two-column-grid">
+                <div class="zone-container">
+                    <h4 class="zone-heading">Donatorområde</h4>
                     ${donorZonesHtml}
                 </div>
-                <div style="break-inside: avoid; padding: 10px;">
-                    <h5 style="margin-top: 5px; margin-bottom: 5px;">Mottagarområde</h5>
+                <div class="zone-container">
+                    <h5 class="zone-heading">Mottagarområde</h5>
                     ${recipientZonesHtmlJournal}
                 </div>
             </div>
+
         </div>
         </body>
         </html>

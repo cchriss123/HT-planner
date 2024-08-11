@@ -16,42 +16,39 @@ const base64Image = getLogo();
 
 export function getCalculatorEngPdfHtml(name: string, globalState: AppStateContextType): string {
 
-    const donorZonesHtml = globalState.donorZones.map(zone => `
+    const donorZonesHtml = globalState.donorZones.map((zone) => `
     <div class="zone-section avoid-break">
         <div class="zone-details">
-            <h5>${zone.name}</h5>
-            <p>Caliber: ${zone.caliber}</p>
-            <p>Grafts per cm²: ${zone.graftsPerCm2}</p>
-            <p>Hair per cm²: ${zone.hairPerCm2}</p>
-            <p>Area: ${zone.area}</p>
-            <p>Desired coverage value: ${zone.desiredCoverageValue}</p>
-            <p>Hair per graft: ${zone.hairPerGraft?.toFixed(2)}</p>
-            <p>Grafts per zone: ${zone.graftsPerZone}</p>
-            <p>Coverage value: ${zone.coverageValue.toFixed(2)}</p>
-            <p>Hair per zone: ${zone.hairPerZone}</p>
-            <p>Grafts extracted to reach desired coverage value: ${zone.graftsExtractedToReachDonorDesiredCoverageValue}</p>
-            <p>Grafts left to reach desired coverage value: ${zone.graftsLeftToReachDonorDesiredCoverageValue}</p>
+            <p class="zone-title">${zone.name}</p>
+            <p class="zone-text">Caliber: ${zone.caliber}</p>
+            <p class="zone-text">Grafts per cm²: ${zone.graftsPerCm2}</p>
+            <p class="zone-text">Hair per cm²: ${zone.hairPerCm2}</p>
+            <p class="zone-text">Area: ${zone.area}</p>
+            <p class="zone-text">Desired Coverage Value: ${zone.desiredCoverageValue}</p>
+            <p class="zone-text">Hair per Graft: ${zone.hairPerGraft?.toFixed(2)}</p>
+            <p class="zone-text">Grafts per Zone: ${zone.graftsPerZone}</p>
+            <p class="zone-text">Coverage Value: ${zone.coverageValue.toFixed(2)}</p>
+            <p class="zone-text">Hair per Zone: ${zone.hairPerZone}</p>
+            <p class="zone-text">Grafts Extracted to Reach Desired Coverage Value: ${zone.graftsExtractedToReachDonorDesiredCoverageValue}</p>
         </div>
-    </div>
-`).join('');
+    </div>`).join('');
 
-    const recipientZonesHtmlJournal = globalState.recipientZones.map(zone => `
+    const recipientZonesHtmlJournal = globalState.recipientZones.map((zone) => `
     <div class="zone-section avoid-break">
         <div class="zone-details">
-            <h5>${zone.name}</h5>
-            <p>Grafts implanted in the frontal zone: ${zone.graftsImplantedToReachDesiredRecipientCoverageValue}</p>
-            <p>Caliber: ${zone.caliber}</p>
-            <p>Grafts per cm²: ${zone.graftsPerCm2}</p>
-            <p>Hair per cm²: ${zone.hairPerCm2}</p>
-            <p>Area: ${zone.area}</p>
-            <p>Desired coverage value: ${zone.desiredCoverageValue}</p>
-            <p>Hair per graft: ${zone.hairPerGraft?.toFixed(2)}</p>
-            <p>Starting coverage value: ${zone.startingCoverageValue.toFixed(2)}</p>
-            <p>Coverage value difference: ${zone.coverageValueDifference.toFixed(2)}</p>
-            <p>Grafts implanted to reach desired coverage value: ${zone.graftsImplantedToReachDesiredRecipientCoverageValue}</p>
+            <p class="zone-title">${zone.name}</p>            
+            <p class="zone-text">Number of Grafts Planted in Frontal Zone: ${zone.graftsImplantedToReachDesiredRecipientCoverageValue}</p>
+            <p class="zone-text">Caliber: ${zone.caliber}</p>
+            <p class="zone-text">Grafts per cm²: ${zone.graftsPerCm2}</p>
+            <p class="zone-text">Hair per cm²: ${zone.hairPerCm2}</p>
+            <p class="zone-text">Area: ${zone.area}</p>
+            <p class="zone-text">Desired Coverage Value: ${zone.desiredCoverageValue}</p>
+            <p class="zone-text">Hair per Graft: ${zone.hairPerGraft?.toFixed(2)}</p>
+            <p class="zone-text">Starting Coverage Value: ${zone.startingCoverageValue.toFixed(2)}</p>
+            <p class="zone-text">Coverage Value Difference: ${zone.coverageValueDifference.toFixed(2)}</p>
+            <p class="zone-text">Grafts Implanted to Reach Desired Coverage Value: ${zone.graftsImplantedToReachDesiredRecipientCoverageValue}</p>
         </div>
-    </div>
-`).join('');
+    </div>`).join('');
 
     return `
         <!DOCTYPE html>
@@ -64,29 +61,34 @@ export function getCalculatorEngPdfHtml(name: string, globalState: AppStateConte
         </head>
         <body>
         <div class="content-wrapper">
-        
-             <div style="text-align:center; padding: 20px;">
-                 <img src="${base64Image}" alt="Logo" style="max-width: 60px; max-height: 60px; margin: 0 auto;">
+            <div class="grid-layout">
+                <div>
+                    <h4>Individual Hair Transplantation Plan</h4>
+                    <p class="headerInfo"><strong>Name:</strong> ${name}</p>
+                    <p class="headerInfo"><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
+                    <p class="headerInfo"><strong>Surgeon:</strong> Armin Soleimanpor</p>
+                    <p class="headerInfo"><strong>Clinic:</strong> Göta Hårklinik</p>
+                </div>
+                <div style="display: flex; justify-content: center; align-items: center;">
+                    <img src="${base64Image}" alt="Logo" style="max-width: 100px; max-height: 100px;">
+                </div>
             </div>
-        
-            <h3>Individual Plan for Hair Transplantation</h3>
-            <p><strong>Name:</strong> ${name}</p>
-            <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
-            <p><strong>Surgeon:</strong> Armin Soleimanpor</p>
-            <p><strong>Clinic:</strong> Göta Hair Clinic</p>
-          
-            <h4>Assessment of Donor and Recipient Areas</h4>
-            <div class="pdf-two-column-layout">
-                <div class="pdf-column">
-                    <h4>Donor Area</h4>
+
+
+            <hr class="section-divider">
+            <h4 class="section-title">Assessment of Donor and Recipient Areas</h4>
+            
+            <div class="two-column-grid">
+                <div class="zone-container">
+                    <h4 class="zone-heading">Donor Area</h4>
                     ${donorZonesHtml}
                 </div>
-                <div class="pdf-column">
-                    <h4>Recipient Area</h4>
+                <div class="zone-container">
+                    <h5 class="zone-heading">Recipient Area</h5>
                     ${recipientZonesHtmlJournal}
                 </div>
             </div>
-    
+
         </div>
         </body>
         </html>
