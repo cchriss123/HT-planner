@@ -17,7 +17,7 @@ const base64Image = getLogo();
 export function getCalculatorSwePdfHtml(name: string, globalState: AppStateContextType): string {
 
     const donorZonesHtml = globalState.donorZones.map(zone => `
-    <div class="zone-section avoid-break">
+    <div class="avoid-break">
         <div class="zone-details">
             <h5>${zone.name}</h5>
             <p>Kaliber: ${zone.caliber}</p>
@@ -36,7 +36,7 @@ export function getCalculatorSwePdfHtml(name: string, globalState: AppStateConte
 `).join('');
 
     const recipientZonesHtmlJournal = globalState.recipientZones.map(zone => `
-    <div class="zone-section avoid-break">
+    <div class="avoid-break">
         <div class="zone-details">
             <h5>${zone.name}</h5>
             <p>Antal grafts planterade i frontalzon: ${zone.graftsImplantedToReachDesiredRecipientCoverageValue}</p>
@@ -65,17 +65,24 @@ export function getCalculatorSwePdfHtml(name: string, globalState: AppStateConte
         </head>
         <body>
         <div class="content-wrapper">
-        
-             <div style="text-align:center; padding: 20px;">
-                 <img src="${base64Image}" alt="Logo" style="max-width: 60px; max-height: 60px; margin: 0 auto;">
+       
+        <div style="display: flex; flex-direction: row; width: 100%;">
+            <!-- Left Box -->
+            <div style="flex: 1; padding: 10px;">
+                <h4>Individuell plan för hårtransplantation</h4>
+                <p><strong>Namn:</strong> ${name}</p>
+                <p><strong>Datum:</strong> ${new Date().toLocaleDateString()}</p>
+                <p><strong>Kirurg:</strong> Armin Soleimanpor</p>
+                <p><strong>Klinik:</strong> Göta Hårklinik</p>
             </div>
-        
-            <h3>Individuell plan för hårtransplantation</h3>
-            <p><strong>Namn:</strong> ${name}</p>
-            <p><strong>Datum:</strong> ${new Date().toLocaleDateString()}</p>
-            <p><strong>Kirurg:</strong> Armin Soleimanpor</p>
-            <p><strong>Klinik:</strong> Göta Hårklinik</p>
+            <!-- Right Box -->
+            <div style="flex: 1; display: flex; justify-content: center; align-items: center; padding: 10px;">
+                <img src="${base64Image}" alt="Logo" style="max-width: 100px; max-height: 100px;">
+            </div>
+        </div>
+
           
+          <div>
             <h4>Bedömning av donatorområde och mottagarområde</h4>
             <div class="pdf-two-column-layout">
                 <div class="pdf-column">
@@ -87,6 +94,7 @@ export function getCalculatorSwePdfHtml(name: string, globalState: AppStateConte
                     ${recipientZonesHtmlJournal}
                 </div>
             </div>
+        </div>
     
         </div>
         </body>
