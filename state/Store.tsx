@@ -159,7 +159,6 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
             saveZones('donorZones', donorZones);
             updateTotalCounts();
             recipientZones.forEach(zone => calculateRecipientZoneValues(zone));
-
         }
     }, [donorZones]);
 
@@ -261,7 +260,21 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         for (const zone of donorZones) {
             sum += zone.caliber;
         }
+        console.log(sum / amountOfDonorZones);
 
+        return sum / amountOfDonorZones;
+    }
+
+    function getDonorZoneAvgHairPerGraft() {
+        const amountOfDonorZones = donorZones.length;
+
+        if (amountOfDonorZones === 0) {
+            return 0;
+        }
+        let sum = 0;
+        for (const zone of donorZones) {
+            sum += zone.hairPerGraft || 0;
+        }
         return sum / amountOfDonorZones;
     }
 
@@ -270,11 +283,18 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
             zone.desiredCoverageValue = 0;
         }
 
-
+        zone.grafts = zone.graftsPerCm2 * zone.area;
         zone.hairPerGraft = zone.hairPerCm2 / zone.graftsPerCm2;
         zone.startingCoverageValue = zone.caliber * zone.hairPerCm2;
         zone.coverageValueDifference = zone.desiredCoverageValue - zone.startingCoverageValue;
-        zone.graftsImplantedToReachDesiredRecipientCoverageValue = Math.floor((zone.area * zone.coverageValueDifference) / getDonorZoneAvgCaliber());
+        zone.graftsImplantedToReachDesiredRecipientCoverageValue =
+            Math.floor((zone.area * zone.coverageValueDifference) / (getDonorZoneAvgCaliber())*getDonorZoneAvgHairPerGraft());
+
+        zone.graftsImplantedToReachDesiredRecipientCoverageValue =
+            Math.floor(
+                (zone.area * zone.coverageValueDifference) /
+                (getDonorZoneAvgCaliber() * getDonorZoneAvgHairPerGraft())
+            );
     }
 
 

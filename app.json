@@ -19,7 +19,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.nyblad123.FollicleCalculator"
     },
     "web": {
       "bundler": "metro",
@@ -30,6 +31,14 @@
       "expo-router",
       "expo-asset"
     ],
-    "experiments": {}
+    "experiments": {},
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "808c82fb-37da-4312-bdd9-19623d4881ae"
+      }
+    }
   }
 }
