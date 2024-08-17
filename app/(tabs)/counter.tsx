@@ -124,6 +124,13 @@ export default function CounterScreen() {
         }
     }, [globalState.donorZones]);
 
+    useEffect(() => {
+        if (selectedZone) {
+            sendAsync(selectedZone, globalState.ip);
+        }
+    }, [selectedZone]);
+
+
 
     return (
         <View style={{ flex: 1, paddingTop: 70 }}>
