@@ -2,9 +2,9 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { Colors } from "@/constants/Colors";
 import React, { useState, useEffect } from 'react';
 import { Appearance, StyleSheet, Text, TouchableOpacity, View, Alert } from 'react-native';
-import { useAppState, DonorZone, RecipientZone } from "@/state/Store";
+import { useAppState } from "@/state/Store";
 
-export default function ResetButton() {
+export default function DeleteZonesButton() {
     const colorScheme = Appearance.getColorScheme();
     const styles = createStyles(colorScheme);
     const globalState = useAppState();
@@ -17,7 +17,7 @@ export default function ResetButton() {
         }
     }, [message]);
 
-    function resetZones(donorZones: DonorZone[], recipientZones: RecipientZone[]) {
+    function deleteZones() {
         Alert.alert(
             'Delete Zone',
             `Are you sure you want to delete all zones?`,
@@ -45,9 +45,9 @@ export default function ResetButton() {
         <View style={styles.buttonContainer}>
             <TouchableOpacity
                 style={styles.buttonReset}
-                onPress={() => resetZones(globalState.donorZones, globalState.recipientZones)}>
+                onPress={() => deleteZones()}>
                 <Ionicons name="refresh" size={22} color="white" />
-                <Text style={styles.buttonResetText}>Reset Zones</Text>
+                <Text style={styles.buttonResetText}>Delete Zones</Text>
             </TouchableOpacity>
             {message ? <Text style={styles.message}>{message}</Text> : null}
         </View>

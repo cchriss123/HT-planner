@@ -45,7 +45,7 @@ function ServerInput() {
                     style={[styles.button, { width: '54%' }]} onPress={editZoneSubmit}>
                     <Text style={styles.buttonTitle}>Save IP</Text>
                 </TouchableOpacity>
-                {/*<ResetButton />*/}
+                {/*<DeleteZonesButton />*/}
             </View>
 
             {message ? <Text style={styles.message}>{message}</Text> : null}

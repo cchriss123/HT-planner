@@ -9,7 +9,7 @@ import AddZone from "@/components/forms/AddZone";
 import EditDonorZone from "@/components/forms/EditZone";
 import logoImg from '@/assets/images/logo.png';
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import ResetButton from "@/components/ResetButton";
+import DeleteZonesButton from "@/components/DeleteZonesButton";
 import ServerInput from "@/components/forms/ServerInput";
 
 
@@ -123,7 +123,7 @@ export default function ZonesScreen() {
 
                 <CustomBottomSheet ref={bottomSheetRefs.wheel} menuVisible={wheelMenuVisible} setMenuVisible={setWheelMenuVisible}>
                     <ServerInput />
-                    <ResetButton />
+                    <DeleteZonesButton />
                 </CustomBottomSheet>
 
 
