@@ -36,27 +36,15 @@ export default function RootLayout() {
 
   return (
       <AppStateProvider>
-          <GestureHandlerRootView style={{ flex: 1 }}>
+          <GestureHandlerRootView>
               <PaperProvider>
-
-
                   <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-
-
-                  <View style={{ flex: 1 , backgroundColor: Colors[colorScheme ?? 'light'].softBackground}}>
-                      <View style={{ flex: 1 , borderWidth:1    }}>
-                        {/*<Text style={{ fontFamily: 'SpaceMono', fontSize: 24, textAlign: 'center', marginTop: 20 }}>*/}
-                        {/*  Welcome to My App*/}
-                        {/*</Text>*/}
-
-                        <Stack>
-                          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-                          <Stack.Screen name="+not-found" />
-                        </Stack>
-
-                      </View>
+                  <View style={{ flex: 1 }}>
+                    <Stack>
+                      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                      <Stack.Screen name="+not-found" />
+                    </Stack>
                   </View>
-
                 </ThemeProvider>
               </PaperProvider>
         </GestureHandlerRootView>

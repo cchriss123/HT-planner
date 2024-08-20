@@ -194,7 +194,7 @@ export default function CounterScreen() {
 
                         <View style={styles.outerInfoContainer}>
                             <View style={styles.innerInfoContainer}>
-                                <Text style={{ fontWeight: 'bold' }}>Zone Info</Text>
+                                <Text style={styles.infoHeaderText}>Zone Info</Text>
 
                                 <View style={{ flexDirection: 'row' }}>
                                     <Text style={styles.infoText}>{`Grafts count: `}</Text>
@@ -228,7 +228,7 @@ export default function CounterScreen() {
 
                             </View>
                             <View style={styles.innerInfoContainer}>
-                                <Text style={{ fontWeight: 'bold' }}>Overall Info</Text>
+                                <Text style={styles.infoHeaderText}>Overall Info</Text>
                                 <View style={{ flexDirection: 'row' }}>
                                     <Text style={styles.infoText}>{`Total Singles:`}</Text>
                                     <Text>{`${globalState.totalSingles}`}</Text>
@@ -358,6 +358,12 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
         },
         infoText: {
             width: '60%',
+            color: colors.primaryText,
+        },
+        infoHeaderText: {
+            width: '60%',
+            color: colors.primaryText,
+            fontWeight: 'bold'
         },
     });
 }

@@ -173,8 +173,8 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             alignItems: 'center',
             justifyContent: 'space-between',
             height: 60,
-            width: '100%', // Ensures the container takes full width of the screen
-            paddingHorizontal: 10, // Add padding to the sides for better alignment
+            width: '100%',
+            paddingHorizontal: 10,
             marginTop: 10,
         },
         tabButton: {

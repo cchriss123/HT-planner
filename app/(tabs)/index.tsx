@@ -69,6 +69,7 @@ export default function ZonesScreen() {
     }
 
     return (
+
         <View style={{ flex: 1, paddingTop: 70}}>
             <View style={styles.topContainer}>
                 <View style={styles.placeholderContainer} />
