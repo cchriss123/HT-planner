@@ -1,12 +1,17 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
-import React, { useState, useEffect } from 'react';
-import { Text, TouchableOpacity, View, Alert } from 'react-native';
-import { useAppState } from "@/state/Store";
+import React, {useState, useEffect} from 'react';
+import {Text, TouchableOpacity, View, Alert} from 'react-native';
+import {useAppState} from "@/state/Store";
 import FormStyles from "@/components/buttons/styles/RedButtonStyles"
+import BottomSheet from "@gorhom/bottom-sheet";
 
 
-export default function ResetZoneCountButton() {
-    const { styles} = FormStyles();
+interface ResetZoneCountButtonProps {
+    bottomSheetRef: React.RefObject<BottomSheet>;
+}
+
+export default function ResetZoneCountButton({bottomSheetRef}: ResetZoneCountButtonProps) {
+    const {styles} = FormStyles();
 
     const globalState = useAppState();
     const [message, setMessage] = useState('');
@@ -47,10 +52,11 @@ export default function ResetZoneCountButton() {
 
                         globalState.setDonorZones([...globalState.donorZones]);
                         setMessage('Zone counts reset');
+                        bottomSheetRef.current?.close();
                     }
                 }
             ],
-            { cancelable: true }
+            {cancelable: true}
         );
     }
 
@@ -59,7 +65,7 @@ export default function ResetZoneCountButton() {
             <TouchableOpacity
                 style={styles.buttonReset}
                 onPress={() => resetZones()}>
-                <Ionicons name="refresh" size={22} color="white" />
+                <Ionicons name="refresh" size={22} color="white"/>
                 <Text style={styles.buttonResetText}>Reset Counts</Text>
             </TouchableOpacity>
             {message ? <Text style={styles.message}>{message}</Text> : null}

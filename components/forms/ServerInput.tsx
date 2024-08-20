@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import { TextInput } from 'react-native-paper';
+import React, {useEffect, useState} from 'react';
+import {View, Text, TouchableOpacity} from 'react-native';
+import {TextInput} from 'react-native-paper';
 import FormStyles from "@/components/forms/styles/FormStyles";
-import { useAppState } from '@/state/Store';
+import {useAppState} from '@/state/Store';
+import BottomSheet from "@gorhom/bottom-sheet";
 
 
+interface ServerInputProps {
+    bottomSheetRef: React.RefObject<BottomSheet>;
+}
 
-function ServerInput() {
+function ServerInput({bottomSheetRef}: ServerInputProps) {
     const [inputIp, setInputIp] = useState('');
     const [message, setMessage] = useState('');
-    const { styles, theme } = FormStyles();
+    const {styles, theme} = FormStyles();
     const globalState = useAppState();
 
     useEffect(() => {
@@ -26,6 +30,7 @@ function ServerInput() {
     function editZoneSubmit() {
         globalState.saveIp(inputIp);
         setMessage('New IP saved');
+        bottomSheetRef.current?.close();
     }
 
     return (
@@ -40,12 +45,11 @@ function ServerInput() {
                 theme={theme}
             />
 
-            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+            <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
                 <TouchableOpacity
-                    style={[styles.button, { width: '54%' }]} onPress={editZoneSubmit}>
+                    style={[styles.button, {width: '54%'}]} onPress={editZoneSubmit}>
                     <Text style={styles.buttonTitle}>Save IP</Text>
                 </TouchableOpacity>
-                {/*<DeleteZonesButton />*/}
             </View>
 
             {message ? <Text style={styles.message}>{message}</Text> : null}
