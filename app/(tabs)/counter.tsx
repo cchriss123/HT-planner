@@ -200,31 +200,31 @@ export default function CounterScreen() {
 
                                     <View style={{ flexDirection: 'row' }}>
                                         <Text style={styles.infoText}>{`Grafts count: `}</Text>
-                                        <Text>{`${selectedZone.grafts}`}</Text>
+                                        <Text style={styles.infoText}>{`${selectedZone.grafts}`}</Text>
                                     </View>
                                     <View style={{ flexDirection: 'row' }}>
                                         <Text style={styles.infoText}>{`Hairs count: `}</Text>
-                                        <Text>{`${selectedZone.hairs}`}</Text>
+                                        <Text style={styles.infoText}>{`${selectedZone.hairs}`}</Text>
                                     </View>
 
                                     <View style={{ flexDirection: 'row' }}>
                                         <Text style={styles.infoText}>{`Hairs/FU: `}</Text>
-                                        <Text>{`${selectedZone.hairPerCountedGraft.toFixed(2)}`}</Text>
+                                        <Text style={styles.infoText}>{`${selectedZone.hairPerCountedGraft.toFixed(2)}`}</Text>
                                     </View>
                                     <View style={{ flexDirection: 'row' }}>
                                         <Text style={styles.infoText}>{`Area: `}</Text>
-                                        <Text>{`${selectedZone.area} cm²`}</Text>
+                                        <Text style={styles.infoText}>{`${selectedZone.area} cm²`}</Text>
                                     </View>
                                     <View style={{ flexDirection: 'row' }}>
-                                        <Text>{""}</Text>
+                                        <Text style={styles.infoText}>{""}</Text>
                                     </View>
                                     <View style={{ flexDirection: 'row' }}>
                                         <Text style={styles.infoText}>{`Target: `}</Text>
-                                        <Text>{`${selectedZone.graftsExtractedToReachDonorDesiredCoverageValue}`}</Text>
+                                        <Text style={styles.infoText}>{`${selectedZone.graftsExtractedToReachDonorDesiredCoverageValue}`}</Text>
                                     </View>
                                     <View style={{ flexDirection: 'row' }}>
                                         <Text style={styles.infoText}>{`Left: `}</Text>
-                                        <Text>{`${selectedZone.graftsLeftToReachDonorDesiredCoverageValue}`}</Text>
+                                        <Text style={styles.infoText}>{`${selectedZone.graftsLeftToReachDonorDesiredCoverageValue}`}</Text>
                                     </View>
 
 
@@ -233,32 +233,32 @@ export default function CounterScreen() {
                                     <Text style={styles.infoHeaderText}>Overall Info</Text>
                                     <View style={{ flexDirection: 'row' }}>
                                         <Text style={styles.infoText}>{`Total Singles:`}</Text>
-                                        <Text>{`${globalState.totalSingles}`}</Text>
+                                        <Text style={styles.infoText}>{`${globalState.totalSingles}`}</Text>
                                     </View>
                                     <View style={{ flexDirection: 'row' }}>
                                         <Text style={styles.infoText}>{`Total Doubles:`}</Text>
-                                        <Text>{`${globalState.totalDoubles}`}</Text>
+                                        <Text style={styles.infoText}>{`${globalState.totalDoubles}`}</Text>
                                     </View>
                                     <View style={{ flexDirection: 'row' }}>
                                         <Text style={styles.infoText}>{`Total Triples:`}</Text>
-                                        <Text>{`${globalState.totalTriples}`}</Text>
+                                        <Text style={styles.infoText}>{`${globalState.totalTriples}`}</Text>
                                     </View>
                                     <View style={{ flexDirection: 'row' }}>
                                         <Text style={styles.infoText}>{`Total Quads:`}</Text>
-                                        <Text>{`${globalState.totalQuadruples}`}</Text>
+                                        <Text style={styles.infoText}>{`${globalState.totalQuadruples}`}</Text>
                                     </View>
                                     <Text></Text>
                                     <View style={{ flexDirection: 'row' }}>
                                         <Text style={styles.infoText}>{`Total Grafts:`}</Text>
-                                        <Text>{`${globalState.totalGrafts}`}</Text>
+                                        <Text style={styles.infoText}>{`${globalState.totalGrafts}`}</Text>
                                     </View>
                                     <View style={{ flexDirection: 'row' }}>
                                         <Text style={styles.infoText}>{`Total Hair:`}</Text>
-                                        <Text>{`${globalState.totalHair}`}</Text>
+                                        <Text style={styles.infoText}>{`${globalState.totalHair}`}</Text>
                                     </View>
                                     <View style={{ flexDirection: 'row' }}>
                                         <Text style={styles.infoText}>{`Total Hair/FU:`}</Text>
-                                        <Text>{`${globalState.totalHairPerGraftsCounted.toFixed(2)}`}</Text>
+                                        <Text style={styles.infoText}>{`${globalState.totalHairPerGraftsCounted.toFixed(2)}`}</Text>
                                     </View>
                                 </View>
                             </View>

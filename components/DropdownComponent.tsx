@@ -1,8 +1,9 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import {StyleSheet, View, Text, Appearance} from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { useAppState, DonorZone } from '@/state/Store';
+import {Colors} from "@/constants/Colors";
 
 export interface DropdownComponentProps {
   selectedZone: DonorZone | null;
@@ -12,6 +13,10 @@ export interface DropdownComponentProps {
 export function DropdownComponent({selectedZone, setSelectedZone}: DropdownComponentProps) {
   const zoneState = useAppState();
   const zones = zoneState.donorZones;
+  const colorScheme = Appearance.getColorScheme();
+  const colors = colorScheme === 'dark' ? Colors.dark : Colors.light;
+
+  const styles = createStyles(Appearance.getColorScheme() , colors);
 
   function renderItem(zone: DonorZone) {
     return (
@@ -48,50 +53,61 @@ export function DropdownComponent({selectedZone, setSelectedZone}: DropdownCompo
   );
 }
 
-const styles = StyleSheet.create({
-  dropdown: {
-
-    borderWidth: 1,
-    borderColor: 'lightgrey',
-    margin: 16,
-    height: 50,
-    backgroundColor: 'white',
-    borderRadius: 12,
-    padding: 12,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
+function createStyles(colorScheme: "light" | "dark" | null | undefined, colors: {
+  primaryText: string;
+  solidBackground: string;
+  secondaryBlue: string;
+  neutralGrey: string;
+  softBackground: string;
+  primaryBlue: string
+}) {
+  return StyleSheet.create({
+    dropdown: {
+      borderWidth: 1,
+      borderColor: 'lightgrey',
+      marginBottom: 16,
+      height: 50,
+      backgroundColor: colors.solidBackground,
+      borderRadius: 12,
+      padding: 12,
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowRadius: 5,
+      width: '100%',
+      elevation: 5,
     },
-    shadowRadius: 5,
-    width: '100%',
-    elevation: 5,
-  },
-  icon: {
-    marginRight: 5,
-  },
-  item: {
-    padding: 17,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  textItem: {
-    flex: 1,
-    fontSize: 16,
-  },
-  placeholderStyle: {
-    fontSize: 16,
-  },
-  selectedTextStyle: {
-    fontSize: 16,
-  },
-  iconStyle: {
-    width: 20,
-    height: 20,
-  },
-  inputSearchStyle: {
-    height: 40,
-    fontSize: 16,
-  },
-});
+    icon: {
+      marginRight: 5,
+      color: colors.primaryText,
+
+    },
+    item: {
+      padding: 17,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      backgroundColor: colors.solidBackground,
+    },
+    textItem: {
+      flex: 1,
+      fontSize: 16,
+      color: colors.primaryText,
+    },
+    placeholderStyle: {
+      fontSize: 16,
+      color: colors.neutralGrey,
+    },
+    selectedTextStyle: {
+      fontSize: 16,
+      color: colors.primaryText,
+    },
+    iconStyle: {
+      width: 20,
+      height: 20,
+    },
+
+  });
+}

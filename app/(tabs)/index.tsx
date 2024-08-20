@@ -13,7 +13,7 @@ import ResetButton from "@/components/ResetButton";
 import ServerInput from "@/components/forms/ServerInput";
 
 
-Appearance.getColorScheme = () => 'dark';
+Appearance.getColorScheme = () => 'light';
 
 export default function ZonesScreen() {
     const colorScheme = Appearance.getColorScheme();
