@@ -8,14 +8,15 @@ import { Platform } from 'react-native';
 export default function TabLayout() {
 
     const colorScheme = useColorScheme();
+    const colors = colorScheme === 'dark' ? Colors.dark : Colors.light;
     const isAndroid = Platform.OS === 'android';
     return (
         <Tabs
             screenOptions={{
                 tabBarHideOnKeyboard: isAndroid,
-                tabBarActiveTintColor: Colors[colorScheme ?? 'light'].primaryBlue,
+                tabBarActiveTintColor: colors.primaryBlue,
                 tabBarStyle: {
-                    backgroundColor: Colors[colorScheme ?? 'light'].solidBackground,
+                    backgroundColor: colors.solidBackground,
                     borderTopWidth: 1,
                     borderTopColor: 'lightgrey',
                 },

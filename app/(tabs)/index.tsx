@@ -13,7 +13,7 @@ import ResetButton from "@/components/ResetButton";
 import ServerInput from "@/components/forms/ServerInput";
 
 
-Appearance.getColorScheme = () => 'light';
+Appearance.getColorScheme = () => 'dark';
 
 export default function ZonesScreen() {
     const colorScheme = Appearance.getColorScheme();
@@ -191,6 +191,8 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             shadowRadius: 5,
             elevation: 5,
             alignItems: 'center',
+            borderWidth: 1,
+            borderColor: 'lightgrey',
         },
         zoneListTitle: {
             fontSize: 14,
