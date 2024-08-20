@@ -9,8 +9,9 @@ import AddZone from "@/components/forms/AddZone";
 import EditDonorZone from "@/components/forms/EditZone";
 import logoImg from '@/assets/images/logo.png';
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import DeleteZonesButton from "@/components/DeleteZonesButton";
+import DeleteZonesButton from "@/components/buttons/DeleteZonesButton";
 import ServerInput from "@/components/forms/ServerInput";
+import ResetZoneCountButton from "@/components/buttons/ResetZoneCountButton";
 
 
 Appearance.getColorScheme = () => 'light';
@@ -123,7 +124,14 @@ export default function ZonesScreen() {
 
                 <CustomBottomSheet ref={bottomSheetRefs.wheel} menuVisible={wheelMenuVisible} setMenuVisible={setWheelMenuVisible}>
                     <ServerInput />
-                    <DeleteZonesButton />
+
+                    <View style={{ flexDirection: 'column'}}>
+                        <ResetZoneCountButton />
+                        <DeleteZonesButton />
+                    </View>
+
+
+
                 </CustomBottomSheet>
 
 

@@ -240,12 +240,14 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     }
 
     function calculateDonorZoneValues(zone: DonorZone) {
+
         zone.hairPerGraft = zone.hairPerCm2 / zone.graftsPerCm2;
         zone.graftsPerZone = zone.area * zone.graftsPerCm2;
         zone.coverageValue = zone.caliber * zone.hairPerCm2;
         zone.hairPerZone = zone.area * zone.hairPerCm2;
         zone.graftsExtractedToReachDonorDesiredCoverageValue = Math.floor(zone.graftsPerZone - ((zone.area * zone.desiredCoverageValue) / (zone.caliber * zone.hairPerGraft)));
         zone.graftsLeftToReachDonorDesiredCoverageValue = Math.floor(zone.graftsExtractedToReachDonorDesiredCoverageValue) - zone.grafts;
+
     }
 
     function getDonorZoneAvgCaliber() {
@@ -260,7 +262,6 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         for (const zone of donorZones) {
             sum += zone.caliber;
         }
-        console.log(sum / amountOfDonorZones);
 
         return sum / amountOfDonorZones;
     }
