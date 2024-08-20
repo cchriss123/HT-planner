@@ -35,8 +35,8 @@ export const Colors = {
     solidBackground: '#fff',
   },
   dark: {
-    // primaryBlue: '#0a7ea4',
-    primaryBlue: '#24a2d5',
+    primaryBlue: '#0a7ea4',
+    // primaryBlue: '#24a2d5',
     secondaryBlue: '#66c2cd',
     primaryText: '#ECEDEE',
     neutralGrey: '#9BA1A6',

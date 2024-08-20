@@ -12,11 +12,13 @@ export interface Props {
 }
 
 const CustomBottomSheet = forwardRef<BottomSheet, Props>((props, ref) => {
+
     const { children } = props;
     const {setMenuVisible } = props;
     const snapPoints = useMemo(() => ['50%', '60%', '70%', '80%', '90%', '95%', '100%'], []);
     const colorScheme = useColorScheme();
     const colors = colorScheme === 'dark' ? Colors.dark : Colors.light;
+    const styles = createStyles(colors);
     const renderBackDrop = useCallback((props: any) =>
         <BottomSheetBackdrop
             animatedIndex={props.animatedIndex}
@@ -46,9 +48,13 @@ const CustomBottomSheet = forwardRef<BottomSheet, Props>((props, ref) => {
             onChange={handleSheetChanges}
             backdropComponent={renderBackDrop}
             animationConfigs={animationConfigs}
-            backgroundStyle={{ borderRadius: 12, backgroundColor:
+            backgroundStyle={{
+                borderRadius: 12,
+                backgroundColor:
                 colors.solidBackground,
                 borderWidth: 1,
+                borderColor: colors.themedGrey,
+
 
         }}
         >
@@ -59,15 +65,22 @@ const CustomBottomSheet = forwardRef<BottomSheet, Props>((props, ref) => {
     );
 });
 
-const styles = StyleSheet.create({
-    contentContainer: {
-        flex: 1,
-        alignItems: 'center',
-        borderLeftWidth: 1,
-        borderRightWidth: 1,
-        backgroundColor: Colors.light.solidBackground,
+function createStyles(colors: {
+    neutralGrey: string;
+    solidBackground: string;
+    themedGrey: string;
+}) {
+    return StyleSheet.create({
+        contentContainer: {
+            flex: 1,
+            alignItems: 'center',
+            borderLeftWidth: 1,
+            borderRightWidth: 1,
+            borderColor: colors.themedGrey,
+            backgroundColor: colors.solidBackground,
 
-    },
-});
+        },
+    });
+}
 
 export default CustomBottomSheet;
