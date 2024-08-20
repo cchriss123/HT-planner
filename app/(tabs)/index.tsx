@@ -69,83 +69,82 @@ export default function ZonesScreen() {
     }
 
     return (
+        <View style={{ flex: 1, backgroundColor: colors.softBackground }}>
 
-        <View style={{ flex: 1, paddingTop: 70}}>
-            <View style={styles.topContainer}>
-                <View style={styles.placeholderContainer} />
-                <View style={styles.logoContainer}>
-                    <Image source={logoImg} style={styles.logo} />
+            <View style={{ flex: 1, paddingTop: 60}}>
+                <View style={styles.topContainer}>
+                    <View style={styles.placeholderContainer} />
+                    <View style={styles.logoContainer}>
+                        <Image source={logoImg} style={styles.logo} />
+                    </View>
+                    <TouchableOpacity
+                        style={styles.gearContainer}
+                        onPress={() => handleMenuPress()}
+                    >
+                        <FontAwesome gear="setting" size={35} color={wheelMenuVisible ? colors.primaryBlue : colors.neutralGrey} name="gear" />
+                    </TouchableOpacity>
                 </View>
-                <TouchableOpacity
-                    style={styles.gearContainer}
-                    onPress={() => handleMenuPress()}
-                >
-                    <FontAwesome gear="setting" size={35} color={wheelMenuVisible ? colors.primaryBlue : colors.neutralGrey} name="gear" />
-                </TouchableOpacity>
+
+                    <View style={styles.buttonWrapper}>
+                        <View style={styles.buttonContainer}>
+
+                            <View style={styles.button}>
+                                <TouchableOpacity onPress={() => openMenu(bottomSheetRefs.addDonor)}>
+                                    <Icon name="add-circle" size={65} color={colors.primaryBlue} />
+                                </TouchableOpacity>
+                                <Text style={styles.zoneListTitle}>Add Donor Zones</Text>
+                            </View>
+
+                            <FlatList
+                                data={donorZones}
+                                renderItem={(item) => renderZoneItem(item, bottomSheetRefs.editDonor)}
+                                style={styles.flatList}
+                                contentContainerStyle={styles.flatListContent}
+                            />
+
+                        </View>
+
+                        <View style={styles.buttonContainer}>
+                            <View style={styles.button}>
+                                <TouchableOpacity onPress={() => openMenu(bottomSheetRefs.addRecipient)}>
+                                    <Icon name="add-circle" size={65} color={colors.primaryBlue} />
+                                </TouchableOpacity>
+                                <Text style={styles.zoneListTitle}>Add Recipient Zones</Text>
+                            </View>
+                            <FlatList
+                                data={recipientZones}
+                                renderItem={(item) => renderZoneItem(item, bottomSheetRefs.editRecipient)}
+                                style={styles.flatList}
+                                contentContainerStyle={styles.flatListContent}
+                            />
+                        </View>
+                    </View>
+
+
+                <CustomBottomSheet ref={bottomSheetRefs.wheel} menuVisible={wheelMenuVisible} setMenuVisible={setWheelMenuVisible}>
+                    <ServerInput />
+                    <ResetButton />
+                </CustomBottomSheet>
+
+
+
+                <CustomBottomSheet ref={bottomSheetRefs.addDonor} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
+                    <AddZone zones={donorZones} zoneType={'donor'} bottomSheetRef={bottomSheetRefs.addDonor} />
+                </CustomBottomSheet>
+
+                <CustomBottomSheet ref={bottomSheetRefs.addRecipient} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
+                    <AddZone zones={recipientZones} zoneType={'recipient'} bottomSheetRef={bottomSheetRefs.addRecipient} />
+                </CustomBottomSheet>
+
+                <CustomBottomSheet ref={bottomSheetRefs.editDonor} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
+                    <EditDonorZone zone={selectedZone as DonorZone} zones={donorZones} bottomSheetRef={bottomSheetRefs.editDonor} />
+                </CustomBottomSheet>
+
+                <CustomBottomSheet ref={bottomSheetRefs.editRecipient} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
+                    <EditDonorZone zone={selectedZone as RecipientZone} zones={recipientZones} bottomSheetRef={bottomSheetRefs.editRecipient} />
+                </CustomBottomSheet>
+
             </View>
-
-
-
-
-                <View style={styles.buttonWrapper}>
-                    <View style={styles.buttonContainer}>
-
-                        <View style={styles.button}>
-                            <TouchableOpacity onPress={() => openMenu(bottomSheetRefs.addDonor)}>
-                                <Icon name="add-circle" size={65} color={colors.primaryBlue} />
-                            </TouchableOpacity>
-                            <Text style={styles.zoneListTitle}>Add Donor Zones</Text>
-                        </View>
-
-                        <FlatList
-                            data={donorZones}
-                            renderItem={(item) => renderZoneItem(item, bottomSheetRefs.editDonor)}
-                            style={styles.flatList}
-                            contentContainerStyle={styles.flatListContent}
-                        />
-
-                    </View>
-
-                    <View style={styles.buttonContainer}>
-                        <View style={styles.button}>
-                            <TouchableOpacity onPress={() => openMenu(bottomSheetRefs.addRecipient)}>
-                                <Icon name="add-circle" size={65} color={colors.primaryBlue} />
-                            </TouchableOpacity>
-                            <Text style={styles.zoneListTitle}>Add Recipient Zones</Text>
-                        </View>
-                        <FlatList
-                            data={recipientZones}
-                            renderItem={(item) => renderZoneItem(item, bottomSheetRefs.editRecipient)}
-                            style={styles.flatList}
-                            contentContainerStyle={styles.flatListContent}
-                        />
-                    </View>
-                </View>
-
-
-            <CustomBottomSheet ref={bottomSheetRefs.wheel} menuVisible={wheelMenuVisible} setMenuVisible={setWheelMenuVisible}>
-                <ServerInput />
-                <ResetButton />
-            </CustomBottomSheet>
-
-
-
-            <CustomBottomSheet ref={bottomSheetRefs.addDonor} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
-                <AddZone zones={donorZones} zoneType={'donor'} bottomSheetRef={bottomSheetRefs.addDonor} />
-            </CustomBottomSheet>
-
-            <CustomBottomSheet ref={bottomSheetRefs.addRecipient} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
-                <AddZone zones={recipientZones} zoneType={'recipient'} bottomSheetRef={bottomSheetRefs.addRecipient} />
-            </CustomBottomSheet>
-
-            <CustomBottomSheet ref={bottomSheetRefs.editDonor} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
-                <EditDonorZone zone={selectedZone as DonorZone} zones={donorZones} bottomSheetRef={bottomSheetRefs.editDonor} />
-            </CustomBottomSheet>
-
-            <CustomBottomSheet ref={bottomSheetRefs.editRecipient} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
-                <EditDonorZone zone={selectedZone as RecipientZone} zones={recipientZones} bottomSheetRef={bottomSheetRefs.editRecipient} />
-            </CustomBottomSheet>
-
         </View>
 
     );

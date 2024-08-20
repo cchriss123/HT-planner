@@ -12,6 +12,7 @@ import CustomBottomSheet from "@/components/CustomBottomSheet";
 export default function CalculatorScreen() {
     const [activeTab, setActiveTab] = useState<string>('Donor Zones');
     const colorScheme = Appearance.getColorScheme();
+    const colors = colorScheme === 'dark' ? Colors.dark : Colors.light;
     const styles = createStyles(colorScheme);
     const globalState = useAppState();
     const bottomSheetRef = useRef<BottomSheet>(null);
@@ -113,54 +114,57 @@ export default function CalculatorScreen() {
 
 
     return (
-        <View style={{ flex: 1, paddingTop: 70}}>
-            <View style={styles.tabContainer}>
-                <TouchableOpacity
-                    style={[styles.tabButton, activeTab === 'Donor Zones' && styles.activeTab]}
-                    onPress={() => handleTabChange('Donor Zones')}
-                >
-                    <Text style={styles.tabText}>Donor Areas</Text>
+        <View style={{ flex: 1, backgroundColor: colors.softBackground }}>
 
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={[styles.tabButton, activeTab === 'Recipient Zones' && styles.activeTab]}
-                    onPress={() => handleTabChange('Recipient Zones')}
-                >
-                    <Text style={styles.tabText}>Recipient Areas</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={{marginRight: '3%'}} onPress={handleMenuPress}>
-                    <FontAwesome name="file-pdf-o" size={35} color={
-                        menuVisible ? Colors.light.primaryBlue : Colors.light.neutralGrey
-                    } />
-                </TouchableOpacity>
+            <View style={{ flex: 1, paddingTop: 60}}>
+                <View style={styles.tabContainer}>
+                    <TouchableOpacity
+                        style={[styles.tabButton, activeTab === 'Donor Zones' && styles.activeTab]}
+                        onPress={() => handleTabChange('Donor Zones')}
+                    >
+                        <Text style={styles.tabText}>Donor Areas</Text>
 
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={[styles.tabButton, activeTab === 'Recipient Zones' && styles.activeTab]}
+                        onPress={() => handleTabChange('Recipient Zones')}
+                    >
+                        <Text style={styles.tabText}>Recipient Areas</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{marginRight: '3%'}} onPress={handleMenuPress}>
+                        <FontAwesome name="file-pdf-o" size={35} color={
+                            menuVisible ? Colors.light.primaryBlue : Colors.light.neutralGrey
+                        } />
+                    </TouchableOpacity>
+
+                </View>
+
+                <View style={styles.outerContainer}>
+                    {activeTab === 'Donor Zones' && (
+                        <FlatList
+                            data={donorZones}
+                            renderItem={renderDonorZoneItem}
+                            keyExtractor={(item) => item.name}
+                            style={{ alignSelf: 'center', paddingHorizontal: '2.5%' }}
+
+                        />
+
+
+                    )}
+                    {activeTab === 'Recipient Zones' && (
+                        <FlatList
+                            data={recipientZones}
+                            renderItem={renderRecipientZoneItem}
+                            keyExtractor={(item) => item.name}
+                            style={{alignSelf: 'center', paddingHorizontal: '2.5%'}}
+                        />
+
+                    )}
+                </View>
+                <CustomBottomSheet ref={bottomSheetRef} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
+                    <PdfExporter pdfType="calculator" bottomSheetRef={bottomSheetRef} />
+                </CustomBottomSheet>
             </View>
-
-            <View style={styles.outerContainer}>
-                {activeTab === 'Donor Zones' && (
-                    <FlatList
-                        data={donorZones}
-                        renderItem={renderDonorZoneItem}
-                        keyExtractor={(item) => item.name}
-                        style={{ alignSelf: 'center', paddingHorizontal: '2.5%' }}
-
-                    />
-
-
-                )}
-                {activeTab === 'Recipient Zones' && (
-                    <FlatList
-                        data={recipientZones}
-                        renderItem={renderRecipientZoneItem}
-                        keyExtractor={(item) => item.name}
-                        style={{alignSelf: 'center', paddingHorizontal: '2.5%'}}
-                    />
-
-                )}
-            </View>
-            <CustomBottomSheet ref={bottomSheetRef} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
-                <PdfExporter pdfType="calculator" bottomSheetRef={bottomSheetRef} />
-            </CustomBottomSheet>
         </View>
     );
 }
