@@ -42,16 +42,16 @@ export default function CalculatorScreen() {
                 <Collapsible title={item.name}>
                     <View style={styles.row}>
                         <View style={styles.leftColumn}>
-                            <Text>Caliber:</Text>
-                            <Text>Hair per cm²:</Text>
-                            <Text>Grafts per cm²:</Text>
-                            <Text>Desired coverage value:</Text>
+                            <Text style={styles.zoneButtonHiddenText}>Caliber:</Text>
+                            <Text style={styles.zoneButtonHiddenText}>Hair per cm²:</Text>
+                            <Text style={styles.zoneButtonHiddenText}>Grafts per cm²:</Text>
+                            <Text style={styles.zoneButtonHiddenText}>Desired coverage value:</Text>
                         </View>
                         <View style={styles.rightColumn}>
-                            <Text>{item.caliber}</Text>
-                            <Text>{item.hairPerCm2}</Text>
-                            <Text>{item.graftsPerCm2}</Text>
-                            <Text>{item.desiredCoverageValue}</Text>
+                            <Text style={styles.zoneButtonHiddenText}>{item.caliber}</Text>
+                            <Text style={styles.zoneButtonHiddenText}>{item.hairPerCm2}</Text>
+                            <Text style={styles.zoneButtonHiddenText}>{item.graftsPerCm2}</Text>
+                            <Text style={styles.zoneButtonHiddenText}>{item.desiredCoverageValue}</Text>
                         </View>
                     </View>
                 </Collapsible>
@@ -81,16 +81,16 @@ export default function CalculatorScreen() {
                 <Collapsible title={item.name}>
                     <View style={styles.row}>
                         <View style={styles.leftColumn}>
-                            <Text>Caliber:</Text>
-                            <Text>Hair per cm²:</Text>
-                            <Text>Grafts per cm²:</Text>
-                            <Text>Desired coverage value:</Text>
+                            <Text style={styles.zoneButtonHiddenText}>Caliber:</Text>
+                            <Text style={styles.zoneButtonHiddenText}>Hair per cm²:</Text>
+                            <Text style={styles.zoneButtonHiddenText}>Grafts per cm²:</Text>
+                            <Text style={styles.zoneButtonHiddenText}>Desired coverage value:</Text>
                         </View>
                         <View style={styles.rightColumn}>
-                            <Text>{item.caliber}</Text>
-                            <Text>{item.hairPerCm2}</Text>
-                            <Text>{item.graftsPerCm2}</Text>
-                            <Text>{item.desiredCoverageValue}</Text>
+                            <Text style={styles.zoneButtonHiddenText}>{item.caliber}</Text>
+                            <Text style={styles.zoneButtonHiddenText}>{item.hairPerCm2}</Text>
+                            <Text style={styles.zoneButtonHiddenText}>{item.graftsPerCm2}</Text>
+                            <Text style={styles.zoneButtonHiddenText}>{item.desiredCoverageValue}</Text>
                         </View>
                     </View>
                 </Collapsible>
@@ -190,6 +190,7 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
         },
         tabText: {
             fontSize: 16,
+            color: colors.primaryText,
         },
         outerContainer: {
             flexDirection: 'row',
@@ -232,6 +233,13 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
         zoneButtonText: {
             fontSize: 16,
             marginVertical: 3,
+            color: colors.primaryText
         },
+        zoneButtonHiddenText: {
+            color: colors.primaryText
+
+
+        }
+
     });
 }
