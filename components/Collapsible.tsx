@@ -9,13 +9,17 @@ import { Colors } from '@/constants/Colors';
 export function Collapsible({ children, title }: PropsWithChildren & { title: string }) {
   const [isOpen, setIsOpen] = useState(false);
   const theme = useColorScheme() ?? 'light';
+  const colors = theme === 'light' ? Colors.light : Colors.dark;
+    const styles = createStyles(colors);
 
-  const backgroundColor = theme === 'light' ? Colors.light.solidBackground : Colors.dark.solidBackground;
+
+
+
 
   return (
-      <ThemedView style={[styles.container, { backgroundColor }]}>
+      <ThemedView style={[styles.container, { borderColor: colors.solidBackground }]}>
         <TouchableOpacity
-            style={[styles.heading, { backgroundColor }]}
+            style={[styles.heading, { backgroundColor: colors.solidBackground }]}
             onPress={() => setIsOpen((value) => !value)}
             activeOpacity={0.8}>
           <Ionicons
@@ -26,30 +30,40 @@ export function Collapsible({ children, title }: PropsWithChildren & { title: st
           <ThemedText type="defaultSemiBold">{title}</ThemedText>
         </TouchableOpacity>
         {isOpen &&
-            <ThemedView style={[styles.content, { backgroundColor }]}>
+            <ThemedView style={[styles.content, { backgroundColor: colors.solidBackground }]}>
               {children}
             </ThemedView>}
       </ThemedView>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    borderRadius: 12,
-    marginVertical: 10,
-    overflow: 'hidden',
-    backgroundColor: Colors.light.solidBackground,
-    borderWidth: 1,
-    borderColor: 'lightgrey'
-  },
-  heading: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-    padding: 10,
-  },
-  content: {
-    marginTop: 6,
-    padding: 10,
-  },
-});
+function createStyles(colors: {
+  themedGrey: string;
+  primaryText: string;
+  solidBackground: string;
+  secondaryBlue: string;
+  neutralGrey: string;
+  softBackground: string;
+  primaryBlue: string
+}) {
+  return  StyleSheet.create({
+    container: {
+      borderRadius: 12,
+      marginVertical: 10,
+      overflow: 'hidden',
+      backgroundColor: colors.solidBackground,
+      borderWidth: 1,
+      borderColor: colors.themedGrey,
+    },
+    heading: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 6,
+      padding: 10,
+    },
+    content: {
+      marginTop: 6,
+      padding: 10,
+    },
+  });
+}

@@ -30,16 +30,17 @@ export const Colors = {
     secondaryBlue: '#99cdff',
     primaryText: '#11181C',
     neutralGrey: '#687076',
+    themedGrey: 'lightgrey',
     softBackground: '#f2f2f2',
     solidBackground: '#fff',
   },
   dark: {
     // primaryBlue: '#0a7ea4',
     primaryBlue: '#24a2d5',
-
     secondaryBlue: '#66c2cd',
     primaryText: '#ECEDEE',
     neutralGrey: '#9BA1A6',
+    themedGrey: '#4B4F54',
     softBackground: '#151718',
     solidBackground: 'black',
   },

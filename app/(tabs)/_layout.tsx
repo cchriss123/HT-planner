@@ -18,7 +18,7 @@ export default function TabLayout() {
                 tabBarStyle: {
                     backgroundColor: colors.solidBackground,
                     borderTopWidth: 1,
-                    borderTopColor: 'lightgrey',
+                    borderTopColor: colors.themedGrey,
                 },
                 headerShown: false,
             }}>

@@ -174,7 +174,7 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             paddingTop: 10,
             flex: 1,
             borderTopWidth: 1,
-            borderColor: 'lightgrey',
+            borderColor: colors.themedGrey,
         },
         buttonContainer: {
             flex: 1,
@@ -192,7 +192,7 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             elevation: 5,
             alignItems: 'center',
             borderWidth: 1,
-            borderColor: 'lightgrey',
+            borderColor: colors.themedGrey,
         },
         zoneListTitle: {
             fontSize: 14,

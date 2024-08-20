@@ -198,7 +198,7 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             justifyContent: 'center',
             alignItems: 'center',
             borderTopWidth: 1,
-            borderColor: 'lightgrey',
+            borderColor: colors.themedGrey,
             paddingTop: 5,
             paddingBottom: 70,
         },
@@ -215,7 +215,7 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             shadowRadius: 5,
             elevation: 5,
             borderWidth: 1,
-            borderColor: 'lightgrey',
+            borderColor: colors.themedGrey,
         },
         row: {
             flexDirection: 'row',

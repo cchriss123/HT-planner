@@ -59,12 +59,13 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined, colors: 
   secondaryBlue: string;
   neutralGrey: string;
   softBackground: string;
-  primaryBlue: string
+  primaryBlue: string;
+  themedGrey: string;
 }) {
   return StyleSheet.create({
     dropdown: {
       borderWidth: 1,
-      borderColor: 'lightgrey',
+      borderColor: colors.themedGrey,
       marginBottom: 16,
       height: 50,
       backgroundColor: colors.solidBackground,
