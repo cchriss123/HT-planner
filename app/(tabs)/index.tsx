@@ -125,7 +125,7 @@ export default function ZonesScreen() {
                 <CustomBottomSheet ref={bottomSheetRefs.wheel} menuVisible={wheelMenuVisible} setMenuVisible={setWheelMenuVisible}>
                     <ServerInput bottomSheetRef={bottomSheetRefs.wheel} />
 
-                    <View style={{ flexDirection: 'column'}}>
+                    <View style={{ flexDirection: 'column', width: '100%', borderColor: colors.themedGrey, alignItems: 'center', justifyContent: 'center'}}>
                         <ResetZoneCountButton bottomSheetRef={bottomSheetRefs.wheel}/>
                         <DeleteZonesButton bottomSheetRef={bottomSheetRefs.wheel}/>
                     </View>

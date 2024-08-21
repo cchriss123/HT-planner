@@ -1,6 +1,6 @@
 import React, {useRef, useState} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Appearance, FlatList} from 'react-native';
-import PdfExporter from "@/components/PdfExporter";
+import PdfExporter from "@/components/forms/PdfExporter";
 import {Colors} from "@/constants/Colors";
 import {useAppState, DonorZone, RecipientZone} from "@/state/Store";
 import BottomSheet from "@gorhom/bottom-sheet";

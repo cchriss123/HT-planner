@@ -1,6 +1,8 @@
 import { StyleSheet } from 'react-native';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import {isPhone} from "@/constants/DeviceType";
+
 
 export default function FormStyles() {
     const colorScheme = useColorScheme();
@@ -20,21 +22,29 @@ export default function FormStyles() {
             backdrop: colors.primaryText,
             notification: colors.primaryBlue,
         },
+        fontSizes: {
+            small: 40,
+            medium: 40,
+            large: 40,
+        },
+
     };
 
     const styles = StyleSheet.create({
         container: {
-            width: '70%',
+            width: isPhone ? '70%' : '50%',
             alignItems: 'center',
             marginTop : '5%',
         },
         input: {
             width: '100%',
-            height: 40,
+            height: isPhone ? 40 : 55,
             marginVertical: 5,
+            fontSize: isPhone ? 16 : 20,
         },
         button: {
-            height: 40,
+            width: '45%',
+            height: isPhone ? 40 : 55,
             color: colors.primaryText,
             borderRadius: 8,
             shadowColor: '#000',
@@ -46,7 +56,7 @@ export default function FormStyles() {
             shadowRadius: 5,
             elevation: 5,
             marginVertical: 20,
-            width: '45%',
+
             backgroundColor: colors.primaryBlue,
             alignItems: 'center',
             justifyContent: 'center',
@@ -55,6 +65,7 @@ export default function FormStyles() {
             color: colors.solidBackground,
             alignItems: 'center',
             justifyContent: 'center',
+            fontSize: isPhone ? 14 : 18,
         },
         message: {
             color: colors.primaryText,
@@ -62,7 +73,7 @@ export default function FormStyles() {
             fontWeight: 'bold',
         },
         title: {
-            fontSize: 16,
+            fontSize: isPhone ? 16 : 20,
             fontWeight: 'bold',
             color: colors.primaryText,
             marginTop: 20,

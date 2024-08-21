@@ -8,7 +8,7 @@ import { useAppState, DonorZone } from '@/state/Store';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import CustomBottomSheet from '@/components/CustomBottomSheet';
 import BottomSheet from "@gorhom/bottom-sheet";
-import PdfExporter from "@/components/PdfExporter";
+import PdfExporter from "@/components/forms/PdfExporter";
 
 
 
@@ -164,13 +164,11 @@ export default function CounterScreen() {
                             <View style={styles.buttonAreaContainer}>
                                 <View style={styles.buttonContainer}>
                                     <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(-1)}>
-                                        <Icon name="remove-circle"
-                                              size={isPhone ? 65 : 120}
-                                              color={Colors.light.primaryBlue} />
+                                        <Icon name="remove-circle" size={isPhone ? 65 : 110} color={Colors.light.primaryBlue} />
                                     </TouchableOpacity>
                                     <Text style={styles.buttonText}>{`Singles ${selectedZone.singles}`}</Text>
                                     <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(1)}>
-                                        <Icon name="add-circle" size={isPhone ? 65 : 120} color={Colors.light.primaryBlue} />
+                                        <Icon name="add-circle" size={isPhone ? 65 : 110} color={Colors.light.primaryBlue} />
                                     </TouchableOpacity>
                                 </View>
 

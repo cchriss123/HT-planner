@@ -1,6 +1,8 @@
 import { StyleSheet } from 'react-native';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import {isPhone} from "@/constants/DeviceType";
+
 
 export default function FormStyles() {
     const colorScheme = useColorScheme();
@@ -8,19 +10,18 @@ export default function FormStyles() {
 
     const styles = StyleSheet.create({
         buttonContainer: {
-            width: '50%',
+            width: isPhone ? '70%' : '50%',
             alignItems: 'center',
             marginBottom: 20,
         },
             buttonReset: {
-            height: 40,
+            height: isPhone ? 40 : 55,
             backgroundColor: 'red',
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'center',
             padding: 10,
             marginTop: 15,
-
             color: colors.primaryText,
             borderRadius: 8,
             shadowColor: '#000',
@@ -31,12 +32,13 @@ export default function FormStyles() {
             },
             shadowRadius: 5,
             elevation: 5,
-            width: '76%',
+            width: '45%',
 
         },
         buttonResetText: {
             color: 'white',
-            fontSize: 16,
+            fontSize: isPhone ? 14 : 18,
+
             marginLeft: 5,
         },
         message: {

@@ -47,7 +47,7 @@ function ServerInput({bottomSheetRef}: ServerInputProps) {
 
             <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
                 <TouchableOpacity
-                    style={[styles.button, {width: '54%'}]} onPress={editZoneSubmit}>
+                    style={styles.button} onPress={editZoneSubmit}>
                     <Text style={styles.buttonTitle}>Save IP</Text>
                 </TouchableOpacity>
             </View>
