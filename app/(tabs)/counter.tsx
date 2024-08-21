@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {View, TouchableOpacity, Text, useColorScheme, StyleSheet} from 'react-native';
 import { Colors } from '@/constants/Colors';
+import { isPhone } from '@/constants/DeviceType';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { DropdownComponent } from '@/components/DropdownComponent';
 import { useAppState, DonorZone } from '@/state/Store';
@@ -8,6 +9,8 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import CustomBottomSheet from '@/components/CustomBottomSheet';
 import BottomSheet from "@gorhom/bottom-sheet";
 import PdfExporter from "@/components/PdfExporter";
+
+
 
 export default function CounterScreen() {
     const colorScheme = useColorScheme();
@@ -17,6 +20,7 @@ export default function CounterScreen() {
     const [selectedZone, setSelectedZone] = useState<DonorZone | null>(null);
     const bottomSheetRef = useRef<BottomSheet>(null);
     const [menuVisible, setMenuVisible] = useState(false);
+
 
 
     function handleMenuPress() {
@@ -135,14 +139,20 @@ export default function CounterScreen() {
 
     return (
         <View style={{ flex: 1, backgroundColor: colors.softBackground }}>
-            <View style={{ flex: 1, paddingTop: 60 }}>
+            <View style={{
+                flex: 1,
+                paddingTop: 60
+            }}>
                     <View style={styles.topContainer}>
                         <View style={{ borderColor: 'black', width: '60%', alignItems: 'center' }}>
                             <DropdownComponent selectedZone={selectedZone} setSelectedZone={setSelectedZone} />
                         </View>
                         <TouchableOpacity style={{marginRight: '3%'
                         }} onPress={handleMenuPress}>
-                            <FontAwesome name="file-pdf-o" size={35} color={
+                            <FontAwesome
+                                name="file-pdf-o"
+                                size= { isPhone ? 35 : 60 }
+                                color={
                                 menuVisible ? Colors.light.primaryBlue : Colors.light.neutralGrey
                             } />
                         </TouchableOpacity>
@@ -154,41 +164,43 @@ export default function CounterScreen() {
                             <View style={styles.buttonAreaContainer}>
                                 <View style={styles.buttonContainer}>
                                     <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(-1)}>
-                                        <Icon name="remove-circle" size={65} color={Colors.light.primaryBlue} />
+                                        <Icon name="remove-circle"
+                                              size={isPhone ? 65 : 120}
+                                              color={Colors.light.primaryBlue} />
                                     </TouchableOpacity>
                                     <Text style={styles.buttonText}>{`Singles ${selectedZone.singles}`}</Text>
                                     <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(1)}>
-                                        <Icon name="add-circle" size={65} color={Colors.light.primaryBlue} />
+                                        <Icon name="add-circle" size={isPhone ? 65 : 120} color={Colors.light.primaryBlue} />
                                     </TouchableOpacity>
                                 </View>
 
                                 <View style={styles.buttonContainer}>
                                     <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(-2)}>
-                                        <Icon name="remove-circle" size={65} color={Colors.light.primaryBlue} />
+                                        <Icon name="remove-circle" size={isPhone ? 65 : 110} color={Colors.light.primaryBlue} />
                                     </TouchableOpacity>
                                     <Text style={styles.buttonText}>{`Doubles ${selectedZone.doubles}`}</Text>
                                     <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(2)}>
-                                        <Icon name="add-circle" size={65} color={Colors.light.primaryBlue} />
+                                        <Icon name="add-circle" size={isPhone ? 65 : 110} color={Colors.light.primaryBlue} />
                                     </TouchableOpacity>
                                 </View>
 
                                 <View style={styles.buttonContainer}>
                                     <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(-3)}>
-                                        <Icon name="remove-circle" size={65} color={Colors.light.primaryBlue} />
+                                        <Icon name="remove-circle" size={isPhone ? 65 : 110} color={Colors.light.primaryBlue} />
                                     </TouchableOpacity>
                                     <Text style={styles.buttonText}>{`Triples ${selectedZone.triples}`}</Text>
                                     <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(3)}>
-                                        <Icon name="add-circle" size={65} color={Colors.light.primaryBlue} />
+                                        <Icon name="add-circle" size={isPhone ? 65 : 110} color={Colors.light.primaryBlue} />
                                     </TouchableOpacity>
                                 </View>
 
                                 <View style={styles.buttonContainer}>
                                     <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(-4)}>
-                                        <Icon name="remove-circle" size={65} color={Colors.light.primaryBlue} />
+                                        <Icon name="remove-circle" size={isPhone ? 65 : 110} color={Colors.light.primaryBlue} />
                                     </TouchableOpacity>
                                     <Text style={styles.buttonText}>{`Quads ${selectedZone.quadruples}`}</Text>
                                     <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(4)}>
-                                        <Icon name="add-circle" size={65} color={Colors.light.primaryBlue} />
+                                        <Icon name="add-circle" size={isPhone ? 65 : 110} color={Colors.light.primaryBlue} />
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -281,15 +293,16 @@ export default function CounterScreen() {
 }
 
 function createStyles(colorScheme: "light" | "dark" | null | undefined) {
+
     const colors = colorScheme === 'dark' ? Colors.dark : Colors.light;
     return StyleSheet.create({
         topContainer: {
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-between',
-            height: 60,
+            height: isPhone ? 50 : 100,
             width: '100%',
-            paddingHorizontal: 10,
+            paddingHorizontal: '2.5%',
             marginTop: 10,
         },
         buttonAreaContainer: {
@@ -305,9 +318,9 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
         buttonContainer: {
             flexDirection: 'row',
             borderRadius: 12,
-            margin: 8,
+            margin: isPhone ? 8 : 16,
             width: '95%',
-            height: 70,
+            height: isPhone ? 70 : 110,
             justifyContent: 'space-between',
             alignItems: 'center',
             backgroundColor: colors.solidBackground,
@@ -325,7 +338,7 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
         },
         buttonText: {
             color: colors.primaryText,
-            fontSize: 25,
+            fontSize: isPhone ? 25 : 45,
             fontWeight: 'bold',
             textAlign: 'center',
         },
@@ -343,12 +356,13 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
         },
         outerInfoContainer: {
             flexDirection: 'row',
-            width: '97%',
+            width: isPhone ? '97%' : '97.5%',
         },
         innerInfoContainer: {
             paddingHorizontal: '2%',
             paddingVertical: '3%',
-            margin: '0.5%',
+            marginHorizontal: isPhone ? '1%' : '1.5%',
+            marginVertical: '1%',
             borderWidth: 1,
             borderColor: colors.themedGrey,
             borderRadius: 12,
@@ -363,11 +377,14 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
         infoText: {
             width: '60%',
             color: colors.primaryText,
+            fontSize: isPhone ? 14 : 28
         },
         infoHeaderText: {
             width: '60%',
             color: colors.primaryText,
-            fontWeight: 'bold'
+            fontWeight: 'bold',
+            fontSize: isPhone ? 14 : 28
+
         },
     });
 }

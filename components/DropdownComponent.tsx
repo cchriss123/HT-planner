@@ -4,6 +4,8 @@ import { Dropdown } from 'react-native-element-dropdown';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { useAppState, DonorZone } from '@/state/Store';
 import {Colors} from "@/constants/Colors";
+import { isPhone } from '@/constants/DeviceType';
+
 
 export interface DropdownComponentProps {
   selectedZone: DonorZone | null;
@@ -27,7 +29,7 @@ export function DropdownComponent({selectedZone, setSelectedZone}: DropdownCompo
                   style={styles.icon}
                   color="black"
                   name="check"
-                  size={20}
+                  size= {isPhone ? 20 : 40}
               />
           )}
         </View>
@@ -41,7 +43,7 @@ export function DropdownComponent({selectedZone, setSelectedZone}: DropdownCompo
           selectedTextStyle={styles.selectedTextStyle}
           iconStyle={styles.iconStyle}
           data={zones}
-          maxHeight={400}
+          maxHeight={isPhone ? 400 : 800}
           labelField="name"
           valueField="name"
           placeholder="Select zone"
@@ -66,8 +68,8 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined, colors: 
     dropdown: {
       borderWidth: 1,
       borderColor: colors.themedGrey,
-      marginBottom: 16,
-      height: 50,
+      marginBottom: isPhone ? 16 : 24,
+      height: isPhone ? 50 : 90,
       backgroundColor: colors.solidBackground,
       borderRadius: 12,
       padding: 12,
@@ -94,20 +96,20 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined, colors: 
     },
     textItem: {
       flex: 1,
-      fontSize: 16,
+      fontSize: isPhone ? 16 : 32,
       color: colors.primaryText,
     },
     placeholderStyle: {
-      fontSize: 16,
+      fontSize: isPhone ? 16 : 32,
       color: colors.neutralGrey,
     },
     selectedTextStyle: {
-      fontSize: 16,
+      fontSize: isPhone ? 16 : 32,
       color: colors.primaryText,
     },
     iconStyle: {
-      width: 20,
-      height: 20,
+      width: isPhone ? 20 : 40,
+      height: isPhone ? 20 : 40,
     },
 
   });
