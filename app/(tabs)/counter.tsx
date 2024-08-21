@@ -151,7 +151,7 @@ export default function CounterScreen() {
                         }} onPress={handleMenuPress}>
                             <FontAwesome
                                 name="file-pdf-o"
-                                size= { isPhone ? 35 : 60 }
+                                size= { isPhone ? 35 : 50 }
                                 color={
                                 menuVisible ? Colors.light.primaryBlue : Colors.light.neutralGrey
                             } />

@@ -12,6 +12,8 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import DeleteZonesButton from "@/components/buttons/DeleteZonesButton";
 import ServerInput from "@/components/forms/ServerInput";
 import ResetZoneCountButton from "@/components/buttons/ResetZoneCountButton";
+import { isPhone } from '@/constants/DeviceType';
+
 
 
 Appearance.getColorScheme = () => 'light';
@@ -82,7 +84,7 @@ export default function ZonesScreen() {
                         style={styles.gearContainer}
                         onPress={() => handleMenuPress()}
                     >
-                        <FontAwesome gear="setting" size={35} color={wheelMenuVisible ? colors.primaryBlue : colors.neutralGrey} name="gear" />
+                        <FontAwesome gear="setting" size= { isPhone ? 35 : 50 } color={wheelMenuVisible ? colors.primaryBlue : colors.neutralGrey} name="gear" />
                     </TouchableOpacity>
                 </View>
 
@@ -91,7 +93,7 @@ export default function ZonesScreen() {
 
                             <View style={styles.button}>
                                 <TouchableOpacity onPress={() => openMenu(bottomSheetRefs.addDonor)}>
-                                    <Icon name="add-circle" size={65} color={colors.primaryBlue} />
+                                    <Icon name="add-circle" size={isPhone ? 65 : 110} color={colors.primaryBlue} />
                                 </TouchableOpacity>
                                 <Text style={styles.zoneListTitle}>Add Donor Zones</Text>
                             </View>
@@ -108,7 +110,7 @@ export default function ZonesScreen() {
                         <View style={styles.buttonContainer}>
                             <View style={styles.button}>
                                 <TouchableOpacity onPress={() => openMenu(bottomSheetRefs.addRecipient)}>
-                                    <Icon name="add-circle" size={65} color={colors.primaryBlue} />
+                                    <Icon name="add-circle" size={isPhone ? 65 : 110} color={colors.primaryBlue} />
                                 </TouchableOpacity>
                                 <Text style={styles.zoneListTitle}>Add Recipient Zones</Text>
                             </View>
@@ -210,7 +212,7 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
         },
         zoneButton: {
             marginVertical: 5,
-            height: 50,
+            height: isPhone ? 50 : 75,
             padding: 10,
             backgroundColor: colors.primaryBlue,
             borderRadius: 8,
@@ -222,9 +224,11 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             elevation: 5,
             alignItems: 'center',
             justifyContent: 'center',
+
         },
         zoneButtonText: {
             color: colors.solidBackground,
+            fontSize: isPhone ? 14 : 18,
         },
         flatList: {
             flex: 1,
@@ -236,7 +240,7 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-between',
-            height: 60,
+            height: isPhone ? 50 : 100,
             width: '100%',
             paddingHorizontal: 10,
             marginTop: 10,
@@ -250,8 +254,8 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             alignItems: 'center',
         },
         logo: {
-            width: 35,
-            height: 35,
+            width: isPhone ? 35 : 50,
+            height: isPhone ? 35 : 50,
             resizeMode: 'contain',
         },
         gearContainer: {

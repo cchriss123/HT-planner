@@ -136,7 +136,7 @@ export default function CalculatorScreen() {
                     <TouchableOpacity style={{marginRight: '3%'}} onPress={handleMenuPress}>
                         <FontAwesome
                             name="file-pdf-o"
-                            size= { isPhone ? 35 : 60 }
+                            size= { isPhone ? 35 : 50 }
                             color={
                                 menuVisible ? Colors.light.primaryBlue : Colors.light.neutralGrey
                             } />
