@@ -7,6 +7,8 @@ import BottomSheet from "@gorhom/bottom-sheet";
 import { Collapsible } from '@/components/Collapsible';
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import CustomBottomSheet from "@/components/CustomBottomSheet";
+import { isPhone } from '@/constants/DeviceType';
+
 
 
 export default function CalculatorScreen() {
@@ -39,7 +41,7 @@ export default function CalculatorScreen() {
         return (
             <View style={styles.zoneItem}>
 
-                <Collapsible title={item.name}>
+                <Collapsible title={item.name} >
                     <View style={styles.row}>
                         <View style={styles.leftColumn}>
                             <Text style={styles.zoneButtonHiddenText}>Caliber:</Text>
@@ -132,9 +134,12 @@ export default function CalculatorScreen() {
                         <Text style={styles.tabText}>Recipient Areas</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={{marginRight: '3%'}} onPress={handleMenuPress}>
-                        <FontAwesome name="file-pdf-o" size={35} color={
-                            menuVisible ? Colors.light.primaryBlue : Colors.light.neutralGrey
-                        } />
+                        <FontAwesome
+                            name="file-pdf-o"
+                            size= { isPhone ? 35 : 60 }
+                            color={
+                                menuVisible ? Colors.light.primaryBlue : Colors.light.neutralGrey
+                            } />
                     </TouchableOpacity>
 
                 </View>
@@ -176,10 +181,11 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-between',
-            height: 60,
+            height: isPhone ? 50 : 100,
             width: '100%',
-            paddingHorizontal: 10,
+            paddingHorizontal: isPhone ? 10 : 20,
             marginTop: 10,
+
         },
         tabButton: {
             padding: 10,
@@ -189,7 +195,7 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             borderBottomColor: colors.primaryBlue,
         },
         tabText: {
-            fontSize: 16,
+            fontSize: isPhone ? 16 : 24,
             color: colors.primaryText,
         },
         outerContainer: {
@@ -231,12 +237,14 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             padding: 5,
         },
         zoneButtonText: {
-            fontSize: 16,
+            fontSize: isPhone ? 16 : 20,
             marginVertical: 3,
             color: colors.primaryText
         },
         zoneButtonHiddenText: {
-            color: colors.primaryText
+            color: colors.primaryText,
+            fontSize: isPhone ? 14 : 18,
+
 
 
         }
