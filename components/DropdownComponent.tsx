@@ -29,7 +29,7 @@ export function DropdownComponent({selectedZone, setSelectedZone}: DropdownCompo
                   style={styles.icon}
                   color="black"
                   name="check"
-                  size= {isPhone ? 20 : 40}
+                  size= {isPhone ? 20 : 30}
               />
           )}
         </View>
@@ -68,8 +68,8 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined, colors: 
     dropdown: {
       borderWidth: 1,
       borderColor: colors.themedGrey,
-      marginBottom: isPhone ? 16 : 24,
-      height: isPhone ? 50 : 90,
+      marginBottom: 18,
+      height: isPhone ? 50 : 75,
       backgroundColor: colors.solidBackground,
       borderRadius: 12,
       padding: 12,
@@ -96,20 +96,20 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined, colors: 
     },
     textItem: {
       flex: 1,
-      fontSize: isPhone ? 16 : 32,
+      fontSize: isPhone ? 16 : 24,
       color: colors.primaryText,
     },
     placeholderStyle: {
-      fontSize: isPhone ? 16 : 32,
+      fontSize: isPhone ? 16 : 24,
       color: colors.neutralGrey,
     },
     selectedTextStyle: {
-      fontSize: isPhone ? 16 : 32,
+      fontSize: isPhone ? 16 : 24,
       color: colors.primaryText,
     },
     iconStyle: {
-      width: isPhone ? 20 : 40,
-      height: isPhone ? 20 : 40,
+      width: isPhone ? 20 : 30,
+      height: isPhone ? 20 : 30,
     },
 
   });
