@@ -68,8 +68,8 @@ export default function CalculatorScreen() {
                     <View style={styles.rightColumn}>
                         <Text style={styles.zoneButtonText}>{item.area} cm²</Text>
                         <Text style={styles.zoneButtonText}>{item.coverageValue.toFixed(2)}</Text>
-                        <Text style={styles.zoneButtonText}>{item.graftsPerZone}</Text>
-                        <Text style={styles.zoneButtonText}>{item.graftsLeftToReachDonorDesiredCoverageValue}</Text>
+                        <Text style={styles.zoneButtonText}>{Math.round(item.graftsPerZone)}</Text>
+                        <Text style={styles.zoneButtonText}>{Math.round(item.graftsLeftToReachDonorDesiredCoverageValue)}</Text>
                     </View>
                 </View>
 
@@ -105,8 +105,8 @@ export default function CalculatorScreen() {
                     </View>
                     <View style={styles.rightColumn}>
                         <Text style={styles.zoneButtonText}>{item.area} cm²</Text>
-                        <Text style={styles.zoneButtonText}>{item.grafts}</Text>
-                        <Text style={styles.zoneButtonText}>{item.graftsImplantedToReachDesiredRecipientCoverageValue}</Text>
+                        <Text style={styles.zoneButtonText}>{Math.round(item.grafts)}</Text>
+                        <Text style={styles.zoneButtonText}>{Math.round(item.graftsImplantedToReachDesiredRecipientCoverageValue)}</Text>
                     </View>
                 </View>
 
