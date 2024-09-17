@@ -20,6 +20,7 @@ export default function CounterScreen() {
     const [selectedZone, setSelectedZone] = useState<DonorZone | null>(null);
     const bottomSheetRef = useRef<BottomSheet>(null);
     const [menuVisible, setMenuVisible] = useState(false);
+    const [isTimesTen, setIsTimesTen] = useState(false);
 
 
 
@@ -83,40 +84,62 @@ export default function CounterScreen() {
         }
     }
 
-    function updateZoneCounts(value: number) {
-        if (!selectedZone) return;
-        if (value > 4) return;
 
-        if (value === 1) selectedZone.singles++;
-        else if (value === 2) selectedZone.doubles++;
-        else if (value === 3) selectedZone.triples++;
-        else if (value === 4) selectedZone.quadruples++;
-        else if (value === -1) {
-            if (selectedZone.singles <= 0) return;
-            selectedZone.singles--;
-        } else if (value === -2) {
-            if (selectedZone.doubles <= 0) return;
-            selectedZone.doubles--;
-        } else if (value === -3) {
-            if (selectedZone.triples <= 0) return;
-            selectedZone.triples--;
-        } else if (value === -4) {
-            if (selectedZone.quadruples <= 0) return;
-            selectedZone.quadruples--;
+    function updateZoneCounts(graftType: string, operation: string) {
+        if (!selectedZone) return;
+
+        const factor = isTimesTen ? 10 : 1;
+
+        for (let i = 0; i < factor; i++) {
+            if (graftType === "single" && operation === "add") selectedZone.singles++;
+            else if (graftType === "double" && operation === "add") selectedZone.doubles++;
+            else if (graftType === "triple" && operation === "add") selectedZone.triples++;
+            else if (graftType === "quad" && operation === "add") selectedZone.quadruples++;
+
+            else if (graftType === "single" && operation === "subtract") {
+                if (selectedZone.singles <= 0) break;
+                selectedZone.singles--;
+            } else if (graftType === "double" && operation === "subtract") {
+                if (selectedZone.doubles <= 0) break;
+                selectedZone.doubles--;
+            } else if (graftType === "triple" && operation === "subtract") {
+                if (selectedZone.triples <= 0) break;
+                selectedZone.triples--;
+            } else if (graftType === "quad" && operation === "subtract") {
+                if (selectedZone.quadruples <= 0) break;
+                selectedZone.quadruples--;
+            }
+
+            if (operation === "add") {
+                selectedZone.grafts++;
+                selectedZone.hairs += getHairsChanged(graftType, operation);
+            } else {
+                selectedZone.grafts--;
+                selectedZone.hairs += getHairsChanged(graftType, operation);
+            }
         }
 
-        value > 0 ? selectedZone.grafts++ : selectedZone.grafts--;
-        selectedZone.hairs += value;
         selectedZone.hairPerCountedGraft = selectedZone.hairs / selectedZone.grafts || 0;
-
         globalState.calculateDonorZoneValues(selectedZone);
         globalState.updateTotalCounts();
         globalState.setDonorZones([...globalState.donorZones]);
 
         sendAsync(selectedZone, globalState.ip);
-
-
     }
+
+
+
+    function getHairsChanged(graftType: string, operation: string) {
+        let hairsChanged = 0;
+        if (graftType === "single") hairsChanged = 1;
+        else if (graftType === "double") hairsChanged = 2;
+        else if (graftType === "triple") hairsChanged = 3;
+        else if (graftType === "quad") hairsChanged = 4;
+        if (operation === "subtract") hairsChanged *= -1;
+        return hairsChanged;
+    }
+
+
 
     useEffect(() => {
         if (!selectedZone && globalState.donorZones.length > 0) {
@@ -147,6 +170,15 @@ export default function CounterScreen() {
                         <View style={{ borderColor: 'black', width: '60%', alignItems: 'center' }}>
                             <DropdownComponent selectedZone={selectedZone} setSelectedZone={setSelectedZone} />
                         </View>
+
+                        <TouchableOpacity style={{ marginRight: '3%' }} onPress={() => setIsTimesTen(prevState => !prevState)}>
+                            <FontAwesome
+                                name="forward"
+                                size={isPhone ? 35 : 50}
+                                color={isTimesTen ? Colors.light.primaryBlue : Colors.light.neutralGrey}
+                            />
+                        </TouchableOpacity>
+
                         <TouchableOpacity style={{marginRight: '3%'
                         }} onPress={handleMenuPress}>
                             <FontAwesome
@@ -163,41 +195,41 @@ export default function CounterScreen() {
                         <View style={{ flex: 1, alignItems: 'center' }}>
                             <View style={styles.buttonAreaContainer}>
                                 <View style={styles.buttonContainer}>
-                                    <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(-1)}>
+                                    <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts("single", "subtract")}>
                                         <Icon name="remove-circle" size={isPhone ? 65 : 110} color={Colors.light.primaryBlue} />
                                     </TouchableOpacity>
                                     <Text style={styles.buttonText}>{`Singles ${selectedZone.singles}`}</Text>
-                                    <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(1)}>
+                                    <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts("single", "add")}>
                                         <Icon name="add-circle" size={isPhone ? 65 : 110} color={Colors.light.primaryBlue} />
                                     </TouchableOpacity>
                                 </View>
 
                                 <View style={styles.buttonContainer}>
-                                    <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(-2)}>
+                                    <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts("double", "subtract")}>
                                         <Icon name="remove-circle" size={isPhone ? 65 : 110} color={Colors.light.primaryBlue} />
                                     </TouchableOpacity>
                                     <Text style={styles.buttonText}>{`Doubles ${selectedZone.doubles}`}</Text>
-                                    <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(2)}>
+                                    <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts("double", "add")}>
                                         <Icon name="add-circle" size={isPhone ? 65 : 110} color={Colors.light.primaryBlue} />
                                     </TouchableOpacity>
                                 </View>
 
                                 <View style={styles.buttonContainer}>
-                                    <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(-3)}>
+                                    <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts("triple", "subtract")}>
                                         <Icon name="remove-circle" size={isPhone ? 65 : 110} color={Colors.light.primaryBlue} />
                                     </TouchableOpacity>
                                     <Text style={styles.buttonText}>{`Triples ${selectedZone.triples}`}</Text>
-                                    <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(3)}>
+                                    <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts("triple", "add")}>
                                         <Icon name="add-circle" size={isPhone ? 65 : 110} color={Colors.light.primaryBlue} />
                                     </TouchableOpacity>
                                 </View>
 
                                 <View style={styles.buttonContainer}>
-                                    <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(-4)}>
+                                    <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts("quad", "subtract")}>
                                         <Icon name="remove-circle" size={isPhone ? 65 : 110} color={Colors.light.primaryBlue} />
                                     </TouchableOpacity>
                                     <Text style={styles.buttonText}>{`Quads ${selectedZone.quadruples}`}</Text>
-                                    <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts(4)}>
+                                    <TouchableOpacity style={styles.button} onPress={() => updateZoneCounts("quad", "add")}>
                                         <Icon name="add-circle" size={isPhone ? 65 : 110} color={Colors.light.primaryBlue} />
                                     </TouchableOpacity>
                                 </View>
@@ -386,3 +418,6 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
         },
     });
 }
+
+
+
