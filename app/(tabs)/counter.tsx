@@ -262,11 +262,11 @@ export default function CounterScreen() {
                                     </View>
                                     <View style={{ flexDirection: 'row' }}>
                                         <Text style={styles.infoText}>{`Target: `}</Text>
-                                        <Text style={styles.infoText}>{`${selectedZone.totalGraftsExtractedToReachTarget}`}</Text>
+                                        <Text style={styles.infoText}>{`${selectedZone.availableForExtractionTotal}`}</Text>
                                     </View>
                                     <View style={{ flexDirection: 'row' }}>
                                         <Text style={styles.infoText}>{`Left: `}</Text>
-                                        <Text style={styles.infoText}>{`${selectedZone.graftsLeftToReachTarget}`}</Text>
+                                        <Text style={styles.infoText}>{`${selectedZone.availableForExtractionLeft}`}</Text>
                                     </View>
 
 

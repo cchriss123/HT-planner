@@ -77,8 +77,8 @@ function AddZone({ zones, zoneType, bottomSheetRef }: AddZoneProps) {
             graftsPerZone: 0,
             coverageValue: 0,
             hairPerZone: 0,
-            totalGraftsExtractedToReachTarget: 0,
-            graftsLeftToReachTarget: 0,
+            availableForExtractionTotal: 0,
+            availableForExtractionLeft: 0,
         };
 
         globalState.calculateDonorZoneValues(newZone);

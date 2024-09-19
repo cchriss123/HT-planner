@@ -24,12 +24,12 @@ export function getCalculatorEngPdfHtml(name: string, globalState: AppStateConte
             <p class="zone-text">Grafts per cm²: ${zone.graftsPerCm2}</p>
             <p class="zone-text">Hair per cm²: ${zone.hairPerCm2}</p>
             <p class="zone-text">Area: ${zone.area}</p>
-            <p class="zone-text">Desired Coverage Value: ${zone.minimumCoverageValue}</p>
+            <p class="zone-text">Minimum Coverage Value: ${zone.minimumCoverageValue}</p>
             <p class="zone-text">Hair per Graft: ${zone.hairPerGraft?.toFixed(2)}</p>
             <p class="zone-text">Grafts per Zone: ${zone.graftsPerZone}</p>
             <p class="zone-text">Coverage Value: ${zone.coverageValue.toFixed(2)}</p>
             <p class="zone-text">Hair per Zone: ${zone.hairPerZone}</p>
-            <p class="zone-text">Grafts Extracted to Reach Desired Coverage Value: ${zone.totalGraftsExtractedToReachTarget}</p>
+            <p class="zone-text">Grafts available for extraction: ${zone.availableForExtractionTotal}</p>
         </div>
     </div>`).join('');
 

@@ -69,7 +69,7 @@ export default function CalculatorScreen() {
                         <Text style={styles.zoneButtonText}>{item.area} cm²</Text>
                         <Text style={styles.zoneButtonText}>{item.coverageValue.toFixed(2)}</Text>
                         <Text style={styles.zoneButtonText}>{Math.round(item.graftsPerZone)}</Text>
-                        <Text style={styles.zoneButtonText}>{Math.round(item.graftsLeftToReachTarget)}</Text>
+                        <Text style={styles.zoneButtonText}>{Math.round(item.availableForExtractionTotal)}</Text>
                     </View>
                 </View>
 
