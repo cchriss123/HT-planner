@@ -18,9 +18,11 @@ interface EditZoneArgs {
     fuPerCm2: string;
     hairsPerCm2: string;
     area: string;
-    desiredCoverageValue: string;
+    desiredCoverageValue?: string;
+    minimumCoverageValue?: string;
     bottomSheetRef: React.RefObject<BottomSheet>;
 }
+
 
 function EditZone({ zones, zone, bottomSheetRef }: EditZoneProps) {
     if (!zone) return null;
@@ -30,7 +32,8 @@ function EditZone({ zones, zone, bottomSheetRef }: EditZoneProps) {
     const [fuPerCm2, setFuPerCm2] = React.useState(zone.graftsPerCm2.toString());
     const [hairsPerCm2, setHairsPerCm2] = React.useState(zone.hairPerCm2.toString());
     const [area, setArea] = React.useState(zone.area.toString());
-    const [desiredCoverageValue, setDesiredCoverageValue] = React.useState(zone.desiredCoverageValue.toString());
+    const [desiredCoverageValue, setDesiredCoverageValue] = React.useState(zone.type === 'recipient' ? (zone as RecipientZone).desiredCoverageValue.toString() : '');
+    const [minimumCoverageValue, setMinimumCoverageValue] = React.useState(zone.type === 'donor' ? (zone as DonorZone).minimumCoverageValue.toString() : '');
     const [message, setMessage] = React.useState('');
     const { setDonorZones, setRecipientZones, donorZones, recipientZones, updateTotalCounts } = useAppState();
     const { calculateDonorZoneValues, calculateRecipientZoneValues } = useAppState();
@@ -51,30 +54,34 @@ function EditZone({ zones, zone, bottomSheetRef }: EditZoneProps) {
             hairsPerCm2: args.hairsPerCm2,
             area: args.area,
             desiredCoverageValue: args.desiredCoverageValue,
-        });
+            minimumCoverageValue: args.minimumCoverageValue,
+        }, zone.type);
 
         if (zones.some(z => z.name === args.name && z.name !== zone.name)) {
             setMessage('Zone with that name already exists.');
             return;
         }
 
+        // Update zone values
         zone.name = args.name || zone.name;
         zone.caliber = checkedValues.caliber || zone.caliber;
         zone.graftsPerCm2 = checkedValues.fuPerCm2 || zone.graftsPerCm2;
         zone.hairPerCm2 = checkedValues.hairsPerCm2 || zone.hairPerCm2;
         zone.area = checkedValues.area || zone.area;
-        zone.desiredCoverageValue = checkedValues.desiredCoverageValue || zone.desiredCoverageValue;
 
         if (zone.type === 'donor') {
-            calculateDonorZoneValues(zone as DonorZone);
-
-            updateTotalCounts();
+            const donorZone = zone as DonorZone;
+            donorZone.minimumCoverageValue = checkedValues.minimumCoverageValue || donorZone.minimumCoverageValue;
+            calculateDonorZoneValues(donorZone);
             setDonorZones([...donorZones]);
         } else if (zone.type === 'recipient') {
-            calculateRecipientZoneValues(zone as RecipientZone);
+            const recipientZone = zone as RecipientZone;
+            recipientZone.desiredCoverageValue = checkedValues.desiredCoverageValue || recipientZone.desiredCoverageValue;
+            calculateRecipientZoneValues(recipientZone);
             setRecipientZones([...recipientZones]);
         }
 
+        updateTotalCounts();
         setMessage('Zone updated.');
         bottomSheetRef.current?.close();
     }
@@ -159,17 +166,30 @@ function EditZone({ zones, zone, bottomSheetRef }: EditZoneProps) {
                 style={styles.input}
                 theme={theme}
             />
-            <TextInput
-                label="Desired Coverage Value"
-                mode="outlined"
-                value={desiredCoverageValue}
-                onChangeText={setDesiredCoverageValue}
-                placeholder={zone.desiredCoverageValue.toString()}
-                keyboardType="numeric"
-                style={styles.input}
-                theme={theme}
-            />
-
+            {zone.type === 'recipient' && (
+                <TextInput
+                    label="Desired Coverage Value"
+                    mode="outlined"
+                    value={desiredCoverageValue}
+                    onChangeText={setDesiredCoverageValue}
+                    placeholder={(zone as RecipientZone).desiredCoverageValue?.toString()}
+                    keyboardType="numeric"
+                    style={styles.input}
+                    theme={theme}
+                />
+            )}
+            {zone.type === 'donor' && (
+                <TextInput
+                    label="Minimum Coverage Value"
+                    mode="outlined"
+                    value={minimumCoverageValue}
+                    onChangeText={setMinimumCoverageValue}
+                    placeholder={(zone as DonorZone).minimumCoverageValue?.toString()}
+                    keyboardType="numeric"
+                    style={styles.input}
+                    theme={theme}
+                />
+            )}
             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                 <TouchableOpacity
                     style={styles.button}
@@ -180,12 +200,13 @@ function EditZone({ zones, zone, bottomSheetRef }: EditZoneProps) {
                         hairsPerCm2,
                         area,
                         desiredCoverageValue,
+                        minimumCoverageValue,
                         bottomSheetRef,
                     })}
                 >
                     <Text style={styles.buttonTitle}>Save Changes</Text>
                 </TouchableOpacity>
-                <View style={{ width: '10%'}}></View>
+                <View style={{ width: '10%' }}></View>
                 <TouchableOpacity
                     style={[styles.button, { backgroundColor: 'red' }]}
                     onPress={() => deleteZone(zone)}
@@ -193,7 +214,6 @@ function EditZone({ zones, zone, bottomSheetRef }: EditZoneProps) {
                     <Text style={styles.buttonTitle}>Delete Zone</Text>
                 </TouchableOpacity>
             </View>
-
             {message ? <Text style={styles.message}>{message}</Text> : null}
         </View>
     );

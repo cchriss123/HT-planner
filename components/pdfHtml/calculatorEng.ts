@@ -24,12 +24,12 @@ export function getCalculatorEngPdfHtml(name: string, globalState: AppStateConte
             <p class="zone-text">Grafts per cm²: ${zone.graftsPerCm2}</p>
             <p class="zone-text">Hair per cm²: ${zone.hairPerCm2}</p>
             <p class="zone-text">Area: ${zone.area}</p>
-            <p class="zone-text">Desired Coverage Value: ${zone.desiredCoverageValue}</p>
+            <p class="zone-text">Desired Coverage Value: ${zone.minimumCoverageValue}</p>
             <p class="zone-text">Hair per Graft: ${zone.hairPerGraft?.toFixed(2)}</p>
             <p class="zone-text">Grafts per Zone: ${zone.graftsPerZone}</p>
             <p class="zone-text">Coverage Value: ${zone.coverageValue.toFixed(2)}</p>
             <p class="zone-text">Hair per Zone: ${zone.hairPerZone}</p>
-            <p class="zone-text">Grafts Extracted to Reach Desired Coverage Value: ${zone.graftsExtractedToReachDonorDesiredCoverageValue}</p>
+            <p class="zone-text">Grafts Extracted to Reach Desired Coverage Value: ${zone.totalGraftsExtractedToReachTarget}</p>
         </div>
     </div>`).join('');
 
@@ -37,7 +37,7 @@ export function getCalculatorEngPdfHtml(name: string, globalState: AppStateConte
     <div class="zone-section avoid-break">
         <div class="zone-details">
             <p class="zone-title">${zone.name}</p>            
-            <p class="zone-text">Number of Grafts Planted in Frontal Zone: ${zone.graftsImplantedToReachDesiredRecipientCoverageValue}</p>
+            <p class="zone-text">Number of Grafts Planted in Frontal Zone: ${zone.graftsImplantedToReachRecipientDesiredCoverageValue}</p>
             <p class="zone-text">Caliber: ${zone.caliber}</p>
             <p class="zone-text">Grafts per cm²: ${zone.graftsPerCm2}</p>
             <p class="zone-text">Hair per cm²: ${zone.hairPerCm2}</p>
@@ -46,7 +46,7 @@ export function getCalculatorEngPdfHtml(name: string, globalState: AppStateConte
             <p class="zone-text">Hair per Graft: ${zone.hairPerGraft?.toFixed(2)}</p>
             <p class="zone-text">Starting Coverage Value: ${zone.startingCoverageValue.toFixed(2)}</p>
             <p class="zone-text">Coverage Value Difference: ${zone.coverageValueDifference.toFixed(2)}</p>
-            <p class="zone-text">Grafts Implanted to Reach Desired Coverage Value: ${zone.graftsImplantedToReachDesiredRecipientCoverageValue}</p>
+            <p class="zone-text">Grafts Implanted to Reach Desired Coverage Value: ${zone.graftsImplantedToReachRecipientDesiredCoverageValue}</p>
         </div>
     </div>`).join('');
 

@@ -29,7 +29,7 @@ export function getCalculatorSwePdfHtml(name: string, globalState: AppStateConte
             <p class="zone-text">Grafts per zon: ${zone.graftsPerZone}</p>
             <p class="zone-text">Täckningsvärde: ${zone.coverageValue.toFixed(2)}</p>
             <p class="zone-text">Hår per zon: ${zone.hairPerZone}</p>
-            <p class="zone-text">Grafts extraherade för att nå önskat täckningsvärde: ${zone.graftsExtractedToReachDonorDesiredCoverageValue}</p>
+            <p class="zone-text">Grafts extraherade för att nå önskat täckningsvärde: ${zone.totalGraftsExtractedToReachTarget}</p>
         </div>
     </div>`).join('');
 
@@ -37,7 +37,7 @@ export function getCalculatorSwePdfHtml(name: string, globalState: AppStateConte
     <div class="zone-section avoid-break">
         <div class="zone-details">
             <p class="zone-title">${zone.name}</p>            
-            <p class="zone-text">Antal grafts planterade i frontalzon: ${zone.graftsImplantedToReachDesiredRecipientCoverageValue}</p>
+            <p class="zone-text">Antal grafts planterade i frontalzon: ${zone.graftsImplantedToReachRecipientDesiredCoverageValue}</p>
             <p class="zone-text">Kaliber: ${zone.caliber}</p>
             <p class="zone-text">Grafts per cm²: ${zone.graftsPerCm2}</p>
             <p class="zone-text">Hår per cm²: ${zone.hairPerCm2}</p>
@@ -46,7 +46,7 @@ export function getCalculatorSwePdfHtml(name: string, globalState: AppStateConte
             <p class="zone-text">Hår per graft: ${zone.hairPerGraft?.toFixed(2)}</p>
             <p class="zone-text">Starttäckningsvärde: ${zone.startingCoverageValue.toFixed(2)}</p>
             <p class="zone-text">Täckningsvärdeskillnad: ${zone.coverageValueDifference.toFixed(2)}</p>
-            <p class="zone-text">Grafts implanterade för att nå önskat täckningsvärde: ${zone.graftsImplantedToReachDesiredRecipientCoverageValue}</p>
+            <p class="zone-text">Grafts implanterade för att nå önskat täckningsvärde: ${zone.graftsImplantedToReachRecipientDesiredCoverageValue}</p>
         </div>
     </div>`).join('');
 

@@ -9,13 +9,15 @@ export interface Zone {
     graftsPerCm2: number;
     hairPerCm2: number;
     area: number;
-    desiredCoverageValue: number;
 
     // Calculated values from user inputs
-    hairPerGraft?: number; // = hairPerCm2 / graftsPerCm2
+    hairPerGraft?: number;
 }
 
 export interface DonorZone extends Zone {
+    // User inputs
+    minimumCoverageValue: number;
+
     // Counter values
     type: 'donor';
     singles: number;
@@ -27,25 +29,25 @@ export interface DonorZone extends Zone {
     hairPerCountedGraft: number;
 
     // Calculated values from user inputs
-    graftsPerZone: number; // = areaInCm2 * graftsPerCm2
-    coverageValue: number; // = caliber * hairPerCm2
-    hairPerZone: number; // = areaInCm2 * hairPerCm2
+    graftsPerZone: number;
+    coverageValue: number;
+    hairPerZone: number;
 
-    // Formula: graftsExtractedToReachDonorDesiredCoverageValue = graftsPerZone - ((areaInCm2 * desiredCoverageValue) / (caliber * hairPerGraft))
-    graftsExtractedToReachDonorDesiredCoverageValue: number;
-    //only used in counter
-    graftsLeftToReachDonorDesiredCoverageValue: number; // graftsExtractedToReachDonorDesiredCoverageValue - grafts
+    totalGraftsExtractedToReachTarget: number;
+    graftsLeftToReachTarget: number;
 }
 
 export interface RecipientZone extends Zone {
+
+
+    desiredCoverageValue: number;
     // Calculated values from user inputs
     type: 'recipient';
-    startingCoverageValue: number; // = caliber * hairPerCm2
-    coverageValueDifference: number; // = recipientDesiredCoverageValue - starting
+    startingCoverageValue: number;
+    coverageValueDifference: number;
     grafts: number;
 
-    // Formula: graftsImplantedToReachDesiredRecipientCoverageValue = (areaInCm2 * coverageValueDifference) / (caliber * hairPerGraft)
-    graftsImplantedToReachDesiredRecipientCoverageValue: number; // The number of FUs to be implanted to achieve the desired recipient coverage value
+    graftsImplantedToReachRecipientDesiredCoverageValue: number; // The number of FUs to be implanted to achieve the desired recipient coverage value
 }
 
 interface AppStateContextType {
@@ -111,8 +113,8 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     function calculateTotalGraftsNeeded() : void {
         totalGraftsNeeded.current = 0;
         for (const zone of recipientZones) {
-            totalGraftsNeeded.current += zone.graftsImplantedToReachDesiredRecipientCoverageValue;
-            console.log('Added in iteration: ', zone.graftsImplantedToReachDesiredRecipientCoverageValue);
+            totalGraftsNeeded.current += zone.graftsImplantedToReachRecipientDesiredCoverageValue;
+            console.log('Added in iteration: ', zone.graftsImplantedToReachRecipientDesiredCoverageValue);
         }
     }
 
@@ -255,8 +257,9 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         zone.graftsPerZone = zone.area * zone.graftsPerCm2;
         zone.coverageValue = zone.caliber * zone.hairPerCm2;
         zone.hairPerZone = zone.area * zone.hairPerCm2;
-        zone.graftsExtractedToReachDonorDesiredCoverageValue = Math.floor(zone.graftsPerZone - ((zone.area * zone.desiredCoverageValue) / (zone.caliber * zone.hairPerGraft)));
-        zone.graftsLeftToReachDonorDesiredCoverageValue = Math.floor(zone.graftsExtractedToReachDonorDesiredCoverageValue) - zone.grafts;
+
+        zone.totalGraftsExtractedToReachTarget = Math.floor(zone.graftsPerZone - ((zone.area * zone.minimumCoverageValue) / (zone.caliber * zone.hairPerGraft)));
+        zone.graftsLeftToReachTarget = Math.floor(zone.totalGraftsExtractedToReachTarget) - zone.grafts;
 
     }
 
@@ -299,7 +302,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         zone.startingCoverageValue = zone.caliber * zone.hairPerCm2;
         zone.coverageValueDifference = zone.desiredCoverageValue - zone.startingCoverageValue;
 
-        zone.graftsImplantedToReachDesiredRecipientCoverageValue =
+        zone.graftsImplantedToReachRecipientDesiredCoverageValue =
             (zone.area * zone.coverageValueDifference) / (getDonorZoneAvgCaliber() * getDonorZoneAvgHairPerGraft());
     }
 
@@ -315,7 +318,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
                 graftsPerCm2: 60,
                 hairPerCm2: 180,
                 area: 45,
-                desiredCoverageValue: 6,
+                minimumCoverageValue: 6,
                 singles: 0,
                 doubles: 0,
                 triples: 0,
@@ -326,8 +329,8 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
                 graftsPerZone: 0,
                 coverageValue: 0,
                 hairPerZone: 0,
-                graftsExtractedToReachDonorDesiredCoverageValue: 0,
-                graftsLeftToReachDonorDesiredCoverageValue: 0,
+                totalGraftsExtractedToReachTarget: 0,
+                graftsLeftToReachTarget: 0,
             },
             {
                 type: 'donor',
@@ -336,7 +339,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
                 graftsPerCm2: 120,
                 hairPerCm2: 150,
                 area: 11.7,
-                desiredCoverageValue: 5,
+                minimumCoverageValue: 5,
                 singles: 0,
                 doubles: 0,
                 triples: 0,
@@ -347,8 +350,8 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
                 graftsPerZone: 0,
                 coverageValue: 0,
                 hairPerZone: 0,
-                graftsExtractedToReachDonorDesiredCoverageValue: 0,
-                graftsLeftToReachDonorDesiredCoverageValue: 0,
+                totalGraftsExtractedToReachTarget: 0,
+                graftsLeftToReachTarget: 0,
             },
             {
                 type: 'donor',
@@ -357,7 +360,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
                 graftsPerCm2: 130,
                 hairPerCm2: 170,
                 area: 15.7,
-                desiredCoverageValue: 5,
+                minimumCoverageValue: 5,
                 singles: 0,
                 doubles: 0,
                 triples: 0,
@@ -368,8 +371,8 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
                 graftsPerZone: 0,
                 coverageValue: 0,
                 hairPerZone: 0,
-                graftsExtractedToReachDonorDesiredCoverageValue: 0,
-                graftsLeftToReachDonorDesiredCoverageValue: 0,
+                totalGraftsExtractedToReachTarget: 0,
+                graftsLeftToReachTarget: 0,
             },
             {
                 type: 'donor',
@@ -378,7 +381,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
                 graftsPerCm2: 140,
                 hairPerCm2: 190,
                 area: 17.7,
-                desiredCoverageValue: 5,
+                minimumCoverageValue: 5,
                 singles: 0,
                 doubles: 0,
                 triples: 0,
@@ -389,8 +392,8 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
                 graftsPerZone: 0,
                 coverageValue: 0,
                 hairPerZone: 0,
-                graftsExtractedToReachDonorDesiredCoverageValue: 0,
-                graftsLeftToReachDonorDesiredCoverageValue: 0,
+                totalGraftsExtractedToReachTarget: 0,
+                graftsLeftToReachTarget: 0,
             },
             {
                 type: 'donor',
@@ -399,7 +402,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
                 graftsPerCm2: 150,
                 hairPerCm2: 200,
                 area: 19.7,
-                desiredCoverageValue: 5,
+                minimumCoverageValue: 5,
                 singles: 0,
                 doubles: 0,
                 triples: 0,
@@ -410,8 +413,8 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
                 graftsPerZone: 0,
                 coverageValue: 0,
                 hairPerZone: 0,
-                graftsExtractedToReachDonorDesiredCoverageValue: 0,
-                graftsLeftToReachDonorDesiredCoverageValue: 0,
+                totalGraftsExtractedToReachTarget: 0,
+                graftsLeftToReachTarget: 0,
             },
         ];
     }
@@ -428,7 +431,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
                 desiredCoverageValue: 20,
                 startingCoverageValue: 0,
                 coverageValueDifference: 0,
-                graftsImplantedToReachDesiredRecipientCoverageValue: 0,
+                graftsImplantedToReachRecipientDesiredCoverageValue: 0,
                 grafts: 0,
             },
             {
@@ -441,7 +444,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
                 desiredCoverageValue: 20,
                 startingCoverageValue: 0,
                 coverageValueDifference: 0,
-                graftsImplantedToReachDesiredRecipientCoverageValue: 0,
+                graftsImplantedToReachRecipientDesiredCoverageValue: 0,
                 grafts: 0,
             },
         ];

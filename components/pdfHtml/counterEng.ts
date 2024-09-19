@@ -17,7 +17,7 @@ const base64Image = getLogo();
 export function getCounterEngPdfHtml(name: string, globalState: AppStateContextType): string {
     const recipientZonesHtml = globalState.recipientZones.map(zone => `
         <div style="display: block; page-break-inside: avoid;">
-            <p>${zone.name}: ${zone.graftsImplantedToReachDesiredRecipientCoverageValue} grafts</p>
+            <p>${zone.name}: ${zone.graftsImplantedToReachRecipientDesiredCoverageValue} grafts</p>
         </div>
     `).join('\n');
 

@@ -53,7 +53,7 @@ export default function CalculatorScreen() {
                             <Text style={styles.zoneButtonHiddenText}>{item.caliber}</Text>
                             <Text style={styles.zoneButtonHiddenText}>{item.hairPerCm2}</Text>
                             <Text style={styles.zoneButtonHiddenText}>{item.graftsPerCm2}</Text>
-                            <Text style={styles.zoneButtonHiddenText}>{item.desiredCoverageValue}</Text>
+                            <Text style={styles.zoneButtonHiddenText}>{item.minimumCoverageValue}</Text>
                         </View>
                     </View>
                 </Collapsible>
@@ -69,7 +69,7 @@ export default function CalculatorScreen() {
                         <Text style={styles.zoneButtonText}>{item.area} cm²</Text>
                         <Text style={styles.zoneButtonText}>{item.coverageValue.toFixed(2)}</Text>
                         <Text style={styles.zoneButtonText}>{Math.round(item.graftsPerZone)}</Text>
-                        <Text style={styles.zoneButtonText}>{Math.round(item.graftsLeftToReachDonorDesiredCoverageValue)}</Text>
+                        <Text style={styles.zoneButtonText}>{Math.round(item.graftsLeftToReachTarget)}</Text>
                     </View>
                 </View>
 
@@ -106,7 +106,7 @@ export default function CalculatorScreen() {
                     <View style={styles.rightColumn}>
                         <Text style={styles.zoneButtonText}>{item.area} cm²</Text>
                         <Text style={styles.zoneButtonText}>{Math.round(item.grafts)}</Text>
-                        <Text style={styles.zoneButtonText}>{Math.round(item.graftsImplantedToReachDesiredRecipientCoverageValue)}</Text>
+                        <Text style={styles.zoneButtonText}>{Math.round(item.graftsImplantedToReachRecipientDesiredCoverageValue)}</Text>
                     </View>
                 </View>
 
