@@ -288,15 +288,11 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         zone.hairPerGraft = zone.hairPerCm2 / zone.graftsPerCm2;
         zone.startingCoverageValue = zone.caliber * zone.hairPerCm2;
         zone.coverageValueDifference = zone.desiredCoverageValue - zone.startingCoverageValue;
-        zone.graftsImplantedToReachDesiredRecipientCoverageValue =
-            Math.floor((zone.area * zone.coverageValueDifference) / (getDonorZoneAvgCaliber())*getDonorZoneAvgHairPerGraft());
 
         zone.graftsImplantedToReachDesiredRecipientCoverageValue =
-            Math.floor(
-                (zone.area * zone.coverageValueDifference) /
-                (getDonorZoneAvgCaliber() * getDonorZoneAvgHairPerGraft())
-            );
+            (zone.area * zone.coverageValueDifference) / (getDonorZoneAvgCaliber() * getDonorZoneAvgHairPerGraft());
     }
+
 
 
 
@@ -441,3 +437,5 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         ];
     }
 }
+
+
