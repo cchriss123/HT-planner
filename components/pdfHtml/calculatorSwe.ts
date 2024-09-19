@@ -24,7 +24,7 @@ export function getCalculatorSwePdfHtml(name: string, globalState: AppStateConte
             <p class="zone-text">Grafts per cm²: ${zone.graftsPerCm2}</p>
             <p class="zone-text">Hår per cm²: ${zone.hairPerCm2}</p>
             <p class="zone-text">Område: ${zone.area}</p>
-            <p class="zone-text">Önskat täckningsvärde: ${zone.desiredCoverageValue}</p>
+            <p class="zone-text">Önskat täckningsvärde: ${zone.minimumCoverageValue}</p>
             <p class="zone-text">Hår per graft: ${zone.hairPerGraft?.toFixed(2)}</p>
             <p class="zone-text">Grafts per zon: ${zone.graftsPerZone}</p>
             <p class="zone-text">Täckningsvärde: ${zone.coverageValue.toFixed(2)}</p>
