@@ -93,6 +93,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     const [totalHair, setTotalHair] = useState(0);
     const [totalHairPerGraftsCounted, setTotalHairPerGraftsCounted] = useState(0);
     const [ip, setIp] = useState('');
+    const totalGraftsNeeded = React.useRef(0);
 
     async function loadIp(): Promise<string> {
         try {
@@ -104,6 +105,15 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
             console.error('Failed to load ip from AsyncStorage', error);
         }
         return '';
+    }
+
+
+    function calculateTotalGraftsNeeded() : void {
+        totalGraftsNeeded.current = 0;
+        for (const zone of recipientZones) {
+            totalGraftsNeeded.current += zone.graftsImplantedToReachDesiredRecipientCoverageValue;
+            console.log('Added in iteration: ', zone.graftsImplantedToReachDesiredRecipientCoverageValue);
+        }
     }
 
     async function loadDonorZones(): Promise<DonorZone[]> {
@@ -437,5 +447,6 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         ];
     }
 }
+
 
 
