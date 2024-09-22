@@ -111,15 +111,15 @@ export default function CounterScreen() {
             }
 
             if (operation === "add") {
-                selectedZone.grafts++;
-                selectedZone.hairs += getHairsChanged(graftType, operation);
+                selectedZone.graftsCounted++;
+                selectedZone.hairsCounted += getHairsChanged(graftType, operation);
             } else {
-                selectedZone.grafts--;
-                selectedZone.hairs += getHairsChanged(graftType, operation);
+                selectedZone.graftsCounted--;
+                selectedZone.hairsCounted += getHairsChanged(graftType, operation);
             }
         }
 
-        selectedZone.hairPerCountedGraft = selectedZone.hairs / selectedZone.grafts || 0;
+        selectedZone.hairPerCountedGraft = selectedZone.hairsCounted / selectedZone.graftsCounted || 0;
         globalState.calculateDonorZoneValues(selectedZone);
         globalState.updateTotalCounts();
         globalState.setDonorZones([...globalState.donorZones]);
@@ -242,11 +242,11 @@ export default function CounterScreen() {
 
                                     <View style={{ flexDirection: 'row' }}>
                                         <Text style={styles.infoText}>{`Grafts count: `}</Text>
-                                        <Text style={styles.infoText}>{`${selectedZone.grafts}`}</Text>
+                                        <Text style={styles.infoText}>{`${selectedZone.graftsCounted}`}</Text>
                                     </View>
                                     <View style={{ flexDirection: 'row' }}>
                                         <Text style={styles.infoText}>{`Hairs count: `}</Text>
-                                        <Text style={styles.infoText}>{`${selectedZone.hairs}`}</Text>
+                                        <Text style={styles.infoText}>{`${selectedZone.hairsCounted}`}</Text>
                                     </View>
 
                                     <View style={{ flexDirection: 'row' }}>

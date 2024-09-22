@@ -42,8 +42,8 @@ export default function ResetZoneCountButton({bottomSheetRef}: ResetZoneCountBut
                             zone.doubles = 0
                             zone.triples = 0
                             zone.quadruples = 0
-                            zone.grafts = 0
-                            zone.hairs = 0
+                            zone.graftsCounted = 0
+                            zone.hairsCounted = 0
                             zone.hairPerGraft = 0
                             globalState.donorZones.forEach(zone => globalState.calculateDonorZoneValues(zone));
                         });
