@@ -1,6 +1,10 @@
 import React, {createContext, ReactNode, useContext, useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+// Todo update pdfs when done with calculations of new values
+// Todo go over use effects and state updates
+
+
 export interface Zone {
     // User inputs
     type: 'donor' | 'recipient';
@@ -37,12 +41,11 @@ export interface DonorZone extends Zone {
     availableForExtractionTotal: number;   //total
     availableForExtractionLeft: number;    //left, only used in counter and should be replaced with new values
 
-    //new values TODO
+    //new values
 
-
-
-
-
+    graftsExtractedToReachRecipientDCV: number;
+    graftsPostExtraction: number;
+    coverageValuePostExtraction: number;
 
 }
 
@@ -315,6 +318,36 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
             (zone.area * zone.coverageValueDifference) / (getDonorZoneAvgCaliber() * getDonorZoneAvgHairPerGraft());
     }
 
+    function calculateDonorValuesPostExtraction(zones: DonorZone[], amountOfGraftsNeeded: number) {
+        if (zones.length === 0) {
+            return;
+        }
+
+        for (const zone of zones) {
+            zone.coverageValuePostExtraction = zone.coverageValue;
+            zone.graftsPostExtraction = zone.graftsPerZone;
+            zone.graftsExtractedToReachRecipientDCV = 0;
+        }
+
+        while (amountOfGraftsNeeded > 0) {
+            let zoneToExtractFrom = zones[0];
+
+            for (const zone of zones) {
+                if (zone.coverageValuePostExtraction > zoneToExtractFrom.coverageValuePostExtraction) {
+                    zoneToExtractFrom = zone;
+                }
+            }
+
+            zoneToExtractFrom.graftsExtractedToReachRecipientDCV++;
+            zoneToExtractFrom.graftsPostExtraction--;
+
+            let newFollicularUnitPerCm2 = zoneToExtractFrom.graftsPostExtraction / zoneToExtractFrom.area;
+            zoneToExtractFrom.coverageValuePostExtraction = zoneToExtractFrom.caliber * newFollicularUnitPerCm2;
+
+            amountOfGraftsNeeded--;
+        }
+    }
+
 
 
 
@@ -340,6 +373,9 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
                 hairPerZone: 0,
                 availableForExtractionTotal: 0,
                 availableForExtractionLeft: 0,
+                graftsExtractedToReachRecipientDCV: 0,
+                graftsPostExtraction: 0,
+                coverageValuePostExtraction: 0,
             },
             {
                 type: 'donor',
@@ -361,6 +397,9 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
                 hairPerZone: 0,
                 availableForExtractionTotal: 0,
                 availableForExtractionLeft: 0,
+                graftsExtractedToReachRecipientDCV: 0,
+                graftsPostExtraction: 0,
+                coverageValuePostExtraction: 0,
             },
             {
                 type: 'donor',
@@ -382,6 +421,9 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
                 hairPerZone: 0,
                 availableForExtractionTotal: 0,
                 availableForExtractionLeft: 0,
+                graftsExtractedToReachRecipientDCV: 0,
+                graftsPostExtraction: 0,
+                coverageValuePostExtraction: 0,
             },
             {
                 type: 'donor',
@@ -403,6 +445,9 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
                 hairPerZone: 0,
                 availableForExtractionTotal: 0,
                 availableForExtractionLeft: 0,
+                graftsExtractedToReachRecipientDCV: 0,
+                graftsPostExtraction: 0,
+                coverageValuePostExtraction: 0,
             },
             {
                 type: 'donor',
@@ -424,6 +469,9 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
                 hairPerZone: 0,
                 availableForExtractionTotal: 0,
                 availableForExtractionLeft: 0,
+                graftsExtractedToReachRecipientDCV: 0,
+                graftsPostExtraction: 0,
+                coverageValuePostExtraction: 0,
             },
         ];
     }
