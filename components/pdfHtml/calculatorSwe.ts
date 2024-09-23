@@ -29,7 +29,8 @@ export function getCalculatorSwePdfHtml(name: string, globalState: AppStateConte
             <p class="zone-text">Grafts per zon: ${zone.graftsInZone}</p>
             <p class="zone-text">Täckningsvärde: ${zone.coverageValue.toFixed(2)}</p>
             <p class="zone-text">Hår per zon: ${zone.hairInZone}</p>
-            <p class="zone-text">Grafts extraherade för att nå lägsta täckningsvärde: ${zone.availableForExtractionTotal}</p>
+            <p class="zone-text">Grafts tillgängliga för extrahering: ${zone.availableForExtractionTotal}</p>
+            <p class="zone-text">Grafts att extrahera: ${zone.graftsToExtract}</p>
         </div>
     </div>`).join('');
 

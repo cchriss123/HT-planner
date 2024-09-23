@@ -30,6 +30,7 @@ export function getCalculatorEngPdfHtml(name: string, globalState: AppStateConte
             <p class="zone-text">Coverage Value: ${zone.coverageValue.toFixed(2)}</p>
             <p class="zone-text">Hair per Zone: ${zone.hairInZone}</p>
             <p class="zone-text">Grafts available for extraction: ${zone.availableForExtractionTotal}</p>
+            <p class="zone-text">Grafts to extract: ${zone.graftsToExtract}</p>
         </div>
     </div>`).join('');
 

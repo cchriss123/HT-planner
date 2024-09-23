@@ -38,12 +38,6 @@ export interface DonorZone extends Zone {
 
     availableForExtractionTotal: number;   //total
 
-    //old value
-    //TODO replace this
-    availableForExtractionLeft: number;    //left, only used in counter and should be replaced with new values
-
-    //new values
-
     graftsToExtract: number;
     graftsToExtractLeft: number;
     graftsPostExtraction: number;
@@ -286,7 +280,6 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         zone.hairInZone = zone.area * zone.hairPerCm2;
 
         zone.availableForExtractionTotal = Math.floor(zone.graftsInZone - ((zone.area * zone.minimumCoverageValue) / (zone.caliber * zone.hairPerGraft)));
-        zone.availableForExtractionLeft = Math.floor(zone.availableForExtractionTotal) - zone.graftsCounted;
     }
 
     function calculateDonorZoneAvgCaliber() {
@@ -418,7 +411,6 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
                 coverageValue: 0,
                 hairInZone: 0,
                 availableForExtractionTotal: 0,
-                availableForExtractionLeft: 0,
                 graftsToExtract: 0,
                 graftsToExtractLeft: 0,
                 graftsPostExtraction: 0,
@@ -443,7 +435,6 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
                 coverageValue: 0,
                 hairInZone: 0,
                 availableForExtractionTotal: 0,
-                availableForExtractionLeft: 0,
                 graftsToExtract: 0,
                 graftsToExtractLeft: 0,
                 graftsPostExtraction: 0,
@@ -468,7 +459,6 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
                 coverageValue: 0,
                 hairInZone: 0,
                 availableForExtractionTotal: 0,
-                availableForExtractionLeft: 0,
                 graftsToExtract: 0,
                 graftsToExtractLeft: 0,
                 graftsPostExtraction: 0,
@@ -493,7 +483,6 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
                 coverageValue: 0,
                 hairInZone: 0,
                 availableForExtractionTotal: 0,
-                availableForExtractionLeft: 0,
                 graftsToExtract: 0,
                 graftsToExtractLeft: 0,
                 graftsPostExtraction: 0,
@@ -518,7 +507,6 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
                 coverageValue: 0,
                 hairInZone: 0,
                 availableForExtractionTotal: 0,
-                availableForExtractionLeft: 0,
                 graftsToExtract: 0,
                 graftsToExtractLeft: 0,
                 graftsPostExtraction: 0,
@@ -558,6 +546,5 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         ];
     }
 }
-
 
 
