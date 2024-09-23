@@ -10,7 +10,6 @@ import CustomBottomSheet from "@/components/CustomBottomSheet";
 import { isPhone } from '@/constants/DeviceType';
 
 
-
 export default function CalculatorScreen() {
     const [activeTab, setActiveTab] = useState<string>('Donor Zones');
     const colorScheme = Appearance.getColorScheme();
@@ -65,21 +64,24 @@ export default function CalculatorScreen() {
                         <Text style={styles.zoneButtonText}>Total Grafts:</Text>
                         <Text style={styles.zoneButtonText}>Available for extraction:</Text>
                         <Text style={styles.zoneButtonText}>Grafts to extract:</Text>
-                        <Text style={styles.zoneButtonText}>Coverage value post extraction:</Text>
-
-
                     </View>
+
                     <View style={styles.rightColumn}>
                         <Text style={styles.zoneButtonText}>{item.area} cm²</Text>
                         <Text style={styles.zoneButtonText}>{item.coverageValue.toFixed(2)}</Text>
                         <Text style={styles.zoneButtonText}>{Math.round(item.graftsInZone)}</Text>
                         <Text style={styles.zoneButtonText}>{Math.round(item.availableForExtractionTotal)}</Text>
-                        <Text style={styles.zoneButtonText}>{item.graftsToExtract}</Text>
-                        <Text style={styles.zoneButtonText}>{item.coverageValuePostExtraction}</Text>
+
+                        <Text style={[styles.zoneButtonText, item.graftsToExtract > item.availableForExtractionTotal ? { color: 'red', fontWeight: 'bold' } : {}]}>
+                            {item.graftsToExtract}
+                        </Text>
+
+
 
 
                     </View>
                 </View>
+
 
             </View>
         );
@@ -253,10 +255,6 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
         zoneButtonHiddenText: {
             color: colors.primaryText,
             fontSize: isPhone ? 14 : 18,
-
-
-
-        }
-
+        },
     });
 }

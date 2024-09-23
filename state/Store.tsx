@@ -2,7 +2,6 @@ import React, {createContext, ReactNode, useContext, useEffect, useState} from '
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Todo update pdfs when done with calculations of new values
-// Todo go over use effects and state updates
 
 
 export interface Zone {
