@@ -23,11 +23,11 @@ export function getCalculatorSwePdfHtml(name: string, globalState: AppStateConte
             <p class="zone-text">Kaliber: ${zone.caliber}</p>
             <p class="zone-text">Grafts per cm²: ${zone.graftsPerCm2}</p>
             <p class="zone-text">Hår per cm²: ${zone.hairPerCm2}</p>
-            <p class="zone-text">Område: ${zone.area}</p>
-            <p class="zone-text">Minimum önskvärda täckningsvärde: ${zone.minimumCoverageValue}</p>
+            <p class="zone-text">Område: ${zone.area} cm²</p>
+            <p class="zone-text">Lägsta önskvärda täckningsvärde: ${zone.minimumCoverageValue}</p>
             <p class="zone-text">Hår per graft: ${zone.hairPerGraft?.toFixed(2)}</p>
             <p class="zone-text">Grafts per zon: ${zone.graftsInZone}</p>
-            <p class="zone-text">Täckningsvärde: ${zone.coverageValue.toFixed(2)}</p>
+            <p class="zone-text">Täckningsvärde före operation: ${zone.coverageValue.toFixed(2)}</p>
             <p class="zone-text">Hår per zon: ${zone.hairInZone}</p>
             <p class="zone-text">Grafts tillgängliga för extrahering: ${zone.availableForExtractionTotal}</p>
             <p class="zone-text">Grafts att extrahera: ${zone.graftsToExtract}</p>
@@ -38,16 +38,15 @@ export function getCalculatorSwePdfHtml(name: string, globalState: AppStateConte
     <div class="zone-section avoid-break">
         <div class="zone-details">
             <p class="zone-title">${zone.name}</p>            
-            <p class="zone-text">Antal grafts planterade i frontalzon: ${zone.graftsImplantedToReachRecipientDesiredCoverageValue}</p>
+            <p class="zone-text">Antal grafts planterade i frontalzon: ${Math.round(zone.graftsImplantedToReachRecipientDesiredCoverageValue)}</p>
             <p class="zone-text">Kaliber: ${zone.caliber}</p>
             <p class="zone-text">Grafts per cm²: ${zone.graftsPerCm2}</p>
             <p class="zone-text">Hår per cm²: ${zone.hairPerCm2}</p>
             <p class="zone-text">Område: ${zone.area}</p>
             <p class="zone-text">Önskat täckningsvärde: ${zone.desiredCoverageValue}</p>
             <p class="zone-text">Hår per graft: ${zone.hairPerGraft?.toFixed(2)}</p>
-            <p class="zone-text">Starttäckningsvärde: ${zone.startingCoverageValue.toFixed(2)}</p>
+            <p class="zone-text">Täckningsvärde före operation: ${zone.startingCoverageValue.toFixed(2)}</p>
             <p class="zone-text">Täckningsvärdeskillnad: ${zone.coverageValueDifference.toFixed(2)}</p>
-            <p class="zone-text">Grafts implanterade för att nå önskat täckningsvärde: ${zone.graftsImplantedToReachRecipientDesiredCoverageValue}</p>
         </div>
     </div>`).join('');
 
