@@ -37,6 +37,7 @@ export interface DonorZone extends Zone {
     graftsInZone: number;
     coverageValue: number;
     hairInZone: number;
+
     availableForExtractionTotal: number;   //total
 
 
@@ -81,7 +82,8 @@ interface AppStateContextType {
     totalHairPerGraftsCounted: number;
 
     calculateDonorZoneValues(zone: DonorZone): void;
-    calculateRecipientZoneValues(zone: RecipientZone): void;
+    performCalculationsAndRerender(): void;
+
 
     ip: string;
     saveIp(ip: string): void;
@@ -101,6 +103,8 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     const [donorZones, setDonorZones] = useState<DonorZone[]>([]);
     const [recipientZones, setRecipientZones] = useState<RecipientZone[]>([]);
     const [initialized, setInitialized] = useState(false);
+    const [initialCalculationsDone, setInitialCalculationsDone] = useState(false);
+
 
     const [totalSingles, setTotalSingles] = useState(0);
     const [totalDoubles, setTotalDoubles] = useState(0);
@@ -110,6 +114,8 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     const [totalHair, setTotalHair] = useState(0);
     const [totalHairPerGraftsCounted, setTotalHairPerGraftsCounted] = useState(0);
     const [ip, setIp] = useState('');
+    const averageCaliber = React.useRef(0);
+    const averageHairPerGraft = React.useRef(0);
     const totalGraftsNeeded = React.useRef(0);
 
     async function loadIp(): Promise<string> {
@@ -132,7 +138,6 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         try {
             const storedDonorZones = await AsyncStorage.getItem('donorZones');
             if (storedDonorZones) {
-                console.log('Loaded donor zones from AsyncStorage');
                 return JSON.parse(storedDonorZones) as DonorZone[];
 
             }
@@ -160,39 +165,42 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
             const loadedDonorZones = await loadDonorZones();
             const loadedRecipientZones = await loadRecipientZones();
             setIp(await loadIp());
-            loadedDonorZones.forEach(zone => calculateDonorZoneValues(zone));
-            loadedRecipientZones.forEach(zone => calculateRecipientZoneValues(zone));
-            setInitialized(true);
-
             setDonorZones([...loadedDonorZones]);
             setRecipientZones([...loadedRecipientZones]);
-
-
+            setInitialized(true);
         }
         initializeZones();
+
     }, []);
 
     useEffect(() => {
-        if (initialized) {
+        if (initialized && initialCalculationsDone) {
             saveZones('donorZones', donorZones);
-            updateTotalCounts();
-            recipientZones.forEach(zone => calculateRecipientZoneValues(zone));
-        }
-    }, [donorZones]);
-
-    useEffect(() => {
-        if (initialized) {
             saveZones('recipientZones', recipientZones);
         }
-    }, [recipientZones]);
+    }, [donorZones, recipientZones]);
 
-    async function saveZones(key: string, zones: DonorZone[] | RecipientZone[]) {
-        try {
-            await AsyncStorage.setItem(key, JSON.stringify(zones));
-        } catch (error) {
-            console.error(`Failed to save ${key} to AsyncStorage`, error);
+    useEffect(() => {
+        if (initialized && donorZones.length > 0 && recipientZones.length > 0 && !initialCalculationsDone) {
+            performCalculationsAndRerender();
+            setInitialCalculationsDone(true);
         }
+    }, [initialized, donorZones, recipientZones, initialCalculationsDone]);
+
+
+    function performCalculationsAndRerender() {
+
+        donorZones.forEach(zone => calculateDonorZoneValues(zone));
+        calculateDonorZoneAvgCaliber();
+        calculateDonorZoneAvgHairPerGraft();
+        recipientZones.forEach(zone => calculateRecipientZoneValues(zone));
+        calculateTotalGraftsNeeded();
+        calculateDonorValuesPostExtraction();
+        setDonorZones([...donorZones]);
+        setRecipientZones([...recipientZones]);
     }
+
+
 
     return (
         <AppStateContext.Provider
@@ -210,15 +218,25 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
                 totalHair,
                 totalHairPerGraftsCounted,
                 calculateDonorZoneValues,
-                calculateRecipientZoneValues,
+                // calculateRecipientZoneValues,
                 ip,
                 saveIp,
-
+                // calculateTotalGraftsNeeded,
+                // calculateDonorValuesPostExtraction,
+                performCalculationsAndRerender,
             }}
         >
             {children}
         </AppStateContext.Provider>
     );
+
+    async function saveZones(key: string, zones: DonorZone[] | RecipientZone[]) {
+        try {
+            await AsyncStorage.setItem(key, JSON.stringify(zones));
+        } catch (error) {
+            console.error(`Failed to save ${key} to AsyncStorage`, error);
+        }
+    }
 
     async function saveIp(ip: string) {
         setIp(ip);
@@ -257,6 +275,8 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         setTotalHairPerGraftsCounted(grafts > 0 ? hair / grafts : 0);
     }
 
+
+
     function calculateDonorZoneValues(zone: DonorZone) {
 
         zone.hairPerGraft = zone.hairPerCm2 / zone.graftsPerCm2;
@@ -266,14 +286,14 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
 
         zone.availableForExtractionTotal = Math.floor(zone.graftsInZone - ((zone.area * zone.minimumCoverageValue) / (zone.caliber * zone.hairPerGraft)));
         zone.availableForExtractionLeft = Math.floor(zone.availableForExtractionTotal) - zone.graftsCounted;
-
     }
 
-    function getDonorZoneAvgCaliber() {
+    function calculateDonorZoneAvgCaliber() {
 
         const amountOfDonorZones = donorZones.length;
 
         if (amountOfDonorZones === 0) {
+            console.log('No donor zones');
             return 0;
         }
 
@@ -282,10 +302,10 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
             sum += zone.caliber;
         }
 
-        return sum / amountOfDonorZones;
+        averageCaliber.current = sum / amountOfDonorZones;
     }
 
-    function getDonorZoneAvgHairPerGraft() {
+    function calculateDonorZoneAvgHairPerGraft() {
         const amountOfDonorZones = donorZones.length;
 
         if (amountOfDonorZones === 0) {
@@ -295,7 +315,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         for (const zone of donorZones) {
             sum += zone.hairPerGraft || 0;
         }
-        return sum / amountOfDonorZones;
+        averageHairPerGraft.current = sum / amountOfDonorZones;
     }
 
     function calculateRecipientZoneValues(zone: RecipientZone) {
@@ -308,33 +328,47 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         zone.startingCoverageValue = zone.caliber * zone.hairPerCm2;
         zone.coverageValueDifference = zone.desiredCoverageValue - zone.startingCoverageValue;
 
+
         zone.graftsImplantedToReachRecipientDesiredCoverageValue =
-            (zone.area * zone.coverageValueDifference) / (getDonorZoneAvgCaliber() * getDonorZoneAvgHairPerGraft());
+            (zone.area * zone.coverageValueDifference) / ( averageHairPerGraft.current * averageCaliber.current);
+
+        console.log("area: ", zone.area);
+        console.log("coverageValueDifference: ", zone.coverageValueDifference);
+        console.log("calculateDonorZoneAvgCaliber: ", averageHairPerGraft.current);
+        console.log("calculateDonorZoneAvgHairPerGraft: ", averageCaliber.current);
+        console.log("graftsImplantedToReachRecipientDesiredCoverageValue: ", zone.graftsImplantedToReachRecipientDesiredCoverageValue);
     }
 
-    function calculateTotalGraftsNeeded() : void {
+    function calculateTotalGraftsNeeded() : number {
         totalGraftsNeeded.current = 0;
         for (const zone of recipientZones) {
             totalGraftsNeeded.current += zone.graftsImplantedToReachRecipientDesiredCoverageValue;
-            console.log('Added in iteration: ', zone.graftsImplantedToReachRecipientDesiredCoverageValue);
         }
+        return Math.ceil(totalGraftsNeeded.current);
     }
 
-    function calculateDonorValuesPostExtraction(zones: DonorZone[], amountOfGraftsNeeded: number) {
-        if (zones.length === 0) {
+    function calculateDonorValuesPostExtraction() {
+
+        let graftsNeeded = totalGraftsNeeded.current;
+
+        if (donorZones.length === 0) {
             return;
         }
 
-        for (const zone of zones) {
+        if (graftsNeeded === 0) {
+            return;
+        }
+
+        for (const zone of donorZones) {
             zone.coverageValuePostExtraction = zone.coverageValue;
             zone.graftsPostExtraction = zone.graftsInZone;
             zone.graftsExtractedToReachRecipientDCV = 0;
         }
 
-        while (amountOfGraftsNeeded > 0) {
-            let zoneToExtractFrom = zones[0];
+        while (graftsNeeded > 0) {
+            let zoneToExtractFrom = donorZones[0];
 
-            for (const zone of zones) {
+            for (const zone of donorZones) {
                 if (zone.coverageValuePostExtraction > zoneToExtractFrom.coverageValuePostExtraction) {
                     zoneToExtractFrom = zone;
                 }
@@ -346,12 +380,9 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
             let newFollicularUnitPerCm2 = zoneToExtractFrom.graftsPostExtraction / zoneToExtractFrom.area;
             zoneToExtractFrom.coverageValuePostExtraction = zoneToExtractFrom.caliber * newFollicularUnitPerCm2;
 
-            amountOfGraftsNeeded--;
+            graftsNeeded--;
         }
     }
-
-
-
 
     function getMockDonorZones(): DonorZone[] {
         return [

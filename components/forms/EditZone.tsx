@@ -36,7 +36,7 @@ function EditZone({ zones, zone, bottomSheetRef }: EditZoneProps) {
     const [minimumCoverageValue, setMinimumCoverageValue] = React.useState(zone.type === 'donor' ? (zone as DonorZone).minimumCoverageValue.toString() : '');
     const [message, setMessage] = React.useState('');
     const { setDonorZones, setRecipientZones, donorZones, recipientZones, updateTotalCounts } = useAppState();
-    const { calculateDonorZoneValues, calculateRecipientZoneValues } = useAppState();
+    const globalState = useAppState();
     const { styles, theme } = FormStyles();
 
     useEffect(() => {
@@ -72,13 +72,11 @@ function EditZone({ zones, zone, bottomSheetRef }: EditZoneProps) {
         if (zone.type === 'donor') {
             const donorZone = zone as DonorZone;
             donorZone.minimumCoverageValue = checkedValues.minimumCoverageValue || donorZone.minimumCoverageValue;
-            calculateDonorZoneValues(donorZone);
-            setDonorZones([...donorZones]);
+            globalState.performCalculationsAndRerender();
         } else if (zone.type === 'recipient') {
             const recipientZone = zone as RecipientZone;
             recipientZone.desiredCoverageValue = checkedValues.desiredCoverageValue || recipientZone.desiredCoverageValue;
-            calculateRecipientZoneValues(recipientZone);
-            setRecipientZones([...recipientZones]);
+            globalState.performCalculationsAndRerender();
         }
 
         updateTotalCounts();

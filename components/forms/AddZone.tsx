@@ -79,11 +79,16 @@ function AddZone({ zones, zoneType, bottomSheetRef }: AddZoneProps) {
             hairInZone: 0,
             availableForExtractionTotal: 0,
             availableForExtractionLeft: 0,
+            coverageValuePostExtraction: 0,
+            graftsPostExtraction: 0,
+            graftsExtractedToReachRecipientDCV: 0,
         };
 
-        globalState.calculateDonorZoneValues(newZone);
-        globalState.updateTotalCounts();
-        globalState.setDonorZones([...zones as DonorZone[], newZone]);
+        //globalState.calculateDonorZoneValues(newZone);
+
+        globalState.donorZones.push(newZone);
+        globalState.performCalculationsAndRerender();
+
         setMessage('Donor zone added successfully!');
         resetForm();
         bottomSheetRef.current?.close();
@@ -104,8 +109,8 @@ function AddZone({ zones, zoneType, bottomSheetRef }: AddZoneProps) {
             grafts: 0,
         };
 
-        globalState.calculateRecipientZoneValues(newZone);
-        globalState.setRecipientZones([...zones as RecipientZone[], newZone]);
+        globalState.recipientZones.push(newZone);
+        globalState.performCalculationsAndRerender();
         setMessage('Recipient zone added successfully!');
         resetForm();
         bottomSheetRef.current?.close();
