@@ -81,7 +81,8 @@ function AddZone({ zones, zoneType, bottomSheetRef }: AddZoneProps) {
             availableForExtractionLeft: 0,
             coverageValuePostExtraction: 0,
             graftsPostExtraction: 0,
-            graftsExtractedToReachRecipientDCV: 0,
+            graftsToExtract: 0,
+            graftsToExtractLeft: 0,
         };
 
         //globalState.calculateDonorZoneValues(newZone);

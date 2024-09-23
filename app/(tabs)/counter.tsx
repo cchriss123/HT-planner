@@ -122,6 +122,7 @@ export default function CounterScreen() {
         selectedZone.hairPerCountedGraft = selectedZone.hairsCounted / selectedZone.graftsCounted || 0;
         globalState.calculateDonorZoneValues(selectedZone);
         globalState.updateTotalCounts();
+        globalState.calculateGraftsToExtractLeft();
         globalState.setDonorZones([...globalState.donorZones]);
 
         sendAsync(selectedZone, globalState.ip);
@@ -262,11 +263,11 @@ export default function CounterScreen() {
                                     </View>
                                     <View style={{ flexDirection: 'row' }}>
                                         <Text style={styles.infoText}>{`Target: `}</Text>
-                                        <Text style={styles.infoText}>{`${selectedZone.availableForExtractionTotal}`}</Text>
+                                        <Text style={styles.infoText}>{`${selectedZone.graftsToExtract}`}</Text>
                                     </View>
                                     <View style={{ flexDirection: 'row' }}>
                                         <Text style={styles.infoText}>{`Left: `}</Text>
-                                        <Text style={styles.infoText}>{`${selectedZone.availableForExtractionLeft}`}</Text>
+                                        <Text style={styles.infoText}>{`${selectedZone.graftsToExtractLeft}`}</Text>
                                     </View>
 
 

@@ -64,12 +64,20 @@ export default function CalculatorScreen() {
                         <Text style={styles.zoneButtonText}>Coverage Value:</Text>
                         <Text style={styles.zoneButtonText}>Total Grafts:</Text>
                         <Text style={styles.zoneButtonText}>Available for extraction:</Text>
+                        <Text style={styles.zoneButtonText}>Grafts to extract:</Text>
+                        <Text style={styles.zoneButtonText}>Coverage value post extraction:</Text>
+
+
                     </View>
                     <View style={styles.rightColumn}>
                         <Text style={styles.zoneButtonText}>{item.area} cm²</Text>
                         <Text style={styles.zoneButtonText}>{item.coverageValue.toFixed(2)}</Text>
                         <Text style={styles.zoneButtonText}>{Math.round(item.graftsInZone)}</Text>
                         <Text style={styles.zoneButtonText}>{Math.round(item.availableForExtractionTotal)}</Text>
+                        <Text style={styles.zoneButtonText}>{item.graftsToExtract}</Text>
+                        <Text style={styles.zoneButtonText}>{item.coverageValuePostExtraction}</Text>
+
+
                     </View>
                 </View>
 
@@ -107,6 +115,7 @@ export default function CalculatorScreen() {
                         <Text style={styles.zoneButtonText}>{item.area} cm²</Text>
                         <Text style={styles.zoneButtonText}>{Math.round(item.grafts)}</Text>
                         <Text style={styles.zoneButtonText}>{Math.round(item.graftsImplantedToReachRecipientDesiredCoverageValue)}</Text>
+
                     </View>
                 </View>
 

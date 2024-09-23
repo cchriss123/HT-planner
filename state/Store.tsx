@@ -22,7 +22,6 @@ export interface DonorZone extends Zone {
     // User inputs
     minimumCoverageValue: number;
 
-
     // Counter values
     type: 'donor';
     singles: number;
@@ -40,14 +39,14 @@ export interface DonorZone extends Zone {
 
     availableForExtractionTotal: number;   //total
 
-
     //old value
     //TODO replace this
     availableForExtractionLeft: number;    //left, only used in counter and should be replaced with new values
 
     //new values
 
-    graftsExtractedToReachRecipientDCV: number;
+    graftsToExtract: number;
+    graftsToExtractLeft: number;
     graftsPostExtraction: number;
     coverageValuePostExtraction: number;
 
@@ -83,7 +82,7 @@ interface AppStateContextType {
 
     calculateDonorZoneValues(zone: DonorZone): void;
     performCalculationsAndRerender(): void;
-
+    calculateGraftsToExtractLeft(): void;
 
     ip: string;
     saveIp(ip: string): void;
@@ -132,8 +131,8 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
 
     async function loadDonorZones(): Promise<DonorZone[]> {
 
-        // await AsyncStorage.clear();
-        // console.log('AsyncStorage cleared');
+        await AsyncStorage.clear();
+        console.log('AsyncStorage cleared');
 
         try {
             const storedDonorZones = await AsyncStorage.getItem('donorZones');
@@ -196,6 +195,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         recipientZones.forEach(zone => calculateRecipientZoneValues(zone));
         calculateTotalGraftsNeeded();
         calculateDonorValuesPostExtraction();
+        calculateGraftsToExtractLeft();
         setDonorZones([...donorZones]);
         setRecipientZones([...recipientZones]);
     }
@@ -224,6 +224,8 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
                 // calculateTotalGraftsNeeded,
                 // calculateDonorValuesPostExtraction,
                 performCalculationsAndRerender,
+                calculateGraftsToExtractLeft,
+
             }}
         >
             {children}
@@ -332,11 +334,6 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         zone.graftsImplantedToReachRecipientDesiredCoverageValue =
             (zone.area * zone.coverageValueDifference) / ( averageHairPerGraft.current * averageCaliber.current);
 
-        console.log("area: ", zone.area);
-        console.log("coverageValueDifference: ", zone.coverageValueDifference);
-        console.log("calculateDonorZoneAvgCaliber: ", averageHairPerGraft.current);
-        console.log("calculateDonorZoneAvgHairPerGraft: ", averageCaliber.current);
-        console.log("graftsImplantedToReachRecipientDesiredCoverageValue: ", zone.graftsImplantedToReachRecipientDesiredCoverageValue);
     }
 
     function calculateTotalGraftsNeeded() : number {
@@ -362,25 +359,42 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         for (const zone of donorZones) {
             zone.coverageValuePostExtraction = zone.coverageValue;
             zone.graftsPostExtraction = zone.graftsInZone;
-            zone.graftsExtractedToReachRecipientDCV = 0;
+
+            zone.graftsToExtract = 0;
+
         }
 
         while (graftsNeeded > 0) {
-            let zoneToExtractFrom = donorZones[0];
 
+            let zoneToExtractFrom = donorZones[0];
             for (const zone of donorZones) {
                 if (zone.coverageValuePostExtraction > zoneToExtractFrom.coverageValuePostExtraction) {
                     zoneToExtractFrom = zone;
                 }
             }
 
-            zoneToExtractFrom.graftsExtractedToReachRecipientDCV++;
+            zoneToExtractFrom.graftsToExtract++;
             zoneToExtractFrom.graftsPostExtraction--;
 
+
             let newFollicularUnitPerCm2 = zoneToExtractFrom.graftsPostExtraction / zoneToExtractFrom.area;
-            zoneToExtractFrom.coverageValuePostExtraction = zoneToExtractFrom.caliber * newFollicularUnitPerCm2;
+
+            if (!zoneToExtractFrom.hairPerGraft) {
+                zoneToExtractFrom.hairPerGraft = 1;
+                console.error('Hair per graft not set');
+            }
+
+
+            let newHairPerCm2 = newFollicularUnitPerCm2 * zoneToExtractFrom.hairPerGraft;
+            zoneToExtractFrom.coverageValuePostExtraction = zoneToExtractFrom.caliber * newHairPerCm2;
 
             graftsNeeded--;
+        }
+    }
+
+    function calculateGraftsToExtractLeft() {
+        for (const zone of donorZones) {
+            zone.graftsToExtractLeft = zone.graftsToExtract - zone.graftsCounted;
         }
     }
 
@@ -406,7 +420,8 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
                 hairInZone: 0,
                 availableForExtractionTotal: 0,
                 availableForExtractionLeft: 0,
-                graftsExtractedToReachRecipientDCV: 0,
+                graftsToExtract: 0,
+                graftsToExtractLeft: 0,
                 graftsPostExtraction: 0,
                 coverageValuePostExtraction: 0,
             },
@@ -430,7 +445,8 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
                 hairInZone: 0,
                 availableForExtractionTotal: 0,
                 availableForExtractionLeft: 0,
-                graftsExtractedToReachRecipientDCV: 0,
+                graftsToExtract: 0,
+                graftsToExtractLeft: 0,
                 graftsPostExtraction: 0,
                 coverageValuePostExtraction: 0,
             },
@@ -454,7 +470,8 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
                 hairInZone: 0,
                 availableForExtractionTotal: 0,
                 availableForExtractionLeft: 0,
-                graftsExtractedToReachRecipientDCV: 0,
+                graftsToExtract: 0,
+                graftsToExtractLeft: 0,
                 graftsPostExtraction: 0,
                 coverageValuePostExtraction: 0,
             },
@@ -478,7 +495,8 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
                 hairInZone: 0,
                 availableForExtractionTotal: 0,
                 availableForExtractionLeft: 0,
-                graftsExtractedToReachRecipientDCV: 0,
+                graftsToExtract: 0,
+                graftsToExtractLeft: 0,
                 graftsPostExtraction: 0,
                 coverageValuePostExtraction: 0,
             },
@@ -502,7 +520,8 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
                 hairInZone: 0,
                 availableForExtractionTotal: 0,
                 availableForExtractionLeft: 0,
-                graftsExtractedToReachRecipientDCV: 0,
+                graftsToExtract: 0,
+                graftsToExtractLeft: 0,
                 graftsPostExtraction: 0,
                 coverageValuePostExtraction: 0,
             },
