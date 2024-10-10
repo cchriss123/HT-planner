@@ -64,6 +64,7 @@ export default function CalculatorScreen() {
                         <Text style={styles.zoneButtonText}>Total Grafts:</Text>
                         <Text style={styles.zoneButtonText}>Available for extraction:</Text>
                         <Text style={styles.zoneButtonText}>Grafts to extract:</Text>
+                        <Text style={styles.zoneButtonText}>Grafts to extract / cm² :</Text>
                     </View>
 
                     <View style={styles.rightColumn}>
@@ -75,14 +76,11 @@ export default function CalculatorScreen() {
                         <Text style={[styles.zoneButtonText, item.graftsToExtract > item.availableForExtractionTotal ? { color: 'red', fontWeight: 'bold' } : {}]}>
                             {item.graftsToExtract}
                         </Text>
-
-
-
-
+                        <Text style={styles.zoneButtonText}>
+                            {(item.graftsToExtract / item.area).toFixed(2)} 
+                        </Text>
                     </View>
                 </View>
-
-
             </View>
         );
     }
