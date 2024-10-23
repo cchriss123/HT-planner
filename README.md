@@ -55,6 +55,9 @@ Extract the APK
    unzip output.apks -d output-folder
    ```
 
+## Integration with Counter-Display
+
+You can use this app with [Counter-Display](https://github.com/cchriss123/Counter-Display) to send data to a desktop device over a local network using its IP address.
 
 
 
