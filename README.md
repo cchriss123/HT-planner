@@ -27,7 +27,7 @@ Build the app online
    ```bash
    eas build
    ```
-Build the app local
+Build the app locally
 
    ```bash
     npx expo prebuild
@@ -46,7 +46,7 @@ Download bundle tool
 Generate APK 
 
    ```bash
-   java -jar bundletool-all-1.17.1.jar build-apks --bundle=path/to/your-app.aab --output=output.apks --mode=universal
+   java -jar bundletool-all-1.17.1.jar build-apks --bundle={path/to/your-app}.aab --output=output.apks --mode=universal
    ```
 
 Extract the APK
