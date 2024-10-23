@@ -33,7 +33,7 @@ Build the app local
     npx expo prebuild
    ```
 
-##Create an APK from AAB
+## Create an APK from AAB
 
 Install Java
 
