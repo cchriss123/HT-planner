@@ -19,13 +19,13 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
 2. Start the app
 
    ```bash
-    npx expo start
+   npx expo start
    ```
 
 Build the app online
 
    ```bash
-    eas build
+   eas build
    ```
 Build the app local
 
@@ -40,19 +40,19 @@ Install Java
 Download bundle tool
 
    ```bash
-    wget https://github.com/google/bundletool/releases/download/1.17.1/bundletool-all-1.17.1.jar
+   wget https://github.com/google/bundletool/releases/download/1.17.1/bundletool-all-1.17.1.jar
    ```
 
 Generate APK 
 
    ```bash
-    java -jar bundletool-all-1.17.1.jar build-apks --bundle=path/to/your-app.aab --output=output.apks --mode=universal
+   java -jar bundletool-all-1.17.1.jar build-apks --bundle=path/to/your-app.aab --output=output.apks --mode=universal
    ```
 
 Extract the APK
 
    ```bash
-      unzip output.apks -d output-folder
+   unzip output.apks -d output-folder
    ```
 
 
