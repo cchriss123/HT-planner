@@ -13,6 +13,7 @@ import DeleteZonesButton from "@/components/buttons/DeleteZonesButton";
 import ServerInput from "@/components/forms/ServerInput";
 import ResetZoneCountButton from "@/components/buttons/ResetZoneCountButton";
 import { isPhone } from '@/constants/DeviceType';
+import '@/reanimatedConfig';
 
 
 

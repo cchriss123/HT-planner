@@ -14,12 +14,14 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.nyblad123.FollicleCalculator"
+      "bundleIdentifier": "com.nyblad123.FollicleCalculator",
+      "newArchEnabled": true
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#ffffff",
+        "newArchEnabled": true
       },
       "package": "com.nyblad123.FollicleCalculator"
     },
@@ -31,7 +33,15 @@
     "plugins": [
       "expo-router",
       "expo-asset",
-      ["expo-build-properties", { "android": { "useCleartextTraffic": true } }]
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "useCleartextTraffic": true
+          }
+        }
+      ],
+      "expo-font"
     ],
     "experiments": {},
     "extra": {
