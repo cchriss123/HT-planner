@@ -1,50 +1,69 @@
-# Welcome to your Expo app 👋
+# Follicle Calculator 
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
+## Features
+
+- **Consultation Assistance**: The app helps in performing calculations during hair transplant consultations.
+- **PDF Export**: After the consultation, the app generates a PDF report that can be integrated into medical journals or provided to patients for post-operative documentation.
+- **Surgical Assistance**: During the surgery, the app assists in organizing hair follicle extractions and allows the information to be displayed on an external monitor for the surgeon's convenience.
+
 ## Get started
 
-1. Install dependencies
+Install dependencies
 
    ```bash
    npm install
    ```
 
-2. Start the app
+Start the app
 
    ```bash
-    npx expo start
+   npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+Build the app online
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+   ```bash
+   eas build
+   ```
+Build the app locally
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+   ```bash
+    npx expo prebuild
+   ```
 
-## Get a fresh project
+### Create an APK from AAB
 
-When you're ready, run:
+Install Java
 
-```bash
-npm run reset-project
-```
+Download bundle tool
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+   ```bash
+   wget https://github.com/google/bundletool/releases/download/1.17.1/bundletool-all-1.17.1.jar
+   ```
 
-## Learn more
+Generate APK 
 
-To learn more about developing your project with Expo, look at the following resources:
+   ```bash
+   java -jar bundletool-all-1.17.1.jar build-apks --bundle={path/to/your-app}.aab --output=output.apks --mode=universal
+   ```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+Extract the APK
 
-## Join the community
+   ```bash
+   unzip output.apks -d output-folder
+   ```
 
-Join our community of developers creating universal apps.
+## Integration with Counter-Display
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+You can use this app with [Counter-Display](https://github.com/cchriss123/Counter-Display) to send data to a desktop device over a local network using its IP address.
+
+
+
+
+
+
+
+
+
