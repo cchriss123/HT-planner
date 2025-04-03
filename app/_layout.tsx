@@ -32,20 +32,30 @@ export default function RootLayout() {
     return null;
   }
 
-  return (
-      <AppStateProvider>
-          <GestureHandlerRootView>
-              <PaperProvider>
-                  <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-                  <View style={{ flex: 1 }}>
-                    <Stack>
-                      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-                      <Stack.Screen name="+not-found" />
-                    </Stack>
-                  </View>
-                </ThemeProvider>
-              </PaperProvider>
-        </GestureHandlerRootView>
-      </AppStateProvider>
-);
+    const trialEndDate = new Date('2025-06-01');
+    const now = new Date();
+
+    return now > trialEndDate ? (
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#000' }}>
+            <Text style={{ color: '#fff', fontSize: 24 }}>
+                Trial Ended on {trialEndDate.toLocaleDateString()}
+            </Text>
+        </View>
+    ) : (
+        <AppStateProvider>
+            <GestureHandlerRootView style={{ flex: 1 }}>
+                <PaperProvider>
+                    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+                        <View style={{ flex: 1 }}>
+                            <Stack>
+                                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                                <Stack.Screen name="+not-found" />
+                            </Stack>
+                        </View>
+                    </ThemeProvider>
+                </PaperProvider>
+            </GestureHandlerRootView>
+        </AppStateProvider>
+    );
+
 }
