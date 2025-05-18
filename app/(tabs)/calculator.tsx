@@ -39,7 +39,6 @@ export default function CalculatorScreen() {
     function renderDonorZoneItem({ item }: { item: DonorZone }) {
         return (
             <View style={styles.zoneItem}>
-
                 <Collapsible title={item.name} >
                     <View style={styles.row}>
                         <View style={styles.leftColumn}>
@@ -47,12 +46,15 @@ export default function CalculatorScreen() {
                             <Text style={styles.zoneButtonHiddenText}>Hair per cm²:</Text>
                             <Text style={styles.zoneButtonHiddenText}>Grafts per cm²:</Text>
                             <Text style={styles.zoneButtonHiddenText}>Desired coverage value:</Text>
+                            <Text style={styles.zoneButtonText}>Follicular Units in Zone:</Text>
                         </View>
                         <View style={styles.rightColumn}>
                             <Text style={styles.zoneButtonHiddenText}>{item.caliber}</Text>
                             <Text style={styles.zoneButtonHiddenText}>{item.hairPerCm2}</Text>
                             <Text style={styles.zoneButtonHiddenText}>{item.graftsPerCm2}</Text>
                             <Text style={styles.zoneButtonHiddenText}>{item.minimumCoverageValue}</Text>
+                            <Text style={styles.zoneButtonText}>{Math.round(item.graftsInZone)}</Text>
+
                         </View>
                     </View>
                 </Collapsible>
@@ -61,24 +63,21 @@ export default function CalculatorScreen() {
                     <View style={styles.leftColumn}>
                         <Text style={styles.zoneButtonText}>Area:</Text>
                         <Text style={styles.zoneButtonText}>Coverage Value:</Text>
-                        <Text style={styles.zoneButtonText}>Total Grafts:</Text>
                         <Text style={styles.zoneButtonText}>Available for extraction:</Text>
                         <Text style={styles.zoneButtonText}>Grafts to extract:</Text>
-                        <Text style={styles.zoneButtonText}>Grafts to extract / cm² :</Text>
                     </View>
 
                     <View style={styles.rightColumn}>
                         <Text style={styles.zoneButtonText}>{item.area} cm²</Text>
                         <Text style={styles.zoneButtonText}>{item.coverageValue.toFixed(2)}</Text>
-                        <Text style={styles.zoneButtonText}>{Math.round(item.graftsInZone)}</Text>
-                        <Text style={styles.zoneButtonText}>{Math.round(item.availableForExtractionTotal)}</Text>
+                        <Text style={styles.zoneButtonText}>{Math.round(item.availableForExtraction)}</Text>
 
-                        <Text style={[styles.zoneButtonText, item.graftsToExtract > item.availableForExtractionTotal ? { color: 'red', fontWeight: 'bold' } : {}]}>
-                            {item.graftsToExtract}
+                        <Text style={[styles.zoneButtonText, item.graftsToExtract > item.availableForExtraction ? { color: 'red', fontWeight: 'bold' } : {}]}>
+                            <Text>
+                                {item.graftsToExtract} ({(item.graftsToExtract / item.area).toFixed(1)} /cm²)
+                            </Text>
                         </Text>
-                        <Text style={styles.zoneButtonText}>
-                            {(item.graftsToExtract / item.area).toFixed(2)} 
-                        </Text>
+
                     </View>
                 </View>
             </View>
@@ -153,6 +152,18 @@ export default function CalculatorScreen() {
 
                 </View>
 
+                <View>
+
+                </View>
+                <View>
+                    <Text>Total donor grafts:</Text>
+                    <Text>Extractable grafts:</Text>
+                    {/* Needs both a unit and a percentage of this the percentage is (extractable grafts / total grafts) */}
+
+                    <Text>Recipient needs:</Text>
+
+                </View>
+
                 <View style={styles.outerContainer}>
                     {activeTab === 'Donor Zones' && (
                         <FlatList
@@ -174,7 +185,11 @@ export default function CalculatorScreen() {
                         />
 
                     )}
+
                 </View>
+
+
+
                 <CustomBottomSheet ref={bottomSheetRef} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
                     <PdfExporter pdfType="calculator" bottomSheetRef={bottomSheetRef} />
                 </CustomBottomSheet>

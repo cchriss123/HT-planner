@@ -77,10 +77,7 @@ function AddZone({ zones, zoneType, bottomSheetRef }: AddZoneProps) {
             graftsInZone: 0,
             coverageValue: 0,
             hairInZone: 0,
-            availableForExtractionTotal: 0,
-            availableForExtractionLeft: 0,
-            coverageValuePostExtraction: 0,
-            graftsPostExtraction: 0,
+            availableForExtraction: 0,
             graftsToExtract: 0,
             graftsToExtractLeft: 0,
         };

@@ -29,7 +29,7 @@ export function getCalculatorEngPdfHtml(name: string, globalState: AppStateConte
             <p class="zone-text">Grafts per Zone: ${zone.graftsInZone}</p>
             <p class="zone-text">Coverage Value Before Surgery: ${zone.coverageValue.toFixed(2)}</p>
             <p class="zone-text">Hair per Zone: ${zone.hairInZone}</p>
-            <p class="zone-text">Grafts Available for Extraction: ${zone.availableForExtractionTotal}</p>
+            <p class="zone-text">Grafts Available for Extraction: ${zone.availableForExtraction}</p>
             <p class="zone-text">Grafts to Extract: ${zone.graftsToExtract}</p>
         </div>
     </div>`).join('');
