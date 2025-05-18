@@ -157,7 +157,7 @@ export default function CalculatorScreen() {
 
                 </View>
                 <View>
-                    <Text>Total donor grafts: {globalState.totalGrafts}</Text>
+                    <Text>Total donor grafts: {donorZones.reduce((acc, zone) => acc + zone.graftsInZone, 0)}</Text>
                     <Text>Extractable grafts: {globalState.totalDonorExtractable}</Text>
                     <Text>Recipient needs: {globalState.totalGraftsNeeded}</Text>
                 </View>
