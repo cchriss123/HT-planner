@@ -2,12 +2,13 @@ import React, {useRef, useState} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Appearance, FlatList} from 'react-native';
 import PdfExporter from "@/components/forms/PdfExporter";
 import {Colors} from "@/constants/Colors";
-import {useAppState, DonorZone, RecipientZone} from "@/state/Store";
+import {useAppState} from "@/state/Store";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { Collapsible } from '@/components/Collapsible';
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import CustomBottomSheet from "@/components/CustomBottomSheet";
 import { isPhone } from '@/constants/DeviceType';
+import {DonorZone, RecipientZone} from "@/types/zones";
 
 
 export default function CalculatorScreen() {

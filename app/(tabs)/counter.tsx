@@ -4,11 +4,13 @@ import { Colors } from '@/constants/Colors';
 import { isPhone } from '@/constants/DeviceType';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { DropdownComponent } from '@/components/DropdownComponent';
-import { useAppState, DonorZone } from '@/state/Store';
+import { useAppState } from '@/state/Store';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import CustomBottomSheet from '@/components/CustomBottomSheet';
 import BottomSheet from "@gorhom/bottom-sheet";
 import PdfExporter from "@/components/forms/PdfExporter";
+import {DonorZone} from "@/types/zones";
+
 
 
 
@@ -122,7 +124,7 @@ export default function CounterScreen() {
         selectedZone.hairPerCountedGraft = selectedZone.hairsCounted / selectedZone.graftsCounted || 0;
         globalState.calculateDonorZoneValues(selectedZone);
         globalState.updateTotalCounts();
-        globalState.calculateGraftsToExtractLeft();
+        globalState.calculateGraftsToExtractLeft(globalState.donorZones);
         globalState.setDonorZones([...globalState.donorZones]);
 
         sendAsync(selectedZone, globalState.ip);

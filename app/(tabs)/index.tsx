@@ -4,7 +4,7 @@ import { Colors } from '@/constants/Colors';
 import Icon from "react-native-vector-icons/Ionicons";
 import BottomSheet from "@gorhom/bottom-sheet";
 import CustomBottomSheet from "@/components/CustomBottomSheet";
-import { useAppState, Zone, DonorZone, RecipientZone } from "@/state/Store";
+import { useAppState} from "@/state/Store";
 import AddZone from "@/components/forms/AddZone";
 import EditDonorZone from "@/components/forms/EditZone";
 import logoImg from '@/assets/images/logo.png';
@@ -14,6 +14,7 @@ import ServerInput from "@/components/forms/ServerInput";
 import ResetZoneCountButton from "@/components/buttons/ResetZoneCountButton";
 import { isPhone } from '@/constants/DeviceType';
 import '@/reanimatedConfig';
+import {DonorZone, RecipientZone, Zone} from "@/types/zones";
 
 
 

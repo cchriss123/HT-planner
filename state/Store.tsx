@@ -1,57 +1,18 @@
 import React, {createContext, ReactNode, useContext, useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getMockDonorZones, getMockRecipientZones } from '@/mocks/mockZones';
+import {DonorZone, RecipientZone} from '@/types/zones';
+import {calculateDonorZoneValues,
+    calculateDonorZoneAvgCaliber,
+    calculateDonorZoneAvgHairPerGraft,
 
 
-export interface Zone {
-    // User inputs
-    type: 'donor' | 'recipient';
-    name: string;
-    caliber: number;
-    graftsPerCm2: number;
-    hairPerCm2: number;
-    area: number;
 
-    // Calculated values from user inputs
-    hairPerGraft?: number;
-}
+    calculateGraftsToExtract,
+    calculateGraftsToExtractLeft,
 
-export interface DonorZone extends Zone {
-    // User inputs
-    minimumCoverageValue: number;
+} from "@/calculations/calculations";
 
-    // Counter values
-    type: 'donor';
-    singles: number;
-    doubles: number;
-    triples: number;
-    quadruples: number;
-    graftsCounted: number;
-    hairsCounted: number;
-    hairPerCountedGraft: number;
-
-    // Calculated values from user inputs
-    graftsInZone: number;
-    coverageValue: number;
-    hairInZone: number;
-
-    availableForExtraction: number;   //total
-
-    graftsToExtract: number;
-    graftsToExtractLeft: number;
-}
-
-export interface RecipientZone extends Zone {
-
-
-    desiredCoverageValue: number;
-    // Calculated values from user inputs
-    type: 'recipient';
-    startingCoverageValue: number;
-    coverageValueDifference: number;
-    grafts: number;
-
-    graftsImplantedToReachRecipientDesiredCoverageValue: number; // The number of FUs to be implanted to achieve the desired recipient coverage value
-}
 
 interface AppStateContextType {
     donorZones: DonorZone[];
@@ -70,7 +31,7 @@ interface AppStateContextType {
 
     calculateDonorZoneValues(zone: DonorZone): void;
     performCalculationsAndRerender(): void;
-    calculateGraftsToExtractLeft(): void;
+    calculateGraftsToExtractLeft(zones: DonorZone[]): void;
 
     ip: string;
     saveIp(ip: string): void;
@@ -86,14 +47,11 @@ export function useAppState() {
     return context;
 }
 
-
-
 export function AppStateProvider({ children }: { children: ReactNode }) {
     const [donorZones, setDonorZones] = useState<DonorZone[]>([]);
     const [recipientZones, setRecipientZones] = useState<RecipientZone[]>([]);
     const [initialized, setInitialized] = useState(false);
     const [initialCalculationsDone, setInitialCalculationsDone] = useState(false);
-
 
     const [totalSingles, setTotalSingles] = useState(0);
     const [totalDoubles, setTotalDoubles] = useState(0);
@@ -182,13 +140,13 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     function performCalculationsAndRerender() {
 
         donorZones.forEach(zone => calculateDonorZoneValues(zone));
-        calculateDonorZoneAvgCaliber();
-        calculateDonorZoneAvgHairPerGraft();
+        averageCaliber.current = calculateDonorZoneAvgCaliber(donorZones);
+        averageHairPerGraft.current = calculateDonorZoneAvgHairPerGraft(donorZones);
         recipientZones.forEach(zone => calculateRecipientZoneValues(zone));
         calculateTotalGraftsNeeded();
         calculateTotalDonorExtractable();
-        calculateGraftsToExtract();
-        calculateGraftsToExtractLeft();
+        calculateGraftsToExtract(donorZones, totalGraftsNeeded.current, totalDonorExtractable.current);
+        calculateGraftsToExtractLeft(donorZones);
         setDonorZones([...donorZones]);
         setRecipientZones([...recipientZones]);
     }
@@ -212,7 +170,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
                 ip,
                 saveIp,
                 performCalculationsAndRerender,
-                calculateGraftsToExtractLeft,
+                calculateGraftsToExtractLeft
 
             }}
         >
@@ -265,47 +223,6 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         setTotalHairPerGraftsCounted(grafts > 0 ? hair / grafts : 0);
     }
 
-
-
-    function calculateDonorZoneValues(zone: DonorZone) {
-
-        zone.hairPerGraft = zone.hairPerCm2 / zone.graftsPerCm2;
-        zone.graftsInZone = zone.area * zone.graftsPerCm2;
-        zone.coverageValue = zone.caliber * zone.hairPerCm2;
-        zone.hairInZone = zone.area * zone.hairPerCm2;
-        zone.availableForExtraction = Math.floor(zone.graftsInZone - ((zone.area * zone.minimumCoverageValue) / (zone.caliber * zone.hairPerGraft)));
-    }
-
-    function calculateDonorZoneAvgCaliber() {
-
-        const amountOfDonorZones = donorZones.length;
-
-        if (amountOfDonorZones === 0) {
-            console.log('No donor zones');
-            return 0;
-        }
-
-        let sum = 0;
-        for (const zone of donorZones) {
-            sum += zone.caliber;
-        }
-
-        averageCaliber.current = sum / amountOfDonorZones;
-    }
-
-    function calculateDonorZoneAvgHairPerGraft() {
-        const amountOfDonorZones = donorZones.length;
-
-        if (amountOfDonorZones === 0) {
-            return 0;
-        }
-        let sum = 0;
-        for (const zone of donorZones) {
-            sum += zone.hairPerGraft || 0;
-        }
-        averageHairPerGraft.current = sum / amountOfDonorZones;
-    }
-
     function calculateRecipientZoneValues(zone: RecipientZone) {
         if (zone.desiredCoverageValue === undefined) {
             zone.desiredCoverageValue = 0;
@@ -336,132 +253,6 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
             sum += zone.availableForExtraction;
         }
         totalDonorExtractable.current = sum;
-    }
-
-    function calculateGraftsToExtract() {
-
-        let percentageOfAvailable = totalGraftsNeeded.current / totalDonorExtractable.current;
-        for (const zone of donorZones) {
-            zone.graftsToExtract = Math.round(zone.availableForExtraction * percentageOfAvailable);
-        }
-
-    }
-
-    function calculateGraftsToExtractLeft() {
-        for (const zone of donorZones) {
-            zone.graftsToExtractLeft = zone.graftsToExtract - zone.graftsCounted;
-        }
-    }
-
-    function getMockDonorZones(): DonorZone[] {
-        return [
-            {
-                type: 'donor',
-                name: 'Donor Zone 1',
-                caliber: 0.06,
-                graftsPerCm2: 80,
-                hairPerCm2: 200,
-                area: 45,
-                minimumCoverageValue: 6,
-                singles: 0,
-                doubles: 0,
-                triples: 0,
-                quadruples: 0,
-                graftsCounted: 0,
-                hairsCounted: 0,
-                hairPerCountedGraft: 0,
-                graftsInZone: 0,
-                coverageValue: 0,
-                hairInZone: 0,
-                availableForExtraction: 0,
-                graftsToExtract: 0,
-                graftsToExtractLeft: 0,
-            },
-            {
-                type: 'donor',
-                name: 'Donor Zone 2',
-                caliber: 0.05,
-                graftsPerCm2: 60,
-                hairPerCm2: 190,
-                area: 40,
-                minimumCoverageValue: 6,
-                singles: 0,
-                doubles: 0,
-                triples: 0,
-                quadruples: 0,
-                graftsCounted: 0,
-                hairsCounted: 0,
-                hairPerCountedGraft: 0,
-                graftsInZone: 0,
-                coverageValue: 0,
-                hairInZone: 0,
-                availableForExtraction: 0,
-                graftsToExtract: 0,
-                graftsToExtractLeft: 0,
-            },
-            {
-                type: 'donor',
-                name: 'Donor Zone 3',
-                caliber: 0.07,
-                graftsPerCm2: 90,
-                hairPerCm2: 200,
-                area: 6,
-                minimumCoverageValue: 6,
-                singles: 0,
-                doubles: 0,
-                triples: 0,
-                quadruples: 0,
-                graftsCounted: 0,
-                hairsCounted: 0,
-                hairPerCountedGraft: 0,
-                graftsInZone: 0,
-                coverageValue: 0,
-                hairInZone: 0,
-                availableForExtraction: 0,
-                graftsToExtract: 0,
-                graftsToExtractLeft: 0,
-            },
-            {
-                type: 'donor',
-                name: 'Donor Zone 4',
-                caliber: 0.06,
-                graftsPerCm2: 95,
-                hairPerCm2: 210,
-                area: 60,
-                minimumCoverageValue: 6,
-                singles: 0,
-                doubles: 0,
-                triples: 0,
-                quadruples: 0,
-                graftsCounted: 0,
-                hairsCounted: 0,
-                hairPerCountedGraft: 0,
-                graftsInZone: 0,
-                coverageValue: 0,
-                hairInZone: 0,
-                availableForExtraction: 0,
-                graftsToExtract: 0,
-                graftsToExtractLeft: 0,
-            },
-        ];
-    }
-
-    function getMockRecipientZones(): RecipientZone[] {
-        return [
-            {
-                type: 'recipient',
-                name: 'Recipient Zone 1',
-                caliber: 0,
-                graftsPerCm2: 0,
-                hairPerCm2: 0,
-                area: 160,
-                desiredCoverageValue: 5.4,
-                startingCoverageValue: 0,
-                coverageValueDifference: 0,
-                graftsImplantedToReachRecipientDesiredCoverageValue: 0,
-                grafts: 0,
-            },
-        ];
     }
 }
 

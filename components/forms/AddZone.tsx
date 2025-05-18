@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { TextInput } from 'react-native-paper';
-import { DonorZone, RecipientZone, useAppState, Zone } from "@/state/Store";
+import { useAppState } from "@/state/Store";
 import FormStyles from "@/components/forms/styles/FormStyles";
 import { valuesToCheck, ZoneArgs } from "@/components/forms/utility/valuesToCheck";
 import BottomSheet from "@gorhom/bottom-sheet";
+import {DonorZone, RecipientZone, Zone} from "@/types/zones";
 
 interface AddZoneProps {
     zones: Zone[];

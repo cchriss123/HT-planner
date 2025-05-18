@@ -7,13 +7,7 @@
 // const tintColorDark = '#fff';
 
 
-
-
-
 export const Colors = {
-
-
-
 
   blue: '#24a2d5',
   lightBlue: '#99cdff',
@@ -21,9 +15,6 @@ export const Colors = {
   peach: '#ffce9b',
   brown: '#b27c50',
   lightBeige: '#fbe1c8',
-
-
-
 
   light: {
     primaryBlue: '#24a2d5',
