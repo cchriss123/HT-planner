@@ -11,10 +11,7 @@ import BottomSheet from "@gorhom/bottom-sheet";
 import PdfExporter from "@/components/forms/PdfExporter";
 import {DonorZone} from "@/types/zones";
 
-
-
-
-export default function CounterScreen() {
+export default function CounterScreen(zones: DonorZone[]) {
     const colorScheme = useColorScheme();
     const colors = colorScheme === 'dark' ? Colors.dark : Colors.light;
     const styles = createStyles(colorScheme);
@@ -36,7 +33,6 @@ export default function CounterScreen() {
             bottomSheetRef.current?.snapToIndex(2);
         }
     }
-
 
     interface DisplayData {
         donorZone: DonorZone;
@@ -123,7 +119,7 @@ export default function CounterScreen() {
 
         selectedZone.hairPerCountedGraft = selectedZone.hairsCounted / selectedZone.graftsCounted || 0;
         globalState.calculateDonorZoneValues(selectedZone);
-        globalState.updateTotalCounts();
+        globalState.updateTotalCounts(globalState.donorZones);
         globalState.calculateGraftsToExtractLeft(globalState.donorZones);
         globalState.setDonorZones([...globalState.donorZones]);
 

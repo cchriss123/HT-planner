@@ -5,14 +5,12 @@ import {DonorZone, RecipientZone} from '@/types/zones';
 import {calculateDonorZoneValues,
     calculateDonorZoneAvgCaliber,
     calculateDonorZoneAvgHairPerGraft,
-
-
-
+    calculateRecipientZoneValues,
+    calculateTotalGraftsNeeded,
+    calculateTotalDonorExtractable,
     calculateGraftsToExtract,
     calculateGraftsToExtractLeft,
-
 } from "@/calculations/calculations";
-
 
 interface AppStateContextType {
     donorZones: DonorZone[];
@@ -20,7 +18,7 @@ interface AppStateContextType {
     recipientZones: RecipientZone[];
     setRecipientZones: (zones: RecipientZone[]) => void;
 
-    updateTotalCounts(): void;
+    updateTotalCounts(DonorZones: DonorZone[]): void;
     totalSingles: number;
     totalDoubles: number;
     totalTriples: number;
@@ -142,9 +140,9 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         donorZones.forEach(zone => calculateDonorZoneValues(zone));
         averageCaliber.current = calculateDonorZoneAvgCaliber(donorZones);
         averageHairPerGraft.current = calculateDonorZoneAvgHairPerGraft(donorZones);
-        recipientZones.forEach(zone => calculateRecipientZoneValues(zone));
-        calculateTotalGraftsNeeded();
-        calculateTotalDonorExtractable();
+        recipientZones.forEach(zone => calculateRecipientZoneValues(zone, averageHairPerGraft.current, averageCaliber.current));
+        totalGraftsNeeded.current = calculateTotalGraftsNeeded(recipientZones);
+        totalDonorExtractable.current = calculateTotalDonorExtractable(donorZones);
         calculateGraftsToExtract(donorZones, totalGraftsNeeded.current, totalDonorExtractable.current);
         calculateGraftsToExtractLeft(donorZones);
         setDonorZones([...donorZones]);
@@ -221,38 +219,6 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         setTotalGrafts(grafts);
         setTotalHair(hair);
         setTotalHairPerGraftsCounted(grafts > 0 ? hair / grafts : 0);
-    }
-
-    function calculateRecipientZoneValues(zone: RecipientZone) {
-        if (zone.desiredCoverageValue === undefined) {
-            zone.desiredCoverageValue = 0;
-        }
-
-        zone.grafts = zone.graftsPerCm2 * zone.area;
-        zone.hairPerGraft = zone.hairPerCm2 / zone.graftsPerCm2;
-        zone.startingCoverageValue = zone.caliber * zone.hairPerCm2;
-        zone.coverageValueDifference = zone.desiredCoverageValue - zone.startingCoverageValue;
-
-
-        zone.graftsImplantedToReachRecipientDesiredCoverageValue =
-            (zone.area * zone.coverageValueDifference) / ( averageHairPerGraft.current * averageCaliber.current);
-
-    }
-
-    function calculateTotalGraftsNeeded() : number {
-        totalGraftsNeeded.current = 0;
-        for (const zone of recipientZones) {
-            totalGraftsNeeded.current += zone.graftsImplantedToReachRecipientDesiredCoverageValue;
-        }
-        return Math.ceil(totalGraftsNeeded.current);
-    }
-
-    function calculateTotalDonorExtractable() {
-        let sum = 0;
-        for (const zone of donorZones) {
-            sum += zone.availableForExtraction;
-        }
-        totalDonorExtractable.current = sum;
     }
 }
 

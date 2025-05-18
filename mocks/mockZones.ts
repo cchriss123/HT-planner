@@ -52,7 +52,7 @@ export function getMockDonorZones(): DonorZone[] {
             caliber: 0.07,
             graftsPerCm2: 90,
             hairPerCm2: 200,
-            area: 6,
+            area: 70,
             minimumCoverageValue: 6,
             singles: 0,
             doubles: 0,

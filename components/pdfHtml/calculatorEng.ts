@@ -1,6 +1,6 @@
-import { DonorZone, RecipientZone } from "@/state/Store";
 import { getStyle } from "@/components/pdfCss/calculatorStyle";
 import { getLogo } from "@/components/pdfHtml/logo";
+import {DonorZone, RecipientZone} from "@/types/zones";
 
 interface AppStateContextType {
     totalGrafts: number;
