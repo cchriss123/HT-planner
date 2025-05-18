@@ -83,7 +83,7 @@ function AddZone({ zones, zoneType, bottomSheetRef }: AddZoneProps) {
             graftsToExtractLeft: 0,
         };
 
-        //globalState.calculateDonorZoneValues(newZone);
+        globalState.calculateDonorZoneValues(newZone);
 
         globalState.donorZones.push(newZone);
         globalState.performCalculationsAndRerender();

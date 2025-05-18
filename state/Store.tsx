@@ -18,7 +18,7 @@ interface AppStateContextType {
     recipientZones: RecipientZone[];
     setRecipientZones: (zones: RecipientZone[]) => void;
 
-    updateTotalCounts(DonorZones: DonorZone[]): void;
+    updateTotalCounts(): void;
     totalSingles: number;
     totalDoubles: number;
     totalTriples: number;

@@ -26,18 +26,17 @@ interface EditZoneArgs {
 
 
 function EditZone({ zones, zone, bottomSheetRef }: EditZoneProps) {
-    if (!zone) return null;
-
-    const [name, setName] = React.useState(zone.name);
-    const [caliber, setCaliber] = React.useState(zone.caliber.toString());
-    const [fuPerCm2, setFuPerCm2] = React.useState(zone.graftsPerCm2.toString());
-    const [hairsPerCm2, setHairsPerCm2] = React.useState(zone.hairPerCm2.toString());
-    const [area, setArea] = React.useState(zone.area.toString());
-    const [desiredCoverageValue, setDesiredCoverageValue] = React.useState(zone.type === 'recipient' ? (zone as RecipientZone).desiredCoverageValue.toString() : '');
-    const [minimumCoverageValue, setMinimumCoverageValue] = React.useState(zone.type === 'donor' ? (zone as DonorZone).minimumCoverageValue.toString() : '');
-    const [message, setMessage] = React.useState('');
     const { setDonorZones, setRecipientZones, donorZones, recipientZones, updateTotalCounts, performCalculationsAndRerender } = useAppState();
     const { styles, theme } = FormStyles();
+
+    const [name, setName] = React.useState(zone?.name ?? '');
+    const [caliber, setCaliber] = React.useState(zone?.caliber.toString() ?? '');
+    const [fuPerCm2, setFuPerCm2] = React.useState(zone?.graftsPerCm2.toString() ?? '');
+    const [hairsPerCm2, setHairsPerCm2] = React.useState(zone?.hairPerCm2.toString() ?? '');
+    const [area, setArea] = React.useState(zone?.area.toString() ?? '');
+    const [desiredCoverageValue, setDesiredCoverageValue] = React.useState(zone?.type === 'recipient' ? (zone as RecipientZone).desiredCoverageValue.toString() : '');
+    const [minimumCoverageValue, setMinimumCoverageValue] = React.useState(zone?.type === 'donor' ? (zone as DonorZone).minimumCoverageValue.toString() : '');
+    const [message, setMessage] = React.useState('');
 
     useEffect(() => {
         if (message) {
@@ -45,6 +44,8 @@ function EditZone({ zones, zone, bottomSheetRef }: EditZoneProps) {
             return () => clearTimeout(timer);
         }
     }, [message]);
+
+    if (!zone) return <View style={{ display: 'none' }} />;
 
     function editZoneSubmit(args: EditZoneArgs) {
         const checkedValues = valuesToCheck({
@@ -62,7 +63,6 @@ function EditZone({ zones, zone, bottomSheetRef }: EditZoneProps) {
             return;
         }
 
-        // Update zone values
         zone.name = args.name || zone.name;
         zone.caliber = checkedValues.caliber || zone.caliber;
         zone.graftsPerCm2 = checkedValues.fuPerCm2 || zone.graftsPerCm2;
@@ -76,8 +76,8 @@ function EditZone({ zones, zone, bottomSheetRef }: EditZoneProps) {
             const recipientZone = zone as RecipientZone;
             recipientZone.desiredCoverageValue = checkedValues.desiredCoverageValue || recipientZone.desiredCoverageValue;
         }
-        performCalculationsAndRerender();
 
+        performCalculationsAndRerender();
         updateTotalCounts();
         setMessage('Zone updated.');
         bottomSheetRef.current?.close();
