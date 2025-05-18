@@ -17,7 +17,6 @@ interface AppStateContextType {
     setDonorZones: (zones: DonorZone[]) => void;
     recipientZones: RecipientZone[];
     setRecipientZones: (zones: RecipientZone[]) => void;
-
     updateTotalCounts(): void;
     totalSingles: number;
     totalDoubles: number;
@@ -26,11 +25,11 @@ interface AppStateContextType {
     totalGrafts: number;
     totalHair: number;
     totalHairPerGraftsCounted: number;
-
+    totalGraftsNeeded: number;
+    totalDonorExtractable: number;
     calculateDonorZoneValues(zone: DonorZone): void;
     performCalculationsAndRerender(): void;
     calculateGraftsToExtractLeft(zones: DonorZone[]): void;
-
     ip: string;
     saveIp(ip: string): void;
 }
@@ -50,7 +49,6 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     const [recipientZones, setRecipientZones] = useState<RecipientZone[]>([]);
     const [initialized, setInitialized] = useState(false);
     const [initialCalculationsDone, setInitialCalculationsDone] = useState(false);
-
     const [totalSingles, setTotalSingles] = useState(0);
     const [totalDoubles, setTotalDoubles] = useState(0);
     const [totalTriples, setTotalTriples] = useState(0);
@@ -59,10 +57,13 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     const [totalHair, setTotalHair] = useState(0);
     const [totalHairPerGraftsCounted, setTotalHairPerGraftsCounted] = useState(0);
     const [ip, setIp] = useState('');
+    const [totalGraftsNeeded, setTotalGraftsNeeded] = useState(0);
+    const [totalDonorExtractable, setTotalDonorExtractable] = useState(0);
+
     const averageCaliber = React.useRef(0);
     const averageHairPerGraft = React.useRef(0);
-    const totalGraftsNeeded = React.useRef(0);
-    const totalDonorExtractable = React.useRef(0);
+
+
 
 
     async function loadIp(): Promise<string> {
@@ -136,18 +137,30 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
 
 
     function performCalculationsAndRerender() {
-
         donorZones.forEach(zone => calculateDonorZoneValues(zone));
-        averageCaliber.current = calculateDonorZoneAvgCaliber(donorZones);
-        averageHairPerGraft.current = calculateDonorZoneAvgHairPerGraft(donorZones);
-        recipientZones.forEach(zone => calculateRecipientZoneValues(zone, averageHairPerGraft.current, averageCaliber.current));
-        totalGraftsNeeded.current = calculateTotalGraftsNeeded(recipientZones);
-        totalDonorExtractable.current = calculateTotalDonorExtractable(donorZones);
-        calculateGraftsToExtract(donorZones, totalGraftsNeeded.current, totalDonorExtractable.current);
+
+        const avgCaliber = calculateDonorZoneAvgCaliber(donorZones);
+        const avgHairPerGraft = calculateDonorZoneAvgHairPerGraft(donorZones);
+        averageCaliber.current = avgCaliber;
+        averageHairPerGraft.current = avgHairPerGraft;
+
+        recipientZones.forEach(zone =>
+            calculateRecipientZoneValues(zone, avgHairPerGraft, avgCaliber)
+        );
+
+        const graftsNeeded = calculateTotalGraftsNeeded(recipientZones);
+        const donorExtractable = calculateTotalDonorExtractable(donorZones);
+
+        setTotalGraftsNeeded(graftsNeeded);
+        setTotalDonorExtractable(donorExtractable);
+
+        calculateGraftsToExtract(donorZones, graftsNeeded, donorExtractable);
         calculateGraftsToExtractLeft(donorZones);
+
         setDonorZones([...donorZones]);
         setRecipientZones([...recipientZones]);
     }
+
 
     return (
         <AppStateContext.Provider
@@ -165,6 +178,8 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
                 totalHair,
                 totalHairPerGraftsCounted,
                 calculateDonorZoneValues,
+                totalDonorExtractable,
+                totalGraftsNeeded,
                 ip,
                 saveIp,
                 performCalculationsAndRerender,

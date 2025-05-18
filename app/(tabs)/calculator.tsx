@@ -47,14 +47,14 @@ export default function CalculatorScreen() {
                             <Text style={styles.zoneButtonHiddenText}>Hair per cm²:</Text>
                             <Text style={styles.zoneButtonHiddenText}>Grafts per cm²:</Text>
                             <Text style={styles.zoneButtonHiddenText}>Desired coverage value:</Text>
-                            <Text style={styles.zoneButtonText}>Follicular Units in Zone:</Text>
+                            <Text style={styles.zoneButtonHiddenText}>Follicular Units in Zone:</Text>
                         </View>
                         <View style={styles.rightColumn}>
                             <Text style={styles.zoneButtonHiddenText}>{item.caliber}</Text>
                             <Text style={styles.zoneButtonHiddenText}>{item.hairPerCm2}</Text>
                             <Text style={styles.zoneButtonHiddenText}>{item.graftsPerCm2}</Text>
                             <Text style={styles.zoneButtonHiddenText}>{item.minimumCoverageValue}</Text>
-                            <Text style={styles.zoneButtonText}>{Math.round(item.graftsInZone)}</Text>
+                            <Text style={styles.zoneButtonHiddenText}>{Math.round(item.graftsInZone)}</Text>
 
                         </View>
                     </View>
@@ -157,12 +157,9 @@ export default function CalculatorScreen() {
 
                 </View>
                 <View>
-                    <Text>Total donor grafts:</Text>
-                    <Text>Extractable grafts:</Text>
-                    {/* Needs both a unit and a percentage of this the percentage is (extractable grafts / total grafts) */}
-
-                    <Text>Recipient needs:</Text>
-
+                    <Text>Total donor grafts: {globalState.totalGrafts}</Text>
+                    <Text>Extractable grafts: {globalState.totalDonorExtractable}</Text>
+                    <Text>Recipient needs: {globalState.totalGraftsNeeded}</Text>
                 </View>
 
                 <View style={styles.outerContainer}>
@@ -172,7 +169,6 @@ export default function CalculatorScreen() {
                             renderItem={renderDonorZoneItem}
                             keyExtractor={(item) => item.name}
                             style={{ alignSelf: 'center', paddingHorizontal: '2.5%' }}
-
                         />
 
 

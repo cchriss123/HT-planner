@@ -24,7 +24,6 @@ interface EditZoneArgs {
     bottomSheetRef: React.RefObject<BottomSheet>;
 }
 
-
 function EditZone({ zones, zone, bottomSheetRef }: EditZoneProps) {
     const { setDonorZones, setRecipientZones, donorZones, recipientZones, updateTotalCounts, performCalculationsAndRerender } = useAppState();
     const { styles, theme } = FormStyles();
