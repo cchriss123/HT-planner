@@ -15,13 +15,11 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.nyblad123.FollicleCalculator",
-      "newArchEnabled": true
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff",
-        "newArchEnabled": true
       },
       "package": "com.nyblad123.FollicleCalculator"
     },
