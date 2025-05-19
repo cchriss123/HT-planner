@@ -19,7 +19,7 @@ const base64Image = getLogo();
 export function getCounterEngPdfHtml(name: string, globalState: AppStateContextType): string {
     const recipientZonesHtml = globalState.recipientZones.map(zone => `
         <div style="display: block; page-break-inside: avoid;">
-            <p>${zone.name}: ${zone.graftsImplantedToReachRecipientDesiredCoverageValue} grafts</p>
+            <p>${zone.name}: ${Math.round(zone.graftsImplantedToReachRecipientDesiredCoverageValue)} grafts</p>
         </div>
     `).join('\n');
 
@@ -64,7 +64,7 @@ export function getCounterEngPdfHtml(name: string, globalState: AppStateContextT
                     <p>Total number of double grafts: ${globalState.totalDoubles}</p>
                     <p>Total number of triple grafts: ${globalState.totalTriples}</p>
                     <p>Total number of quadruple grafts: ${globalState.totalQuadruples}</p>
-                    <p>% extracted grafts: ${Math.round((globalState.totalGrafts / calculateTotalGrafts(globalState.donorZones)) * 100)}%</p>
+                    <p>Percentage of available grafts that have been extracted: ${Math.round((globalState.totalGrafts / calculateTotalGrafts(globalState.donorZones)) * 100)}%</p>
                 </div>
                 <div class="summary-column">
                     <h4>Implantation</h4>

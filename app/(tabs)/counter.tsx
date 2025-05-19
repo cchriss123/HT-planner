@@ -13,13 +13,13 @@ import {DonorZone} from "@/types/zones";
 import { ScrollView } from 'react-native';
 
 
-export default function CounterScreen(zones: DonorZone[]) {
+export default function CounterScreen() {
     const colorScheme = useColorScheme();
     const colors = colorScheme === 'dark' ? Colors.dark : Colors.light;
     const styles = createStyles(colorScheme);
     const globalState = useAppState();
     const [selectedZone, setSelectedZone] = useState<DonorZone | null>(null);
-    const bottomSheetRef = useRef<BottomSheet>(null);
+    const bottomSheetRef = useRef<BottomSheet>(null) as React.RefObject<BottomSheet>;
     const [menuVisible, setMenuVisible] = useState(false);
     const [isTimesTen, setIsTimesTen] = useState(false);
 

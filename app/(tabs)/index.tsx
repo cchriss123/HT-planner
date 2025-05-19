@@ -7,7 +7,6 @@ import CustomBottomSheet from "@/components/CustomBottomSheet";
 import { useAppState} from "@/state/Store";
 import AddZone from "@/components/forms/AddZone";
 import EditDonorZone from "@/components/forms/EditZone";
-import logoImg from '@/assets/images/logo.png';
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import DeleteZonesButton from "@/components/buttons/DeleteZonesButton";
 import ServerInput from "@/components/forms/ServerInput";
@@ -31,11 +30,11 @@ export default function ZonesScreen() {
     const recipientZones = globalState.recipientZones;
     const [selectedZone, setSelectedZone] = useState<Zone | null>(null);
     const bottomSheetRefs = {
-        addDonor: useRef<BottomSheet>(null),
-        addRecipient: useRef<BottomSheet>(null),
-        editDonor: useRef<BottomSheet>(null),
-        editRecipient: useRef<BottomSheet>(null),
-        wheel: useRef<BottomSheet>(null),
+        addDonor: useRef<BottomSheet>(null) as React.RefObject<BottomSheet>,
+        addRecipient: useRef<BottomSheet>(null) as React.RefObject<BottomSheet>,
+        editDonor: useRef<BottomSheet>(null) as React.RefObject<BottomSheet>,
+        editRecipient: useRef<BottomSheet>(null) as React.RefObject<BottomSheet>,
+        wheel: useRef<BottomSheet>(null) as React.RefObject<BottomSheet>,
     };
 
     useEffect(() => {
@@ -80,7 +79,7 @@ export default function ZonesScreen() {
                 <View style={styles.topContainer}>
                     <View style={styles.placeholderContainer} />
                     <View style={styles.logoContainer}>
-                        <Image source={logoImg} style={styles.logo} />
+                        <Image source={require('@/assets/images/logo.png')} style={styles.logo} />
                     </View>
                     <TouchableOpacity
                         style={styles.gearContainer}
@@ -112,6 +111,7 @@ export default function ZonesScreen() {
                         <View style={styles.buttonContainer}>
                             <View style={styles.button}>
                                 <TouchableOpacity onPress={() => openMenu(bottomSheetRefs.addRecipient)}>
+
                                     <Icon name="add-circle" size={isPhone ? 65 : 110} color={colors.primaryBlue} />
                                 </TouchableOpacity>
                                 <Text style={styles.zoneListTitle}>Add Recipient Zones</Text>

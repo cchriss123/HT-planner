@@ -18,7 +18,7 @@ export default function CalculatorScreen() {
     const colors = colorScheme === 'dark' ? Colors.dark : Colors.light;
     const styles = createStyles(colorScheme);
     const globalState = useAppState();
-    const bottomSheetRef = useRef<BottomSheet>(null);
+    const bottomSheetRef = useRef<BottomSheet>(null) as React.RefObject<BottomSheet>;
     const [menuVisible, setMenuVisible] = useState(false);
     const donorZones = globalState.donorZones;
     const recipientZones = globalState.recipientZones;
