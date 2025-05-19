@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getMockDonorZones, getMockRecipientZones } from '@/mocks/mockZones';
 import {DonorZone, RecipientZone} from '@/types/zones';
 import {calculateDonorZoneValues,
+    calculateDonorZoneAvgCaliber,
     calculateDonorZoneAvgHairPerGraft,
     calculateRecipientZoneValues,
     calculateTotalGraftsNeeded,
