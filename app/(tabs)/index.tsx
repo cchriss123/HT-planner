@@ -16,7 +16,6 @@ import '@/reanimatedConfig';
 import {DonorZone, RecipientZone, Zone} from "@/types/zones";
 
 
-
 Appearance.getColorScheme = () => 'light';
 
 export default function ZonesScreen() {
@@ -46,7 +45,6 @@ export default function ZonesScreen() {
         ref.current?.expand();
         ref.current?.snapToIndex(1);
     }
-
 
     function handleMenuPress() {
         if (wheelMenuVisible) {

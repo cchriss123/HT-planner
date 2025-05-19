@@ -12,7 +12,6 @@ import PdfExporter from "@/components/forms/PdfExporter";
 import {DonorZone} from "@/types/zones";
 import { ScrollView } from 'react-native';
 
-
 export default function CounterScreen() {
     const colorScheme = useColorScheme();
     const colors = colorScheme === 'dark' ? Colors.dark : Colors.light;
@@ -22,8 +21,6 @@ export default function CounterScreen() {
     const bottomSheetRef = useRef<BottomSheet>(null) as React.RefObject<BottomSheet>;
     const [menuVisible, setMenuVisible] = useState(false);
     const [isTimesTen, setIsTimesTen] = useState(false);
-
-
 
     function handleMenuPress() {
         if (menuVisible) {
@@ -84,7 +81,6 @@ export default function CounterScreen() {
         }
     }
 
-
     function updateZoneCounts(graftType: string, operation: string) {
         if (!selectedZone) return;
 
@@ -128,8 +124,6 @@ export default function CounterScreen() {
         sendAsync(selectedZone, globalState.ip);
     }
 
-
-
     function getHairsChanged(graftType: string, operation: string) {
         let hairsChanged = 0;
         if (graftType === "single") hairsChanged = 1;
@@ -139,8 +133,6 @@ export default function CounterScreen() {
         if (operation === "subtract") hairsChanged *= -1;
         return hairsChanged;
     }
-
-
 
     useEffect(() => {
         if (!selectedZone && globalState.donorZones.length > 0) {
@@ -158,8 +150,6 @@ export default function CounterScreen() {
             sendAsync(selectedZone, globalState.ip);
         }
     }, [selectedZone]);
-
-
 
     return (
         <ScrollView style={{ flex: 1, backgroundColor: colors.softBackground }}>
@@ -418,7 +408,6 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             color: colors.primaryText,
             fontWeight: 'bold',
             fontSize: isPhone ? 14 : 28
-
         },
     });
 }
