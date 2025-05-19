@@ -9,6 +9,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import CustomBottomSheet from "@/components/CustomBottomSheet";
 import { isPhone } from '@/constants/DeviceType';
 import {DonorZone, RecipientZone} from "@/types/zones";
+import { calculateTotalGrafts } from "@/calculations/calculations";
 
 
 export default function CalculatorScreen() {
@@ -164,7 +165,7 @@ export default function CalculatorScreen() {
                             </View>
                             <View style={styles.rightColumn}>
                                 <Text style={styles.zoneButtonText}>
-                                    {donorZones.reduce((acc, zone) => acc + zone.graftsInZone, 0)}
+                                    {calculateTotalGrafts(donorZones)}
                                 </Text>
                                 <Text style={styles.zoneButtonText}>{globalState.totalDonorExtractable}</Text>
                                 <Text style={styles.zoneButtonText}>{globalState.totalGraftsNeeded}</Text>
@@ -172,8 +173,6 @@ export default function CalculatorScreen() {
                         </View>
                     </View>
                 </View>
-
-
 
                 <View style={styles.outerContainer}>
                     {activeTab === 'Donor Zones' && (

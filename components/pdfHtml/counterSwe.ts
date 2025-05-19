@@ -1,6 +1,8 @@
 import {getStyle} from "@/components/pdfCss/counterStyle";
 import {getLogo} from "@/components/pdfHtml/logo";
 import {DonorZone, RecipientZone} from "@/types/zones";
+import { calculateTotalGrafts } from "@/calculations/calculations";
+
 
 
 interface AppStateContextType {
@@ -64,6 +66,7 @@ export function getCounterSwePdfHtml(name: string, globalState: AppStateContextT
                     <p>Totalt antal dubbla grafts: ${globalState.totalDoubles}</p>
                     <p>Totalt antal trippel grafts: ${globalState.totalTriples}</p>
                     <p>Totalt antal fyrdubbel grafts: ${globalState.totalQuadruples}</p>
+                    <p>% harvested grafts: ${Math.round((globalState.totalGrafts / calculateTotalGrafts(globalState.donorZones)) * 100)}%</p>
                 </div>
                 <div class="summary-column">
                     <h4>Implantation</h4>
