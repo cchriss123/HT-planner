@@ -8,23 +8,6 @@ export function calculateDonorZoneValues(zone: DonorZone) : void {
     zone.availableForExtraction = Math.floor(zone.graftsInZone - ((zone.area * zone.minimumCoverageValue) / (zone.caliber * zone.hairPerGraft)));
 }
 
-export function calculateDonorZoneAvgCaliber(donorZones: DonorZone[]) : number {
-
-    const amountOfDonorZones = donorZones.length;
-
-    if (amountOfDonorZones === 0) {
-        console.log('No donor zones');
-        return 0;
-    }
-
-    let sum = 0;
-    for (const zone of donorZones) {
-        sum += zone.caliber;
-    }
-
-    return sum / amountOfDonorZones;
-}
-
 export function calculateDonorZoneAvgHairPerGraft(donorZones: DonorZone[]) : number {
     const amountOfDonorZones = donorZones.length;
 

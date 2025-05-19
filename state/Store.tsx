@@ -3,7 +3,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getMockDonorZones, getMockRecipientZones } from '@/mocks/mockZones';
 import {DonorZone, RecipientZone} from '@/types/zones';
 import {calculateDonorZoneValues,
-    calculateDonorZoneAvgCaliber,
     calculateDonorZoneAvgHairPerGraft,
     calculateRecipientZoneValues,
     calculateTotalGraftsNeeded,
@@ -60,7 +59,6 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     const [ip, setIp] = useState('');
     const [totalGraftsNeeded, setTotalGraftsNeeded] = useState(0);
     const [totalDonorExtractable, setTotalDonorExtractable] = useState(0);
-    const [averageCaliber, setAverageCaliber] = useState(0);
     const [averageHairPerGraft, setAverageHairPerGraft] = useState(0);
 
 
@@ -141,7 +139,6 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
 
         const avgCaliber = calculateDonorZoneAvgCaliber(donorZones);
         const avgHairPerGraft = calculateDonorZoneAvgHairPerGraft(donorZones);
-        setAverageCaliber(avgCaliber);
         setAverageHairPerGraft(avgHairPerGraft);
 
         recipientZones.forEach(zone =>
