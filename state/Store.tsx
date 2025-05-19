@@ -27,6 +27,7 @@ interface AppStateContextType {
     totalHairPerGraftsCounted: number;
     totalGraftsNeeded: number;
     totalDonorExtractable: number;
+    averageHairPerGraft: number;
     calculateDonorZoneValues(zone: DonorZone): void;
     performCalculationsAndRerender(): void;
     calculateGraftsToExtractLeft(zones: DonorZone[]): void;
@@ -59,9 +60,8 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     const [ip, setIp] = useState('');
     const [totalGraftsNeeded, setTotalGraftsNeeded] = useState(0);
     const [totalDonorExtractable, setTotalDonorExtractable] = useState(0);
-
-    const averageCaliber = React.useRef(0);
-    const averageHairPerGraft = React.useRef(0);
+    const [averageCaliber, setAverageCaliber] = useState(0);
+    const [averageHairPerGraft, setAverageHairPerGraft] = useState(0);
 
 
 
@@ -141,8 +141,8 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
 
         const avgCaliber = calculateDonorZoneAvgCaliber(donorZones);
         const avgHairPerGraft = calculateDonorZoneAvgHairPerGraft(donorZones);
-        averageCaliber.current = avgCaliber;
-        averageHairPerGraft.current = avgHairPerGraft;
+        setAverageCaliber(avgCaliber);
+        setAverageHairPerGraft(avgHairPerGraft);
 
         recipientZones.forEach(zone =>
             calculateRecipientZoneValues(zone, avgHairPerGraft, avgCaliber)
@@ -183,7 +183,8 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
                 ip,
                 saveIp,
                 performCalculationsAndRerender,
-                calculateGraftsToExtractLeft
+                calculateGraftsToExtractLeft,
+                averageHairPerGraft,
 
             }}
         >

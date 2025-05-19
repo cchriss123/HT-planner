@@ -10,6 +10,8 @@ import CustomBottomSheet from '@/components/CustomBottomSheet';
 import BottomSheet from "@gorhom/bottom-sheet";
 import PdfExporter from "@/components/forms/PdfExporter";
 import {DonorZone} from "@/types/zones";
+import { ScrollView } from 'react-native';
+
 
 export default function CounterScreen(zones: DonorZone[]) {
     const colorScheme = useColorScheme();
@@ -160,7 +162,7 @@ export default function CounterScreen(zones: DonorZone[]) {
 
 
     return (
-        <View style={{ flex: 1, backgroundColor: colors.softBackground }}>
+        <ScrollView style={{ flex: 1, backgroundColor: colors.softBackground }}>
             <View style={{
                 flex: 1,
                 paddingTop: 60
@@ -290,16 +292,20 @@ export default function CounterScreen(zones: DonorZone[]) {
                                     </View>
                                     <Text></Text>
                                     <View style={{ flexDirection: 'row' }}>
-                                        <Text style={styles.infoText}>{`Total Grafts:`}</Text>
+                                        <Text style={styles.infoText}>{`Grafts count:`}</Text>
                                         <Text style={styles.infoText}>{`${globalState.totalGrafts}`}</Text>
                                     </View>
                                     <View style={{ flexDirection: 'row' }}>
-                                        <Text style={styles.infoText}>{`Total Hair:`}</Text>
+                                        <Text style={styles.infoText}>{`Grafts target:`}</Text>
+                                        <Text style={styles.infoText}>{`${globalState.totalGraftsNeeded}`}</Text>
+                                    </View>
+                                    <View style={{ flexDirection: 'row' }}>
+                                        <Text style={styles.infoText}>{`Hairs count:`}</Text>
                                         <Text style={styles.infoText}>{`${globalState.totalHair}`}</Text>
                                     </View>
                                     <View style={{ flexDirection: 'row' }}>
-                                        <Text style={styles.infoText}>{`Total Hair/FU:`}</Text>
-                                        <Text style={styles.infoText}>{`${globalState.totalHairPerGraftsCounted.toFixed(2)}`}</Text>
+                                        <Text style={styles.infoText}>{`Hairs target`}</Text>
+                                        <Text style={styles.infoText}>{`${Math.round(globalState.totalGraftsNeeded * globalState.averageHairPerGraft)}`}</Text>
                                     </View>
                                 </View>
                             </View>
@@ -316,8 +322,7 @@ export default function CounterScreen(zones: DonorZone[]) {
                     <PdfExporter pdfType="counter" bottomSheetRef={bottomSheetRef} />
                 </CustomBottomSheet>
             </View>
-        </View>
-
+        </ScrollView>
     );
 }
 
