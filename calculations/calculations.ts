@@ -18,7 +18,6 @@ export function calculateDonorZoneAvgCaliber(donorZones: DonorZone[]): number {
             totalGrafts += zone.graftsInZone;
         }
     }
-
     return totalGrafts > 0 ? weightedCaliberSum / totalGrafts : 0;
 }
 
@@ -32,7 +31,6 @@ export function calculateDonorZoneAvgHairPerGraft(donorZones: DonorZone[]): numb
             totalGrafts += zone.graftsInZone;
         }
     }
-
     return totalGrafts > 0 ? totalHairs / totalGrafts : 0;
 }
 

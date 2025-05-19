@@ -81,6 +81,7 @@ export default function CalculatorScreen() {
 
                     </View>
                 </View>
+
             </View>
         );
     }
@@ -150,17 +151,29 @@ export default function CalculatorScreen() {
                                 menuVisible ? Colors.light.primaryBlue : Colors.light.neutralGrey
                             } />
                     </TouchableOpacity>
-
                 </View>
 
-                <View>
+                <View style={{ paddingVertical: 10, borderTopWidth: 1, borderColor: colors.themedGrey }}>
+                    <View style={styles.statsContainer}>
+                        <Text style={styles.statsLabel}>Summary</Text>
+                        <View style={styles.row}>
+                            <View style={styles.leftColumn}>
+                                <Text style={styles.zoneButtonText}>Total donor grafts:</Text>
+                                <Text style={styles.zoneButtonText}>Extractable grafts:</Text>
+                                <Text style={styles.zoneButtonText}>Recipient needs:</Text>
+                            </View>
+                            <View style={styles.rightColumn}>
+                                <Text style={styles.zoneButtonText}>
+                                    {donorZones.reduce((acc, zone) => acc + zone.graftsInZone, 0)}
+                                </Text>
+                                <Text style={styles.zoneButtonText}>{globalState.totalDonorExtractable}</Text>
+                                <Text style={styles.zoneButtonText}>{globalState.totalGraftsNeeded}</Text>
+                            </View>
+                        </View>
+                    </View>
+                </View>
 
-                </View>
-                <View>
-                    <Text>Total donor grafts: {donorZones.reduce((acc, zone) => acc + zone.graftsInZone, 0)}</Text>
-                    <Text>Extractable grafts: {globalState.totalDonorExtractable}</Text>
-                    <Text>Recipient needs: {globalState.totalGraftsNeeded}</Text>
-                </View>
+
 
                 <View style={styles.outerContainer}>
                     {activeTab === 'Donor Zones' && (
@@ -250,12 +263,12 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
         },
         leftColumn: {
             flex: 3,
-            padding: 5,
-            marginLeft: 20,
+            padding: '1%',
+            marginLeft: '2.5%',
         },
         rightColumn: {
             flex: 2,
-            padding: 5,
+            padding: '1%',
         },
         zoneButtonText: {
             fontSize: isPhone ? 16 : 20,
@@ -265,6 +278,29 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
         zoneButtonHiddenText: {
             color: colors.primaryText,
             fontSize: isPhone ? 14 : 18,
+        },
+        statsContainer: {
+            backgroundColor: colors.solidBackground,
+            borderRadius: 12,
+            paddingVertical: 10,
+            marginVertical: 5,
+            marginHorizontal: '2.5%',
+            width: '100%',
+            justifyContent: 'space-between',
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.3,
+            shadowRadius: 5,
+            elevation: 5,
+            borderWidth: 1,
+            borderColor: colors.themedGrey,
+        },
+        statsLabel: {
+            fontSize: isPhone ? 16 : 20,
+            fontWeight: '600',
+            marginVertical: 5,
+            color: colors.primaryText,
+            marginLeft: '3.5%',
         },
     });
 }
