@@ -125,18 +125,16 @@ export default function CalculatorScreen() {
         );
     }
 
-
     return (
         <View style={{ flex: 1, backgroundColor: colors.softBackground }}>
-
-            <View style={{ flex: 1, paddingTop: 60}}>
+            {/* Fixed Tabs */}
+            <View style={{ paddingTop: 60 }}>
                 <View style={styles.tabContainer}>
                     <TouchableOpacity
                         style={[styles.tabButton, activeTab === 'Donor Zones' && styles.activeTab]}
                         onPress={() => handleTabChange('Donor Zones')}
                     >
                         <Text style={styles.tabText}>Donor Areas</Text>
-
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={[styles.tabButton, activeTab === 'Recipient Zones' && styles.activeTab]}
@@ -144,17 +142,19 @@ export default function CalculatorScreen() {
                     >
                         <Text style={styles.tabText}>Recipient Areas</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{marginRight: '3%'}} onPress={handleMenuPress}>
+                    <TouchableOpacity style={{ marginRight: '3%' }} onPress={handleMenuPress}>
                         <FontAwesome
                             name="file-pdf-o"
-                            size= { isPhone ? 35 : 50 }
+                            size={isPhone ? 35 : 50}
                             color={
                                 menuVisible ? Colors.light.primaryBlue : Colors.light.neutralGrey
-                            } />
+                            }
+                        />
                     </TouchableOpacity>
                 </View>
 
-                <View style={{ paddingVertical: 10, borderTopWidth: 1, borderColor: colors.themedGrey }}>
+                {/* Static Summary Section */}
+                <View style={{ paddingVertical: 10, borderTopWidth: 1, borderBottomWidth: 1, borderColor: colors.themedGrey }}>
                     <View style={styles.statsContainer}>
                         <Text style={styles.statsLabel}>Summary</Text>
                         <View style={styles.row}>
@@ -167,42 +167,45 @@ export default function CalculatorScreen() {
                                 <Text style={styles.zoneButtonText}>
                                     {calculateTotalGrafts(donorZones)}
                                 </Text>
-                                <Text style={styles.zoneButtonText}>{globalState.totalDonorExtractable}</Text>
-                                <Text style={styles.zoneButtonText}>{globalState.totalGraftsNeeded}</Text>
+                                <Text style={styles.zoneButtonText}>
+                                    {globalState.totalDonorExtractable}
+                                </Text>
+                                <Text style={styles.zoneButtonText}>
+                                    {globalState.totalGraftsNeeded}
+                                </Text>
                             </View>
                         </View>
                     </View>
                 </View>
-
-                <View style={styles.outerContainer}>
-                    {activeTab === 'Donor Zones' && (
-                        <FlatList
-                            data={donorZones}
-                            renderItem={renderDonorZoneItem}
-                            keyExtractor={(item) => item.name}
-                            style={{ alignSelf: 'center', paddingHorizontal: '2.5%' }}
-                        />
-
-
-                    )}
-                    {activeTab === 'Recipient Zones' && (
-                        <FlatList
-                            data={recipientZones}
-                            renderItem={renderRecipientZoneItem}
-                            keyExtractor={(item) => item.name}
-                            style={{alignSelf: 'center', paddingHorizontal: '2.5%'}}
-                        />
-
-                    )}
-
-                </View>
-
-                <CustomBottomSheet ref={bottomSheetRef} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
-                    <PdfExporter pdfType="calculator" bottomSheetRef={bottomSheetRef} />
-                </CustomBottomSheet>
             </View>
+
+
+            {/* Scrollable List */}
+            {activeTab === 'Donor Zones' ? (
+                <FlatList<DonorZone>
+                    data={donorZones}
+                    renderItem={renderDonorZoneItem}
+                    keyExtractor={(item) => item.name}
+                    contentContainerStyle={{ paddingHorizontal: '2.5%', paddingBottom: 100 }}
+                    style={{ flex: 1 }}
+                />
+            ) : (
+                <FlatList<RecipientZone>
+                    data={recipientZones}
+                    renderItem={renderRecipientZoneItem}
+                    keyExtractor={(item) => item.name}
+                    contentContainerStyle={{ paddingHorizontal: '2.5%', paddingBottom: 100 }}
+                    style={{ flex: 1 }}
+                />
+            )}
+
+            {/* Bottom Sheet */}
+            <CustomBottomSheet ref={bottomSheetRef} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
+                <PdfExporter pdfType="calculator" bottomSheetRef={bottomSheetRef} />
+            </CustomBottomSheet>
         </View>
     );
+
 }
 
 function createStyles(colorScheme: "light" | "dark" | null | undefined) {
@@ -280,10 +283,10 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             backgroundColor: colors.solidBackground,
             borderRadius: 12,
             paddingVertical: 10,
+            paddingHorizontal: '2.5%',
             marginVertical: 5,
-            marginHorizontal: '2.5%',
-            width: '100%',
-            justifyContent: 'space-between',
+            alignSelf: 'center',
+            width: '95%',
             shadowColor: '#000',
             shadowOffset: { width: 0, height: 2 },
             shadowOpacity: 0.3,
@@ -292,12 +295,13 @@ function createStyles(colorScheme: "light" | "dark" | null | undefined) {
             borderWidth: 1,
             borderColor: colors.themedGrey,
         },
+
         statsLabel: {
             fontSize: isPhone ? 16 : 20,
             fontWeight: '600',
             marginVertical: 5,
             color: colors.primaryText,
-            marginLeft: '3.5%',
+            paddingLeft: '3.5%',
         },
     });
 }
