@@ -11,6 +11,7 @@ import BottomSheet from "@gorhom/bottom-sheet";
 import PdfExporter from "@/components/forms/PdfExporter";
 import {DonorZone} from "@/types/zones";
 import { ScrollView } from 'react-native';
+let hasShownNetworkError = false;
 
 export default function CounterScreen() {
     const colorScheme = useColorScheme();
@@ -21,6 +22,7 @@ export default function CounterScreen() {
     const bottomSheetRef = useRef<BottomSheet>(null) as React.RefObject<BottomSheet>;
     const [menuVisible, setMenuVisible] = useState(false);
     const [isTimesTen, setIsTimesTen] = useState(false);
+
 
     function handleMenuPress() {
         if (menuVisible) {
@@ -72,12 +74,15 @@ export default function CounterScreen() {
             body: JSON.stringify(displayData),
         };
 
+
         try {
-            await fetch(url, payload).catch(error => {
-                console.error('Error sending data:', error);
-            });
+            await fetch(url, payload);
+            hasShownNetworkError = false;
         } catch (error) {
-            console.error('Unexpected error:', error);
+            if (!hasShownNetworkError) {
+                hasShownNetworkError = true;
+                console.warn('Server unreachable. Skipping request.');
+            }
         }
     }
 
