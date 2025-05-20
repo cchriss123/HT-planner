@@ -90,9 +90,5 @@ export function calculateGraftsToExtractLeft(donorZones: DonorZone[]) : void {
 }
 
 export function calculateTotalGrafts(donorZones: DonorZone[]) : number {
-    let sum = 0;
-    for (const zone of donorZones) {
-        sum += zone.graftsToExtract;
-    }
-    return sum;
+    return donorZones.reduce((acc, zone) => acc + zone.graftsInZone, 0);
 }
