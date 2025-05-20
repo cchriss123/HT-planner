@@ -46,21 +46,22 @@ function EditZone({ zones, zone, bottomSheetRef }: EditZoneProps) {
 
     useEffect(() => {
         if (zone) {
-            setName(zone.name || '');
-            setCaliber(zone.caliber?.toString() || '');
-            setFuPerCm2(zone.graftsPerCm2?.toString() || '');
-            setHairsPerCm2(zone.hairPerCm2?.toString() || '');
-            setArea(zone.area?.toString() || '');
+            setName(zone.name ?? '');
+            setCaliber(zone.caliber?.toString() ?? '');
+            setFuPerCm2(zone.graftsPerCm2?.toString() ?? '');
+            setHairsPerCm2(zone.hairPerCm2?.toString() ?? '');
+            setArea(zone.area?.toString() ?? '');
 
             if (zone.type === 'recipient') {
-                setDesiredCoverageValue((zone as RecipientZone).desiredCoverageValue?.toString() || '');
+                setDesiredCoverageValue((zone as RecipientZone).desiredCoverageValue?.toString() ?? '');
             }
 
             if (zone.type === 'donor') {
-                setMinimumCoverageValue((zone as DonorZone).minimumCoverageValue?.toString() || '');
+                setMinimumCoverageValue((zone as DonorZone).minimumCoverageValue?.toString() ?? '');
             }
         }
     }, [zone]);
+
 
 
     if (!zone) return <View style={{ display: 'none' }} />;
