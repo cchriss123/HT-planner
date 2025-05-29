@@ -76,13 +76,10 @@ export default function CalculatorScreen() {
 
                         <Text style={[styles.zoneButtonText, item.graftsToExtract > item.availableForExtraction ? { color: 'red', fontWeight: 'bold' } : {}]}>
                             <Text>
-                                {item.graftsToExtract} ({(item.graftsToExtract / item.area).toFixed(1)} /cm²)
-                            </Text>
+                                {item.graftsToExtract}{" "}({Math.round(item.graftsToExtract / item.area)}/cm²)                            </Text>
                         </Text>
-
                     </View>
                 </View>
-
             </View>
         );
     }
@@ -116,7 +113,10 @@ export default function CalculatorScreen() {
                     <View style={styles.rightColumn}>
                         <Text style={styles.zoneButtonText}>{item.area} cm²</Text>
                         <Text style={styles.zoneButtonText}>{Math.round(item.grafts)}</Text>
-                        <Text style={styles.zoneButtonText}>{Math.round(item.graftsImplantedToReachRecipientDesiredCoverageValue)}</Text>
+                        <Text style={styles.zoneButtonText}>
+                            {Math.round(item.graftsImplantedToReachRecipientDesiredCoverageValue)}{" "}
+                            ({Math.round(item.graftsImplantedToReachRecipientDesiredCoverageValue / item.area)}/cm²)
+                        </Text>
 
                     </View>
                 </View>
