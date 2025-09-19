@@ -39,12 +39,20 @@ export default function ZonesScreen() {
     useEffect(() => {
         if (!menuVisible) setSelectedZone(null);
     }, [menuVisible]);
-    
+
     function openMenu(ref: React.RefObject<BottomSheet>, zone: Zone | null = null) {
-        setSelectedZone(zone);
-        ref.current?.expand();
-        ref.current?.snapToIndex(1);
+        if (zone) {
+            setSelectedZone(zone);
+            requestAnimationFrame(() => {
+                ref.current?.expand();
+                ref.current?.snapToIndex(1);
+            });
+        } else {
+            ref.current?.expand();
+            ref.current?.snapToIndex(1);
+        }
     }
+
 
     function handleMenuPress() {
         if (wheelMenuVisible) {
@@ -147,12 +155,13 @@ export default function ZonesScreen() {
                 </CustomBottomSheet>
 
                 <CustomBottomSheet ref={bottomSheetRefs.editDonor} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
-                    <EditDonorZone zone={selectedZone as DonorZone} zones={donorZones} bottomSheetRef={bottomSheetRefs.editDonor} />
+                    {selectedZone && <EditDonorZone zone={selectedZone as DonorZone} zones={donorZones} bottomSheetRef={bottomSheetRefs.editDonor} />}
                 </CustomBottomSheet>
 
                 <CustomBottomSheet ref={bottomSheetRefs.editRecipient} menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
-                    <EditDonorZone zone={selectedZone as RecipientZone} zones={recipientZones} bottomSheetRef={bottomSheetRefs.editRecipient} />
+                    {selectedZone && <EditDonorZone zone={selectedZone as RecipientZone} zones={recipientZones} bottomSheetRef={bottomSheetRefs.editRecipient} />}
                 </CustomBottomSheet>
+
 
             </View>
         </View>

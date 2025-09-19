@@ -1,9 +1,9 @@
 import React, { forwardRef, useCallback, useMemo } from 'react';
-import {View, StyleSheet, useColorScheme, Keyboard} from 'react-native';
-import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
+import { StyleSheet, useColorScheme, Keyboard } from 'react-native';
+import BottomSheet, {BottomSheetBackdrop, BottomSheetView} from '@gorhom/bottom-sheet';
 import { Colors } from '@/constants/Colors';
 import { Easing } from 'react-native-reanimated';
-
+import {BottomSheetMethods} from "@gorhom/bottom-sheet/lib/typescript/types";
 
 export interface Props {
     children: React.ReactNode;
@@ -11,38 +11,48 @@ export interface Props {
     setMenuVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const CustomBottomSheet = forwardRef<BottomSheet, Props>((props, ref) => {
+const CustomBottomSheet = forwardRef<BottomSheetMethods, Props>((props, ref) => {
+    const { children, setMenuVisible } = props;
 
-    const { children } = props;
-    const {setMenuVisible } = props;
-    const snapPoints = useMemo(() => ['50%', '60%', '70%', '80%', '90%', '95%', '100%'], []);
+    const snapPoints = useMemo(
+        () => ['50%', '60%', '70%', '80%', '90%', '95%', '100%'],
+        []
+    );
+
     const colorScheme = useColorScheme();
     const colors = colorScheme === 'dark' ? Colors.dark : Colors.light;
     const styles = createStyles(colors);
-    const renderBackDrop = useCallback((props: any) =>
-        <BottomSheetBackdrop
-            animatedIndex={props.animatedIndex}
-            animatedPosition={props.animatedPosition}
-            disappearsOnIndex={-1}
-            appearsOnIndex={0}
-            {...props} />
-        , []);
-    const animationConfigs = useMemo(() => ({duration: 200, easing: Easing.out(Easing.ease)}), []);
 
-    function handleSheetChanges(index: number) {
+    const renderBackDrop = useCallback(
+        (p: any) => (
+            <BottomSheetBackdrop
+                {...p}
+                disappearsOnIndex={-1}
+                appearsOnIndex={0}
+            />
+        ),
+        []
+    );
+
+    const animationConfigs = useMemo(
+        () => ({ duration: 200, easing: Easing.out(Easing.ease) }),
+        []
+    );
+
+    const handleSheetChanges = useCallback((index: number) => {
         if (index === -1) {
             setMenuVisible(false);
             Keyboard.dismiss();
         } else {
             setMenuVisible(true);
         }
-    }
+    }, [setMenuVisible]);
 
     return (
         <BottomSheet
-            index={-1}
             ref={ref}
-            enablePanDownToClose={true}
+            index={-1}
+            enablePanDownToClose
             handleIndicatorStyle={{ backgroundColor: colors.neutralGrey }}
             snapPoints={snapPoints}
             onChange={handleSheetChanges}
@@ -50,17 +60,14 @@ const CustomBottomSheet = forwardRef<BottomSheet, Props>((props, ref) => {
             animationConfigs={animationConfigs}
             backgroundStyle={{
                 borderRadius: 12,
-                backgroundColor:
-                colors.solidBackground,
+                backgroundColor: colors.solidBackground,
                 borderWidth: 1,
                 borderColor: colors.themedGrey,
-
-
-        }}
+            }}
         >
-            <View style={styles.contentContainer}>
+            <BottomSheetView style={styles.contentContainer}>
                 {children}
-            </View>
+            </BottomSheetView>
         </BottomSheet>
     );
 });
@@ -78,7 +85,6 @@ function createStyles(colors: {
             borderRightWidth: 1,
             borderColor: colors.themedGrey,
             backgroundColor: colors.solidBackground,
-
         },
     });
 }
