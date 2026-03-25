@@ -53,7 +53,6 @@ export default function ZonesScreen() {
         }
     }
 
-
     function handleMenuPress() {
         if (wheelMenuVisible) {
             setWheelMenuVisible(false);
@@ -64,8 +63,6 @@ export default function ZonesScreen() {
             bottomSheetRefs.wheel.current?.snapToIndex(2);
         }
     }
-
-
 
     function renderZoneItem({ item }: { item: Zone }, ref: React.RefObject<BottomSheet>) {
         return (
