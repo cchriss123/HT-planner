@@ -10,7 +10,7 @@ import {getCalculatorEngPdfHtml} from "@/components/pdfHtml/calculatorEng";
 import {getCalculatorSwePdfHtml} from "@/components/pdfHtml/calculatorSwe";
 import {useAppState} from "@/state/Store";
 import BottomSheet from "@gorhom/bottom-sheet";
-import * as FileSystem from 'expo-file-system';
+import * as FileSystem from 'expo-file-system/legacy';
 
 
 interface PdfExporterProps {
@@ -56,12 +56,14 @@ export default function PdfExporter({pdfType, bottomSheetRef}: PdfExporterProps)
                 right: 40,
             },
         });
-    
+
         const sanitizedPatientName = name.replace(/ /g, '_');
         const reportTypeInFile = reportType === 'counter' ? 'patient' : 'journal';
         const date = new Date().toISOString().split('T')[0];
-        const newFileName = `${FileSystem.documentDirectory}${sanitizedPatientName}_${reportTypeInFile}_${date}.pdf`;
-    
+
+        const newFileName =
+            `${FileSystem.documentDirectory!}${sanitizedPatientName}_${reportTypeInFile}_${date}.pdf`;
+
         await FileSystem.moveAsync({
             from: pdfFile.uri,
             to: newFileName,
