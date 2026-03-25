@@ -16,6 +16,10 @@ import '@/reanimatedConfig';
 import {DonorZone, RecipientZone, Zone} from "@/types/zones";
 
 
+//TODO reset summary at zone reset
+//TODO fix pdf export again
+//TODO implement noZone counting
+
 Appearance.getColorScheme = () => 'light';
 
 export default function ZonesScreen() {

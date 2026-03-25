@@ -33,6 +33,7 @@ interface AppStateContextType {
     calculateGraftsToExtractLeft(zones: DonorZone[]): void;
     ip: string;
     saveIp(ip: string): void;
+    resetCalculatedValues(): void;
 }
 
 export const AppStateContext = createContext<AppStateContextType | undefined>(undefined);
@@ -61,8 +62,6 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     const [totalGraftsNeeded, setTotalGraftsNeeded] = useState(0);
     const [totalDonorExtractable, setTotalDonorExtractable] = useState(0);
     const [averageHairPerGraft, setAverageHairPerGraft] = useState(0);
-
-
 
 
     async function loadIp(): Promise<string> {
@@ -136,6 +135,8 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
 
 
     function performCalculationsAndRerender() {
+
+
         donorZones.forEach(zone => calculateDonorZoneValues(zone));
 
         const avgCaliber = calculateDonorZoneAvgCaliber(donorZones);
@@ -157,6 +158,19 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
 
         setDonorZones([...donorZones]);
         setRecipientZones([...recipientZones]);
+    }
+
+    function resetCalculatedValues() {
+        setTotalSingles(0);
+        setTotalDoubles(0);
+        setTotalTriples(0);
+        setTotalQuadruples(0);
+        setTotalGrafts(0);
+        setTotalHair(0);
+        setTotalHairPerGraftsCounted(0);
+        setTotalGraftsNeeded(0);
+        setTotalDonorExtractable(0);
+        setAverageHairPerGraft(0);
     }
 
 
@@ -183,6 +197,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
                 performCalculationsAndRerender,
                 calculateGraftsToExtractLeft,
                 averageHairPerGraft,
+                resetCalculatedValues,
 
             }}
         >
@@ -214,7 +229,6 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         let quadruples = 0;
         let grafts = 0;
         let hair = 0;
-        let totalArea = 0;
 
         for (const zone of donorZones) {
             singles += zone.singles;
@@ -223,7 +237,6 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
             quadruples += zone.quadruples;
             grafts += zone.graftsCounted;
             hair += zone.hairsCounted;
-            totalArea += zone.area;
         }
 
         setTotalSingles(singles);

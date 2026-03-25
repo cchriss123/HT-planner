@@ -2,9 +2,10 @@ import React from 'react';
 import {StyleSheet, View, Text, Appearance} from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import AntDesign from '@expo/vector-icons/AntDesign';
-import { useAppState, DonorZone } from '@/state/Store';
+import { useAppState } from '@/state/Store';
 import {Colors} from "@/constants/Colors";
 import { isPhone } from '@/constants/DeviceType';
+import {DonorZone} from "@/types/zones";
 
 
 export interface DropdownComponentProps {

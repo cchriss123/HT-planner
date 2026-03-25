@@ -37,8 +37,11 @@ export default function DeleteZonesButton({bottomSheetRef}: DeleteZonesButtonPro
                     text: 'Delete',
                     style: 'destructive',
                     onPress: () => {
+
                         globalState.setDonorZones([]);
                         globalState.setRecipientZones([]);
+                        globalState.resetCalculatedValues();
+
                         setMessage('Zones deleted');
                         bottomSheetRef.current?.close();
                     }
